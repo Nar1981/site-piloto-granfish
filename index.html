@@ -21,7 +21,6 @@
       width: 100%;
       height: 100%;
       height: 100dvh;
-      /* Removido o background-color sólido que cobria a imagem */
       background-color: transparent; 
       color: #ffffff;
       display: flex;
@@ -37,7 +36,7 @@
       top: 0; left: 0;
       width: 100vw; height: 100vh; height: 100dvh;
       object-fit: cover;
-      z-index: 1; /* Camada 1: Fundo real */
+      z-index: 1;
       pointer-events: none;
     }
 
@@ -45,9 +44,8 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh; height: 100dvh;
-      /* Película escura */
       background: linear-gradient(135deg, rgba(5,22,42,0.85) 0%, rgba(5,22,42,0.60) 100%);
-      z-index: 2; /* Camada 2: Escurecimento */
+      z-index: 2;
       pointer-events: none;
     }
 
@@ -130,7 +128,7 @@
       color: #ffffff;
       padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px;
       border-bottom: 1px solid rgba(0, 210, 255, 0.2);
-      z-index: 110; /* Camada superior */
+      z-index: 110;
       position: relative;
       display: flex;
       align-items: center;
@@ -170,7 +168,7 @@
       -webkit-overflow-scrolling: touch;
       display: none; 
       opacity: 0;
-      z-index: 10; /* Fica acima da imagem de fundo */
+      z-index: 10;
       transition: opacity 0.4s ease;
     }
 
@@ -181,7 +179,7 @@
 
     /* Container Principal */
     .main-container {
-      background: rgba(11, 23, 38, 0.65); /* Transparente para revelar o fundo */
+      background: rgba(11, 23, 38, 0.65);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(0, 210, 255, 0.28);
@@ -684,7 +682,6 @@
 <body>
 
   <!-- IMAGEM DE FUNDO FIXA E PELÍCULA -->
-  <!-- O z-index garante que fique entre o "nada" do fundo e o conteúdo do site -->
   <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
   <div class="fixed-bg-overlay"></div>
 
@@ -860,7 +857,7 @@
 
         <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
           <svg viewBox="0 0 24 24">
-            <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+            <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
           </svg>
           <span>Instagram</span>
         </a>
@@ -915,19 +912,24 @@
       resetFooterTimer();
     }
 
-    // Fecha o rodapé ao clicar/tocar em qualquer lugar fora dele
-    document.addEventListener('mousedown', (e) => {
-      if (footerPanel.classList.contains('expanded') && !footerPanel.contains(e.target)) {
+    // 1. Fecha o rodapé quando um botão/link de contato for clicado
+    const botoesContato = footerInner.querySelectorAll('a');
+    botoesContato.forEach(botao => {
+      botao.addEventListener('click', () => {
         footerPanel.classList.remove('expanded');
         clearTimeout(footerTimer);
-      }
+      });
     });
 
-    document.addEventListener('touchstart', (e) => {
-      if (footerPanel.classList.contains('expanded') && !footerPanel.contains(e.target)) {
-        footerPanel.classList.remove('expanded');
-        clearTimeout(footerTimer);
-      }
+    // 2. Garante o fechamento imediato ao clicar ou tocar em qualquer parte do corpo do site
+    mainContent.addEventListener('click', () => {
+      footerPanel.classList.remove('expanded');
+      clearTimeout(footerTimer);
+    });
+
+    mainContent.addEventListener('touchstart', () => {
+      footerPanel.classList.remove('expanded');
+      clearTimeout(footerTimer);
     }, {passive: true});
 
     // Mantém o painel aberto enquanto houver interação dentro dele
