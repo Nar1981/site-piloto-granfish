@@ -190,9 +190,9 @@
       opacity: 1;
     }
 
-    /* Container Principal - Agora Fundo Branco */
+    /* Container Principal - Fundo Branco */
     .main-container {
-      background: rgba(255, 255, 255, 0.5); /* Alterado para Branco Translúcido */
+      background: rgba(255, 255, 255, 0.5); 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(0, 0, 0, 0.1);
@@ -205,7 +205,7 @@
       flex-direction: column;
       gap: 30px;
       margin: auto;
-      color: #333333; /* Texto padrão interno adaptado para o branco */
+      color: #333333; 
     }
 
     /* Hero Section Integrada */
@@ -277,13 +277,13 @@
       max-width: 500px;
     }
 
-    /* Subtítulos de Seção - Escurecidos para o Fundo Branco */
+    /* Subtítulos de Seção */
     .section-title {
       font-size: clamp(11px, 1.4vw, 12px);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1.2px;
-      color: #334155; /* Escurecido */
+      color: #334155; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -300,7 +300,9 @@
       background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
     }
 
-    /* Cards 3D Expandidos */
+    /* =========================================
+       CARDS 3D LIVRES (Sem Box)
+       ========================================= */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -314,18 +316,15 @@
 
     .catalog-card {
       position: relative;
-      background: linear-gradient(145deg, rgba(19,39,56,0.85) 0%, rgba(12,26,39,0.85) 100%);
-      border: 1px solid rgba(0, 210, 255, 0.35);
-      border-radius: 16px;
-      padding: 16px;
+      background: transparent; /* Box removido */
+      border: none; /* Borda removida */
+      padding: 8px 0; /* Padding reduzido para a forma livre */
       text-decoration: none;
-      color: #ffffff; /* Texto interno do card continua branco */
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: none; /* Sombra do box removida */
       transition: all 0.3s ease;
     }
 
@@ -335,7 +334,6 @@
       height: 85px;
       background: transparent;
       border: none;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -353,7 +351,7 @@
       object-fit: contain;
       background: transparent;
       mix-blend-mode: screen; 
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); /* Sombra reforçada na imagem solta */
       transition: transform 0.35s ease;
     }
 
@@ -367,24 +365,8 @@
       min-width: 0;
     }
 
-    .catalog-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -150%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.25), transparent);
-      transform: skewX(-25deg);
-      transition: left 0.75s ease;
-      pointer-events: none;
-    }
-
-    .catalog-card:hover::before { left: 150%; }
-
     .catalog-card:hover {
-      border-color: #00d2ff;
-      background: linear-gradient(145deg, rgba(27,57,82,0.95) 0%, rgba(15,36,54,0.95) 100%);
       transform: translateY(-3px);
-      box-shadow: 0 10px 26px rgba(0, 210, 255, 0.32);
     }
 
     .catalog-card:hover .catalog-thumb-box img { transform: scale(1.08); }
@@ -393,7 +375,7 @@
     .catalog-card h3 {
       font-size: clamp(14px, 1.6vw, 18px);
       font-weight: 800;
-      color: #ffffff;
+      color: #1c3144; /* Escurecido para leitura no fundo claro */
       display: flex;
       align-items: center;
       gap: 8px;
@@ -403,7 +385,7 @@
 
     .catalog-card p {
       font-size: clamp(11px, 1vw, 12px);
-      color: #9cb0c3;
+      color: #333333; /* Escurecido para leitura no fundo claro */
       line-height: 1.35;
     }
 
@@ -520,7 +502,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
     .insta-iframe {
@@ -871,7 +853,7 @@
 
         <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
           <svg viewBox="0 0 24 24">
-            <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+            <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
           </svg>
           <span>Instagram</span>
         </a>
