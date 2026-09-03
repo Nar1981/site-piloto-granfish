@@ -8,6 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
 
+  <!-- Script Oficial do Instagram carregado antecipadamente no Head -->
+  <script async defer src="https://www.instagram.com/embed.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -52,7 +55,7 @@
     #splash-screen video {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Nunca corta o vídeo em qualquer tela */
+      object-fit: contain;
       background: #000000;
     }
 
@@ -65,15 +68,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: clamp(20px, 4vh, 44px) 16px;
+      padding: clamp(18px, 4vh, 44px) 16px;
       pointer-events: none;
       text-align: center;
     }
 
     .welcome-text h1 {
-      font-size: clamp(17px, 4vw, 24px);
+      font-size: clamp(17px, 4.2vw, 22px);
       font-weight: 800;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       color: #00d2ff;
       text-shadow: 0 2px 12px rgba(0, 210, 255, 0.4);
@@ -89,7 +92,7 @@
     .skip-notice {
       background: rgba(13, 27, 42, 0.92);
       border: 1px solid #00d2ff;
-      padding: 10px 24px;
+      padding: 10px 22px;
       border-radius: 26px;
       font-size: 11px;
       font-weight: 700;
@@ -183,7 +186,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Cards dos Menus 3D com Imagem Lateral e Shimmer */
+    /* Cards 3D com Miniatura Lateral Transparente */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -212,35 +215,36 @@
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* Caixa da Miniatura Lateral do Barco */
+    /* Caixa transparente para a miniatura do barco */
     .catalog-thumb-box {
-      width: 110px;
-      min-width: 110px;
-      height: 80px;
-      background: #06111d;
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      border-radius: 10px;
+      width: 125px;
+      min-width: 125px;
+      height: 85px;
+      background: transparent; /* Remove fundo preto da caixa */
+      border: none;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
       flex-shrink: 0;
     }
 
     @media (max-width: 440px) {
       .catalog-thumb-box {
-        width: 90px;
-        min-width: 90px;
-        height: 68px;
+        width: 100px;
+        min-width: 100px;
+        height: 70px;
       }
     }
 
+    /* Faz a cor preta do JPEG se fundir e ficar 100% transparente */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #000;
+      background: transparent;
+      mix-blend-mode: screen; /* Transforma o fundo preto original da imagem em transparente */
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
       transition: transform 0.35s ease;
     }
 
@@ -254,7 +258,6 @@
       min-width: 0;
     }
 
-    /* Feixe de Luz Transversal Animado */
     .catalog-card::before {
       content: "";
       position: absolute;
@@ -278,7 +281,7 @@
     }
 
     .catalog-card:hover .catalog-thumb-box img {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     .catalog-card:active {
@@ -375,7 +378,7 @@
       transform: scale(0.96);
     }
 
-    /* Grid Oficial de Embeds do Instagram (Totalmente Visível) */
+    /* Grid Oficial do Instagram em Tempo Real */
     .instagram-feed-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -387,45 +390,25 @@
       .instagram-feed-grid { grid-template-columns: 1fr; gap: 12px; }
     }
 
-    .insta-embed-card {
-      background: rgba(12, 28, 44, 0.85);
-      border: 1px solid #223b52;
-      border-radius: 14px;
-      overflow: hidden;
+    .insta-embed-cell {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .insta-iframe {
-      width: 100%;
-      height: 480px;
-      border: none;
-      display: block;
-      background: #000;
-    }
-
-    .insta-direct-link {
-      width: 100%;
-      padding: 9px;
-      background: #0f2233;
-      color: #00d2ff;
-      font-size: 11px;
-      font-weight: 700;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 6px;
-      border-top: 1px solid #223b52;
-      transition: all 0.2s ease;
+      align-items: flex-start;
+      width: 100%;
+      min-height: 440px;
+      background: rgba(14, 33, 53, 0.45);
+      border-radius: 12px;
+      border: 1px solid #273b4d;
+      padding: 4px;
+      overflow: hidden;
     }
 
-    .insta-direct-link:hover {
-      background: #00d2ff;
-      color: #000;
+    .insta-embed-cell blockquote {
+      margin: 0 auto !important;
+      max-width: 100% !important;
+      min-width: 100% !important;
+      width: 100% !important;
+      border-radius: 8px !important;
     }
 
     /* Rodapé Institucional */
@@ -479,11 +462,11 @@
       <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D -->
+    <!-- Catálogos 3D com Miniaturas com Fundo Transparente -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
       
-      <!-- Card Hurricane com Miniatura Fallback -->
+      <!-- Card Hurricane -->
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
         <div class="catalog-thumb-box">
           <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" 
@@ -495,7 +478,7 @@
         </div>
       </a>
 
-      <!-- Card Poontoon com Miniatura Fallback -->
+      <!-- Card Poontoon -->
       <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
         <div class="catalog-thumb-box">
           <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" 
@@ -522,7 +505,7 @@
 
       <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
         <svg viewBox="0 0 24 24">
-          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -542,68 +525,48 @@
       </a>
     </div>
 
-    <!-- Feed Oficial do Instagram (Iframes Diretos) -->
+    <!-- Feed Oficial do Instagram em Tempo Real -->
     <div class="section-title">Últimas do Estaleiro (@granfishoficial)</div>
     <div class="instagram-feed-grid">
       
-      <!-- Post 1 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcmESjDFT3_/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 2 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DcGaIQOlRSb/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcGaIQOlRSb/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 3 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/Dbd_u9hFb8e/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dbd_u9hFb8e/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 4 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DbL8O6SlZyw/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DbL8O6SlZyw/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 5 (Reel) -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/reel/DbEXftxpsiq/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbEXftxpsiq/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 6 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/Dan460NFTzL/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dan460NFTzL/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 7 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DaVwi53lZd5/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaVwi53lZd5/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 8 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DaK_6CWlYk6/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaK_6CWlYk6/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 9 -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/p/DZyJJx7D2hs/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZyJJx7D2hs/" data-instgrm-version="14"></blockquote>
       </div>
 
-      <!-- Post 10 (Reel) -->
-      <div class="insta-embed-card">
-        <iframe src="https://www.instagram.com/reel/DXMSBBFh8Fm/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
-        <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel no Instagram ↗</a>
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXMSBBFh8Fm/" data-instgrm-version="14"></blockquote>
       </div>
 
     </div>
@@ -625,6 +588,17 @@
     const mainContent = document.getElementById('main-content');
     let videoFinalizado = false;
 
+    function processarInstagramEmTempoReal() {
+      let tentativas = 0;
+      const interval = setInterval(() => {
+        tentativas++;
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+        if (tentativas >= 5) clearInterval(interval);
+      }, 500);
+    }
+
     function fecharAbertura() {
       if (videoFinalizado) return;
       videoFinalizado = true;
@@ -632,27 +606,22 @@
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
+        processarInstagramEmTempoReal();
       }, 400);
     }
 
-    // Fecha ao terminar o vídeo, em caso de erro, ou ao clicar na tela
     video.onended = fecharAbertura;
     video.onerror = fecharAbertura;
     splashScreen.addEventListener('click', fecharAbertura);
 
-    // Timeout de segurança: abre a página em no máximo 4.5s mesmo se o vídeo travar
     setTimeout(fecharAbertura, 4500);
 
-    // Fallback de extensões para carregar imagens locais sem falhas
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
       let t = parseInt(imgEl.dataset.tentativa);
       if (t < extensoes.length) {
         imgEl.dataset.tentativa = t + 1;
         imgEl.src = extensoes[t];
-      } else {
-        imgEl.style.display = 'none';
-        imgEl.parentElement.innerHTML = '<span style="font-size:26px;">🚤</span>';
       }
     }
   </script>
