@@ -52,7 +52,7 @@
     #splash-screen video {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Nunca corta laterais no mobile */
+      object-fit: contain; /* Nunca corta as laterais no mobile */
       background: #000000;
     }
 
@@ -125,9 +125,10 @@
       visibility: hidden;
       opacity: 0;
       flex-direction: column;
+      align-items: center;
       gap: 18px;
       margin: auto;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .main-container.visible {
@@ -143,6 +144,7 @@
       gap: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 14px;
+      width: 100%;
     }
 
     .logo {
@@ -170,6 +172,7 @@
       justify-content: center;
       gap: 8px;
       text-align: center;
+      width: 100%;
     }
 
     .section-title::before,
@@ -180,7 +183,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.35), transparent);
     }
 
-    /* Menus 3D com Overlay Glow e Shimmer */
+    /* Menus 3D com Efeito de Shimmer e Overlay */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -208,7 +211,7 @@
       gap: 5px;
       overflow: hidden;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.45);
-      transition: all 0.25s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .catalog-card::before {
@@ -317,7 +320,7 @@
       transform: scale(0.96);
     }
 
-    /* Grid do Instagram */
+    /* Grid Náutico das Publicações do Instagram */
     .instagram-feed-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -329,25 +332,72 @@
       .instagram-feed-grid { grid-template-columns: 1fr; }
     }
 
-    .insta-embed-cell {
+    .insta-post-card {
+      background: linear-gradient(145deg, #102130 0%, #0c1824 100%);
+      border: 1px solid #22374a;
+      border-radius: 12px;
+      padding: 14px 12px;
+      text-decoration: none;
+      color: #ffffff;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      width: 100%;
-      min-height: 380px;
-      background: rgba(14, 33, 53, 0.45);
-      border-radius: 10px;
-      border: 1px solid #273b4d;
-      padding: 4px;
-      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      gap: 8px;
+      min-height: 120px;
+      transition: all 0.25s ease;
     }
 
-    .insta-embed-cell blockquote {
-      margin: 0 auto !important;
-      max-width: 100% !important;
-      min-width: 100% !important;
-      width: 100% !important;
-      border-radius: 8px !important;
+    .insta-post-card:hover {
+      border-color: #00d2ff;
+      background: linear-gradient(145deg, #152b3d 0%, #0e1e2d 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 210, 255, 0.2);
+    }
+
+    .insta-post-card:active {
+      transform: scale(0.98);
+    }
+
+    .insta-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .insta-header svg {
+      width: 14px;
+      height: 14px;
+      fill: #E1306C;
+    }
+
+    .insta-tag {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #00d2ff;
+    }
+
+    .insta-title {
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #dbe4ee;
+      text-align: center;
+    }
+
+    .insta-btn-link {
+      font-size: 10px;
+      font-weight: 700;
+      color: #00d2ff;
+      letter-spacing: 0.4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
 
     /* Rodapé Institucional */
@@ -360,6 +410,7 @@
       font-size: 10px;
       color: #8fa0b5;
       line-height: 1.55;
+      width: 100%;
     }
 
     .corporate-footer h4 {
@@ -400,7 +451,7 @@
       <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D com Abertura em Nova Guia -->
+    <!-- Catálogos 3D -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
@@ -427,7 +478,7 @@
 
       <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
         <svg viewBox="0 0 24 24">
-          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -447,49 +498,99 @@
       </a>
     </div>
 
-    <!-- Feed Oficial do Instagram -->
+    <!-- Feed Náutico Corporativo do Instagram (100% Compatível e Rápido) -->
     <div class="section-title">Últimas do Estaleiro (@granfishoficial)</div>
     <div class="instagram-feed-grid">
       
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcmESjDFT3_/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Lançamento</span>
+        </div>
+        <div class="insta-title">Design exclusivo & inovação na linha de montagem Gran Fish.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcGaIQOlRSb/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Engenharia</span>
+        </div>
+        <div class="insta-title">Estrutura de alta performance e navegabilidade testada em água.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dbd_u9hFb8e/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Acabamento</span>
+        </div>
+        <div class="insta-title">Cores sólidas, metálicas e grafismos náuticos em detalhes.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DbL8O6SlZyw/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Embarcação</span>
+        </div>
+        <div class="insta-title">Projeto náutico projetado para lazer esportivo com segurança.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbEXftxpsiq/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Vídeo Reel</span>
+        </div>
+        <div class="insta-title">Teste na represa com parceiros da pesca esportiva (Tilu Shop).</div>
+        <div class="insta-btn-link">Assistir Vídeo ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dan460NFTzL/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Produção</span>
+        </div>
+        <div class="insta-title">Padrão de fabricação e montagem de pontões e consoles.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaVwi53lZd5/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Estaleiro</span>
+        </div>
+        <div class="insta-title">Testes hidrodinâmicos e estabilidade das embarcações.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaK_6CWlYk6/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Tecnologia</span>
+        </div>
+        <div class="insta-title">Sistemas de flutuação e layout de convés modular.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZyJJx7D2hs/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Construção Naval</span>
+        </div>
+        <div class="insta-title">Detalhamento dos materiais compostos e ligas navais.</div>
+        <div class="insta-btn-link">Ver Publicação ➔</div>
+      </a>
 
-      <div class="insta-embed-cell">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXMSBBFh8Fm/" data-instgrm-version="14"></blockquote>
-      </div>
+      <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
+        <div class="insta-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span class="insta-tag">Vídeo Reel</span>
+        </div>
+        <div class="insta-title">Performance do motor e aceleração na água aberta.</div>
+        <div class="insta-btn-link">Assistir Vídeo ➔</div>
+      </a>
 
     </div>
 
@@ -508,39 +609,12 @@
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
-    let instagramCarregado = false;
-
-    function carregarScriptInstagram() {
-      if (instagramCarregado) {
-        if (window.instgrm && window.instgrm.Embeds) {
-          window.instgrm.Embeds.process();
-        }
-        return;
-      }
-      instagramCarregado = true;
-      const script = document.createElement('script');
-      script.async = true;
-      script.defer = true;
-      script.src = "https://www.instagram.com/embed.js";
-      script.onload = () => {
-        let tentativas = 0;
-        const interval = setInterval(() => {
-          tentativas++;
-          if (window.instgrm && window.instgrm.Embeds) {
-            window.instgrm.Embeds.process();
-          }
-          if (tentativas >= 4) clearInterval(interval);
-        }, 600);
-      };
-      document.head.appendChild(script);
-    }
 
     function fecharAbertura() {
       splashScreen.style.opacity = '0';
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
-        carregarScriptInstagram();
       }, 400);
     }
 
