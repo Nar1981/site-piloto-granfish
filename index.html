@@ -2,11 +2,13 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
+
+  <!-- Otimizações de Conexão: Pré-conecta aos servidores do Instagram para carregar mais rápido depois -->
+  <link rel="preconnect" href="https://www.instagram.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.instagram.com">
 
   <style>
     * {
@@ -38,6 +40,7 @@
       object-fit: cover;
       z-index: 1;
       pointer-events: none;
+      will-change: transform;
     }
 
     .fixed-bg-overlay {
@@ -62,6 +65,7 @@
       transition: opacity 0.5s ease;
       cursor: pointer;
       overflow: hidden;
+      will-change: opacity; /* Otimização GPU */
     }
 
     #splash-screen video {
@@ -148,7 +152,6 @@
       transition: all 0.3s ease;
     }
 
-    /* Texto Maior, Negrito Forte e Justificado à Direita */
     .header-text {
       flex: 1;
       text-align: right;
@@ -168,7 +171,7 @@
     }
 
     /* =========================================
-       ÁREA CENTRAL (CORRIGIDO PARA TABLETS)
+       ÁREA CENTRAL
        ========================================= */
     .scrollable-content {
       flex: 1;
@@ -182,10 +185,11 @@
       opacity: 0;
       z-index: 10;
       transition: opacity 0.4s ease;
+      will-change: opacity;
     }
 
     .scrollable-content.visible {
-      display: block; /* Alterado para block para prevenir o corte superior no Tablet */
+      display: block; 
       opacity: 1;
     }
 
@@ -203,11 +207,11 @@
       display: flex;
       flex-direction: column;
       gap: 36px;
-      margin: 0 auto; /* Ajuste crítico para centralizar verticalmente em display:block sem quebrar o layout */
+      margin: 0 auto; 
       color: #333333; 
     }
 
-    /* Hero Section Livre (Alinhado à esquerda) */
+    /* Hero Section Livre ALINHADA À ESQUERDA */
     .hero-section {
       position: relative;
       width: 100%;
@@ -239,7 +243,6 @@
       letter-spacing: 1.5px;
     }
 
-    /* Título H2 Maior */
     .hero-content h2 {
       font-size: clamp(30px, 5.5vw, 54px);
       font-weight: 900;
@@ -306,6 +309,7 @@
       gap: 16px;
       box-shadow: none;
       transition: all 0.3s ease;
+      will-change: transform;
     }
 
     .catalog-thumb-box {
@@ -448,6 +452,7 @@
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
+      will-change: transform;
     }
 
     .pdf-catalog-btn:hover {
@@ -532,6 +537,7 @@
       box-shadow: 0 -4px 24px rgba(0,0,0,0.6);
       transform: translateY(calc(100% - 46px - env(safe-area-inset-bottom, 0px)));
       transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: transform; /* Otimização GPU */
     }
 
     .panel-controls:hover,
@@ -655,13 +661,13 @@
 </head>
 <body>
 
-  <!-- IMAGEM DE FUNDO FIXA E PELÍCULA -->
-  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
+  <!-- IMAGEM DE FUNDO FIXA OTIMIZADA -->
+  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" decoding="async" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
   <div class="fixed-bg-overlay"></div>
 
   <!-- Abertura com Vídeo & Boas-Vindas -->
   <div id="splash-screen" title="Toque para entrar">
-    <video id="intro-video" autoplay muted playsinline webkit-playsinline>
+    <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
       <source src="logoanimada.mp4" type="video/mp4">
     </video>
     <div class="welcome-overlay">
@@ -673,9 +679,9 @@
     </div>
   </div>
 
-  <!-- Cabeçalho Fixo no Topo (Tamanho Mobile Reduzido 20%, Padrão em Desktop) -->
+  <!-- Cabeçalho Fixo no Topo -->
   <div class="header-title">
-    <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish">
+    <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" decoding="async">
     <span class="header-text">Engenharia Naval & Embarcações</span>
   </div>
 
@@ -701,7 +707,7 @@
           <!-- Card Hurricane -->
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" 
+              <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" decoding="async"
                    onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.jpeg', 'Hurricane60SL_Catalogo.JPG'])">
             </div>
             <div class="catalog-info">
@@ -717,7 +723,7 @@
           <!-- Card Poontoon -->
           <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" 
+              <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" decoding="async"
                    onerror="tentarCarregarImagem(this, ['Pontoon_Config.png', 'Pontoon_Config.jpeg', 'Pontoon_Config.JPG'])">
             </div>
             <div class="catalog-info">
@@ -732,7 +738,7 @@
         </div>
       </div>
 
-      <!-- Botão de Catálogo em PDF Integrado aos 3Ds -->
+      <!-- Botão de Catálogo em PDF -->
       <a href="catalogo.pdf" target="_blank" rel="noopener noreferrer" class="pdf-catalog-btn">
         <svg viewBox="0 0 24 24">
           <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1v-2zM11 9H9v5h1v-2h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-1 2h1v-1h-1v1z"/>
@@ -759,48 +765,49 @@
         </div>
       </div>
 
-      <!-- Feed Oficial do Instagram -->
+      <!-- Feed Oficial do Instagram OTIMIZADO -->
       <div style="width: 100%;">
         <div class="section-title" style="margin-bottom: 14px;">Últimas do Estaleiro (@granfishoficial)</div>
         <div class="instagram-feed-grid">
+          <!-- Note o uso de data-src e lazy-iframe para carregamento sob demanda -->
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DcGaIQOlRSb/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DcGaIQOlRSb/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/Dbd_u9hFb8e/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/Dbd_u9hFb8e/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DbL8O6SlZyw/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DbL8O6SlZyw/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/reel/DbEXftxpsiq/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/reel/DbEXftxpsiq/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/Dan460NFTzL/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/Dan460NFTzL/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DaVwi53lZd5/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DaVwi53lZd5/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DaK_6CWlYk6/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DaK_6CWlYk6/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/p/DZyJJx7D2hs/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/p/DZyJJx7D2hs/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
           </div>
           <div class="insta-embed-card">
-            <iframe src="https://www.instagram.com/reel/DXMSBBFh8Fm/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <iframe data-src="https://www.instagram.com/reel/DXMSBBFh8Fm/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel ↗</a>
           </div>
         </div>
@@ -808,47 +815,31 @@
     </div>
   </div>
 
-  <!-- Rodapé Fixo Inferior (Bottom Sheet Retrátil) -->
+  <!-- Rodapé Fixo Inferior -->
   <div class="panel-controls" id="footer-panel">
-    
-    <!-- Alça de interação para abrir/fechar -->
     <div class="footer-handle" onclick="toggleFooter()">
       <div class="handle-bar"></div>
       <span class="handle-text">Contatos & Informações</span>
     </div>
-
-    <!-- Área rolável interna do rodapé -->
     <div class="panel-controls-inner" id="footer-inner">
       <div class="contact-grid">
         <a href="https://wa.me/5535999999999" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24">
-            <path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.33 7.34 9 7.42 8.72 7.73C8.44 8.04 7.65 8.78 7.65 10.28C7.65 11.78 8.74 13.23 8.89 13.43C9.05 13.64 11.03 16.7 14.1 17.89C16.65 18.88 17.17 18.68 17.72 18.63C18.28 18.58 19.5 17.9 19.76 17.18C20.01 16.47 20.01 15.86 19.93 15.73C19.86 15.6 19.66 15.53 19.35 15.37C19.05 15.22 17.56 14.49 17.28 14.39C17 14.29 16.8 14.24 16.6 14.54C16.4 14.85 15.84 15.53 15.67 15.73C15.5 15.93 15.34 15.96 15.03 15.81C14.73 15.66 13.76 15.34 12.61 14.31C11.72 13.51 11.11 12.53 10.96 12.27C10.81 12.01 10.94 11.87 11.1 11.72C11.23 11.58 11.4 11.37 11.55 11.19C11.7 11.01 11.75 10.89 11.85 10.68C11.96 10.48 11.91 10.3 11.83 10.15C11.75 10 11.15 8.52 10.89 7.92C10.65 7.34 10.4 7.42 10.22 7.41C10.05 7.4 9.85 7.34 9.53 7.34Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.33 7.34 9 7.42 8.72 7.73C8.44 8.04 7.65 8.78 7.65 10.28C7.65 11.78 8.74 13.23 8.89 13.43C9.05 13.64 11.03 16.7 14.1 17.89C16.65 18.88 17.17 18.68 17.72 18.63C18.28 18.58 19.5 17.9 19.76 17.18C20.01 16.47 20.01 15.86 19.93 15.73C19.86 15.6 19.66 15.53 19.35 15.37C19.05 15.22 17.56 14.49 17.28 14.39C17 14.29 16.8 14.24 16.6 14.54C16.4 14.85 15.84 15.53 15.67 15.73C15.5 15.93 15.34 15.96 15.03 15.81C14.73 15.66 13.76 15.34 12.61 14.31C11.72 13.51 11.11 12.53 10.96 12.27C10.81 12.01 10.94 11.87 11.1 11.72C11.23 11.58 11.4 11.37 11.55 11.19C11.7 11.01 11.75 10.89 11.85 10.68C11.96 10.48 11.91 10.3 11.83 10.15C11.75 10 11.15 8.52 10.89 7.92C10.65 7.34 10.4 7.42 10.22 7.41C10.05 7.4 9.85 7.34 9.53 7.34Z"/></svg>
           <span>WhatsApp</span>
         </a>
-
         <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24">
-            <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/></svg>
           <span>Instagram</span>
         </a>
-
         <a href="mailto:contato@granfish.com.br" class="contact-btn">
-          <svg viewBox="0 0 24 24">
-            <path fill="#00d2ff" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path fill="#00d2ff" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           <span>Orçamentos</span>
         </a>
-
         <a href="https://maps.google.com/?q=Rua+das+Primaveras,+50,+Pratapolis+-+MG" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24">
-            <path fill="#EA4335" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           <span>Fábrica</span>
         </a>
       </div>
-
       <div class="corporate-footer">
         <h4>Gran Fish Indústria e Comércio de Embarcações LTDA</h4>
         <p><b>Nome Fantasia:</b> Gran Fish | <b>CNPJ:</b> 59.593.605/0001-86 | <b>Tipo:</b> LTDA</p>
@@ -861,96 +852,97 @@
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
-    
-    // --- Lógica do Rodapé Animado (Bottom Sheet) ---
     const footerPanel = document.getElementById('footer-panel');
     const footerInner = document.getElementById('footer-inner');
     let footerTimer;
     let videoFinalizado = false;
 
-    // Reseta ou inicia o tempo para o rodapé ocultar sozinho (5 seg)
+    // --- Lógica do Rodapé Animado ---
     function resetFooterTimer() {
       clearTimeout(footerTimer);
       if (footerPanel.classList.contains('expanded')) {
-        footerTimer = setTimeout(() => {
-          footerPanel.classList.remove('expanded');
-        }, 5000);
+        footerTimer = setTimeout(() => footerPanel.classList.remove('expanded'), 5000);
       }
     }
 
-    // Abre e fecha pelo clique na alça
     function toggleFooter() {
       footerPanel.classList.toggle('expanded');
       resetFooterTimer();
     }
 
-    // Fecha o rodapé quando um botão/link de contato for clicado
-    const botoesContato = footerInner.querySelectorAll('a');
-    botoesContato.forEach(botao => {
+    footerInner.querySelectorAll('a').forEach(botao => {
       botao.addEventListener('click', () => {
         footerPanel.classList.remove('expanded');
         clearTimeout(footerTimer);
       });
     });
 
-    // Garante o fechamento imediato ao clicar ou tocar em qualquer parte do corpo do site
-    mainContent.addEventListener('click', () => {
-      footerPanel.classList.remove('expanded');
-      clearTimeout(footerTimer);
-    });
+    ['click', 'touchstart'].forEach(evt => 
+      mainContent.addEventListener(evt, () => {
+        footerPanel.classList.remove('expanded');
+        clearTimeout(footerTimer);
+      }, {passive: true})
+    );
 
-    mainContent.addEventListener('touchstart', () => {
-      footerPanel.classList.remove('expanded');
-      clearTimeout(footerTimer);
-    }, {passive: true});
+    ['mouseenter', 'touchstart'].forEach(evt => 
+      footerPanel.addEventListener(evt, () => clearTimeout(footerTimer), {passive: true})
+    );
+    
+    ['mouseleave', 'touchend', 'click'].forEach(evt => 
+      footerPanel.addEventListener(evt, resetFooterTimer, {passive: true})
+    );
 
-    // Mantém o painel aberto enquanto houver interação dentro dele
-    footerPanel.addEventListener('mouseenter', () => clearTimeout(footerTimer));
-    footerPanel.addEventListener('mouseleave', resetFooterTimer);
-    footerPanel.addEventListener('click', resetFooterTimer);
-    footerPanel.addEventListener('touchstart', () => clearTimeout(footerTimer), {passive: true});
-    footerPanel.addEventListener('touchend', resetFooterTimer, {passive: true});
-
-    // Lógica para puxar o painel para baixo (Swipe Down) no celular
     let startY = 0;
-    footerPanel.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].clientY;
-    }, {passive: true});
-
+    footerPanel.addEventListener('touchstart', (e) => startY = e.touches[0].clientY, {passive: true});
     footerPanel.addEventListener('touchmove', (e) => {
-      if (!footerPanel.classList.contains('expanded')) return;
-      
-      // Só permite puxar para fechar se estiver rolando a partir do topo do painel interno
-      if (footerInner.scrollTop > 0) return;
-
-      const currentY = e.touches[0].clientY;
-      const deltaY = currentY - startY;
-      
-      // Se arrastou para baixo mais de 50 pixels, recolhe o painel
-      if (deltaY > 50) {
+      if (!footerPanel.classList.contains('expanded') || footerInner.scrollTop > 0) return;
+      if (e.touches[0].clientY - startY > 50) {
         footerPanel.classList.remove('expanded');
         clearTimeout(footerTimer);
       }
     }, {passive: true});
-    // --- Fim Lógica Rodapé ---
 
+    // --- Lógica de Abertura & Lazy Load (Nova Otimização de Performance) ---
     function fecharAbertura() {
       if (videoFinalizado) return;
       videoFinalizado = true;
       splashScreen.style.opacity = '0';
+      
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
+        iniciarLazyLoading(); // Ativa os Iframes apenas após o site aparecer!
       }, 400);
     }
 
     video.onended = fecharAbertura;
     video.onerror = fecharAbertura;
     splashScreen.addEventListener('click', fecharAbertura);
-
     setTimeout(fecharAbertura, 4500);
 
-    // Sistema de fallback seguro que não apaga o fundo
+    // Sistema Lazy Load Inteligente para economizar memória (resolve travamentos em tablets)
+    function iniciarLazyLoading() {
+      const lazyIframes = document.querySelectorAll('.lazy-iframe');
+      if ('IntersectionObserver' in window) {
+        const iframeObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const iframe = entry.target;
+              iframe.src = iframe.dataset.src;
+              iframe.classList.remove('lazy-iframe');
+              observer.unobserve(iframe);
+            }
+          });
+        }, { rootMargin: "300px 0px" }); // Prepara o carregamento 300px antes de aparecer na tela
+
+        lazyIframes.forEach(iframe => iframeObserver.observe(iframe));
+      } else {
+        // Fallback rápido se o navegador for muito antigo
+        lazyIframes.forEach(iframe => iframe.src = iframe.dataset.src);
+      }
+    }
+
+    // Sistema de fallback de Imagens
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
       let t = parseInt(imgEl.dataset.tentativa);
@@ -959,9 +951,7 @@
         imgEl.src = extensoes[t];
       } else {
         imgEl.style.display = 'none';
-        if (imgEl.classList.contains('fixed-bg') || imgEl.classList.contains('hero-img')) {
-          return; // Proteção para não "quebrar" o site se o fundo falhar
-        }
+        if (imgEl.classList.contains('fixed-bg') || imgEl.classList.contains('hero-img')) return;
         if (imgEl.parentElement && !imgEl.parentElement.dataset.falhou) {
            imgEl.parentElement.dataset.falhou = 'true';
            imgEl.parentElement.innerHTML = '<span style="font-size:32px;">🚤</span>';
