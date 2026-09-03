@@ -3,101 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Configurador Pontoon by GRAN FISH</title>
+  <title>Configurador Poontoon - Compacto</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-    body, html {
-      width: 100%; height: 100%; height: 100dvh; background-color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #ffffff; display: flex; flex-direction: column; overflow: hidden;
-    }
+    body, html { width: 100%; height: 100%; height: 100dvh; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #ffffff; display: flex; flex-direction: column; overflow: hidden; }
 
-    .header-title {
-      width: 100%; background-color: #1c3144; color: #ffffff; text-align: center;
-      padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px;
-      font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
-      border-bottom: 1px solid #222222; z-index: 10; flex-shrink: 0; position: relative;
-    }
-
-    .btn-help {
-      position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px));
-      background: #27272e; border: 1px solid #3d3d47; color: #00d2ff;
-      border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      z-index: 20; transition: all 0.2s;
-    }
+    /* Barra Superior */
+    .header-title { width: 100%; background-color: #1c3144; color: #ffffff; text-align: center; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid #222222; z-index: 10; position: relative; }
+    .btn-help { position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px)); background: #27272e; border: 1px solid #3d3d47; color: #00d2ff; border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
     .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
 
-    .seu-container-do-3d {
-      flex: 1; position: relative; width: 100%; height: 100%;
-    }
+    /* Container do 3D e Logo */
+    .seu-container-do-3d { flex: 1; position: relative; width: 100%; height: 100%; }
+    .btn-reset-cam { position: absolute; top: 16px; left: 16px; background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .btn-reset-cam:active { transform: scale(0.95); background: #00d2ff; color: #000; }
+    .watermark-logo { position: absolute; bottom: 36px; right: 16px; width: 110px; z-index: 999; opacity: 0.9; pointer-events: none; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); display: block; }
+    @media (max-width: 768px) { .watermark-logo { width: 80px; } }
+    #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
 
-    .watermark-logo {
-      position: absolute; bottom: 36px; right: 16px; width: 110px;
-      z-index: 999; opacity: 0.9; pointer-events: none;
-      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); display: block;
-    }
+    /* Painel Inferior Compacto */
+    .panel-controls { width: 100%; background: #1c3144; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 48vh; }
+    
+    /* Abas */
+    .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; border-bottom: 1px solid #2e2e36; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
+    .tabs-container::-webkit-scrollbar { display: none; }
+    .tab-btn { background: #27272e; color: #a0a0a8; border: 1px solid #3d3d47; border-radius: 20px; font-size: 12px; font-weight: 700; padding: 8px 16px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .tab-btn.active { background: #00d2ff; color: #000; border-color: #00d2ff; }
 
-    @media (max-width: 768px) {
-      .watermark-logo { width: 80px; }
-    }
+    .tab-content { display: none; flex-direction: column; gap: 12px; overflow-y: auto; }
+    .tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-    #api-frame { 
-      width: 100%; height: 100%; border: none; background: transparent;
-      position: relative; z-index: 1;
-    }
+    /* Inputs de Cor e Seleção */
+    .color-row { display: flex; align-items: center; gap: 12px; position: relative; width: 100%; }
+    .select-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
+    .color-indicator { position: absolute; left: 8px; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none; }
+    
+    .custom-select { background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: bold; padding: 10px 10px 10px 32px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
+    .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
+    .custom-select option { background: #27272e; color: #ffffff; }
 
-    .panel-controls {
-      width: 100%; background: #1c3144; border-top: 1px solid #2e2e36;
-      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
-      display: flex; flex-direction: column; gap: 15px; z-index: 100;
-      max-height: 55vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
-    }
-
-    .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #a0a0a8; font-weight: 700; margin-bottom: 3px; }
-    .color-row { display: flex; align-items: center; gap: 10px; position: relative; }
-    .label-part { font-size: 13px; font-weight: 600; width: 50px; flex-shrink: 0; }
-    .swatches { display: flex; align-items: center; gap: 15px; flex: 1; padding-bottom: 2px; }
-
-    .current-color-box {
-      display: block; width: 38px; height: 38px; border-radius: 6px; border: 2px solid rgba(255, 255, 255, 0.4);
-      flex-shrink: 0; box-shadow: inset 0 0 5px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.1s;
-    }
-    .current-color-box:active { transform: scale(0.95); }
-
-    .picker-btn-wrapper {
-      position: relative; width: 38px; height: 38px; border-radius: 50%; border: 2px dashed #00d2ff;
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ff0077, #7700ff, #00d2ff);
-    }
-    .picker-btn-wrapper span { font-size: 14px; pointer-events: none; }
+    .picker-btn-wrapper { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 2px dashed #00d2ff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ff0077, #7700ff, #00d2ff); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .picker-btn-wrapper span { font-size: 16px; pointer-events: none; }
     .picker-btn-wrapper input[type="color"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-    .inputs-row { display: flex; gap: 6px; margin-top: 5px; padding-left: 60px; }
-    .select-wrapper { position: relative; width: 33.33%; display: flex; align-items: center; }
+    /* Entradas Manuais Ocultas (Sanfona) */
+    details { margin-top: 5px; background: rgba(0,0,0,0.15); border-radius: 8px; padding: 8px; border: 1px dashed #3d3d47; }
+    summary { font-size: 11px; font-weight: 600; color: #a0a0a8; cursor: pointer; outline: none; }
+    .inputs-row { display: flex; gap: 8px; margin-top: 10px; }
+    .custom-input { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 5px; color: #ffffff; font-size: 12px; font-family: monospace; padding: 8px; width: 50%; outline: none; }
+    .custom-input:focus, .custom-select:focus { border-color: #00d2ff; }
 
-    .color-indicator { position: absolute; left: 6px; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none; }
-    
-    .custom-input, .custom-select {
-      background: #27272e; border: 1px solid #3d3d47; border-radius: 5px;
-      color: #ffffff; font-size: 12px; outline: none; transition: background 0.2s, color 0.2s;
-    }
-    .custom-input { font-family: monospace; padding: 6px; width: 33.33%; font-size: 11px; }
-    .custom-select {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold;
-      padding: 8px 10px 8px 10px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none;
-    }
-    .custom-select.has-color { padding-left: 26px; }
-    .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
-    .custom-select option { background: #27272e; color: #ffffff; padding: 5px; }
-    .custom-input:focus, .custom-select:focus { border-color: #00d2ff; box-shadow: 0 0 5px rgba(0, 210, 255, 0.5); }
+    .status-bar { font-size: 11px; color: #4cd964; text-align: center; margin-bottom: 8px; font-weight: 600; }
 
-    .status-bar { font-size: 11px; color: #4cd964; text-align: center; font-weight: 600;}
+    /* Barra Inferior */
+    .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid #2e2e36; }
+    .quality-btn { flex: 1; background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 10px; cursor: pointer; transition: all 0.2s ease; }
+    .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000000; font-weight: 700; }
+    .btn-capture { flex: 2; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
+    .btn-capture:active { opacity: 0.8; }
 
-    .quality-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #2e2e36; padding-top: 8px; margin-top: 2px; }
-    .quality-buttons { display: flex; gap: 8px; }
-    .quality-btn { background: #27272e; border: 1px solid #3d3d47; border-radius: 5px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 8px 12px; cursor: pointer; transition: all 0.2s ease; }
-    .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000; font-weight: 700; }
-
+    /* Modais */
     .help-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .help-content { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 12px; padding: 24px; max-width: 360px; width: 100%; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .help-content h3 { margin-bottom: 16px; color: #00d2ff; font-size: 18px; text-align: center; }
@@ -106,113 +72,103 @@
     .help-content li::before { content: "➔"; color: #00d2ff; font-weight: bold; }
     .btn-close-help, .btn-action { border: none; color: #000; padding: 12px 16px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-size: 14px; transition: opacity 0.2s; }
     .btn-close-help { background: #00d2ff; }
-    .btn-action:active, .btn-close-help:active { opacity: 0.8; }
 
     @media (hover: hover) and (pointer: fine) {
-      .current-color-box:hover, .picker-btn-wrapper:hover, .custom-select:hover, .seu-container-do-3d:hover {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important;
-      }
+      .picker-btn-wrapper:hover, .custom-select:hover, .tab-btn:hover, .seu-container-do-3d:hover { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important; }
     }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
 <body>
 
-  <div class="header-title">
-    Poontoon by GRAN FISH
-    <button class="btn-help" onclick="toggleHelp()" title="Como usar">?</button>
-  </div>
-
+  <div class="header-title">Poontoon by GRAN FISH <button class="btn-help" onclick="toggleHelp()">?</button></div>
+  
   <div class="seu-container-do-3d">
-    <!-- Logomarca puxada direto do GitHub com crossorigin para permitir gerar a foto final -->
+    <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
     <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
          id="logoGF" 
          class="watermark-logo" 
          alt="Logo Gran Fish" 
          crossorigin="anonymous"
-         onerror="console.warn('Imagem da logo não encontrada.');">
+         onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
     <iframe id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
   </div>
 
   <div class="panel-controls">
     <div id="status" class="status-bar">Carregando modelo 3D...</div>
     
-    <!-- Faixa 1 -->
-    <div>
-      <div class="section-title">Faixa 1</div>
+    <!-- Menu de Abas -->
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="openTab('tab-faixa1', this)">Faixa 1</button>
+      <button class="tab-btn" onclick="openTab('tab-faixa2', this)">Faixa 2</button>
+      <button class="tab-btn" onclick="openTab('tab-faixa3', this)">Faixa 3</button>
+    </div>
+
+    <!-- ABA 1: FAIXA 1 -->
+    <div id="tab-faixa1" class="tab-content active">
       <div class="color-row">
-        <span class="label-part">Cor:</span>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-cinza2"></div>
           <select class="custom-select has-color" id="select-cinza2" onchange="selecionarCor('cinza2', this.value)"></select>
         </div>
-        <div class="swatches">
-          <div class="current-color-box" id="preview-color-cinza2" onclick="abrirMenuCores('cinza2')" title="Escolher da Lista"></div>
-          <div class="picker-btn-wrapper" title="Paleta Livre">
-            <span>🎨</span><input type="color" id="picker-cinza2" value="#25282a" oninput="aplicarHexComSincronizacao('cinza2', this.value)">
-          </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre">
+          <span>🎨</span>
+          <input type="color" id="picker-cinza2" value="#25282a" oninput="aplicarHexComSincronizacao('cinza2', this.value)">
         </div>
       </div>
-      <div class="inputs-row">
-        <input type="text" class="custom-input" id="hex-cinza2" placeholder="HEX: #25282a" style="width:50%" onchange="digitarHex('cinza2', this.value)">
-        <input type="text" class="custom-input" id="rgb-cinza2" placeholder="RGB: 37, 40, 42" style="width:50%" onchange="digitarRgb('cinza2', this.value)">
-      </div>
+      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-cinza2" placeholder="HEX" onchange="digitarHex('cinza2', this.value)">
+          <input type="text" class="custom-input" id="rgb-cinza2" placeholder="RGB" onchange="digitarRgb('cinza2', this.value)">
+        </div>
+      </details>
     </div>
 
-    <!-- Faixa 2 -->
-    <div>
-      <div class="section-title">Faixa 2</div>
+    <!-- ABA 2: FAIXA 2 -->
+    <div id="tab-faixa2" class="tab-content">
       <div class="color-row">
-        <span class="label-part">Cor:</span>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-Azul"></div>
           <select class="custom-select has-color" id="select-Azul" onchange="selecionarCor('Azul', this.value)"></select>
         </div>
-        <div class="swatches">
-          <div class="current-color-box" id="preview-color-Azul" onclick="abrirMenuCores('Azul')" title="Escolher da Lista"></div>
-          <div class="picker-btn-wrapper" title="Paleta Livre">
-            <span>🎨</span><input type="color" id="picker-Azul" value="#0d1b2a" oninput="aplicarHexComSincronizacao('Azul', this.value)">
-          </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre">
+          <span>🎨</span>
+          <input type="color" id="picker-Azul" value="#0d1b2a" oninput="aplicarHexComSincronizacao('Azul', this.value)">
         </div>
       </div>
-      <div class="inputs-row">
-        <input type="text" class="custom-input" id="hex-Azul" placeholder="HEX: #0d1b2a" style="width:50%" onchange="digitarHex('Azul', this.value)">
-        <input type="text" class="custom-input" id="rgb-Azul" placeholder="RGB: 13, 27, 42" style="width:50%" onchange="digitarRgb('Azul', this.value)">
-      </div>
+      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-Azul" placeholder="HEX" onchange="digitarHex('Azul', this.value)">
+          <input type="text" class="custom-input" id="rgb-Azul" placeholder="RGB" onchange="digitarRgb('Azul', this.value)">
+        </div>
+      </details>
     </div>
 
-    <!-- Faixa 3 -->
-    <div>
-      <div class="section-title">Faixa 3</div>
+    <!-- ABA 3: FAIXA 3 -->
+    <div id="tab-faixa3" class="tab-content">
       <div class="color-row">
-        <span class="label-part">Cor:</span>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-cinza"></div>
           <select class="custom-select has-color" id="select-cinza" onchange="selecionarCor('cinza', this.value)"></select>
         </div>
-        <div class="swatches">
-          <div class="current-color-box" id="preview-color-cinza" onclick="abrirMenuCores('cinza')" title="Escolher da Lista"></div>
-          <div class="picker-btn-wrapper" title="Paleta Livre">
-            <span>🎨</span><input type="color" id="picker-cinza" value="#25282a" oninput="aplicarHexComSincronizacao('cinza', this.value)">
-          </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre">
+          <span>🎨</span>
+          <input type="color" id="picker-cinza" value="#25282a" oninput="aplicarHexComSincronizacao('cinza', this.value)">
         </div>
       </div>
-      <div class="inputs-row">
-        <input type="text" class="custom-input" id="hex-cinza" placeholder="HEX: #25282a" style="width:50%" onchange="digitarHex('cinza', this.value)">
-        <input type="text" class="custom-input" id="rgb-cinza" placeholder="RGB: 37, 40, 42" style="width:50%" onchange="digitarRgb('cinza', this.value)">
-      </div>
+      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-cinza" placeholder="HEX" onchange="digitarHex('cinza', this.value)">
+          <input type="text" class="custom-input" id="rgb-cinza" placeholder="RGB" onchange="digitarRgb('cinza', this.value)">
+        </div>
+      </details>
     </div>
 
-    <div class="quality-row">
-      <div class="section-title" style="margin-bottom: 0;">Texturas:</div>
-      <div class="quality-buttons">
-        <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">Alta Res.</button>
-        <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">Baixa Res.</button>
-      </div>
-    </div>
-    <div class="quality-row">
-      <div class="section-title" style="margin-bottom: 0;">Captura:</div>
-      <button type="button" class="quality-btn active" id="btn-capture" onclick="tirarFoto()" style="flex: 1; margin-left: 10px; padding: 10px;">📸 Gerar Imagem</button>
+    <!-- Barra Inferior de Ações -->
+    <div class="action-bar">
+      <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">HD</button>
+      <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
+      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">📸 Salvar Imagem</button>
     </div>
   </div>
 
@@ -221,10 +177,9 @@
     <div class="help-content">
       <h3>Como Interagir</h3>
       <ul>
-        <li><b>Girar Câmera:</b> Clique e arraste.</li>
+        <li><b>Girar Câmera:</b> Clique/Toque e arraste.</li>
         <li><b>Aproximar/Afastar:</b> Use scroll do mouse ou movimento de pinça.</li>
-        <li><b>Mover Posição:</b> Clique direito e arraste, ou deslize com dois dedos.</li>
-        <li><b>Selecionar Cor:</b> Clique na caixinha colorida no painel.</li>
+        <li><b>Feedback Visual:</b> Ao alterar uma cor ou clicar no barco, a área selecionada piscará com um brilho de destaque.</li>
       </ul>
       <button class="btn-close-help" onclick="toggleHelp()">Entendi!</button>
     </div>
@@ -243,10 +198,25 @@
   </div>
 
   <script>
+    function openTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
     const modelUid = '871922e1678141d9b5f9e76775a11dc8';
     const iframe = document.getElementById('api-frame');
     const client = new Sketchfab(iframe);
     let apiInstance = null; let materiaisCarregados = []; let ultimaImagemBase64 = null;
+    let cameraInicial = null;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    function voltarPosicaoInicial() {
+      if (apiInstance && cameraInicial) {
+        apiInstance.setCameraLookAt(cameraInicial.position, cameraInicial.target, 1);
+      }
+    }
 
     const catalogoCores = {
       'Cores Clássicas & Base': {
@@ -331,30 +301,124 @@
       });
     }
 
-    function toggleHelp() { const modal = document.getElementById('helpModal'); modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex'; }
+    function toggleHelp() {
+      const modal = document.getElementById('helpModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
     function srgbToLinear(val) { const c = val / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+
+    function ajustarEmissao(material) {
+      if (material.name === 'LUZ' || material.name === 'LUZ.001' || material.name === 'LUZ.002') {
+        if (material.channels.EmitColor) material.channels.EmitColor.enable = true;
+        if (material.channels.EmissionPBR) material.channels.EmissionPBR.enable = true;
+      } else {
+        if (material.channels.EmitColor) {
+          material.channels.EmitColor.factor = 0;
+          material.channels.EmitColor.color = [0, 0, 0];
+          material.channels.EmitColor.enable = false;
+        }
+        if (material.channels.EmissionPBR) {
+          material.channels.EmissionPBR.factor = 0;
+          material.channels.EmissionPBR.color = [0, 0, 0];
+          material.channels.EmissionPBR.enable = false;
+        }
+      }
+    }
+
+    // Função de Brilho de Destaque (Pulso de Emissão Temporária)
+    function destacarMaterialVisualmente(materialAlvo) {
+      if (!apiInstance || !materialAlvo) return;
+      
+      if (materialAlvo.channels.EmitColor) {
+        materialAlvo.channels.EmitColor.enable = true;
+        materialAlvo.channels.EmitColor.color = [0, 0.8, 1];
+        materialAlvo.channels.EmitColor.factor = 2.5;
+      } else if (materialAlvo.channels.EmissionPBR) {
+        materialAlvo.channels.EmissionPBR.enable = true;
+        materialAlvo.channels.EmissionPBR.color = [0, 0.8, 1];
+        materialAlvo.channels.EmissionPBR.factor = 2.5;
+      }
+      apiInstance.setMaterial(materialAlvo);
+
+      setTimeout(() => {
+        if (materialAlvo.channels.EmitColor) {
+          materialAlvo.channels.EmitColor.factor = 0;
+          materialAlvo.channels.EmitColor.enable = false;
+        }
+        if (materialAlvo.channels.EmissionPBR) {
+          materialAlvo.channels.EmissionPBR.factor = 0;
+          materialAlvo.channels.EmissionPBR.enable = false;
+        }
+        apiInstance.setMaterial(materialAlvo);
+      }, 1500);
+    }
 
     client.init(modelUid, {
       success: function(api) {
         apiInstance = api; api.start();
         api.addEventListener('viewerready', function() {
           if (api.setBackground) api.setBackground({ color: [1.0, 1.0, 1.0, 1.0] });
+
+          setTimeout(() => {
+            if (api.getCameraLookAt) {
+              api.getCameraLookAt(function(err, camera) {
+                if (!err && camera) {
+                  cameraInicial = { position: camera.position, target: camera.target };
+                }
+              });
+            }
+          }, 500);
+
           api.getMaterialList(function(err, materials) {
             if (err) return; materiaisCarregados = materials;
+            materials.forEach(mat => { ajustarEmissao(mat); api.setMaterial(mat); });
+
             setTimeout(function() {
               aplicarHexComSincronizacao('cinza2', '#25282a'); 
               aplicarHexComSincronizacao('Azul', '#0d1b2a'); 
               aplicarHexComSincronizacao('cinza', '#25282a');
             }, 300);
-            document.getElementById('status').innerText = '✓ Selecione as cores.';
+            
+            api.addEventListener('click', function(info) {
+              if (info && info.material && info.material.name) {
+                const matName = info.material.name;
+                const matIds = ['cinza2', 'Azul', 'cinza'];
+                const matchedMat = matIds.find(id => id.toLowerCase() === matName.toLowerCase());
+                if (matchedMat) {
+                  const matchedObj = materiaisCarregados.find(m => m.name.toLowerCase() === matchedMat.toLowerCase());
+                  if (matchedObj) destacarMaterialVisualmente(matchedObj);
+
+                  const tabBtnIndex = matIds.indexOf(matchedMat);
+                  const tabBtns = document.querySelectorAll('.tab-btn');
+                  if(tabBtns[tabBtnIndex]) openTab(`tab-faixa${tabBtnIndex+1}`, tabBtns[tabBtnIndex]);
+
+                  const select = document.getElementById('select-' + matchedMat);
+                  const picker = document.getElementById('picker-' + matchedMat);
+                  if (isMobile) { if (select) select.focus(); } else { if (picker) picker.click(); if (select) select.focus(); }
+                }
+              }
+            }, { pick: 'fast' });
+
+            definirQualidadeTextura(1);
+            document.getElementById('status').innerText = '✓ Selecione as cores ou toque no modelo.';
           });
         });
       },
+      error: function() { document.getElementById('status').innerText = 'Erro ao conectar com Sketchfab.'; },
       autostart: 1, transparent: 1, ui_controls: 1, ui_infos: 0
     });
 
-    function abrirMenuCores(nome) { const s = document.getElementById('select-'+nome); if(s) { try{s.showPicker();}catch(e){s.focus();} } }
-    function definirQualidadeTextura(q) { if (apiInstance && apiInstance.setTextureQuality) { apiInstance.setTextureQuality(q ? 'hd' : 'ld', function(err) { if(!err) { document.getElementById('btn-tex-hd').classList.toggle('active', q===1); document.getElementById('btn-tex-sd').classList.toggle('active', q===0); } }); } }
+    function definirQualidadeTextura(qualidade) {
+      if (apiInstance && apiInstance.setTextureQuality) {
+        apiInstance.setTextureQuality(qualidade ? 'hd' : 'ld', function(err) {
+          if (!err) {
+            document.getElementById('btn-tex-hd').classList.toggle('active', qualidade === 1);
+            document.getElementById('btn-tex-sd').classList.toggle('active', qualidade === 0);
+          }
+        });
+      }
+    }
 
     function obterNomeCorFormatado(idSelect, idInput) {
       const select = document.getElementById(idSelect); const input = document.getElementById(idInput);
@@ -363,13 +427,12 @@
     }
 
     function sincronizarInputs(nomeMaterial, hex, rgbTexto) {
-      const hexInput = document.getElementById('hex-' + nomeMaterial), rgbInput = document.getElementById('rgb-' + nomeMaterial), select = document.getElementById('select-' + nomeMaterial), picker = document.getElementById('picker-' + nomeMaterial), indicator = document.getElementById('indicator-' + nomeMaterial), previewBox = document.getElementById('preview-color-' + nomeMaterial); 
+      const hexInput = document.getElementById('hex-' + nomeMaterial), rgbInput = document.getElementById('rgb-' + nomeMaterial), select = document.getElementById('select-' + nomeMaterial), picker = document.getElementById('picker-' + nomeMaterial), indicator = document.getElementById('indicator-' + nomeMaterial); 
       
       if (hexInput) hexInput.value = hex; 
       if (rgbInput) rgbInput.value = rgbTexto; 
       if (picker) picker.value = hex; 
       if (indicator) indicator.style.backgroundColor = hex; 
-      if (previewBox) previewBox.style.backgroundColor = hex;
       
       if (select) { 
         let achou=false; 
@@ -383,17 +446,28 @@
     }
 
     function selecionarCor(nomeMaterial, hex) { if (hex) aplicarHexComSincronizacao(nomeMaterial, hex); }
-    function aplicarHexComSincronizacao(nomeMaterial, hex) { const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); sincronizarInputs(nomeMaterial, hex, `${r}, ${g}, ${b}`); aplicarRgb(nomeMaterial, [srgbToLinear(r), srgbToLinear(g), srgbToLinear(b)]); }
+    function aplicarHexComSincronizacao(nomeMaterial, hex) { 
+      const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); 
+      sincronizarInputs(nomeMaterial, hex, `${r}, ${g}, ${b}`); 
+      aplicarRgb(nomeMaterial, [srgbToLinear(r), srgbToLinear(g), srgbToLinear(b)]); 
+      
+      const matObj = materiaisCarregados.find(m => m.name.toLowerCase() === nomeMaterial.toLowerCase());
+      if (matObj) destacarMaterialVisualmente(matObj);
+    }
     function digitarHex(nomeMaterial, valorHex) { let hex = valorHex.trim(); if (!hex.startsWith('#')) hex = '#' + hex; if (/^#[0-9A-Fa-f]{6}$/.test(hex)) aplicarHexComSincronizacao(nomeMaterial, hex); }
     function digitarRgb(nomeMaterial, valorRgb) { const p = valorRgb.split(',').map(n => parseInt(n.trim(), 10)); if (p.length === 3) aplicarHexComSincronizacao(nomeMaterial, '#' + p.map(x => x.toString(16).padStart(2, '0')).join('')); }
 
     function aplicarRgb(nomeMaterial, rgb) {
       if (!apiInstance) return; const material = materiaisCarregados.find(m => m.name.toLowerCase() === nomeMaterial.toLowerCase());
-      if (material) { if (material.channels.AlbedoPBR) { material.channels.AlbedoPBR.color = rgb; material.channels.AlbedoPBR.factor = 1; } apiInstance.setMaterial(material); }
+      if (material) { 
+        ajustarEmissao(material);
+        if (material.channels.AlbedoPBR) { material.channels.AlbedoPBR.color = rgb; material.channels.AlbedoPBR.factor = 1; } 
+        apiInstance.setMaterial(material); 
+      }
     }
 
     function tirarFoto() {
-      if (!apiInstance) return;
+      if (!apiInstance) { alert('Aguarde o modelo 3D carregar antes de gerar a imagem.'); return; }
       const btnCapture = document.getElementById('btn-capture'); btnCapture.innerHTML = '⏳ Processando...'; btnCapture.disabled = true;
       apiInstance.getScreenShot(3840, 2160, function(err, base64Image) {
         if (!err) {
@@ -402,9 +476,12 @@
             ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0);
             
             const cor1 = obterNomeCorFormatado('select-cinza2', 'hex-cinza2'); const cor2 = obterNomeCorFormatado('select-Azul', 'hex-Azul'); const cor3 = obterNomeCorFormatado('select-cinza', 'hex-cinza');
+            const agora = new Date(); const dataStr = agora.toLocaleDateString('pt-BR'); const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
             ctx.fillStyle = "rgba(0, 0, 0, 0.65)"; ctx.fillRect(80, 2160 - 520, 1050, 460);
             ctx.fillStyle = "white"; ctx.shadowColor = "rgba(0, 0, 0, 0.8)"; ctx.shadowBlur = 10;
             ctx.font = "bold 64px sans-serif"; ctx.fillText("Poontoon by GRAN FISH", 120, 2160 - 420);
+            ctx.font = "36px sans-serif"; ctx.fillText(`Gerado em: ${dataStr} às ${horaStr}`, 120, 2160 - 360);
             ctx.font = "bold 56px sans-serif"; ctx.fillText("Cores:", 120, 2160 - 270);
             ctx.font = "48px sans-serif"; ctx.fillText("Faixa 1: " + cor1, 120, 2160 - 200); ctx.fillText("Faixa 2: " + cor2, 120, 2160 - 140); ctx.fillText("Faixa 3: " + cor3, 120, 2160 - 80);
             
@@ -417,14 +494,16 @@
             ultimaImagemBase64 = canvas.toDataURL('image/png'); document.getElementById('capturePreview').src = ultimaImagemBase64;
             document.getElementById('shareModal').style.display = 'flex';
             if (navigator.canShare) document.getElementById('btnShareNative').style.display = 'block';
-            btnCapture.innerHTML = '📸 Gerar Imagem'; btnCapture.disabled = false;
+            btnCapture.innerHTML = '📸 Salvar Imagem'; btnCapture.disabled = false;
           }; img.src = base64Image;
+        } else {
+          alert('Ocorreu um erro ao capturar.'); btnCapture.innerHTML = '📸 Salvar Imagem'; btnCapture.disabled = false;
         }
       });
     }
 
     function fecharShareModal() { document.getElementById('shareModal').style.display = 'none'; }
-    function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Pontoon_Config.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
+    function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Pontoon_Configurado.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
     async function compartilharImagem() { const res = await fetch(ultimaImagemBase64); const blob = await res.blob(); const file = new File([blob], 'Pontoon.png', { type: 'image/png' }); await navigator.share({ title: 'Configuração Pontoon', files: [file] }); fecharShareModal(); }
 
     popularSelects();
