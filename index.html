@@ -2,11 +2,13 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
 
-  <!-- Otimizações de Conexão -->
+  <!-- Otimizações de Conexão Seguras -->
   <link rel="preconnect" href="https://www.instagram.com" crossorigin>
   <link rel="dns-prefetch" href="https://www.instagram.com">
 
@@ -41,7 +43,6 @@
       object-fit: cover;
       z-index: 1;
       pointer-events: none;
-      will-change: transform;
     }
 
     .fixed-bg-overlay {
@@ -68,7 +69,6 @@
       transition: opacity 0.5s ease;
       cursor: pointer;
       overflow: hidden;
-      will-change: opacity;
     }
 
     #splash-screen video {
@@ -124,6 +124,8 @@
       transition: all 0.25s ease;
     }
 
+    .skip-notice:hover { transform: scale(1.04); background: #00d2ff; color: #000; }
+
     /* =========================================
        CABEÇALHO FIXO E NAVEGAÇÃO
        ========================================= */
@@ -165,7 +167,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #00d2ff;
-      margin-right: 15px; /* Espaço entre o texto e o botão de menu mobile */
+      margin-right: 15px;
     }
 
     /* Menu Oculto no Celular */
@@ -192,7 +194,7 @@
     @media (min-width: 980px) {
       .header-container { padding: 12px 32px; }
       .header-logo { height: 38px; }
-      .mobile-menu-btn { display: none; } /* Esconde o hambúrguer no PC */
+      .mobile-menu-btn { display: none; } 
       .header-text {
         font-size: 14px;
         text-align: left;
@@ -308,7 +310,6 @@
       opacity: 0;
       z-index: 10;
       transition: opacity 0.4s ease;
-      will-change: opacity;
     }
 
     .scrollable-content.visible { display: block; opacity: 1; }
@@ -403,7 +404,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
     }
 
-    /* Cards 3D Livres */
+    /* Cards 3D Livres e Otimizados para aparecer sempre */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -427,7 +428,6 @@
       gap: 16px;
       box-shadow: none;
       transition: all 0.3s ease;
-      will-change: transform;
     }
 
     .catalog-thumb-box {
@@ -441,7 +441,8 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 440px) {
@@ -455,6 +456,10 @@
       object-fit: contain;
       border-radius: 8px;
       transition: transform 0.35s ease;
+      display: block;
+      mix-blend-mode: darken; /* Força imagens com fundo branco a mesclarem limpo no contêiner claro */
+      position: relative;
+      z-index: 3;
     }
 
     .catalog-info {
@@ -526,7 +531,6 @@
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
-      will-change: transform;
     }
     .pdf-catalog-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5); background: linear-gradient(145deg, #33deff 0%, #338dff 100%); }
     .pdf-catalog-btn:active { transform: scale(0.98); }
@@ -570,7 +574,6 @@
       box-shadow: 0 -4px 24px rgba(0,0,0,0.6);
       transform: translateY(calc(100% - 46px - env(safe-area-inset-bottom, 0px)));
       transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-      will-change: transform;
     }
     .panel-controls:hover, .panel-controls.expanded { transform: translateY(0); }
 
@@ -608,7 +611,7 @@
 <body>
 
   <!-- IMAGEM DE FUNDO FIXA -->
-  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" decoding="async" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
+  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
   <div class="fixed-bg-overlay"></div>
 
   <!-- ABA LATERAL DO MENU MOBILE -->
@@ -628,7 +631,7 @@
 
   <!-- ABERTURA COM VÍDEO -->
   <div id="splash-screen" title="Toque para entrar">
-    <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
+    <video id="intro-video" autoplay muted playsinline webkit-playsinline>
       <source src="logoanimada.mp4" type="video/mp4">
     </video>
     <div class="welcome-overlay">
@@ -643,8 +646,8 @@
   <!-- CABEÇALHO SUPERIOR (Desktop & Mobile) -->
   <div class="header-container">
     <div class="header-logo-box">
-      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" decoding="async">
-      <span class="header-text">Engenharia Naval</span>
+      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish">
+      <span class="header-text">Engenharia Naval & Embarcações</span>
     </div>
     
     <!-- Menu Centralizado para Computador -->
@@ -689,7 +692,7 @@
         <div class="catalogs-grid">
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" decoding="async"
+              <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL"
                    onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.jpeg', 'Hurricane60SL_Catalogo.JPG'])">
             </div>
             <div class="catalog-info">
@@ -704,7 +707,7 @@
 
           <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" decoding="async"
+              <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish"
                    onerror="tentarCarregarImagem(this, ['Pontoon_Config.png', 'Pontoon_Config.jpeg', 'Pontoon_Config.JPG'])">
             </div>
             <div class="catalog-info">
@@ -898,7 +901,7 @@
       }
     }, {passive: true});
 
-    // --- Lógica de Abertura & Lazy Load (Otimização de Performance) ---
+    // --- Lógica de Abertura & Lazy Load (Otimização de Performance Segura) ---
     function fecharAbertura() {
       if (videoFinalizado) return;
       videoFinalizado = true;
@@ -936,7 +939,7 @@
       }
     }
 
-    // --- Sistema de fallback de Imagens ---
+    // --- Sistema Seguro de Fallback de Imagens ---
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
       let t = parseInt(imgEl.dataset.tentativa);
