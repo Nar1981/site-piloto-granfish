@@ -108,7 +108,7 @@
       color: #000;
     }
 
-    /* Container Principal MANTIDO NO DOM PARA CÁLCULO DA META */
+    /* Container Principal */
     .main-container {
       background: rgba(11, 23, 38, 0.95);
       backdrop-filter: blur(16px);
@@ -183,7 +183,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Cards dos Menus 3D com Imagem Lateral e Shimmer */
+    /* Cards dos Menus 3D */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -212,7 +212,6 @@
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* Solução do fundo preto das imagens 3D */
     .catalog-thumb-box {
       width: 125px;
       min-width: 125px;
@@ -227,11 +226,7 @@
     }
 
     @media (max-width: 440px) {
-      .catalog-thumb-box {
-        width: 100px;
-        min-width: 100px;
-        height: 70px;
-      }
+      .catalog-thumb-box { width: 100px; min-width: 100px; height: 70px; }
     }
 
     .catalog-thumb-box img {
@@ -239,7 +234,7 @@
       height: 100%;
       object-fit: contain;
       background: transparent;
-      mix-blend-mode: screen; /* Anula o fundo preto do JPG */
+      mix-blend-mode: screen; 
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
       transition: transform 0.35s ease;
     }
@@ -254,7 +249,6 @@
       min-width: 0;
     }
 
-    /* Feixe de Luz Transversal Animado */
     .catalog-card::before {
       content: "";
       position: absolute;
@@ -266,9 +260,7 @@
       pointer-events: none;
     }
 
-    .catalog-card:hover::before {
-      left: 150%;
-    }
+    .catalog-card:hover::before { left: 150%; }
 
     .catalog-card:hover {
       border-color: #00d2ff;
@@ -277,13 +269,8 @@
       box-shadow: 0 10px 26px rgba(0, 210, 255, 0.32), 0 0 16px rgba(0, 210, 255, 0.2);
     }
 
-    .catalog-card:hover .catalog-thumb-box img {
-      transform: scale(1.08);
-    }
-
-    .catalog-card:active {
-      transform: scale(0.98);
-    }
+    .catalog-card:hover .catalog-thumb-box img { transform: scale(1.08); }
+    .catalog-card:active { transform: scale(0.98); }
 
     .catalog-card h3 {
       font-size: clamp(13px, 1.4vw, 15.5px);
@@ -316,6 +303,43 @@
       padding: 2px 7px;
       border-radius: 12px;
       white-space: nowrap;
+    }
+
+    /* Botão do Catálogo PDF em Destaque */
+    .pdf-catalog-btn {
+      background: linear-gradient(145deg, #00d2ff 0%, #0070ff 100%);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 800;
+      font-size: clamp(12px, 1.3vw, 14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .pdf-catalog-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 210, 255, 0.6);
+      background: linear-gradient(145deg, #33deff 0%, #338dff 100%);
+    }
+
+    .pdf-catalog-btn:active {
+      transform: scale(0.98);
+    }
+
+    .pdf-catalog-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #000000;
     }
 
     /* Canais de Atendimento */
@@ -363,19 +387,11 @@
       box-shadow: 0 6px 18px rgba(0, 210, 255, 0.4);
     }
 
-    .contact-btn:hover svg {
-      transform: scale(1.1);
-    }
+    .contact-btn:hover svg { transform: scale(1.1); }
+    .contact-btn:hover svg path { fill: #000000 !important; }
+    .contact-btn:active { transform: scale(0.96); }
 
-    .contact-btn:hover svg path {
-      fill: #000000 !important;
-    }
-
-    .contact-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* Grid do Instagram (Tempo Real) */
+    /* Grid Oficial de Embeds do Instagram (Tempo Real) */
     .instagram-feed-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -461,8 +477,8 @@
 
     <!-- Catálogos 3D -->
     <div class="section-title">Modelos & Configuradores 3D</div>
+    
     <div class="catalogs-grid">
-      
       <!-- Card Hurricane -->
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
         <div class="catalog-thumb-box">
@@ -486,8 +502,15 @@
           <p>Personalize faixas de acabamento, paleta oceânica e texturas de piso em alta resolução.</p>
         </div>
       </a>
-
     </div>
+
+    <!-- Botão de Catálogo em PDF -->
+    <a href="catalogo.pdf" target="_blank" rel="noopener noreferrer" class="pdf-catalog-btn">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1v-2zM11 9H9v5h1v-2h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-1 2h1v-1h-1v1z"/>
+      </svg>
+      Conheça nosso Catálogo em PDF
+    </a>
 
     <!-- Canais de Atendimento -->
     <div class="section-title">Canais Oficiais & Atendimento</div>
@@ -579,29 +602,24 @@
 
   </div>
 
+  <!-- Carregamento do Motor de Embeds da Meta -->
+  <script async defer src="https://www.instagram.com/embed.js"></script>
+
   <script>
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
     let videoFinalizado = false;
 
-    // Garante o disparo seguro e forçado do Instagram[cite: 4]
-    function carregarInstagramSeguro() {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = "https://www.instagram.com/embed.js";
-      script.onload = () => {
-        let tentativas = 0;
-        const interval = setInterval(() => {
-          tentativas++;
-          if (window.instgrm && window.instgrm.Embeds) {
-            window.instgrm.Embeds.process();
-            clearInterval(interval);
-          }
-          if (tentativas >= 10) clearInterval(interval);
-        }, 500);
-      };
-      document.body.appendChild(script);
+    function processarInstagramEmTempoReal() {
+      let tentativas = 0;
+      const interval = setInterval(() => {
+        tentativas++;
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+        if (tentativas >= 6) clearInterval(interval);
+      }, 500);
     }
 
     function fecharAbertura() {
@@ -611,16 +629,15 @@
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
-        carregarInstagramSeguro();
-      }, 500);
+        processarInstagramEmTempoReal();
+      }, 400);
     }
 
     video.onended = fecharAbertura;
     video.onerror = fecharAbertura;
     splashScreen.addEventListener('click', fecharAbertura);
 
-    // Timeout de segurança: Se o autoplay do celular for bloqueado, pula o vídeo em 4 segundos
-    setTimeout(fecharAbertura, 4000);
+    setTimeout(fecharAbertura, 4500);
 
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
