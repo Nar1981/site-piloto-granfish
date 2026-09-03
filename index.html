@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gran Fish | Engenharia & Construção de Embarcações</title>
+  
+  <!-- Fontes Corporativas Náuticas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    h1, h2, h3, h4, .tagline, .section-title, .badge-3d, .banner-text, .skip-notice {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body, html {
+      width: 100%;
+      min-height: 100vh;
+      background-color: #05162a;
+      background-image: url('background.png'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      padding: 36px 16px;
+      overflow-x: hidden;
+    }
+
+    /* Tela de Abertura em Vídeo */
+    #splash-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #000000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+      cursor: pointer;
+    }
+
+    #splash-screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Boas-Vindas sobre o Vídeo */
+    .welcome-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(5,22,42,0.75) 0%, rgba(0,0,0,0.3) 50%, rgba(5,22,42,0.9) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 50px 20px;
+      pointer-events: none;
+    }
+
+    .welcome-text {
+      text-align: center;
+      animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .welcome-text h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #00d2ff;
+      text-shadow: 0 4px 16px rgba(0, 210, 255, 0.4);
+      margin-bottom: 8px;
+    }
+
+    .welcome-text p {
+      font-size: 15px;
+      font-weight: 500;
+      color: #e3e8ec;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    }
+
+    .skip-notice {
+      background: rgba(13, 27, 42, 0.85);
+      border: 1px solid #00d2ff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #00d2ff;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+      pointer-events: auto;
+      transition: all 0.3s ease;
+    }
+
+    .skip-notice:hover {
+      background: #00d2ff;
+      color: #000000;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Container Principal */
+    .main-container {
+      background: rgba(11, 23, 38, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 210, 255, 0.28);
+      border-radius: 24px;
+      padding: 40px 28px;
+      max-width: 880px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 210, 255, 0.08);
+      z-index: 10;
+      display: flex;
+      visibility: hidden;
+      opacity: 0;
+      flex-direction: column;
+      gap: 28px;
+      margin: auto;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .main-container.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 24px;
+    }
+
+    .logo {
+      max-width: 190px;
+      filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.6));
+    }
+
+    .tagline {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #00d2ff;
+      text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #8fa0b5;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 210, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 100%);
+    }
+
+    /* Catálogos 3D - Destaque com Overlay Glow */
+    .catalogs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 650px) {
+      .catalogs-grid { grid-template-columns: 1fr; }
+    }
+
+    .catalog-card {
+      position: relative;
+      background: linear-gradient(145deg, #162b3d 0%, #0d1e2c 100%);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-decoration: none;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Efeito de Overlay Luminoso de Varredura */
+    .catalog-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.15), transparent);
+      transform: skewX(-20deg);
+      transition: all 0.75s ease;
+      pointer-events: none;
+    }
+
+    .catalog-card:hover::before {
+      left: 150%;
+    }
+
+    .catalog-card:hover {
+      border-color: #00d2ff;
+      background: linear-gradient(145deg, #1c364c 0%, #102537 100%);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.35), 0 0 20px rgba(0, 210, 255, 0.2);
+    }
+
+    .catalog-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      letter-spacing: 0.5px;
+    }
+
+    .catalog-card p {
+      font-size: 12.5px;
+      font-weight: 400;
+      color: #a2b1c2;
+      line-height: 1.5;
+    }
+
+    .badge-3d {
+      background: rgba(0, 210, 255, 0.12);
+      border: 1px solid #00d2ff;
+      color: #00d2ff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.8px;
+    }
+
+    /* Canais de Atendimento */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .contact-btn {
+      background: #15222f;
+      border: 1px solid #2b3d4f;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 15px 12px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .contact-btn svg {
+      width: 26px;
+      height: 26px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-btn:hover {
+      background: #00d2ff;
+      color: #000000;
+      border-color: #00d2ff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
+    }
+
+    .contact-btn:hover svg {
+      transform: scale(1.12);
+    }
+
+    .contact-btn:hover svg path {
+      fill: #000000 !important;
+    }
+
+    /* Grid Oficial de Embeds do Instagram */
+    .instagram-feed-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+
+    @media (max-width: 720px) {
+      .instagram-feed-grid { grid-template-columns: 1fr; }
+    }
+
+    .insta-embed-cell {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      min-height: 480px;
+      background: rgba(14, 33, 53, 0.5);
+      border-radius: 14px;
+      border: 1px solid #273b4d;
+      padding: 8px;
+    }
+
+    .insta-embed-cell blockquote {
+      margin: 0 auto !important;
+      max-width: 100% !important;
+      min-width: 100% !important;
+      width: 100% !important;
+      border-radius: 10px !important;
+    }
+
+    /* Rodapé Institucional */
+    .corporate-footer {
+      background: rgba(6, 17, 29, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: left;
+      font-size: 11.5px;
+      color: #8fa0b5;
+      line-height: 1.7;
+    }
+
+    .corporate-footer h4 {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-highlight {
+      color: #00d2ff;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Abertura com Vídeo & Boas-Vindas -->
+  <div id="splash-screen" title="Toque para entrar">
+    <video id="intro-video" autoplay muted playsinline>
+      <source src="logoanimada.mp4" type="video/mp4">
+    </video>
+    <div class="welcome-overlay">
+      <div class="welcome-text">
+        <h1>Bem-vindo à Gran Fish</h1>
+        <p>Inovação, Segurança e Excelência em Engenharia Náutica</p>
+      </div>
+      <div class="skip-notice">Acessar Catálogo ➔</div>
+    </div>
+  </div>
+
+  <!-- Painel Principal Corporativo -->
+  <div class="main-container" id="main-content">
+    
+    <!-- Cabeçalho -->
+    <div class="brand-header">
+      <img src="logo GF.png" alt="Gran Fish" class="logo">
+      <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
+    </div>
+
+    <!-- Catálogos 3D -->
+    <div class="section-title">Modelos & Configuradores 3D</div>
+    <div class="catalogs-grid">
+      <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
+        <h3>Hurricane 60 SL <span class="badge-3d">3D Interativo ↗</span></h3>
+        <p>Configurador completo de cascos, tintas marítimas e grafismos decalque em tempo real.</p>
+      </a>
+
+      <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
+        <h3>Linha Poontoon <span class="badge-3d">3D Interativo ↗</span></h3>
+        <p>Personalize faixas de acabamento, paleta oceânica, texturas de piso e configurações em alta resolução.</p>
+      </a>
+    </div>
+
+    <!-- Canais de Atendimento -->
+    <div class="section-title">Canais Oficiais & Atendimento</div>
+    <div class="contact-grid">
+      
+      <!-- WhatsApp Oficial -->
+      <a href="https://wa.me/5535999999999" target="_blank" rel="noopener noreferrer" class="contact-btn">
+        <svg viewBox="0 0 24 24">
+          <path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.33 7.34 9 7.42 8.72 7.73C8.44 8.04 7.65 8.78 7.65 10.28C7.65 11.78 8.74 13.23 8.89 13.43C9.05 13.64 11.03 16.7 14.1 17.89C16.65 18.88 17.17 18.68 17.72 18.63C18.28 18.58 19.5 17.9 19.76 17.18C20.01 16.47 20.01 15.86 19.93 15.73C19.86 15.6 19.66 15.53 19.35 15.37C19.05 15.22 17.56 14.49 17.28 14.39C17 14.29 16.8 14.24 16.6 14.54C16.4 14.85 15.84 15.53 15.67 15.73C15.5 15.93 15.34 15.96 15.03 15.81C14.73 15.66 13.76 15.34 12.61 14.31C11.72 13.51 11.11 12.53 10.96 12.27C10.81 12.01 10.94 11.87 11.1 11.72C11.23 11.58 11.4 11.37 11.55 11.19C11.7 11.01 11.75 10.89 11.85 10.68C11.96 10.48 11.91 10.3 11.83 10.15C11.75 10 11.15 8.52 10.89 7.92C10.65 7.34 10.4 7.42 10.22 7.41C10.05 7.4 9.85 7.34 9.53 7.34Z"/>
+        </svg>
+        <span>WhatsApp</span>
+      </a>
+
+      <!-- Instagram Oficial -->
+      <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
+        <svg viewBox="0 0 24 24">
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+        </svg>
+        <span>Instagram</span>
+      </a>
+
+      <!-- E-mail Oficial -->
+      <a href="mailto:contato@granfish.com.br" class="contact-btn">
+        <svg viewBox="0 0 24 24">
+          <path fill="#00d2ff" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span>Orçamentos</span>
+      </a>
+
+      <!-- Google Maps Oficial -->
+      <a href="https://maps.google.com/?q=Rua+das+Primaveras,+50,+Pratapolis+-+MG" target="_blank" rel="noopener noreferrer" class="contact-btn">
+        <svg viewBox="0 0 24 24">
+          <path fill="#EA4335" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span>Localização</span>
+      </a>
+    </div>
+
+    <!-- Feed Oficial Incorporado do Instagram -->
+    <div class="section-title">Últimas do Estaleiro (@granfishoficial)</div>
+    <div class="instagram-feed-grid">
+      
+      <!-- Post 1 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcmESjDFT3_/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 2 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DcGaIQOlRSb/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dbd_u9hFb8e/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 4 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DbL8O6SlZyw/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 5 (Reel) -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbEXftxpsiq/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 6 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dan460NFTzL/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 7 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaVwi53lZd5/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 8 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaK_6CWlYk6/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 9 -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DZyJJx7D2hs/" data-instgrm-version="14"></blockquote>
+      </div>
+
+      <!-- Post 10 (Reel) -->
+      <div class="insta-embed-cell">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXMSBBFh8Fm/" data-instgrm-version="14"></blockquote>
+      </div>
+
+    </div>
+
+    <!-- Informações Cadastrais & Institucionais -->
+    <div class="corporate-footer">
+      <h4>Gran Fish Indústria e Comércio de Embarcações LTDA</h4>
+      <p><b>Nome Fantasia:</b> Gran Fish | <b>CNPJ:</b> 59.593.605/0001-86</p>
+      <p><b>Fundação:</b> 21/02/2025 | <b>Situação:</b> <span class="footer-highlight">Ativa</span> | <b>Tipo Jurídico:</b> Sociedade Limitada (LTDA)</p>
+      <p><b>Sede:</b> Rua das Primaveras, 50 — Pratápolis - MG, CEP 37.970-000</p>
+      <p><b>Atividade Econômica Principal:</b> Construção de embarcações para esporte e lazer (<span class="footer-highlight">CNAE C-3012-1/00</span>)</p>
+    </div>
+
+  </div>
+
+  <!-- Carregamento do Motor de Embeds da Meta -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+
+  <script>
+    const video = document.getElementById('intro-video');
+    const splashScreen = document.getElementById('splash-screen');
+    const mainContent = document.getElementById('main-content');
+
+    function fecharAbertura() {
+      splashScreen.style.opacity = '0';
+      setTimeout(() => {
+        splashScreen.style.display = 'none';
+        mainContent.classList.add('visible');
+
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+      }, 700);
+    }
+
+    video.onended = fecharAbertura;
+    video.onerror = fecharAbertura;
+    splashScreen.addEventListener('click', fecharAbertura);
+  </script>
+</body>
+</html>

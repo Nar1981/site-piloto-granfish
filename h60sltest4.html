@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Configurador Hurricane 60 SL - Catálogo</title>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+    body, html {
+      width: 100%; height: 100%; height: 100dvh;
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #ffffff; display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    .header-title {
+      width: 100%; background-color: #1c3144; color: #ffffff; text-align: center;
+      padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+      border-bottom: 1px solid #222222; z-index: 10; flex-shrink: 0; position: relative;
+    }
+
+    .btn-help {
+      position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px));
+      background: #27272e; border: 1px solid #3d3d47; color: #00d2ff;
+      border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      z-index: 20; transition: all 0.2s;
+    }
+    .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
+
+    .seu-container-do-3d {
+      flex: 1; position: relative; width: 100%; height: 100%; 
+    }
+
+    .watermark-logo {
+      position: absolute; bottom: 36px; right: 16px; width: 110px;
+      z-index: 999; opacity: 0.9; pointer-events: none;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .watermark-logo { width: 80px; }
+    }
+
+    #api-frame { 
+      width: 100%; height: 100%; border: none; background: transparent;
+      position: relative; z-index: 1;
+    }
+
+    .panel-controls {
+      width: 100%; background: #1c3144; border-top: 1px solid #2e2e36;
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
+      display: flex; flex-direction: column; gap: 15px; z-index: 100;
+      max-height: 55vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    }
+
+    .section-title {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #a0a0a8; font-weight: 700; margin-bottom: 3px;
+    }
+
+    .color-row { display: flex; align-items: center; gap: 10px; position: relative; }
+    .label-part { font-size: 13px; font-weight: 600; width: 50px; flex-shrink: 0; }
+    .swatches { display: flex; align-items: center; gap: 15px; flex: 1; padding-bottom: 2px; }
+
+    .current-color-box {
+      display: block; width: 38px; height: 38px; border-radius: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.4); flex-shrink: 0;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.1s;
+    }
+    .current-color-box:active { transform: scale(0.95); }
+
+    .picker-btn-wrapper {
+      position: relative; width: 38px; height: 38px; border-radius: 50%;
+      border: 2px dashed #00d2ff; flex-shrink: 0; display: flex;
+      align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #ff0077, #7700ff, #00d2ff);
+    }
+    .picker-btn-wrapper span { font-size: 14px; pointer-events: none; }
+    .picker-btn-wrapper input[type="color"] {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: pointer;
+    }
+
+    .inputs-row { display: flex; gap: 6px; margin-top: 5px; }
+    .select-wrapper { position: relative; width: 33.33%; display: flex; align-items: center; }
+
+    .color-indicator {
+      position: absolute; left: 6px; width: 14px; height: 14px;
+      border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none;
+    }
+
+    .custom-input, .custom-select {
+      background: #27272e; border: 1px solid #3d3d47; border-radius: 5px;
+      color: #ffffff; font-size: 12px; outline: none; transition: background 0.2s, color 0.2s;
+    }
+    .custom-input { font-family: monospace; padding: 6px; width: 33.33%; font-size: 11px; }
+    .custom-select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold;
+      padding: 8px 10px 8px 10px; width: 100%; cursor: pointer;
+      text-overflow: ellipsis; appearance: none; -webkit-appearance: none;
+    }
+    .custom-select.has-color { padding-left: 26px; }
+    
+    .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
+    .custom-select option { background: #27272e; color: #ffffff; padding: 5px; }
+    .custom-input:focus, .custom-select:focus { border-color: #00d2ff; box-shadow: 0 0 5px rgba(0, 210, 255, 0.5); }
+
+    .status-bar { font-size: 11px; color: #4cd964; text-align: center; font-weight: 600;}
+
+    .quality-row {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid #2e2e36; padding-top: 8px; margin-top: 2px;
+    }
+    .quality-btn {
+      background: #27272e; border: 1px solid #3d3d47; border-radius: 5px;
+      color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 8px 12px;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000; font-weight: 700; }
+
+    .help-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .help-content {
+      background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 12px;
+      padding: 24px; max-width: 360px; width: 100%; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .help-content h3 { margin-bottom: 16px; color: #00d2ff; font-size: 18px; text-align: center; }
+    .help-content ul { padding-left: 0; margin-bottom: 24px; list-style: none; }
+    .help-content li { margin-bottom: 14px; font-size: 13px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; }
+    .help-content li::before { content: "➔"; color: #00d2ff; font-weight: bold; }
+
+    .btn-close-help, .btn-action {
+      border: none; color: #000; padding: 12px 16px; border-radius: 8px;
+      font-weight: 700; width: 100%; cursor: pointer; font-size: 14px; transition: opacity 0.2s;
+    }
+    .btn-close-help { background: #00d2ff; }
+    .btn-action:active, .btn-close-help:active { opacity: 0.8; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .current-color-box:hover, .picker-btn-wrapper:hover, .custom-select:hover, .seu-container-do-3d:hover {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important;
+      }
+    }
+  </style>
+
+  <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+</head>
+<body>
+
+  <div class="header-title">
+    Configurador Hurricane 60 SL (Catálogo)
+    <button class="btn-help" onclick="toggleHelp()" title="Como usar">?</button>
+  </div>
+
+  <div class="seu-container-do-3d">
+    <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
+         id="logoGF" 
+         class="watermark-logo" 
+         alt="Logo Gran Fish" 
+         crossorigin="anonymous"
+         onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
+    
+    <iframe id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
+  </div>
+
+  <div class="panel-controls">
+    <div id="status" class="status-bar">Carregando modelo 3D...</div>
+
+    <!-- MATERIAL DECALQUE: COR DE FUNDO -->
+    <div>
+      <div class="section-title">1. Cor do Fundo (Base)</div>
+      <div class="color-row">
+        <span class="label-part">Cor:</span>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-decalque1"></div>
+          <select class="custom-select has-color" id="select-decalque1" onchange="selecionarCor('decalque1', this.value)"></select>
+        </div>
+        <div class="swatches">
+          <div class="current-color-box" id="preview-color-decalque1" onclick="abrirMenuCores('decalque1')" title="Escolher da Lista"></div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque1" value="#686b73" oninput="aplicarHexComSincronizacao('decalque1', this.value)">
+          </div>
+        </div>
+      </div>
+      <div class="inputs-row" style="padding-left: 60px;">
+        <input type="text" class="custom-input" id="hex-decalque1" placeholder="HEX: #686b73" onchange="digitarHex('decalque1', this.value)" style="width: 50%;">
+        <input type="text" class="custom-input" id="rgb-decalque1" placeholder="RGB: 104, 107, 115" onchange="digitarRgb('decalque1', this.value)" style="width: 50%;">
+      </div>
+    </div>
+
+    <!-- MATERIAL DECALQUE: TEXTURA -->
+    <div style="background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; border: 1px dashed #3d3d47;">
+      <div class="section-title" style="color: #00d2ff;">2. Textura do Adesivo</div>
+      <div class="inputs-row" style="padding-left: 0;">
+        <div class="select-wrapper" style="width: 100%;">
+          <select class="custom-select" id="select-textura-decalque1" onchange="aplicarTexturaAPI(this.value)">
+            <option value="">Nenhum adesivo (Apenas Cor Base)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATERIAL DECALQUE: COR DO ADESIVO 1 -->
+    <div>
+      <div class="section-title">3. Cor do Adesivo (Parte Escura do PNG)</div>
+      <div class="color-row">
+        <span class="label-part">Cor 1:</span>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-decalque-cor1"></div>
+          <select class="custom-select has-color" id="select-decalque-cor1" onchange="selecionarCor('decalque-cor1', this.value)"></select>
+        </div>
+        <div class="swatches">
+          <div class="current-color-box" id="preview-color-decalque-cor1" onclick="abrirMenuCores('decalque-cor1')" title="Escolher da Lista"></div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque-cor1" value="#e74c3c" oninput="aplicarHexComSincronizacao('decalque-cor1', this.value)">
+          </div>
+        </div>
+      </div>
+      <div class="inputs-row" style="padding-left: 60px;">
+        <input type="text" class="custom-input" id="hex-decalque-cor1" placeholder="HEX: #e74c3c" onchange="digitarHex('decalque-cor1', this.value)" style="width: 50%;">
+        <input type="text" class="custom-input" id="rgb-decalque-cor1" placeholder="RGB: 231, 76, 60" onchange="digitarRgb('decalque-cor1', this.value)" style="width: 50%;">
+      </div>
+    </div>
+
+    <!-- MATERIAL DECALQUE: COR DO ADESIVO 2 -->
+    <div>
+      <div class="section-title">4. Cor do Adesivo (Parte Clara do PNG)</div>
+      <div class="color-row">
+        <span class="label-part">Cor 2:</span>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-decalque-cor2"></div>
+          <select class="custom-select has-color" id="select-decalque-cor2" onchange="selecionarCor('decalque-cor2', this.value)"></select>
+        </div>
+        <div class="swatches">
+          <div class="current-color-box" id="preview-color-decalque-cor2" onclick="abrirMenuCores('decalque-cor2')" title="Escolher da Lista"></div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque-cor2" value="#ffffff" oninput="aplicarHexComSincronizacao('decalque-cor2', this.value)">
+          </div>
+        </div>
+      </div>
+      <div class="inputs-row" style="padding-left: 60px;">
+        <input type="text" class="custom-input" id="hex-decalque-cor2" placeholder="HEX: #ffffff" onchange="digitarHex('decalque-cor2', this.value)" style="width: 50%;">
+        <input type="text" class="custom-input" id="rgb-decalque-cor2" placeholder="RGB: 255, 255, 255" onchange="digitarRgb('decalque-cor2', this.value)" style="width: 50%;">
+      </div>
+    </div>
+
+    <!-- CAPTURA -->
+    <div class="quality-row" style="margin-top: 10px;">
+      <button type="button" class="quality-btn active" id="btn-capture" onclick="tirarFoto()" style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 5px; font-size: 13px; padding: 10px;">
+        📸 Gerar Imagem do Projeto
+      </button>
+    </div>
+  </div>
+
+  <!-- Modais -->
+  <div id="helpModal" class="help-modal">
+    <div class="help-content">
+      <h3>Como Interagir</h3>
+      <ul>
+        <li><b>Girar Câmera:</b> Clique e arraste em qualquer lugar vazio do modelo 3D.</li>
+        <li><b>Aproximar/Afastar:</b> Use o scroll do mouse ou movimento de pinça.</li>
+        <li><b>Adesivos de 2 Cores:</b> A Cor 1 pinta as partes pretas do desenho original. A Cor 2 pinta as partes brancas.</li>
+      </ul>
+      <button class="btn-close-help" onclick="toggleHelp()">Entendi!</button>
+    </div>
+  </div>
+
+  <div id="shareModal" class="help-modal">
+    <div class="help-content" style="text-align: center;">
+      <h3>Imagem Pronta!</h3>
+      <img id="capturePreview" style="width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d47;" />
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <button class="btn-action" onclick="baixarImagem()" style="background: #4cd964; flex: 1;">📥 Baixar</button>
+        <button class="btn-action" id="btnShareNative" onclick="compartilharImagem()" style="background: #00d2ff; flex: 1; display: none;">🔗 Compartilhar</button>
+      </div>
+      <button class="btn-close-help" onclick="fecharShareModal()" style="background: transparent; border: 1px solid #3d3d47; color: #a0a0a8;">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    const modelUid = '38cdf0bb7bbc4e90a0062a64d86cd1b0';
+    const iframe = document.getElementById('api-frame');
+    const client = new Sketchfab(iframe);
+
+    let apiInstance = null;
+    let materiaisCarregados = [];
+    let ultimaImagemBase64 = null;
+
+    let decalqueState = {
+      hex: '#686b73',       
+      decalHex1: '#e74c3c', 
+      decalHex2: '#ffffff', 
+      textureUrl: ''        
+    };
+
+    const BASE_URL_TEXTURAS = 'https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/'; 
+    const EXTENSAO_ARQUIVO = '.png'; 
+
+    const catalogoCores = {
+      'Cores Clássicas & Base': {
+        'Preto Ônix': '#111111', 'Branco Puro': '#ffffff', 'Branco Pérola': '#fdfcf7', 'Off White': '#f4f4f0',
+        'Cinza Asfalto': '#3a3f44', 'Grafite Chumbo': '#25282a', 'Cinza Chumbo': '#212529', 'Cinza Nardo': '#686b73',
+        'Cinza Espacial': '#4a4e51', 'Cinza Tempestade': '#37474f', 'Cinza Cimento': '#8d99ae', 'Fibra de Carbono': '#1a1a1a', 'Preto Perolizado': '#18181b'
+      },
+      'Azuis Oceânicos': {
+        'Azul Marinho': '#0d1b2a', 'Azul Cobalto': '#0f2b48', 'Azul Petróleo': '#16252d', 'Azul Royal': '#002366',
+        'Azul Atlântico': '#1c3144', 'Azul Caribe': '#00bcd4', 'Azul Bahama': '#00a4e4', 'Azul Abissal': '#050c1a',
+        'Azul Mediterrâneo': '#004777', 'Azul Elétrico': '#0070ff', 'Azul Aço': '#4682b4', 'Azul Indiano': '#13293d',
+        'Azul Laguna': '#00838f', 'Azul Polar': '#e0f7fa', 'Azul Celeste': '#48cae4', 'Azul Meia-Noite': '#0a1128',
+        'Ciano': '#00d2ff', 'Turquesa': '#00a896', 'Índigo': '#283593'
+      },
+      'Verdes & Náuticos': {
+        'Verde': '#27ae60', 'Verde Oliva': '#1e261d', 'Verde Florestal': '#0e291e', 'Verde Água': '#0a9396',
+        'Verde Menta': '#52b788', 'Verde Esmeralda': '#2ecc71', 'Verde Militar': '#4b5320', 'Verde Musgo': '#2f3e2e',
+        'Verde Selva': '#1e4d2b', 'Verde Sálvia': '#99aab5', 'Verde Malaquita': '#116e50'
+      },
+      'Tons Quentes & Esportivos': {
+        'Vermelho': '#e74c3c', 'Vermelho Ferrari': '#ff2800', 'Vermelho Escarlate': '#c0392b', 'Vermelho Rubi': '#9b111e',
+        'Laranja': '#e67e22', 'Laranja Safety': '#ff6700', 'Laranja Fluorescente': '#ff5e00', 'Laranja Sunset': '#f3722c',
+        'Amarelo': '#f1c40f', 'Amarelo Safety': '#ffea00', 'Amarelo Fluo': '#ccff00', 'Amarelo Solar': '#f9c74f',
+        'Verde Neon': '#39ff14', 'Verde Acid': '#b5e61d', 'Coral': '#ff6f61', 'Salmão': '#fa8072',
+        'Magenta': '#d81b60', 'Rosa Quartzo': '#f7cac9', 'Roxo': '#8e44ad', 'Roxo Berinjela': '#231229', 'Roxo Ametista': '#5c2d91', 'Vinho Bordô': '#401018'
+      },
+      'Madeiras & Terrosos': {
+        'Marrom Café': '#2b1d16', 'Teka': '#8b5a2b', 'Caramelo': '#b3541e', 'Mogno': '#4a150e', 'Nogueira': '#3d2314',
+        'Terracota': '#d95d39', 'Whisky': '#a0522d', 'Cappuccino': '#8b7d6b', 'Chocolate': '#38220f', 'Bege': '#d8cbb5',
+        'Areia': '#c2b280', 'Creme': '#fffdd0', 'Marfim': '#fffff0', 'Amêndoa': '#ebd5b3', 'Camurça': '#deb887', 'Concha': '#fff5ee'
+      },
+      'Metálicos & Nobres': {
+        'Dourado': '#d4af37', 'Ouro Velho': '#cfb53b', 'Prata': '#c0c0c0', 'Prata Lunar': '#e3e8ec', 'Bronze': '#cd7f32',
+        'Cobre': '#b87333', 'Cobre Escovado': '#934d28', 'Titânio': '#58595b', 'Estanho': '#7f8c8d', 'Champagne': '#f7e7ce'
+      }
+    };
+
+    function obterEmojiCor(grupo, nome) {
+      const n = nome.toLowerCase();
+      if (grupo.includes('Azuis')) return '🟦';
+      if (grupo.includes('Verdes')) return '🟩';
+      if (grupo.includes('Quentes')) {
+        if (n.includes('amarelo') || n.includes('solar')) return '🟨';
+        if (n.includes('laranja') || n.includes('terracota') || n.includes('coral') || n.includes('salmão') || n.includes('sunset')) return '🟧';
+        if (n.includes('roxo') || n.includes('magenta') || n.includes('ametista') || n.includes('berinjela')) return '🟪';
+        return '🟥';
+      }
+      if (grupo.includes('Madeiras') || grupo.includes('Terrosos')) {
+        if (n.includes('bege') || n.includes('areia') || n.includes('creme') || n.includes('marfim') || n.includes('amêndoa') || n.includes('concha')) return '⬜'; 
+        return '🟫';
+      }
+      if (grupo.includes('Metálicos')) {
+        if (n.includes('dourado') || n.includes('ouro') || n.includes('champagne')) return '🟨';
+        if (n.includes('cobre') || n.includes('bronze')) return '🟧';
+        if (n.includes('prata') || n.includes('titânio') || n.includes('estanho') || n.includes('lunar')) return '⬜';
+      }
+      if (n.includes('branco') || n.includes('off') || n.includes('pérola')) return '⬜';
+      if (n.includes('cinza') || n.includes('grafite') || n.includes('asfalto') || n.includes('carbono') || n.includes('chumbo') || n.includes('nardo') || n.includes('cimento')) return '⬛';
+      return '⬛';
+    }
+
+    function calcularContraste(hex) {
+      const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      return (((r*299)+(g*587)+(b*114))/1000 >= 128) ? '#000000' : '#ffffff';
+    }
+
+    function toggleHelp() {
+      const modal = document.getElementById('helpModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function inicializarInterface() {
+      const selectsCoresIds = ['select-decalque1', 'select-decalque-cor1', 'select-decalque-cor2'];
+      
+      selectsCoresIds.forEach(id => {
+        const selectElement = document.getElementById(id);
+        selectElement.innerHTML = '<option value="">🎨 Cores Personalizadas</option>';
+        
+        for (const [grupo, cores] of Object.entries(catalogoCores)) {
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = grupo;
+          for (const [nome, hex] of Object.entries(cores)) {
+            const option = document.createElement('option');
+            option.value = hex; option.style.backgroundColor = hex; option.style.color = calcularContraste(hex);
+            const icone = obterEmojiCor(grupo, nome);
+            option.textContent = `${icone} ${nome}`;
+            optgroup.appendChild(option);
+          }
+          selectElement.appendChild(optgroup);
+        }
+      });
+
+      const selectTex = document.getElementById('select-textura-decalque1');
+      for (let i = 1; i <= 6; i++) {
+        let numFormatado = String(i).padStart(4, '0');
+        let nomeRef = 'ref' + numFormatado;
+        let urlTextura = BASE_URL_TEXTURAS + nomeRef + EXTENSAO_ARQUIVO;
+        
+        let option = document.createElement('option');
+        option.value = urlTextura;
+        option.textContent = 'Padrão ' + nomeRef.toUpperCase();
+        selectTex.appendChild(option);
+      }
+
+      sincronizarInputs('decalque-cor1', '#e74c3c', '231, 76, 60');
+      sincronizarInputs('decalque-cor2', '#ffffff', '255, 255, 255');
+    }
+
+    function isMaterialDecalque(nomeMaterial) {
+      if (!nomeMaterial) return false;
+      const nomeLimpo = nomeMaterial.toLowerCase().replace(/[^a-z0-9]/g, '');
+      return nomeLimpo.includes('decalque');
+    }
+
+    function srgbToLinear(val) {
+      const c = val / 255;
+      return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+    
+    function hexToRgb(hex) {
+      return { r: parseInt(hex.slice(1, 3), 16), g: parseInt(hex.slice(3, 5), 16), b: parseInt(hex.slice(5, 7), 16) };
+    }
+
+    client.init(modelUid, {
+      success: function(api) {
+        apiInstance = api;
+        api.start();
+
+        api.addEventListener('viewerready', function() {
+          if (api.setBackground) api.setBackground({ color: [1.0, 1.0, 1.0, 1.0] });
+
+          api.getMaterialList(function(err, materials) {
+            if (err) return;
+            materiaisCarregados = materials;
+            
+            let achouDecalque = false;
+            materials.forEach(m => {
+              if (isMaterialDecalque(m.name)) {
+                achouDecalque = true;
+                if (m.channels.AlbedoPBR) m.channels.AlbedoPBR.texture = null;
+                if (m.channels.DiffuseColor) m.channels.DiffuseColor.texture = null;
+                api.setMaterial(m);
+              }
+            });
+
+            setTimeout(() => {
+              aplicarHexComSincronizacao('decalque1', '#686b73');
+              const urlInicial = BASE_URL_TEXTURAS + 'ref0001' + EXTENSAO_ARQUIVO;
+              document.getElementById('select-textura-decalque1').value = urlInicial;
+              aplicarTexturaAPI(urlInicial);
+            }, 300);
+
+            document.getElementById('status').innerText = '✓ Modelo e Texturas Prontos.';
+          });
+        });
+      },
+      error: function() { document.getElementById('status').innerText = 'Erro ao conectar.'; },
+      autostart: 1, transparent: 1, ui_controls: 1, ui_infos: 0
+    });
+
+    function abrirMenuCores(idMaterialHTML) {
+      const select = document.getElementById('select-' + idMaterialHTML);
+      if (select) { try { select.showPicker(); } catch (e) { select.focus(); } }
+    }
+
+    function aplicarTexturaAPI(urlTextura) {
+      decalqueState.textureUrl = urlTextura;
+      atualizarMaterialDecalque();
+    }
+
+    function atualizarMaterialDecalque() {
+      if (!apiInstance || materiaisCarregados.length === 0) return;
+      const status = document.getElementById('status');
+
+      if (!decalqueState.textureUrl) {
+        const cBase = hexToRgb(decalqueState.hex);
+        const rgbArray = [srgbToLinear(cBase.r), srgbToLinear(cBase.g), srgbToLinear(cBase.b)];
+        materiaisCarregados.forEach(material => {
+          if (isMaterialDecalque(material.name)) {
+            if (material.channels.AlbedoPBR) {
+              material.channels.AlbedoPBR.enable = true; material.channels.AlbedoPBR.color = rgbArray; material.channels.AlbedoPBR.texture = null;
+            } else if (material.channels.DiffuseColor) {
+              material.channels.DiffuseColor.enable = true; material.channels.DiffuseColor.color = rgbArray; material.channels.DiffuseColor.texture = null;
+            }
+            apiInstance.setMaterial(material);
+          }
+        });
+        status.innerText = '✓ Cor base aplicada!'; status.style.color = '#4cd964';
+        return;
+      }
+
+      status.innerText = '⏳ Processando e Colorindo Adesivo...'; status.style.color = '#ffcc00';
+
+      const img = new Image();
+      img.crossOrigin = "anonymous"; 
+      
+      img.onload = function() {
+        const tempCanvas = document.createElement('canvas'); tempCanvas.width = img.width; tempCanvas.height = img.height;
+        const tempCtx = tempCanvas.getContext('2d'); tempCtx.drawImage(img, 0, 0);
+        const imgData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height); const data = imgData.data;
+        const color1 = hexToRgb(decalqueState.decalHex1); const color2 = hexToRgb(decalqueState.decalHex2); 
+
+        for (let i = 0; i < data.length; i += 4) {
+          const a = data[i + 3]; if (a === 0) continue; 
+          const r = data[i]; const g = data[i + 1]; const b = data[i + 2];
+          const brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+          data[i]     = color1.r * (1 - brightness) + color2.r * brightness;
+          data[i + 1] = color1.g * (1 - brightness) + color2.g * brightness;
+          data[i + 2] = color1.b * (1 - brightness) + color2.b * brightness;
+        }
+        tempCtx.putImageData(imgData, 0, 0);
+        const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d'); ctx.fillStyle = decalqueState.hex; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.save(); ctx.translate(0, canvas.height); ctx.scale(1, -1); ctx.drawImage(tempCanvas, 0, 0); ctx.restore();
+
+        apiInstance.addTexture(canvas.toDataURL('image/png'), function(err, textureUid) {
+          if (err) { status.innerText = 'Erro ao processar imagem!'; status.style.color = '#ff4444'; return; }
+          materiaisCarregados.forEach(material => {
+            if (isMaterialDecalque(material.name)) {
+              if (material.channels.AlbedoPBR) { material.channels.AlbedoPBR.enable = true; material.channels.AlbedoPBR.color = [1, 1, 1]; material.channels.AlbedoPBR.texture = { uid: textureUid }; }
+              else if (material.channels.DiffuseColor) { material.channels.DiffuseColor.enable = true; material.channels.DiffuseColor.color = [1, 1, 1]; material.channels.DiffuseColor.texture = { uid: textureUid }; }
+              apiInstance.setMaterial(material);
+            }
+          });
+          status.innerText = '✓ Decalque aplicado com sucesso!'; status.style.color = '#4cd964';
+        });
+      };
+      
+      img.onerror = function() { status.innerText = 'Erro ao carregar a imagem do GitHub!'; status.style.color = '#ff4444'; };
+      img.src = decalqueState.textureUrl;
+    }
+
+    function sincronizarInputs(idHTML, hex, rgbTexto) {
+      const hexInput = document.getElementById('hex-' + idHTML); const rgbInput = document.getElementById('rgb-' + idHTML); const select = document.getElementById('select-' + idHTML); const picker = document.getElementById('picker-' + idHTML); const indicator = document.getElementById('indicator-' + idHTML); const previewBox = document.getElementById('preview-color-' + idHTML); 
+      
+      if (hexInput) hexInput.value = hex; 
+      if (rgbInput) rgbInput.value = rgbTexto; 
+      if (picker) picker.value = hex; 
+      if (indicator) indicator.style.backgroundColor = hex; 
+      if (previewBox) previewBox.style.backgroundColor = hex;
+
+      if (select) {
+        let encontrado = false; const hexMin = hex.toLowerCase();
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase() === hexMin) { select.selectedIndex = i; encontrado = true; break; }
+        }
+        if (!encontrado) select.value = '';
+        select.style.backgroundColor = hex; select.style.color = calcularContraste(hex); 
+      }
+    }
+
+    function selecionarCor(idHTML, hex) { if (!hex) return; aplicarHexComSincronizacao(idHTML, hex); }
+
+    function aplicarHexComSincronizacao(idHTML, hex) {
+      const r = parseInt(hex.slice(1, 3), 16); const g = parseInt(hex.slice(3, 5), 16); const b = parseInt(hex.slice(5, 7), 16);
+      sincronizarInputs(idHTML, hex, `${r}, ${g}, ${b}`);
+      if(idHTML === 'decalque1') { decalqueState.hex = hex; } else if (idHTML === 'decalque-cor1') { decalqueState.decalHex1 = hex; } else if (idHTML === 'decalque-cor2') { decalqueState.decalHex2 = hex; }
+      atualizarMaterialDecalque();
+    }
+
+    function digitarHex(idHTML, valorHex) { let hex = valorHex.trim(); if (!hex.startsWith('#')) hex = '#' + hex; if (/^#[0-9A-Fa-f]{6}$/.test(hex)) aplicarHexComSincronizacao(idHTML, hex); }
+    function digitarRgb(idHTML, valorRgb) { const partes = valorRgb.split(',').map(n => parseInt(n.trim(), 10)); if (partes.length === 3 && partes.every(n => !isNaN(n) && n >= 0 && n <= 255)) { const hex = '#' + partes.map(x => x.toString(16).padStart(2, '0')).join(''); aplicarHexComSincronizacao(idHTML, hex); } }
+
+    function tirarFoto() {
+      if (!apiInstance) return; const btnCapture = document.getElementById('btn-capture'); btnCapture.innerHTML = '⏳ Processando...'; btnCapture.disabled = true;
+
+      apiInstance.getScreenShot(3840, 2160, function(err, base64Image) {
+        if (!err) {
+          const img = new Image(); img.onload = function() {
+            const canvas = document.createElement('canvas'); canvas.width = 3840; canvas.height = 2160; const ctx = canvas.getContext('2d');
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0);
+
+            const inputHexCor = document.getElementById('hex-decalque1').value; const inputHexDecal1 = document.getElementById('hex-decalque-cor1').value; const inputHexDecal2 = document.getElementById('hex-decalque-cor2').value;
+            const selTex = document.getElementById('select-textura-decalque1'); let nomeTex = "Nenhuma (Cor Sólida)";
+            if(selTex.selectedIndex > 0) { nomeTex = selTex.options[selTex.selectedIndex].text; }
+
+            ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; ctx.fillRect(80, 2160 - 520, 1050, 440);
+            ctx.fillStyle = "white"; ctx.shadowColor = "rgba(0, 0, 0, 0.8)"; ctx.shadowBlur = 10;
+            ctx.font = "bold 64px sans-serif"; ctx.fillText("HURRICANE 60 SL", 120, 2160 - 410);
+            ctx.font = "bold 48px sans-serif"; ctx.fillText("Decalque:", 120, 2160 - 300);
+            ctx.font = "36px sans-serif"; ctx.fillText("Cor Base (Fundo): " + inputHexCor, 120, 2160 - 230); ctx.fillText("Padrão: " + nomeTex, 120, 2160 - 170); ctx.fillText("Adesivo Cor 1: " + inputHexDecal1, 120, 2160 - 110); ctx.fillText("Adesivo Cor 2: " + inputHexDecal2, 120, 2160 - 50);
+
+            const logoDOM = document.getElementById('logoGF');
+            if (logoDOM && logoDOM.complete && logoDOM.naturalWidth > 0) {
+              const logoW = 550; const logoH = (logoDOM.naturalHeight / logoDOM.naturalWidth) * logoW;
+              ctx.drawImage(logoDOM, canvas.width - logoW - 120, canvas.height - logoH - 180);
+            }
+
+            ultimaImagemBase64 = canvas.toDataURL('image/png'); document.getElementById('capturePreview').src = ultimaImagemBase64; document.getElementById('shareModal').style.display = 'flex';
+            if (navigator.canShare && navigator.canShare({ files: [new File([], '')] })) { document.getElementById('btnShareNative').style.display = 'block'; }
+
+            btnCapture.innerHTML = '📸 Gerar Imagem do Projeto'; btnCapture.disabled = false;
+          };
+          img.src = base64Image;
+        }
+      });
+    }
+
+    function fecharShareModal() { document.getElementById('shareModal').style.display = 'none'; }
+    function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Hurricane60SL_Catalogo.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
+    async function compartilharImagem() { const res = await fetch(ultimaImagemBase64); const blob = await res.blob(); const file = new File([blob], 'Hurricane60SL.png', { type: 'image/png' }); await navigator.share({ title: 'Configuração Hurricane', files: [file] }); fecharShareModal(); }
+
+    inicializarInterface();
+  </script>
+</body>
+</html>
