@@ -8,9 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
 
-  <!-- Script Oficial do Instagram carregado antecipadamente no Head -->
-  <script async defer src="https://www.instagram.com/embed.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
@@ -68,15 +65,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: clamp(18px, 4vh, 44px) 16px;
+      padding: clamp(20px, 4vh, 44px) 16px;
       pointer-events: none;
       text-align: center;
     }
 
     .welcome-text h1 {
-      font-size: clamp(17px, 4.2vw, 22px);
+      font-size: clamp(17px, 4vw, 24px);
       font-weight: 800;
-      letter-spacing: 1.4px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #00d2ff;
       text-shadow: 0 2px 12px rgba(0, 210, 255, 0.4);
@@ -92,7 +89,7 @@
     .skip-notice {
       background: rgba(13, 27, 42, 0.92);
       border: 1px solid #00d2ff;
-      padding: 10px 22px;
+      padding: 10px 24px;
       border-radius: 26px;
       font-size: 11px;
       font-weight: 700;
@@ -111,7 +108,7 @@
       color: #000;
     }
 
-    /* Container Principal */
+    /* Container Principal MANTIDO NO DOM PARA CÁLCULO DA META */
     .main-container {
       background: rgba(11, 23, 38, 0.95);
       backdrop-filter: blur(16px);
@@ -186,7 +183,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Cards 3D com Miniatura Lateral Transparente */
+    /* Cards dos Menus 3D com Imagem Lateral e Shimmer */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -215,12 +212,12 @@
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* Caixa transparente para a miniatura do barco */
+    /* Solução do fundo preto das imagens 3D */
     .catalog-thumb-box {
       width: 125px;
       min-width: 125px;
       height: 85px;
-      background: transparent; /* Remove fundo preto da caixa */
+      background: transparent;
       border: none;
       overflow: hidden;
       display: flex;
@@ -237,13 +234,12 @@
       }
     }
 
-    /* Faz a cor preta do JPEG se fundir e ficar 100% transparente */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       background: transparent;
-      mix-blend-mode: screen; /* Transforma o fundo preto original da imagem em transparente */
+      mix-blend-mode: screen; /* Anula o fundo preto do JPG */
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
       transition: transform 0.35s ease;
     }
@@ -258,6 +254,7 @@
       min-width: 0;
     }
 
+    /* Feixe de Luz Transversal Animado */
     .catalog-card::before {
       content: "";
       position: absolute;
@@ -281,7 +278,7 @@
     }
 
     .catalog-card:hover .catalog-thumb-box img {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .catalog-card:active {
@@ -378,7 +375,7 @@
       transform: scale(0.96);
     }
 
-    /* Grid Oficial do Instagram em Tempo Real */
+    /* Grid do Instagram (Tempo Real) */
     .instagram-feed-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -462,7 +459,7 @@
       <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D com Miniaturas com Fundo Transparente -->
+    <!-- Catálogos 3D -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
       
@@ -505,7 +502,7 @@
 
       <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
         <svg viewBox="0 0 24 24">
-          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -588,15 +585,23 @@
     const mainContent = document.getElementById('main-content');
     let videoFinalizado = false;
 
-    function processarInstagramEmTempoReal() {
-      let tentativas = 0;
-      const interval = setInterval(() => {
-        tentativas++;
-        if (window.instgrm && window.instgrm.Embeds) {
-          window.instgrm.Embeds.process();
-        }
-        if (tentativas >= 5) clearInterval(interval);
-      }, 500);
+    // Garante o disparo seguro e forçado do Instagram[cite: 4]
+    function carregarInstagramSeguro() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = "https://www.instagram.com/embed.js";
+      script.onload = () => {
+        let tentativas = 0;
+        const interval = setInterval(() => {
+          tentativas++;
+          if (window.instgrm && window.instgrm.Embeds) {
+            window.instgrm.Embeds.process();
+            clearInterval(interval);
+          }
+          if (tentativas >= 10) clearInterval(interval);
+        }, 500);
+      };
+      document.body.appendChild(script);
     }
 
     function fecharAbertura() {
@@ -606,15 +611,16 @@
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
-        processarInstagramEmTempoReal();
-      }, 400);
+        carregarInstagramSeguro();
+      }, 500);
     }
 
     video.onended = fecharAbertura;
     video.onerror = fecharAbertura;
     splashScreen.addEventListener('click', fecharAbertura);
 
-    setTimeout(fecharAbertura, 4500);
+    // Timeout de segurança: Se o autoplay do celular for bloqueado, pula o vídeo em 4 segundos
+    setTimeout(fecharAbertura, 4000);
 
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
