@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
 
-  <!-- Otimizações de Conexão: Pré-conecta aos servidores do Instagram para carregar mais rápido depois -->
+  <!-- Otimizações de Conexão -->
   <link rel="preconnect" href="https://www.instagram.com" crossorigin>
   <link rel="dns-prefetch" href="https://www.instagram.com">
 
@@ -17,6 +17,7 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      scroll-behavior: smooth;
     }
 
     body, html {
@@ -31,7 +32,7 @@
     }
 
     /* =========================================
-       FUNDO ESCURECIDO (IMAGEM FIXA + OVERLAY)
+       FUNDO ESCURECIDO
        ========================================= */
     .fixed-bg {
       position: fixed;
@@ -52,7 +53,9 @@
       pointer-events: none;
     }
 
-    /* Tela de Abertura em Vídeo */
+    /* =========================================
+       TELA DE ABERTURA
+       ========================================= */
     #splash-screen {
       position: fixed;
       top: 0; left: 0;
@@ -65,7 +68,7 @@
       transition: opacity 0.5s ease;
       cursor: pointer;
       overflow: hidden;
-      will-change: opacity; /* Otimização GPU */
+      will-change: opacity;
     }
 
     #splash-screen video {
@@ -121,18 +124,16 @@
       transition: all 0.25s ease;
     }
 
-    .skip-notice:hover { transform: scale(1.04); background: #00d2ff; color: #000; }
-
     /* =========================================
-       CABEÇALHO FIXO
+       CABEÇALHO FIXO E NAVEGAÇÃO
        ========================================= */
-    .header-title {
+    .header-container {
       width: 100%;
       background-color: rgba(28, 49, 68, 0.95);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       color: #ffffff;
-      padding: calc(19px + env(safe-area-inset-top, 0px)) 20px 19px 20px;
+      padding: calc(15px + env(safe-area-inset-top, 0px)) 20px 15px 20px; 
       border-bottom: 1px solid rgba(0, 210, 255, 0.2);
       z-index: 110;
       position: relative;
@@ -141,7 +142,12 @@
       justify-content: space-between;
       flex-shrink: 0;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: all 0.3s ease;
+    }
+
+    .header-logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .header-logo {
@@ -149,7 +155,6 @@
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-      transition: all 0.3s ease;
     }
 
     .header-text {
@@ -160,15 +165,133 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #00d2ff;
-      transition: all 0.3s ease;
-      margin-left: 10px;
+      margin-right: 15px; /* Espaço entre o texto e o botão de menu mobile */
     }
 
-    @media (min-width: 768px) {
-      .header-title { padding: 12px 24px; }
-      .header-logo { height: 34px; }
-      .header-text { font-size: 16px; letter-spacing: 1.5px; }
+    /* Menu Oculto no Celular */
+    .header-nav, .header-cta { display: none; }
+
+    /* Botão Hambúrguer Mobile */
+    .mobile-menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 6px;
     }
+    
+    .mobile-menu-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: #00d2ff;
+      transition: transform 0.2s;
+    }
+    .mobile-menu-btn:active svg { transform: scale(0.9); }
+
+    /* Estilos do Menu Desktop */
+    @media (min-width: 980px) {
+      .header-container { padding: 12px 32px; }
+      .header-logo { height: 38px; }
+      .mobile-menu-btn { display: none; } /* Esconde o hambúrguer no PC */
+      .header-text {
+        font-size: 14px;
+        text-align: left;
+        flex: none;
+        margin-right: 0;
+        margin-left: 14px;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .header-nav a {
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #dce5ee;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .header-nav a:hover { color: #00d2ff; }
+
+      .header-cta {
+        display: inline-block;
+        background: linear-gradient(145deg, #00d2ff 0%, #3a7bd5 100%);
+        color: #000;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 11.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 14px rgba(0, 210, 255, 0.4);
+        transition: transform 0.2s ease;
+        white-space: nowrap;
+      }
+      .header-cta:hover { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0, 210, 255, 0.6); }
+    }
+
+    /* =========================================
+       ABA LATERAL DO MENU MOBILE (SIDEBAR)
+       ========================================= */
+    .sidebar-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-menu {
+      position: fixed; top: 0; right: -280px; width: 260px; height: 100vh;
+      background: rgba(11, 23, 38, 0.98); 
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      z-index: 10001; 
+      display: flex; flex-direction: column; 
+      padding: calc(20px + env(safe-area-inset-top, 0px)) 24px 24px 24px;
+      border-left: 1px solid rgba(0, 210, 255, 0.2);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      transition: right 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .sidebar-menu.active { right: 0; }
+
+    .sidebar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;
+    }
+
+    .sidebar-header span { font-size: 16px; font-weight: 800; color: #00d2ff; text-transform: uppercase; letter-spacing: 1px; }
+    
+    .sidebar-header button { 
+      background: none; border: none; color: #ffffff; font-size: 24px; 
+      cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s;
+    }
+    .sidebar-header button:hover { color: #00d2ff; }
+
+    .sidebar-links { display: flex; flex-direction: column; gap: 24px; }
+    
+    .sidebar-links a {
+      color: #dce5ee; text-decoration: none; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s;
+    }
+    
+    .sidebar-links a:hover { color: #00d2ff; }
 
     /* =========================================
        ÁREA CENTRAL
@@ -188,12 +311,8 @@
       will-change: opacity;
     }
 
-    .scrollable-content.visible {
-      display: block; 
-      opacity: 1;
-    }
+    .scrollable-content.visible { display: block; opacity: 1; }
 
-    /* Container Principal - Fundo Branco Translúcido */
     .main-container {
       background: rgba(255, 255, 255, 0.65); 
       backdrop-filter: blur(12px);
@@ -211,7 +330,7 @@
       color: #333333; 
     }
 
-    /* Hero Section Livre ALINHADA À ESQUERDA */
+    /* Hero Section Livre (Esquerda) */
     .hero-section {
       position: relative;
       width: 100%;
@@ -273,6 +392,7 @@
       gap: 12px;
       text-align: center;
       width: 100%;
+      scroll-margin-top: 100px;
     }
 
     .section-title::before,
@@ -283,9 +403,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
     }
 
-    /* =========================================
-       CARDS 3D LIVRES (Sem Box)
-       ========================================= */
+    /* Cards 3D Livres */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -370,45 +488,13 @@
       line-height: 1.4;
     }
 
-    /* Tags de Especificações */
-    .specs-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
-    }
-    
-    .spec-tag {
-      background: #1e3a5f;
-      color: #dce5ee;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 10px;
-      font-weight: 600;
-    }
-
-    .badge-3d {
-      background: rgba(0, 210, 255, 0.15);
-      border: 1px solid #00d2ff;
-      color: #0070ff;
-      font-size: 9px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 12px;
-      white-space: nowrap;
-    }
+    .specs-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .spec-tag { background: #1e3a5f; color: #dce5ee; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+    .badge-3d { background: rgba(0, 210, 255, 0.15); border: 1px solid #00d2ff; color: #0070ff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 12px; white-space: nowrap; }
 
     /* Diferenciais */
-    .diferenciais-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      width: 100%;
-    }
-
-    @media (max-width: 680px) {
-      .diferenciais-grid { grid-template-columns: 1fr; }
-    }
+    .diferenciais-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
+    @media (max-width: 680px) { .diferenciais-grid { grid-template-columns: 1fr; } }
 
     .dif-card {
       background: rgba(255, 255, 255, 0.6);
@@ -418,20 +504,8 @@
       text-align: left;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-
-    .dif-card h3 {
-      font-size: 13px;
-      font-weight: 800;
-      color: #1c3144;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .dif-card p {
-      font-size: 12px;
-      color: #475569;
-      line-height: 1.5;
-    }
+    .dif-card h3 { font-size: 13px; font-weight: 800; color: #1c3144; text-transform: uppercase; margin-bottom: 6px; }
+    .dif-card p { font-size: 12px; color: #475569; line-height: 1.5; }
 
     /* Botão PDF */
     .pdf-catalog-btn {
@@ -454,24 +528,12 @@
       letter-spacing: 1px;
       will-change: transform;
     }
-
-    .pdf-catalog-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5);
-      background: linear-gradient(145deg, #33deff 0%, #338dff 100%);
-    }
-
+    .pdf-catalog-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5); background: linear-gradient(145deg, #33deff 0%, #338dff 100%); }
     .pdf-catalog-btn:active { transform: scale(0.98); }
     .pdf-catalog-btn svg { width: 20px; height: 20px; fill: #ffffff; }
 
-    /* Grid Oficial de Embeds do Instagram */
-    .instagram-feed-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      width: 100%;
-    }
-
+    /* Feed do Instagram */
+    .instagram-feed-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; }
     @media (max-width: 980px) { .instagram-feed-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 768px) { .instagram-feed-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 480px) { .instagram-feed-grid { grid-template-columns: 1fr; } }
@@ -487,185 +549,84 @@
       width: 100%;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
-
-    .insta-iframe {
-      width: 100%;
-      height: 480px;
-      border: none;
-      display: block;
-      background: #000;
-    }
-
+    .insta-iframe { width: 100%; height: 480px; border: none; display: block; background: #000; }
     .insta-direct-link {
-      width: 100%;
-      padding: 10px;
-      background: #0f2233;
-      color: #00d2ff;
-      font-size: 11px;
-      font-weight: 700;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border-top: 1px solid #223b52;
-      transition: all 0.2s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      width: 100%; padding: 10px; background: #0f2233; color: #00d2ff; font-size: 11px;
+      font-weight: 700; text-decoration: none; display: flex; align-items: center;
+      justify-content: center; gap: 6px; border-top: 1px solid #223b52; transition: all 0.2s ease;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
-
     .insta-direct-link:hover { background: #00d2ff; color: #000; }
 
     /* =========================================
-       RODAPÉ RETRÁTIL (BOTTOM SHEET COMPACTO)
+       RODAPÉ RETRÁTIL
        ========================================= */
     .panel-controls {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(28, 49, 68, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-top: 1px solid #2e2e36;
-      border-radius: 24px 24px 0 0;
+      position: fixed; bottom: 0; left: 0; width: 100%;
+      background: rgba(28, 49, 68, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid #2e2e36; border-radius: 24px 24px 0 0;
       padding: 0 14px calc(16px + env(safe-area-inset-bottom, 0px)) 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      z-index: 200;
+      display: flex; flex-direction: column; gap: 14px; z-index: 200;
       box-shadow: 0 -4px 24px rgba(0,0,0,0.6);
       transform: translateY(calc(100% - 46px - env(safe-area-inset-bottom, 0px)));
       transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-      will-change: transform; /* Otimização GPU */
+      will-change: transform;
     }
+    .panel-controls:hover, .panel-controls.expanded { transform: translateY(0); }
 
-    .panel-controls:hover,
-    .panel-controls.expanded {
-      transform: translateY(0);
-    }
+    .footer-handle { width: 100%; height: 46px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+    .handle-bar { width: 42px; height: 4px; background: #8fa0b5; border-radius: 4px; transition: background 0.3s, width 0.3s; }
+    .panel-controls:hover .handle-bar, .panel-controls.expanded .handle-bar { background: #00d2ff; width: 50px; }
+    .handle-text { font-size: 10.5px; font-weight: 700; color: #8fa0b5; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+    .panel-controls:hover .handle-text, .panel-controls.expanded .handle-text { color: #ffffff; }
 
-    /* Alça de Puxar (Handle) */
-    .footer-handle {
-      width: 100%;
-      height: 46px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .handle-bar {
-      width: 42px;
-      height: 4px;
-      background: #8fa0b5;
-      border-radius: 4px;
-      transition: background 0.3s, width 0.3s;
-    }
-
-    .panel-controls:hover .handle-bar,
-    .panel-controls.expanded .handle-bar {
-      background: #00d2ff;
-      width: 50px;
-    }
-
-    .handle-text {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #8fa0b5;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.3s;
-    }
-
-    .panel-controls:hover .handle-text,
-    .panel-controls.expanded .handle-text {
-      color: #ffffff;
-    }
-
-    .panel-controls-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      max-height: 40vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* Canais de Atendimento no Rodapé */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 640px) {
-      .contact-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    }
+    .panel-controls-inner { display: flex; flex-direction: column; gap: 14px; max-height: 40vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 980px; margin: 0 auto; }
+    @media (max-width: 640px) { .contact-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
 
     .contact-btn {
-      background: rgba(20, 32, 44, 0.8);
-      border: 1px solid rgba(40, 58, 76, 0.8);
-      color: #ffffff;
-      text-decoration: none;
-      padding: 12px 6px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: clamp(10px, 1.1vw, 11px);
-      font-weight: 600;
-      min-height: 52px;
-      transition: all 0.25s ease;
-      text-align: center;
+      background: rgba(20, 32, 44, 0.8); border: 1px solid rgba(40, 58, 76, 0.8); color: #ffffff;
+      text-decoration: none; padding: 12px 6px; border-radius: 12px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px; font-size: clamp(10px, 1.1vw, 11px);
+      font-weight: 600; min-height: 52px; transition: all 0.25s ease; text-align: center;
     }
-
     .contact-btn svg { width: 22px; height: 22px; transition: transform 0.25s ease; }
     .contact-btn:hover { background: #00d2ff; color: #000000; border-color: #00d2ff; transform: translateY(-2px); }
     .contact-btn:hover svg { transform: scale(1.1); }
     .contact-btn:hover svg path { fill: #000000 !important; }
     .contact-btn:active { transform: scale(0.96); }
 
-    /* Informações Corporativas no Rodapé */
     .corporate-footer {
-      background: rgba(6, 17, 29, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      padding: 12px 14px;
-      text-align: center;
-      font-size: clamp(9px, 0.9vw, 10.5px);
-      color: #8fa0b5;
-      line-height: 1.5;
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
+      background: rgba(6, 17, 29, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px;
+      padding: 12px 14px; text-align: center; font-size: clamp(9px, 0.9vw, 10.5px); color: #8fa0b5; line-height: 1.5;
+      width: 100%; max-width: 980px; margin: 0 auto;
     }
-
-    .corporate-footer h4 {
-      color: #ffffff;
-      font-size: clamp(10.5px, 1.1vw, 11.5px);
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
-    .footer-highlight { color: #00d2ff; font-weight: 600; }
+    .corporate-footer h4 { color: #ffffff; font-size: clamp(10.5px, 1.1vw, 11.5px); font-weight: 700; margin-bottom: 2px; }
   </style>
 </head>
 <body>
 
-  <!-- IMAGEM DE FUNDO FIXA OTIMIZADA -->
+  <!-- IMAGEM DE FUNDO FIXA -->
   <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" decoding="async" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
   <div class="fixed-bg-overlay"></div>
 
-  <!-- Abertura com Vídeo & Boas-Vindas -->
+  <!-- ABA LATERAL DO MENU MOBILE -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-menu" id="sidebar-menu">
+    <div class="sidebar-header">
+      <span>Menu</span>
+      <button onclick="closeSidebar()">✕</button>
+    </div>
+    <div class="sidebar-links">
+      <a href="#modelos-3d" onclick="closeSidebar()">Modelos 3D</a>
+      <a href="#diferenciais" onclick="closeSidebar()">Estaleiro</a>
+      <a href="#instagram-feed" onclick="closeSidebar()">Instagram</a>
+      <a href="#" onclick="closeSidebar(); toggleFooter(); return false;">Contato</a>
+    </div>
+  </div>
+
+  <!-- ABERTURA COM VÍDEO -->
   <div id="splash-screen" title="Toque para entrar">
     <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
       <source src="logoanimada.mp4" type="video/mp4">
@@ -679,18 +640,40 @@
     </div>
   </div>
 
-  <!-- Cabeçalho Fixo no Topo -->
-  <div class="header-title">
-    <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" decoding="async">
-    <span class="header-text">Engenharia Naval & Embarcações</span>
+  <!-- CABEÇALHO SUPERIOR (Desktop & Mobile) -->
+  <div class="header-container">
+    <div class="header-logo-box">
+      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" decoding="async">
+      <span class="header-text">Engenharia Naval</span>
+    </div>
+    
+    <!-- Menu Centralizado para Computador -->
+    <nav class="header-nav">
+      <a href="#modelos-3d">Modelos</a>
+      <a href="#diferenciais">Estaleiro</a>
+      <a href="#instagram-feed">Instagram</a>
+      <a href="#" onclick="toggleFooter(); return false;">Contato</a>
+    </nav>
+    
+    <!-- Botão Oculto no Celular, Vísível no PC -->
+    <a href="https://wa.me/5535999999999" target="_blank" class="header-cta">
+      Falar com o estaleiro
+    </a>
+
+    <!-- Ícone Menu Hambúrguer (Aparece só no Celular) -->
+    <div class="mobile-menu-btn" onclick="openSidebar()">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+      </svg>
+    </div>
   </div>
 
-  <!-- Área Central Rolável (Scroll) -->
+  <!-- ÁREA CENTRAL DO SITE -->
   <div class="scrollable-content" id="main-content">
     
     <div class="main-container">
       
-      <!-- Seção Hero Livre ALINHADA À ESQUERDA -->
+      <!-- Seção Inicial Hero -->
       <section class="hero-section">
         <div class="hero-content">
           <span class="hero-badge">Engenharia naval brasileira</span>
@@ -699,12 +682,11 @@
         </div>
       </section>
 
-      <!-- Catálogos 3D Livres -->
-      <div style="width: 100%;">
+      <!-- Configuradores 3D -->
+      <div style="width: 100%;" id="modelos-3d">
         <div class="section-title" style="margin-bottom: 16px;">Modelos & Configuradores 3D</div>
         
         <div class="catalogs-grid">
-          <!-- Card Hurricane -->
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
               <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" decoding="async"
@@ -720,7 +702,6 @@
             </div>
           </a>
 
-          <!-- Card Poontoon -->
           <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
               <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" decoding="async"
@@ -738,7 +719,7 @@
         </div>
       </div>
 
-      <!-- Botão de Catálogo em PDF -->
+      <!-- Catálogo PDF -->
       <a href="catalogo.pdf" target="_blank" rel="noopener noreferrer" class="pdf-catalog-btn">
         <svg viewBox="0 0 24 24">
           <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1v-2zM11 9H9v5h1v-2h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-1 2h1v-1h-1v1z"/>
@@ -746,8 +727,8 @@
         Conheça nosso Catálogo em PDF
       </a>
 
-      <!-- Diferenciais do Estaleiro -->
-      <div style="width: 100%;">
+      <!-- Diferenciais -->
+      <div style="width: 100%;" id="diferenciais">
         <div class="section-title" style="margin-bottom: 14px;">Por que a Gran Fish</div>
         <div class="diferenciais-grid">
           <div class="dif-card">
@@ -765,11 +746,10 @@
         </div>
       </div>
 
-      <!-- Feed Oficial do Instagram OTIMIZADO -->
-      <div style="width: 100%;">
+      <!-- Feed do Instagram Otimizado -->
+      <div style="width: 100%;" id="instagram-feed">
         <div class="section-title" style="margin-bottom: 14px;">Últimas do Estaleiro (@granfishoficial)</div>
         <div class="instagram-feed-grid">
-          <!-- Note o uso de data-src e lazy-iframe para carregamento sob demanda -->
           <div class="insta-embed-card">
             <iframe data-src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" title="Instagram Post"></iframe>
             <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
@@ -815,7 +795,7 @@
     </div>
   </div>
 
-  <!-- Rodapé Fixo Inferior -->
+  <!-- RODAPÉ RETRÁTIL -->
   <div class="panel-controls" id="footer-panel">
     <div class="footer-handle" onclick="toggleFooter()">
       <div class="handle-bar"></div>
@@ -828,7 +808,7 @@
           <span>WhatsApp</span>
         </a>
         <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24"><path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/></svg>
+          <svg viewBox="0 0 24 24"><path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/></svg>
           <span>Instagram</span>
         </a>
         <a href="mailto:contato@granfish.com.br" class="contact-btn">
@@ -849,15 +829,31 @@
   </div>
 
   <script>
+    // --- Referências Principais ---
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
+    
+    // --- Lógica do Menu Lateral Mobile ---
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const sidebarMenu = document.getElementById('sidebar-menu');
+
+    function openSidebar() {
+      sidebarOverlay.classList.add('active');
+      sidebarMenu.classList.add('active');
+    }
+
+    function closeSidebar() {
+      sidebarOverlay.classList.remove('active');
+      sidebarMenu.classList.remove('active');
+    }
+
+    // --- Lógica do Rodapé Animado ---
     const footerPanel = document.getElementById('footer-panel');
     const footerInner = document.getElementById('footer-inner');
     let footerTimer;
     let videoFinalizado = false;
 
-    // --- Lógica do Rodapé Animado ---
     function resetFooterTimer() {
       clearTimeout(footerTimer);
       if (footerPanel.classList.contains('expanded')) {
@@ -902,7 +898,7 @@
       }
     }, {passive: true});
 
-    // --- Lógica de Abertura & Lazy Load (Nova Otimização de Performance) ---
+    // --- Lógica de Abertura & Lazy Load (Otimização de Performance) ---
     function fecharAbertura() {
       if (videoFinalizado) return;
       videoFinalizado = true;
@@ -911,7 +907,7 @@
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
-        iniciarLazyLoading(); // Ativa os Iframes apenas após o site aparecer!
+        iniciarLazyLoading();
       }, 400);
     }
 
@@ -920,7 +916,6 @@
     splashScreen.addEventListener('click', fecharAbertura);
     setTimeout(fecharAbertura, 4500);
 
-    // Sistema Lazy Load Inteligente para economizar memória (resolve travamentos em tablets)
     function iniciarLazyLoading() {
       const lazyIframes = document.querySelectorAll('.lazy-iframe');
       if ('IntersectionObserver' in window) {
@@ -933,16 +928,15 @@
               observer.unobserve(iframe);
             }
           });
-        }, { rootMargin: "300px 0px" }); // Prepara o carregamento 300px antes de aparecer na tela
+        }, { rootMargin: "300px 0px" });
 
         lazyIframes.forEach(iframe => iframeObserver.observe(iframe));
       } else {
-        // Fallback rápido se o navegador for muito antigo
         lazyIframes.forEach(iframe => iframe.src = iframe.dataset.src);
       }
     }
 
-    // Sistema de fallback de Imagens
+    // --- Sistema de fallback de Imagens ---
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
       let t = parseInt(imgEl.dataset.tentativa);
