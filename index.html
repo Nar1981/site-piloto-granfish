@@ -210,23 +210,23 @@
       color: #333333; 
     }
 
-    /* Hero Section Livre (Sem Box e Sem Fundo) */
+    /* Hero Section Livre (Alinhado à esquerda) */
     .hero-section {
       position: relative;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start; /* Alinhamento geral à esquerda */
+      text-align: left; /* Justificado à esquerda */
       padding: 10px 0;
     }
 
     .hero-content {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start; /* Itens à esquerda */
+      text-align: left; /* Texto à esquerda */
       gap: 12px;
     }
 
@@ -242,13 +242,14 @@
       letter-spacing: 1.5px;
     }
 
+    /* Título H2 Maior */
     .hero-content h2 {
-      font-size: clamp(24px, 4vw, 42px);
+      font-size: clamp(30px, 5.5vw, 54px); /* Fonte significativamente aumentada */
       font-weight: 900;
       line-height: 1.15;
       letter-spacing: -0.5px;
       color: #1c3144;
-      max-width: 700px;
+      max-width: 800px;
       margin-top: 8px;
     }
 
@@ -316,7 +317,7 @@
       width: 140px;
       min-width: 140px;
       height: 95px;
-      background: rgba(0, 0, 0, 0.04); /* Fundo extremamente sutil para ancorar a imagem */
+      background: rgba(0, 0, 0, 0.04); 
       border-radius: 12px;
       overflow: hidden;
       display: flex;
@@ -331,7 +332,7 @@
       .catalog-thumb-box { width: 100%; height: 160px; background: transparent; }
     }
 
-    /* Ajuste para object-fit: contain (não corta o barco) e sem mix-blend que some com a imagem */
+    /* Ajuste para object-fit: contain (não corta o barco) */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
@@ -689,7 +690,7 @@
     
     <div class="main-container">
       
-      <!-- Seção Hero Livre (Sem Box) -->
+      <!-- Seção Hero Livre (Sem Box) ALINHADA À ESQUERDA -->
       <section class="hero-section">
         <div class="hero-content">
           <span class="hero-badge">Engenharia naval brasileira</span>
@@ -706,7 +707,6 @@
           <!-- Card Hurricane -->
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <!-- Removido mix-blend-mode no css para evitar sumir em fundo branco -->
               <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" 
                    onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.jpeg', 'Hurricane60SL_Catalogo.JPG'])">
             </div>
@@ -977,3 +977,4 @@
   </script>
 </body>
 </html>
+
