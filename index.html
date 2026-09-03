@@ -30,7 +30,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: env(safe-area-inset-top, 16px) 10px calc(24px + env(safe-area-inset-bottom, 16px)) 10px;
+      padding: clamp(20px, 3vh, 40px) 16px;
       overflow-x: hidden;
     }
 
@@ -52,7 +52,7 @@
     #splash-screen video {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Nunca corta as laterais no mobile */
+      object-fit: contain;
       background: #000000;
     }
 
@@ -65,68 +65,69 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(22px + env(safe-area-inset-bottom, 0px)) 14px;
+      padding: clamp(24px, 4vh, 48px) 20px;
       pointer-events: none;
       text-align: center;
     }
 
     .welcome-text h1 {
-      font-size: clamp(16px, 4.2vw, 20px);
+      font-size: clamp(18px, 2.5vw, 26px);
       font-weight: 800;
-      letter-spacing: 1.2px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: #00d2ff;
-      text-shadow: 0 2px 10px rgba(0, 210, 255, 0.4);
-      margin-bottom: 3px;
+      text-shadow: 0 2px 14px rgba(0, 210, 255, 0.4);
+      margin-bottom: 6px;
     }
 
     .welcome-text p {
-      font-size: clamp(11px, 2.8vw, 12.5px);
+      font-size: clamp(12px, 1.2vw, 15px);
       color: #dce5ee;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.6px;
     }
 
     .skip-notice {
       background: rgba(13, 27, 42, 0.92);
       border: 1px solid #00d2ff;
-      padding: 9px 20px;
-      border-radius: 24px;
-      font-size: 10.5px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #00d2ff;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       backdrop-filter: blur(8px);
-      box-shadow: 0 0 14px rgba(0, 210, 255, 0.3);
+      box-shadow: 0 0 16px rgba(0, 210, 255, 0.35);
       pointer-events: auto;
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: all 0.25s ease;
     }
 
-    .skip-notice:active {
-      transform: scale(0.96);
+    .skip-notice:hover {
+      transform: scale(1.05);
       background: #00d2ff;
-      color: #000;
+      color: #000000;
+      box-shadow: 0 0 24px rgba(0, 210, 255, 0.6);
     }
 
     /* Container Principal */
     .main-container {
       background: rgba(11, 23, 38, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(0, 210, 255, 0.25);
-      border-radius: 16px;
-      padding: 20px 14px;
-      max-width: 740px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 210, 255, 0.28);
+      border-radius: 20px;
+      padding: clamp(20px, 3.5vw, 42px);
+      max-width: 1080px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 210, 255, 0.08);
       z-index: 10;
       display: flex;
       visibility: hidden;
       opacity: 0;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 26px;
       margin: auto;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
@@ -141,36 +142,36 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 14px;
+      padding-bottom: 20px;
       width: 100%;
     }
 
     .logo {
-      max-width: clamp(120px, 32vw, 155px);
-      filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.6));
+      max-width: clamp(140px, 16vw, 210px);
+      filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.6));
     }
 
     .tagline {
-      font-size: clamp(9.5px, 2.4vw, 11.5px);
+      font-size: clamp(10.5px, 1vw, 13px);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 2px;
       color: #00d2ff;
       text-align: center;
     }
 
     .section-title {
-      font-size: 10.5px;
+      font-size: clamp(11px, 0.95vw, 13px);
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: #8fa0b5;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 14px;
       text-align: center;
       width: 100%;
     }
@@ -180,48 +181,95 @@
       content: "";
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Menus 3D com Efeito de Shimmer e Overlay */
+    /* Menus 3D com Miniatura Lateral */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 18px;
       width: 100%;
     }
 
-    @media (max-width: 580px) {
-      .catalogs-grid { grid-template-columns: 1fr; }
+    @media (max-width: 680px) {
+      .catalogs-grid { grid-template-columns: 1fr; gap: 12px; }
     }
 
     .catalog-card {
       position: relative;
       background: linear-gradient(145deg, #132738 0%, #0c1a27 100%);
       border: 1px solid rgba(0, 210, 255, 0.35);
-      border-radius: 12px;
-      padding: 16px 12px;
+      border-radius: 16px;
+      padding: 16px;
       text-decoration: none;
       color: #ffffff;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 5px;
+      gap: 16px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.45);
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
+    @media (max-width: 440px) {
+      .catalog-card {
+        padding: 12px;
+        gap: 12px;
+      }
+    }
+
+    /* Miniatura Lateral da Embarcação */
+    .catalog-thumb-box {
+      width: 110px;
+      min-width: 110px;
+      height: 80px;
+      background: #06111d;
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 440px) {
+      .catalog-thumb-box {
+        width: 85px;
+        min-width: 85px;
+        height: 65px;
+      }
+    }
+
+    .catalog-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .catalog-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Shimmer Luminoso no Hover */
     .catalog-card::before {
       content: "";
       position: absolute;
       top: 0; left: -150%;
       width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.22), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.25), transparent);
       transform: skewX(-25deg);
-      transition: left 0.7s ease;
+      transition: left 0.75s ease;
       pointer-events: none;
     }
 
@@ -231,9 +279,13 @@
 
     .catalog-card:hover {
       border-color: #00d2ff;
-      background: linear-gradient(145deg, #1a354c 0%, #102436 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 210, 255, 0.28);
+      background: linear-gradient(145deg, #1b3952 0%, #0f2436 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.32), 0 0 20px rgba(0, 210, 255, 0.2);
+    }
+
+    .catalog-card:hover .catalog-thumb-box img {
+      transform: scale(1.08);
     }
 
     .catalog-card:active {
@@ -241,31 +293,36 @@
     }
 
     .catalog-card h3 {
-      font-size: clamp(12.5px, 3.2vw, 14.5px);
+      font-size: clamp(13px, 1.2vw, 16px);
       font-weight: 800;
       color: #ffffff;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
+      gap: 8px;
+      letter-spacing: 0.5px;
+      width: 100%;
+      justify-content: space-between;
     }
 
     .catalog-card p {
-      font-size: 10.5px;
+      font-size: clamp(10.5px, 0.85vw, 12px);
       font-weight: 400;
       color: #9cb0c3;
-      line-height: 1.35;
-      text-align: center;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .badge-3d {
       background: rgba(0, 210, 255, 0.15);
       border: 1px solid #00d2ff;
       color: #00d2ff;
-      font-size: 8.5px;
+      font-size: 9px;
       font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 10px;
+      padding: 2px 7px;
+      border-radius: 12px;
       white-space: nowrap;
     }
 
@@ -273,12 +330,12 @@
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 14px;
       width: 100%;
     }
 
-    @media (max-width: 540px) {
-      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     }
 
     .contact-btn {
@@ -286,30 +343,36 @@
       border: 1px solid #283a4c;
       color: #ffffff;
       text-decoration: none;
-      padding: 9px 6px;
-      border-radius: 10px;
+      padding: 14px 10px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      font-size: 10.5px;
+      gap: 7px;
+      font-size: clamp(11px, 0.9vw, 12px);
       font-weight: 600;
-      min-height: 44px;
-      transition: all 0.2s ease;
+      min-height: 52px;
+      transition: all 0.25s ease;
       text-align: center;
     }
 
     .contact-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
+      transition: transform 0.25s ease;
     }
 
     .contact-btn:hover {
       background: #00d2ff;
       color: #000000;
       border-color: #00d2ff;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4);
+    }
+
+    .contact-btn:hover svg {
+      transform: scale(1.1);
     }
 
     .contact-btn:hover svg path {
@@ -320,23 +383,27 @@
       transform: scale(0.96);
     }
 
-    /* Grid Náutico das Publicações do Instagram */
+    /* Grid do Instagram (4 Colunas no PC, 2 no Tablet, 1 no Mobile) */
     .instagram-feed-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
       width: 100%;
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 900px) {
+      .instagram-feed-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 540px) {
       .instagram-feed-grid { grid-template-columns: 1fr; }
     }
 
     .insta-post-card {
       background: linear-gradient(145deg, #102130 0%, #0c1824 100%);
       border: 1px solid #22374a;
-      border-radius: 12px;
-      padding: 14px 12px;
+      border-radius: 14px;
+      padding: 16px 14px;
       text-decoration: none;
       color: #ffffff;
       display: flex;
@@ -344,16 +411,16 @@
       align-items: center;
       justify-content: space-between;
       text-align: center;
-      gap: 8px;
-      min-height: 120px;
+      gap: 10px;
+      min-height: 135px;
       transition: all 0.25s ease;
     }
 
     .insta-post-card:hover {
       border-color: #00d2ff;
       background: linear-gradient(145deg, #152b3d 0%, #0e1e2d 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 210, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0, 210, 255, 0.25);
     }
 
     .insta-post-card:active {
@@ -364,36 +431,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
     }
 
     .insta-header svg {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       fill: #E1306C;
     }
 
     .insta-tag {
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       color: #00d2ff;
     }
 
     .insta-title {
-      font-size: 11px;
+      font-size: clamp(11px, 0.85vw, 12px);
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.45;
       color: #dbe4ee;
       text-align: center;
     }
 
     .insta-btn-link {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 700;
       color: #00d2ff;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -404,20 +471,20 @@
     .corporate-footer {
       background: rgba(6, 17, 29, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 14px 12px;
+      border-radius: 12px;
+      padding: 18px 20px;
       text-align: center;
-      font-size: 10px;
+      font-size: clamp(10.5px, 0.8vw, 11.5px);
       color: #8fa0b5;
-      line-height: 1.55;
+      line-height: 1.6;
       width: 100%;
     }
 
     .corporate-footer h4 {
       color: #ffffff;
-      font-size: 11px;
+      font-size: clamp(11.5px, 0.9vw, 13px);
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .footer-highlight {
@@ -451,18 +518,32 @@
       <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D -->
+    <!-- Catálogos 3D com Miniatura Lateral da Imagem -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
+      
+      <!-- Card Hurricane com Miniatura -->
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
-        <h3>Hurricane 60 SL <span class="badge-3d">3D ↗</span></h3>
-        <p>Configurador interativo de cascos, tintas marítimas e decalques em tempo real.</p>
+        <div class="catalog-thumb-box">
+          <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" onerror="this.style.display='none'">
+        </div>
+        <div class="catalog-info">
+          <h3>Hurricane 60 SL <span class="badge-3d">3D ↗</span></h3>
+          <p>Configurador interativo de cascos, tintas marítimas e decalques em tempo real.</p>
+        </div>
       </a>
 
+      <!-- Card Poontoon com Miniatura -->
       <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
-        <h3>Linha Poontoon <span class="badge-3d">3D ↗</span></h3>
-        <p>Personalize faixas de acabamento, paleta oceânica e texturas de piso em alta resolução.</p>
+        <div class="catalog-thumb-box">
+          <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" onerror="this.style.display='none'">
+        </div>
+        <div class="catalog-info">
+          <h3>Linha Poontoon <span class="badge-3d">3D ↗</span></h3>
+          <p>Personalize faixas de acabamento, paleta oceânica e texturas de piso em alta resolução.</p>
+        </div>
       </a>
+
     </div>
 
     <!-- Canais de Atendimento -->
@@ -498,7 +579,7 @@
       </a>
     </div>
 
-    <!-- Feed Náutico Corporativo do Instagram (100% Compatível e Rápido) -->
+    <!-- Feed Náutico Corporativo -->
     <div class="section-title">Últimas do Estaleiro (@granfishoficial)</div>
     <div class="instagram-feed-grid">
       
