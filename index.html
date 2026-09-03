@@ -15,6 +15,7 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      scroll-behavior: smooth; /* Rolagem suave ao clicar no menu */
     }
 
     body, html {
@@ -120,15 +121,15 @@
     .skip-notice:hover { transform: scale(1.04); background: #00d2ff; color: #000; }
 
     /* =========================================
-       CABEÇALHO FIXO
+       CABEÇALHO FIXO E MENU DE NAVEGAÇÃO
        ========================================= */
-    .header-title {
+    .header-container {
       width: 100%;
       background-color: rgba(28, 49, 68, 0.95);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       color: #ffffff;
-      padding: calc(19px + env(safe-area-inset-top, 0px)) 20px 19px 20px; /* Reduzido em 20% no mobile */
+      padding: calc(19px + env(safe-area-inset-top, 0px)) 20px 19px 20px; 
       border-bottom: 1px solid rgba(0, 210, 255, 0.2);
       z-index: 110;
       position: relative;
@@ -140,6 +141,13 @@
       transition: all 0.3s ease;
     }
 
+    .header-logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
     .header-logo {
       height: clamp(38px, 6.4vw, 54px);
       width: auto;
@@ -148,7 +156,6 @@
       transition: all 0.3s ease;
     }
 
-    /* Texto Maior, Negrito Forte e Justificado à Direita */
     .header-text {
       flex: 1;
       text-align: right;
@@ -161,10 +168,68 @@
       margin-left: 10px;
     }
 
-    @media (min-width: 768px) {
-      .header-title { padding: 12px 24px; }
-      .header-logo { height: 34px; }
-      .header-text { font-size: 16px; letter-spacing: 1.5px; }
+    /* Menu Desktop e Botão Ocultos no Celular */
+    .header-nav { display: none; }
+    .header-cta { display: none; }
+
+    @media (min-width: 980px) {
+      .header-container {
+        padding: 12px 32px;
+      }
+      .header-logo { height: 38px; }
+      
+      .header-logo-box { flex: none; width: auto; }
+      
+      .header-text {
+        font-size: 14px;
+        letter-spacing: 1.5px;
+        margin-left: 14px;
+        text-align: left;
+        flex: none;
+      }
+
+      /* Estilização do Menu Restabelecido no Desktop */
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .header-nav a {
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #dce5ee;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .header-nav a:hover { color: #00d2ff; }
+
+      /* Estilização do Botão de Contato Restabelecido no Desktop */
+      .header-cta {
+        display: inline-block;
+        background: linear-gradient(145deg, #00d2ff 0%, #3a7bd5 100%);
+        color: #000;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 11.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 14px rgba(0, 210, 255, 0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .header-cta:hover {
+        transform: scale(1.04);
+        box-shadow: 0 6px 18px rgba(0, 210, 255, 0.6);
+      }
     }
 
     /* =========================================
@@ -192,7 +257,7 @@
       opacity: 1;
     }
 
-    /* Container Principal - Fundo Branco Translúcido */
+    /* Container Principal */
     .main-container {
       background: rgba(255, 255, 255, 0.65); 
       backdrop-filter: blur(12px);
@@ -217,16 +282,16 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start; /* Alinhamento geral à esquerda */
-      text-align: left; /* Justificado à esquerda */
+      align-items: flex-start;
+      text-align: left;
       padding: 10px 0;
     }
 
     .hero-content {
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* Itens à esquerda */
-      text-align: left; /* Texto à esquerda */
+      align-items: flex-start;
+      text-align: left;
       gap: 12px;
     }
 
@@ -244,7 +309,7 @@
 
     /* Título H2 Maior */
     .hero-content h2 {
-      font-size: clamp(30px, 5.5vw, 54px); /* Fonte significativamente aumentada */
+      font-size: clamp(30px, 5.5vw, 54px);
       font-weight: 900;
       line-height: 1.15;
       letter-spacing: -0.5px;
@@ -273,6 +338,8 @@
       gap: 12px;
       text-align: center;
       width: 100%;
+      /* Compensação para rolagem não esconder o título abaixo do header fixo */
+      scroll-margin-top: 100px;
     }
 
     .section-title::before,
@@ -297,7 +364,6 @@
       .catalogs-grid { grid-template-columns: 1fr; gap: 24px; }
     }
 
-    /* O card flutua livremente no container */
     .catalog-card {
       position: relative;
       background: transparent;
@@ -312,7 +378,6 @@
       transition: all 0.3s ease;
     }
 
-    /* A imagem otimizada para aparecer sempre */
     .catalog-thumb-box {
       width: 140px;
       min-width: 140px;
@@ -332,7 +397,6 @@
       .catalog-thumb-box { width: 100%; height: 160px; background: transparent; }
     }
 
-    /* Ajuste para object-fit: contain (não corta o barco) */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
@@ -372,7 +436,6 @@
       line-height: 1.4;
     }
 
-    /* Tags de Especificações */
     .specs-list {
       display: flex;
       flex-wrap: wrap;
@@ -679,10 +742,25 @@
     </div>
   </div>
 
-  <!-- Cabeçalho Fixo no Topo (Tamanho Mobile Reduzido 20%, Padrão em Desktop) -->
-  <div class="header-title">
-    <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish">
-    <span class="header-text">Engenharia Naval & Embarcações</span>
+  <!-- Cabeçalho Fixo no Topo e Menu de Navegação -->
+  <div class="header-container">
+    <div class="header-logo-box">
+      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish">
+      <span class="header-text">Engenharia Naval</span>
+    </div>
+    
+    <!-- Menu visível apenas em telas grandes -->
+    <nav class="header-nav">
+      <a href="#modelos-3d">Modelos</a>
+      <a href="#diferenciais">Estaleiro</a>
+      <a href="#instagram-feed">Instagram</a>
+      <a href="#" onclick="toggleFooter(); return false;">Contato</a>
+    </nav>
+    
+    <!-- Botão de contato direto no desktop -->
+    <a href="https://wa.me/5535999999999" target="_blank" class="header-cta">
+      Falar com o estaleiro
+    </a>
   </div>
 
   <!-- Área Central Rolável (Scroll) -->
@@ -690,7 +768,7 @@
     
     <div class="main-container">
       
-      <!-- Seção Hero Livre (Sem Box) ALINHADA À ESQUERDA -->
+      <!-- Seção Hero Livre ALINHADA À ESQUERDA -->
       <section class="hero-section">
         <div class="hero-content">
           <span class="hero-badge">Engenharia naval brasileira</span>
@@ -700,7 +778,7 @@
       </section>
 
       <!-- Catálogos 3D Livres -->
-      <div style="width: 100%;">
+      <div style="width: 100%;" id="modelos-3d">
         <div class="section-title" style="margin-bottom: 16px;">Modelos & Configuradores 3D</div>
         
         <div class="catalogs-grid">
@@ -747,7 +825,7 @@
       </a>
 
       <!-- Diferenciais do Estaleiro -->
-      <div style="width: 100%;">
+      <div style="width: 100%;" id="diferenciais">
         <div class="section-title" style="margin-bottom: 14px;">Por que a Gran Fish</div>
         <div class="diferenciais-grid">
           <div class="dif-card">
@@ -766,7 +844,7 @@
       </div>
 
       <!-- Feed Oficial do Instagram -->
-      <div style="width: 100%;">
+      <div style="width: 100%;" id="instagram-feed">
         <div class="section-title" style="margin-bottom: 14px;">Últimas do Estaleiro (@granfishoficial)</div>
         <div class="instagram-feed-grid">
           <div class="insta-embed-card">
@@ -977,4 +1055,3 @@
   </script>
 </body>
 </html>
-
