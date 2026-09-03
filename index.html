@@ -128,7 +128,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       color: #ffffff;
-      padding: calc(19px + env(safe-area-inset-top, 0px)) 20px 19px 20px;
+      padding: calc(19px + env(safe-area-inset-top, 0px)) 20px 19px 20px; /* Reduzido em 20% no mobile */
       border-bottom: 1px solid rgba(0, 210, 255, 0.2);
       z-index: 110;
       position: relative;
@@ -148,21 +148,23 @@
       transition: all 0.3s ease;
     }
 
+    /* Texto Maior, Negrito Forte e Justificado à Direita */
     .header-text {
       flex: 1;
-      text-align: center;
-      font-size: clamp(10px, 1.8vw, 13px);
-      font-weight: 700;
+      text-align: right;
+      font-size: clamp(12px, 2.5vw, 15px);
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       color: #00d2ff;
       transition: all 0.3s ease;
+      margin-left: 10px;
     }
 
     @media (min-width: 768px) {
       .header-title { padding: 12px 24px; }
       .header-logo { height: 34px; }
-      .header-text { font-size: 13px; }
+      .header-text { font-size: 16px; letter-spacing: 1.5px; }
     }
 
     /* =========================================
@@ -190,91 +192,71 @@
       opacity: 1;
     }
 
-    /* Container Principal - Fundo Branco */
+    /* Container Principal - Fundo Branco Translúcido */
     .main-container {
-      background: rgba(255, 255, 255, 0.5); 
+      background: rgba(255, 255, 255, 0.65); 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 20px;
-      padding: clamp(16px, 3vw, 32px);
+      padding: clamp(24px, 4vw, 40px);
       max-width: 980px;
       width: 100%;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 36px;
       margin: auto;
       color: #333333; 
     }
 
-    /* Hero Section Integrada */
+    /* Hero Section Livre (Sem Box e Sem Fundo) */
     .hero-section {
       position: relative;
       width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      min-height: 280px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 32px 20px;
-      border: 1px solid rgba(0, 210, 255, 0.2);
-    }
-
-    .hero-img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(5,22,42,0.90) 0%, rgba(5,22,42,0.5) 100%);
-      z-index: 1;
+      align-items: center;
+      text-align: center;
+      padding: 10px 0;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 2;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
+      align-items: center;
+      text-align: center;
       gap: 12px;
     }
 
     .hero-badge {
-      background: rgba(11, 23, 38, 0.6);
-      border: 1px solid rgba(0, 210, 255, 0.5);
-      color: #00d2ff;
-      padding: 6px 12px;
+      background: rgba(28, 49, 68, 0.1);
+      border: 1px solid rgba(28, 49, 68, 0.3);
+      color: #1c3144;
+      padding: 6px 16px;
       border-radius: 20px;
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      backdrop-filter: blur(4px);
     }
 
     .hero-content h2 {
-      font-size: clamp(22px, 3.5vw, 36px);
+      font-size: clamp(24px, 4vw, 42px);
       font-weight: 900;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.5px;
-      color: #ffffff;
-      max-width: 600px;
+      color: #1c3144;
+      max-width: 700px;
+      margin-top: 8px;
     }
 
     .hero-content p {
-      font-size: clamp(12px, 1.2vw, 15px);
-      color: #dce5ee;
-      line-height: 1.5;
-      max-width: 500px;
+      font-size: clamp(13px, 1.4vw, 16px);
+      color: #475569;
+      line-height: 1.6;
+      max-width: 600px;
     }
 
     /* Subtítulos de Seção */
@@ -306,52 +288,55 @@
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 20px;
       width: 100%;
     }
 
     @media (max-width: 768px) {
-      .catalogs-grid { grid-template-columns: 1fr; }
+      .catalogs-grid { grid-template-columns: 1fr; gap: 24px; }
     }
 
+    /* O card flutua livremente no container */
     .catalog-card {
       position: relative;
-      background: transparent; /* Box removido */
-      border: none; /* Borda removida */
-      padding: 8px 0; /* Padding reduzido para a forma livre */
+      background: transparent;
+      border: none;
+      padding: 0;
       text-decoration: none;
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 16px;
-      box-shadow: none; /* Sombra do box removida */
+      box-shadow: none;
       transition: all 0.3s ease;
     }
 
+    /* A imagem otimizada para aparecer sempre */
     .catalog-thumb-box {
-      width: 120px;
-      min-width: 120px;
-      height: 85px;
-      background: transparent;
-      border: none;
+      width: 140px;
+      min-width: 140px;
+      height: 95px;
+      background: rgba(0, 0, 0, 0.04); /* Fundo extremamente sutil para ancorar a imagem */
+      border-radius: 12px;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
     }
 
     @media (max-width: 440px) {
       .catalog-card { flex-direction: column; align-items: flex-start; }
-      .catalog-thumb-box { width: 100%; height: 120px; }
+      .catalog-thumb-box { width: 100%; height: 160px; background: transparent; }
     }
 
+    /* Ajuste para object-fit: contain (não corta o barco) e sem mix-blend que some com a imagem */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: transparent;
-      mix-blend-mode: screen; 
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); /* Sombra reforçada na imagem solta */
+      border-radius: 8px;
       transition: transform 0.35s ease;
     }
 
@@ -365,17 +350,14 @@
       min-width: 0;
     }
 
-    .catalog-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .catalog-card:hover .catalog-thumb-box img { transform: scale(1.08); }
+    .catalog-card:hover { transform: translateY(-3px); }
+    .catalog-card:hover .catalog-thumb-box img { transform: scale(1.06); }
     .catalog-card:active { transform: scale(0.98); }
 
     .catalog-card h3 {
       font-size: clamp(14px, 1.6vw, 18px);
       font-weight: 800;
-      color: #1c3144; /* Escurecido para leitura no fundo claro */
+      color: #1c3144;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -385,8 +367,8 @@
 
     .catalog-card p {
       font-size: clamp(11px, 1vw, 12px);
-      color: #333333; /* Escurecido para leitura no fundo claro */
-      line-height: 1.35;
+      color: #475569;
+      line-height: 1.4;
     }
 
     /* Tags de Especificações */
@@ -409,7 +391,7 @@
     .badge-3d {
       background: rgba(0, 210, 255, 0.15);
       border: 1px solid #00d2ff;
-      color: #00d2ff;
+      color: #0070ff;
       font-size: 9px;
       font-weight: 800;
       padding: 3px 8px;
@@ -430,24 +412,25 @@
     }
 
     .dif-card {
-      background: rgba(15, 28, 41, 0.95);
-      border: 1px solid rgba(34, 59, 82, 0.8);
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 14px;
       padding: 20px;
       text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .dif-card h3 {
       font-size: 13px;
       font-weight: 800;
-      color: #00d2ff;
+      color: #1c3144;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
 
     .dif-card p {
       font-size: 12px;
-      color: #9cb0c3;
+      color: #475569;
       line-height: 1.5;
     }
 
@@ -458,7 +441,7 @@
       border-radius: 12px;
       padding: 14px 20px;
       text-decoration: none;
-      color: #000000;
+      color: #ffffff;
       font-weight: 800;
       font-size: clamp(11.5px, 1.3vw, 13.5px);
       display: flex;
@@ -466,7 +449,7 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      box-shadow: 0 6px 16px rgba(0, 210, 255, 0.3);
+      box-shadow: 0 6px 16px rgba(0, 112, 255, 0.3);
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -474,12 +457,12 @@
 
     .pdf-catalog-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 210, 255, 0.5);
+      box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5);
       background: linear-gradient(145deg, #33deff 0%, #338dff 100%);
     }
 
     .pdf-catalog-btn:active { transform: scale(0.98); }
-    .pdf-catalog-btn svg { width: 20px; height: 20px; fill: #000000; }
+    .pdf-catalog-btn svg { width: 20px; height: 20px; fill: #ffffff; }
 
     /* Grid Oficial de Embeds do Instagram */
     .instagram-feed-grid {
@@ -502,7 +485,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
 
     .insta-iframe {
@@ -706,10 +689,8 @@
     
     <div class="main-container">
       
-      <!-- Seção Hero Banner -->
+      <!-- Seção Hero Livre (Sem Box) -->
       <section class="hero-section">
-        <img src="hero-boat.jpg" class="hero-img" alt="Lancha Gran Fish navegando ao entardecer" onerror="this.style.display='none'">
-        <div class="hero-overlay"></div>
         <div class="hero-content">
           <span class="hero-badge">Engenharia naval brasileira</span>
           <h2>Embarcações projetadas para durar. Configuradas do seu jeito.</h2>
@@ -717,14 +698,15 @@
         </div>
       </section>
 
-      <!-- Catálogos 3D -->
+      <!-- Catálogos 3D Livres -->
       <div style="width: 100%;">
-        <div class="section-title" style="margin-bottom: 14px;">Modelos & Configuradores 3D</div>
+        <div class="section-title" style="margin-bottom: 16px;">Modelos & Configuradores 3D</div>
         
         <div class="catalogs-grid">
           <!-- Card Hurricane -->
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
+              <!-- Removido mix-blend-mode no css para evitar sumir em fundo branco -->
               <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" 
                    onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.jpeg', 'Hurricane60SL_Catalogo.JPG'])">
             </div>
@@ -974,7 +956,7 @@
 
     setTimeout(fecharAbertura, 4500);
 
-    // Sistema de fallback para garantir que as imagens locais carreguem independentemente da extensão
+    // Sistema de fallback seguro que não apaga o fundo
     function tentarCarregarImagem(imgEl, extensoes) {
       if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
       let t = parseInt(imgEl.dataset.tentativa);
@@ -983,8 +965,12 @@
         imgEl.src = extensoes[t];
       } else {
         imgEl.style.display = 'none';
-        if (imgEl.parentElement && imgEl.classList.contains('hero-img') === false) {
-           imgEl.parentElement.innerHTML = '<span style="font-size:26px;">🚤</span>';
+        if (imgEl.classList.contains('fixed-bg') || imgEl.classList.contains('hero-img')) {
+          return; // Proteção para não "quebrar" o site se o fundo falhar
+        }
+        if (imgEl.parentElement && !imgEl.parentElement.dataset.falhou) {
+           imgEl.parentElement.dataset.falhou = 'true';
+           imgEl.parentElement.innerHTML = '<span style="font-size:32px;">🚤</span>';
         }
       }
     }
