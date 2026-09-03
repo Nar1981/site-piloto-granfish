@@ -30,7 +30,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: clamp(20px, 3vh, 40px) 16px;
+      padding: clamp(16px, 3vh, 36px) 12px;
       overflow-x: hidden;
     }
 
@@ -52,7 +52,7 @@
     #splash-screen video {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: contain; /* Nunca corta o vídeo em qualquer tela */
       background: #000000;
     }
 
@@ -60,38 +60,38 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(180deg, rgba(5,22,42,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(5,22,42,0.88) 100%);
+      background: linear-gradient(180deg, rgba(5,22,42,0.8) 0%, rgba(0,0,0,0.15) 50%, rgba(5,22,42,0.88) 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: clamp(24px, 4vh, 48px) 20px;
+      padding: clamp(20px, 4vh, 44px) 16px;
       pointer-events: none;
       text-align: center;
     }
 
     .welcome-text h1 {
-      font-size: clamp(18px, 2.5vw, 26px);
+      font-size: clamp(17px, 4vw, 24px);
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #00d2ff;
-      text-shadow: 0 2px 14px rgba(0, 210, 255, 0.4);
-      margin-bottom: 6px;
+      text-shadow: 0 2px 12px rgba(0, 210, 255, 0.4);
+      margin-bottom: 4px;
     }
 
     .welcome-text p {
-      font-size: clamp(12px, 1.2vw, 15px);
+      font-size: clamp(11.5px, 2.5vw, 13.5px);
       color: #dce5ee;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
     }
 
     .skip-notice {
       background: rgba(13, 27, 42, 0.92);
       border: 1px solid #00d2ff;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 11.5px;
+      padding: 10px 24px;
+      border-radius: 26px;
+      font-size: 11px;
       font-weight: 700;
       color: #00d2ff;
       letter-spacing: 1px;
@@ -103,31 +103,30 @@
     }
 
     .skip-notice:hover {
-      transform: scale(1.05);
+      transform: scale(1.04);
       background: #00d2ff;
-      color: #000000;
-      box-shadow: 0 0 24px rgba(0, 210, 255, 0.6);
+      color: #000;
     }
 
     /* Container Principal */
     .main-container {
-      background: rgba(11, 23, 38, 0.94);
+      background: rgba(11, 23, 38, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(0, 210, 255, 0.28);
       border-radius: 20px;
-      padding: clamp(20px, 3.5vw, 42px);
-      max-width: 1080px;
+      padding: clamp(20px, 3.2vw, 36px);
+      max-width: 980px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 210, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
       z-index: 10;
       display: flex;
       visibility: hidden;
       opacity: 0;
       flex-direction: column;
       align-items: center;
-      gap: 26px;
+      gap: 22px;
       margin: auto;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
@@ -142,36 +141,36 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       width: 100%;
     }
 
     .logo {
-      max-width: clamp(140px, 16vw, 210px);
+      max-width: clamp(130px, 20vw, 180px);
       filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.6));
     }
 
     .tagline {
-      font-size: clamp(10.5px, 1vw, 13px);
+      font-size: clamp(10px, 1.8vw, 12px);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 1.6px;
       color: #00d2ff;
       text-align: center;
     }
 
     .section-title {
-      font-size: clamp(11px, 0.95vw, 13px);
+      font-size: clamp(11px, 1.6vw, 12px);
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.4px;
       color: #8fa0b5;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
       text-align: center;
       width: 100%;
     }
@@ -184,11 +183,11 @@
       background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Menus 3D com Miniatura Lateral */
+    /* Cards dos Menus 3D com Imagem Lateral e Shimmer */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      gap: 16px;
       width: 100%;
     }
 
@@ -200,31 +199,24 @@
       position: relative;
       background: linear-gradient(145deg, #132738 0%, #0c1a27 100%);
       border: 1px solid rgba(0, 210, 255, 0.35);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 14px;
       text-decoration: none;
       color: #ffffff;
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    @media (max-width: 440px) {
-      .catalog-card {
-        padding: 12px;
-        gap: 12px;
-      }
-    }
-
-    /* Caixa da Miniatura Lateral */
+    /* Caixa da Miniatura Lateral do Barco */
     .catalog-thumb-box {
-      width: 120px;
-      min-width: 120px;
-      height: 85px;
+      width: 110px;
+      min-width: 110px;
+      height: 80px;
       background: #06111d;
       border: 1px solid rgba(0, 210, 255, 0.3);
       border-radius: 10px;
@@ -238,16 +230,16 @@
 
     @media (max-width: 440px) {
       .catalog-thumb-box {
-        width: 95px;
-        min-width: 95px;
-        height: 70px;
+        width: 90px;
+        min-width: 90px;
+        height: 68px;
       }
     }
 
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Mostra o barco inteiro dentro da caixa */
+      object-fit: contain;
       background: #000;
       transition: transform 0.35s ease;
     }
@@ -257,11 +249,12 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      gap: 6px;
+      gap: 5px;
       flex: 1;
       min-width: 0;
     }
 
+    /* Feixe de Luz Transversal Animado */
     .catalog-card::before {
       content: "";
       position: absolute;
@@ -281,7 +274,7 @@
       border-color: #00d2ff;
       background: linear-gradient(145deg, #1b3952 0%, #0f2436 100%);
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0, 210, 255, 0.32), 0 0 20px rgba(0, 210, 255, 0.2);
+      box-shadow: 0 10px 26px rgba(0, 210, 255, 0.32), 0 0 16px rgba(0, 210, 255, 0.2);
     }
 
     .catalog-card:hover .catalog-thumb-box img {
@@ -293,19 +286,18 @@
     }
 
     .catalog-card h3 {
-      font-size: clamp(13px, 1.2vw, 16px);
+      font-size: clamp(13px, 1.4vw, 15.5px);
       font-weight: 800;
       color: #ffffff;
       display: flex;
       align-items: center;
       gap: 8px;
-      letter-spacing: 0.5px;
       width: 100%;
       justify-content: space-between;
     }
 
     .catalog-card p {
-      font-size: clamp(10.5px, 0.85vw, 12px);
+      font-size: clamp(10.5px, 1.1vw, 11.5px);
       font-weight: 400;
       color: #9cb0c3;
       line-height: 1.4;
@@ -319,7 +311,7 @@
       background: rgba(0, 210, 255, 0.15);
       border: 1px solid #00d2ff;
       color: #00d2ff;
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
       padding: 2px 7px;
       border-radius: 12px;
@@ -330,7 +322,7 @@
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
+      gap: 12px;
       width: 100%;
     }
 
@@ -343,23 +335,23 @@
       border: 1px solid #283a4c;
       color: #ffffff;
       text-decoration: none;
-      padding: 14px 10px;
+      padding: 12px 8px;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      font-size: clamp(11px, 0.9vw, 12px);
+      gap: 6px;
+      font-size: clamp(10.5px, 1.1vw, 11.5px);
       font-weight: 600;
-      min-height: 52px;
+      min-height: 48px;
       transition: all 0.25s ease;
       text-align: center;
     }
 
     .contact-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       transition: transform 0.25s ease;
     }
 
@@ -367,8 +359,8 @@
       background: #00d2ff;
       color: #000000;
       border-color: #00d2ff;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 210, 255, 0.4);
     }
 
     .contact-btn:hover svg {
@@ -383,88 +375,57 @@
       transform: scale(0.96);
     }
 
-    /* Grid do Instagram */
+    /* Grid Oficial de Embeds do Instagram (Totalmente Visível) */
     .instagram-feed-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
       width: 100%;
     }
 
-    @media (max-width: 900px) {
-      .instagram-feed-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 720px) {
+      .instagram-feed-grid { grid-template-columns: 1fr; gap: 12px; }
     }
 
-    @media (max-width: 540px) {
-      .instagram-feed-grid { grid-template-columns: 1fr; }
-    }
-
-    .insta-post-card {
-      background: linear-gradient(145deg, #102130 0%, #0c1824 100%);
-      border: 1px solid #22374a;
+    .insta-embed-card {
+      background: rgba(12, 28, 44, 0.85);
+      border: 1px solid #223b52;
       border-radius: 14px;
-      padding: 16px 14px;
-      text-decoration: none;
-      color: #ffffff;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      text-align: center;
-      gap: 10px;
-      min-height: 135px;
-      transition: all 0.25s ease;
+      width: 100%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .insta-post-card:hover {
-      border-color: #00d2ff;
-      background: linear-gradient(145deg, #152b3d 0%, #0e1e2d 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 22px rgba(0, 210, 255, 0.25);
+    .insta-iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      display: block;
+      background: #000;
     }
 
-    .insta-post-card:active {
-      transform: scale(0.98);
-    }
-
-    .insta-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-    }
-
-    .insta-header svg {
-      width: 16px;
-      height: 16px;
-      fill: #E1306C;
-    }
-
-    .insta-tag {
-      font-size: 9.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .insta-direct-link {
+      width: 100%;
+      padding: 9px;
+      background: #0f2233;
       color: #00d2ff;
-    }
-
-    .insta-title {
-      font-size: clamp(11px, 0.85vw, 12px);
-      font-weight: 600;
-      line-height: 1.45;
-      color: #dbe4ee;
-      text-align: center;
-    }
-
-    .insta-btn-link {
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 700;
-      color: #00d2ff;
-      letter-spacing: 0.5px;
+      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 6px;
+      border-top: 1px solid #223b52;
+      transition: all 0.2s ease;
+    }
+
+    .insta-direct-link:hover {
+      background: #00d2ff;
+      color: #000;
     }
 
     /* Rodapé Institucional */
@@ -472,9 +433,9 @@
       background: rgba(6, 17, 29, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 18px 20px;
+      padding: 16px 18px;
       text-align: center;
-      font-size: clamp(10.5px, 0.8vw, 11.5px);
+      font-size: clamp(10px, 1.1vw, 11px);
       color: #8fa0b5;
       line-height: 1.6;
       width: 100%;
@@ -482,9 +443,9 @@
 
     .corporate-footer h4 {
       color: #ffffff;
-      font-size: clamp(11.5px, 0.9vw, 13px);
+      font-size: clamp(11px, 1.2vw, 12px);
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .footer-highlight {
@@ -518,14 +479,15 @@
       <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D com Miniatura Lateral da Imagem -->
+    <!-- Catálogos 3D -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
       
-      <!-- Card Hurricane com Miniatura -->
+      <!-- Card Hurricane com Miniatura Fallback -->
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
         <div class="catalog-thumb-box">
-          <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" onerror="this.onerror=null; this.src='Hurricane60SL_Catalogo.png';">
+          <img src="Hurricane60SL_Catalogo.jpg" alt="Hurricane 60 SL" 
+               onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.jpeg', 'Hurricane60SL_Catalogo.JPG'])">
         </div>
         <div class="catalog-info">
           <h3>Hurricane 60 SL <span class="badge-3d">3D ↗</span></h3>
@@ -533,10 +495,11 @@
         </div>
       </a>
 
-      <!-- Card Poontoon com Miniatura -->
+      <!-- Card Poontoon com Miniatura Fallback -->
       <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
         <div class="catalog-thumb-box">
-          <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" onerror="this.onerror=null; this.src='Pontoon_Config.png';">
+          <img src="Pontoon_Config.jpg" alt="Poontoon Gran Fish" 
+               onerror="tentarCarregarImagem(this, ['Pontoon_Config.png', 'Pontoon_Config.jpeg', 'Pontoon_Config.JPG'])">
         </div>
         <div class="catalog-info">
           <h3>Linha Poontoon <span class="badge-3d">3D ↗</span></h3>
@@ -559,7 +522,7 @@
 
       <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
         <svg viewBox="0 0 24 24">
-          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -579,99 +542,69 @@
       </a>
     </div>
 
-    <!-- Feed Náutico Corporativo -->
+    <!-- Feed Oficial do Instagram (Iframes Diretos) -->
     <div class="section-title">Últimas do Estaleiro (@granfishoficial)</div>
     <div class="instagram-feed-grid">
       
-      <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Lançamento</span>
-        </div>
-        <div class="insta-title">Design exclusivo & inovação na linha de montagem Gran Fish.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 1 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Engenharia</span>
-        </div>
-        <div class="insta-title">Estrutura de alta performance e navegabilidade testada em água.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 2 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DcGaIQOlRSb/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Acabamento</span>
-        </div>
-        <div class="insta-title">Cores sólidas, metálicas e grafismos náuticos em detalhes.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 3 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/Dbd_u9hFb8e/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Embarcação</span>
-        </div>
-        <div class="insta-title">Projeto náutico projetado para lazer esportivo com segurança.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 4 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DbL8O6SlZyw/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Vídeo Reel</span>
-        </div>
-        <div class="insta-title">Teste na represa com parceiros da pesca esportiva (Tilu Shop).</div>
-        <div class="insta-btn-link">Assistir Vídeo ➔</div>
-      </a>
+      <!-- Post 5 (Reel) -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/reel/DbEXftxpsiq/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Produção</span>
-        </div>
-        <div class="insta-title">Padrão de fabricação e montagem de pontões e consoles.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 6 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/Dan460NFTzL/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Estaleiro</span>
-        </div>
-        <div class="insta-title">Testes hidrodinâmicos e estabilidade das embarcações.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 7 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DaVwi53lZd5/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Tecnologia</span>
-        </div>
-        <div class="insta-title">Sistemas de flutuação e layout de convés modular.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 8 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DaK_6CWlYk6/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Construção Naval</span>
-        </div>
-        <div class="insta-title">Detalhamento dos materiais compostos e ligas navais.</div>
-        <div class="insta-btn-link">Ver Publicação ➔</div>
-      </a>
+      <!-- Post 9 -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/p/DZyJJx7D2hs/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação no Instagram ↗</a>
+      </div>
 
-      <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-post-card">
-        <div class="insta-header">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          <span class="insta-tag">Vídeo Reel</span>
-        </div>
-        <div class="insta-title">Performance do motor e aceleração na água aberta.</div>
-        <div class="insta-btn-link">Assistir Vídeo ➔</div>
-      </a>
+      <!-- Post 10 (Reel) -->
+      <div class="insta-embed-card">
+        <iframe src="https://www.instagram.com/reel/DXMSBBFh8Fm/embed/" class="insta-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+        <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel no Instagram ↗</a>
+      </div>
 
     </div>
 
@@ -690,8 +623,11 @@
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
+    let videoFinalizado = false;
 
     function fecharAbertura() {
+      if (videoFinalizado) return;
+      videoFinalizado = true;
       splashScreen.style.opacity = '0';
       setTimeout(() => {
         splashScreen.style.display = 'none';
@@ -699,9 +635,26 @@
       }, 400);
     }
 
+    // Fecha ao terminar o vídeo, em caso de erro, ou ao clicar na tela
     video.onended = fecharAbertura;
     video.onerror = fecharAbertura;
     splashScreen.addEventListener('click', fecharAbertura);
+
+    // Timeout de segurança: abre a página em no máximo 4.5s mesmo se o vídeo travar
+    setTimeout(fecharAbertura, 4500);
+
+    // Fallback de extensões para carregar imagens locais sem falhas
+    function tentarCarregarImagem(imgEl, extensoes) {
+      if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
+      let t = parseInt(imgEl.dataset.tentativa);
+      if (t < extensoes.length) {
+        imgEl.dataset.tentativa = t + 1;
+        imgEl.src = extensoes[t];
+      } else {
+        imgEl.style.display = 'none';
+        imgEl.parentElement.innerHTML = '<span style="font-size:26px;">🚤</span>';
+      }
+    }
   </script>
 </body>
 </html>
