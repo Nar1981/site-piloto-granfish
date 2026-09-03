@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -15,11 +11,7 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    h1, h2, h3, h4, .tagline, .section-title, .badge-3d, .skip-notice {
-      font-family: 'Montserrat', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body, html {
@@ -34,78 +26,68 @@
       color: #ffffff;
       display: flex;
       justify-content: center;
-      padding: env(safe-area-inset-top, 16px) 12px calc(24px + env(safe-area-inset-bottom, 16px)) 12px;
+      align-items: flex-start;
+      padding: env(safe-area-inset-top, 20px) 12px calc(24px + env(safe-area-inset-bottom, 20px)) 12px;
       overflow-x: hidden;
     }
 
-    /* Tela de Abertura em Vídeo - Otimizada para Celular */
+    /* Tela de Abertura em Vídeo */
     #splash-screen {
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh; height: 100dvh;
       background-color: #000000;
-      z-index: 9999;
+      z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.7s ease;
+      transition: opacity 0.6s ease;
       cursor: pointer;
       overflow: hidden;
     }
 
-    /* O pulo do gato: object-fit contain no mobile para NUNCA cortar as laterais do vídeo */
     #splash-screen video {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: #000;
-    }
-
-    @media (min-aspect-ratio: 16/9) {
-      #splash-screen video {
-        object-fit: cover;
-      }
+      object-fit: contain; /* Garante que o vídeo NUNCA seja cortado no mobile */
+      background: #000000;
     }
 
     .welcome-overlay {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(180deg, rgba(5,22,42,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(5,22,42,0.85) 100%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(5,22,42,0.75) 0%, rgba(0,0,0,0.15) 50%, rgba(5,22,42,0.85) 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px)) 16px;
+      padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px)) 16px;
       pointer-events: none;
-    }
-
-    .welcome-text {
       text-align: center;
-      animation: fadeInDown 1s ease;
     }
 
     .welcome-text h1 {
-      font-size: clamp(20px, 5vw, 28px);
-      font-weight: 900;
-      letter-spacing: 2px;
+      font-size: clamp(17px, 4.5vw, 22px);
+      font-weight: 800;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #00d2ff;
-      text-shadow: 0 4px 16px rgba(0, 210, 255, 0.4);
-      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0, 210, 255, 0.4);
+      margin-bottom: 4px;
     }
 
     .welcome-text p {
-      font-size: clamp(12px, 3.2vw, 15px);
-      font-weight: 500;
+      font-size: clamp(11px, 3vw, 13px);
       color: #e3e8ec;
       letter-spacing: 0.5px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
 
     .skip-notice {
       background: rgba(13, 27, 42, 0.9);
       border: 1px solid #00d2ff;
-      padding: 12px 24px;
-      border-radius: 30px;
+      padding: 10px 22px;
+      border-radius: 25px;
       font-size: 11px;
       font-weight: 700;
       color: #00d2ff;
@@ -114,7 +96,7 @@
       backdrop-filter: blur(8px);
       box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
       pointer-events: auto;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .skip-notice:active {
@@ -123,20 +105,15 @@
       color: #000;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     /* Container Principal */
     .main-container {
       background: rgba(11, 23, 38, 0.94);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(0, 210, 255, 0.28);
-      border-radius: 20px;
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      border-radius: 18px;
       padding: 24px 16px;
-      max-width: 860px;
+      max-width: 760px;
       width: 100%;
       text-align: center;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
@@ -145,7 +122,7 @@
       visibility: hidden;
       opacity: 0;
       flex-direction: column;
-      gap: 22px;
+      gap: 20px;
       margin: auto;
       transition: opacity 0.5s ease, visibility 0.5s ease;
     }
@@ -159,49 +136,53 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 18px;
+      padding-bottom: 16px;
     }
 
     .logo {
-      max-width: clamp(140px, 40vw, 190px);
-      filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.6));
+      max-width: clamp(130px, 35vw, 170px);
+      filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.6));
     }
 
     .tagline {
-      font-size: clamp(11px, 2.8vw, 13px);
+      font-size: clamp(10px, 2.5vw, 12px);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: #00d2ff;
-      text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+      text-align: center;
     }
 
     .section-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       color: #8fa0b5;
-      text-align: left;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
+      text-align: center;
     }
 
+    .section-title::before,
     .section-title::after {
       content: "";
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, rgba(0, 210, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 100%);
+      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.4), transparent);
     }
 
-    /* Catálogos 3D */
+    /* EFEITO DESTAQUE NOS MENUS (Overlay Shimmer + Pulso) */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      width: 100%;
     }
 
     @media (max-width: 600px) {
@@ -210,49 +191,76 @@
 
     .catalog-card {
       position: relative;
-      background: linear-gradient(145deg, #162b3d 0%, #0d1e2c 100%);
-      border: 1px solid rgba(0, 210, 255, 0.3);
+      background: linear-gradient(145deg, #132738 0%, #0c1a27 100%);
+      border: 1px solid rgba(0, 210, 255, 0.35);
       border-radius: 14px;
-      padding: 18px 16px;
+      padding: 18px 14px;
       text-decoration: none;
       color: #ffffff;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      text-align: left;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
       overflow: hidden;
-      transition: all 0.25s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 210, 255, 0.05);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Feixe de Luz Transversal Animado */
+    .catalog-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -150%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.2), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.75s ease;
+      pointer-events: none;
+    }
+
+    .catalog-card:hover::before {
+      left: 150%;
+    }
+
+    .catalog-card:hover {
+      border-color: #00d2ff;
+      background: linear-gradient(145deg, #1a354c 0%, #102436 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0, 210, 255, 0.3), 0 0 18px rgba(0, 210, 255, 0.2);
     }
 
     .catalog-card:active {
       transform: scale(0.98);
-      border-color: #00d2ff;
     }
 
     .catalog-card h3 {
-      font-size: clamp(14px, 3.8vw, 16px);
+      font-size: clamp(13px, 3.4vw, 15px);
       font-weight: 800;
       color: #ffffff;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
     }
 
     .catalog-card p {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 400;
-      color: #a2b1c2;
+      color: #9cb0c3;
       line-height: 1.4;
+      text-align: center;
     }
 
     .badge-3d {
-      background: rgba(0, 210, 255, 0.12);
+      background: rgba(0, 210, 255, 0.15);
       border: 1px solid #00d2ff;
       color: #00d2ff;
       font-size: 9px;
       font-weight: 800;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 12px;
       white-space: nowrap;
     }
@@ -261,7 +269,8 @@
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 10px;
+      width: 100%;
     }
 
     @media (max-width: 580px) {
@@ -269,11 +278,11 @@
     }
 
     .contact-btn {
-      background: #15222f;
-      border: 1px solid #2b3d4f;
+      background: #14202c;
+      border: 1px solid #283a4c;
       color: #ffffff;
       text-decoration: none;
-      padding: 12px 8px;
+      padding: 10px 8px;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
@@ -283,25 +292,37 @@
       font-size: 11px;
       font-weight: 600;
       min-height: 48px;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
+      text-align: center;
     }
 
     .contact-btn svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.25s ease;
     }
 
-    .contact-btn:active {
+    .contact-btn:hover {
       background: #00d2ff;
-      color: #000;
-      transform: scale(0.96);
+      color: #000000;
+      border-color: #00d2ff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 210, 255, 0.35);
     }
 
-    .contact-btn:active svg path {
+    .contact-btn:hover svg {
+      transform: scale(1.1);
+    }
+
+    .contact-btn:hover svg path {
       fill: #000000 !important;
     }
 
-    /* Grid do Instagram para Celular */
+    .contact-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Grid do Instagram */
     .instagram-feed-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -316,9 +337,10 @@
     .insta-embed-cell {
       display: flex;
       justify-content: center;
+      align-items: flex-start;
       width: 100%;
-      min-height: 440px;
-      background: rgba(14, 33, 53, 0.4);
+      min-height: 400px;
+      background: rgba(14, 33, 53, 0.45);
       border-radius: 12px;
       border: 1px solid #273b4d;
       padding: 4px;
@@ -338,18 +360,19 @@
       background: rgba(6, 17, 29, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 16px;
-      text-align: left;
-      font-size: 11px;
+      padding: 16px 14px;
+      text-align: center;
+      font-size: 10.5px;
       color: #8fa0b5;
       line-height: 1.6;
     }
 
     .corporate-footer h4 {
       color: #ffffff;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       margin-bottom: 4px;
+      letter-spacing: 0.5px;
     }
 
     .footer-highlight {
@@ -380,20 +403,20 @@
     <!-- Cabeçalho -->
     <div class="brand-header">
       <img src="logo GF.png" alt="Gran Fish" class="logo">
-      <div class="tagline">Engenharia Naval & Embarcações</div>
+      <div class="tagline">Engenharia Naval & Embarcações de Alto Padrão</div>
     </div>
 
-    <!-- Catálogos 3D -->
+    <!-- Catálogos 3D com Efeito de Destaque -->
     <div class="section-title">Modelos & Configuradores 3D</div>
     <div class="catalogs-grid">
       <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
-        <h3>Hurricane 60 SL <span class="badge-3d">3D Interativo ↗</span></h3>
-        <p>Configurador completo de cascos, tintas marítimas e grafismos decalque em tempo real.</p>
+        <h3>Hurricane 60 SL <span class="badge-3d">3D ↗</span></h3>
+        <p>Configurador interativo de cascos, tintas marítimas e decalques em tempo real.</p>
       </a>
 
       <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
-        <h3>Linha Poontoon <span class="badge-3d">3D Interativo ↗</span></h3>
-        <p>Personalize faixas de acabamento, paleta oceânica, pisos náuticos e resolução de textura.</p>
+        <h3>Linha Poontoon <span class="badge-3d">3D ↗</span></h3>
+        <p>Personalize faixas de acabamento, paleta oceânica e texturas de piso em alta resolução.</p>
       </a>
     </div>
 
@@ -410,7 +433,7 @@
 
       <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
         <svg viewBox="0 0 24 24">
-          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
+          <path fill="#E1306C" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -487,24 +510,38 @@
 
   </div>
 
-  <script async src="https://www.instagram.com/embed.js"></script>
-
   <script>
     const video = document.getElementById('intro-video');
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
+    let instagramCarregado = false;
+
+    function carregarScriptInstagram() {
+      if (instagramCarregado) {
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+        return;
+      }
+      instagramCarregado = true;
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = "https://www.instagram.com/embed.js";
+      script.onload = () => {
+        if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+      };
+      document.body.appendChild(script);
+    }
 
     function fecharAbertura() {
       splashScreen.style.opacity = '0';
       setTimeout(() => {
         splashScreen.style.display = 'none';
         mainContent.classList.add('visible');
-
-        // Dispara a renderização dos embeds da Meta no mobile
-        if (window.instgrm && window.instgrm.Embeds) {
-          window.instgrm.Embeds.process();
-        }
-      }, 600);
+        carregarScriptInstagram();
+      }, 500);
     }
 
     video.onended = fecharAbertura;
