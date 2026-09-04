@@ -315,7 +315,7 @@
     .scrollable-content.visible { display: block; opacity: 1; }
 
     .main-container {
-      background: rgba(255, 255, 255, 0.95); 
+      background: rgba(255, 255, 255, 0.65); 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(0, 0, 0, 0.1);
@@ -430,18 +430,18 @@
       transition: all 0.3s ease;
     }
 
+    /* Caixa da miniatura com fundo 100% transparente */
     .catalog-thumb-box {
       width: 140px;
       min-width: 140px;
       height: 95px;
-      background: rgba(0, 0, 0, 0.04); 
+      background: transparent; 
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
     }
 
     @media (max-width: 440px) {
@@ -449,16 +449,14 @@
       .catalog-thumb-box { width: 100%; height: 160px; background: transparent; }
     }
 
-    /* IMAGENS CORRIGIDAS: object-fit puro, sem mix-blend para não interferir no PNG */
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      background: transparent;
       border-radius: 8px;
       transition: transform 0.35s ease;
       display: block;
-      position: relative;
-      z-index: 3;
     }
 
     .catalog-info {
@@ -610,7 +608,7 @@
 <body>
 
   <!-- IMAGEM DE FUNDO FIXA -->
-  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" decoding="async" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
+  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
   <div class="fixed-bg-overlay"></div>
 
   <!-- ABA LATERAL DO MENU MOBILE -->
@@ -630,7 +628,7 @@
 
   <!-- ABERTURA COM VÍDEO -->
   <div id="splash-screen" title="Toque para entrar">
-    <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
+    <video id="intro-video" autoplay muted playsinline webkit-playsinline>
       <source src="logoanimada.mp4" type="video/mp4">
     </video>
     <div class="welcome-overlay">
@@ -645,8 +643,8 @@
   <!-- CABEÇALHO SUPERIOR (Desktop & Mobile) -->
   <div class="header-container">
     <div class="header-logo-box">
-      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" decoding="async">
-      <span class="header-text">Engenharia Naval</span>
+      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish">
+      <span class="header-text">Engenharia Naval & Embarcações</span>
     </div>
     
     <!-- Menu Centralizado para Computador -->
@@ -684,15 +682,14 @@
         </div>
       </section>
 
-      <!-- Configuradores 3D -->
+      <!-- Configuradores 3D com fundo transparente -->
       <div style="width: 100%;" id="modelos-3d">
         <div class="section-title" style="margin-bottom: 16px;">Modelos & Configuradores 3D</div>
         
         <div class="catalogs-grid">
           <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <!-- CÓDIGO DA IMAGEM ATUALIZADO COM OS NOMES EXATOS EM .PNG -->
-              <img src="Hurricane60SL_Catalogo.png" alt="Hurricane 60 SL" decoding="async"
+              <img src="Hurricane60SL_Catalogo.png" alt="Hurricane 60 SL" 
                    onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.jpg', 'Hurricane60SL_Catalogo.JPG', 'hurricane60sl_catalogo.png'])">
             </div>
             <div class="catalog-info">
@@ -707,8 +704,7 @@
 
           <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
             <div class="catalog-thumb-box">
-              <!-- CÓDIGO DA IMAGEM ATUALIZADO COM OS NOMES EXATOS EM .PNG -->
-              <img src="pontoon_config.png" alt="Poontoon Gran Fish" decoding="async"
+              <img src="pontoon_config.png" alt="Poontoon Gran Fish" 
                    onerror="tentarCarregarImagem(this, ['Pontoon_Config.png', 'Pontoon_Config.jpg', 'pontoon_config.jpg'])">
             </div>
             <div class="catalog-info">
@@ -902,7 +898,7 @@
       }
     }, {passive: true});
 
-    // --- Lógica de Abertura & Lazy Load (Otimização Segura) ---
+    // --- Lógica de Abertura & Lazy Load ---
     function fecharAbertura() {
       if (videoFinalizado) return;
       videoFinalizado = true;
