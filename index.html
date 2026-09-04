@@ -2,19 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gran Fish | Engenharia & Construção de Embarcações</title>
-
-  <!-- Prioridade máxima para carregar as imagens 3D primeiro -->
-  <link rel="preload" as="image" href="Hurricane60SL_Catalogo.png" type="image/png" fetchpriority="high">
-  <link rel="preload" as="image" href="Pontoon_Config.png" type="image/png" fetchpriority="high">
-
-  <!-- Otimizações de Conexão Seguras -->
-  <link rel="preconnect" href="https://www.instagram.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.instagram.com">
 
   <style>
     * {
@@ -30,15 +19,15 @@
       width: 100%;
       height: 100%;
       height: 100dvh;
-      background-color: transparent; 
-      color: #ffffff;
+      background-color: #0b1726; 
+      color: #333333;
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
     /* =========================================
-       FUNDO ESCURECIDO
+       FUNDO ESCURECIDO (IMAGEM FIXA + OVERLAY)
        ========================================= */
     .fixed-bg {
       position: fixed;
@@ -59,7 +48,7 @@
     }
 
     /* =========================================
-       TELA DE ABERTURA (SPLASH)
+       TELA DE ABERTURA
        ========================================= */
     #splash-screen {
       position: fixed;
@@ -128,10 +117,8 @@
       transition: all 0.25s ease;
     }
 
-    .skip-notice:hover { transform: scale(1.04); background: #00d2ff; color: #000; }
-
     /* =========================================
-       CABEÇALHO FIXO E NAVEGAÇÃO
+       CABEÇALHO FIXO
        ========================================= */
     .header-container {
       width: 100%;
@@ -190,7 +177,6 @@
       fill: #00d2ff;
       transition: transform 0.2s;
     }
-    .mobile-menu-btn:active svg { transform: scale(0.9); }
 
     @media (min-width: 980px) {
       .header-container { padding: 12px 32px; }
@@ -239,7 +225,7 @@
         transition: transform 0.2s ease;
         white-space: nowrap;
       }
-      .header-cta:hover { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0, 210, 255, 0.6); }
+      .header-cta:hover { transform: scale(1.04); }
     }
 
     /* =========================================
@@ -254,10 +240,7 @@
       transition: opacity 0.3s ease;
     }
 
-    .sidebar-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
 
     .sidebar-menu {
       position: fixed; top: 0; right: -280px; width: 260px; height: 100vh;
@@ -279,25 +262,24 @@
       margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;
     }
 
-    .sidebar-header span { font-size: 16px; font-weight: 800; color: #00d2ff; text-transform: uppercase; letter-spacing: 1px; }
+    .sidebar-header span { font-size: 16px; font-weight: 800; color: #00d2ff; text-transform: uppercase; }
     
     .sidebar-header button { 
       background: none; border: none; color: #ffffff; font-size: 24px; 
-      cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s;
+      cursor: pointer; padding: 4px; line-height: 1;
     }
-    .sidebar-header button:hover { color: #00d2ff; }
 
     .sidebar-links { display: flex; flex-direction: column; gap: 24px; }
     
     .sidebar-links a {
       color: #dce5ee; text-decoration: none; font-size: 14px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s;
+      text-transform: uppercase; letter-spacing: 1.5px;
     }
     
     .sidebar-links a:hover { color: #00d2ff; }
 
     /* =========================================
-       ÁREA DE CONTEÚDO PRINCIPAL
+       ÁREA CENTRAL E CORPO PRINCIPAL
        ========================================= */
     .scrollable-content {
       flex: 1;
@@ -305,26 +287,21 @@
       position: relative;
       background: transparent;
       overflow-y: auto;
-      display: none; 
-      padding: clamp(16px, 3vh, 30px) 12px calc(65px + env(safe-area-inset-bottom, 0px)) 12px;
+      display: block;
+      padding: clamp(16px, 3vh, 30px) 12px calc(75px + env(safe-area-inset-bottom, 0px)) 12px;
       -webkit-overflow-scrolling: touch;
-      opacity: 0;
       z-index: 10;
-      transition: opacity 0.4s ease;
     }
 
-    .scrollable-content.visible { display: block; opacity: 1; }
-
+    /* Container Principal em Branco Puro */
     .main-container {
-      background: rgba(255, 255, 255, 0.65); 
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: #ffffff; 
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 20px;
       padding: clamp(24px, 4vw, 40px);
       max-width: 980px;
       width: 100%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       display: flex;
       flex-direction: column;
       gap: 36px;
@@ -353,8 +330,8 @@
     }
 
     .hero-badge {
-      background: rgba(28, 49, 68, 0.1);
-      border: 1px solid rgba(28, 49, 68, 0.3);
+      background: rgba(28, 49, 68, 0.08);
+      border: 1px solid rgba(28, 49, 68, 0.2);
       color: #1c3144;
       padding: 6px 16px;
       border-radius: 20px;
@@ -378,7 +355,7 @@
       font-size: clamp(13px, 1.4vw, 16px);
       color: #475569;
       line-height: 1.6;
-      max-width: 600px;
+      max-width: 650px;
     }
 
     .section-title {
@@ -404,9 +381,7 @@
       background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
     }
 
-    /* =========================================
-       CATÁLOGO 3D (TRANSPARÊNCIA E PRIORIDADE)
-       ========================================= */
+    /* Cards 3D Livres (Sem Box) */
     .catalogs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -436,41 +411,30 @@
       width: 140px;
       min-width: 140px;
       height: 95px;
-      background: transparent !important;
-      border: none;
+      background: transparent; 
       border-radius: 12px;
-      overflow: visible;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      position: relative;
-      z-index: 2;
     }
 
     @media (max-width: 440px) {
       .catalog-card { flex-direction: column; align-items: flex-start; }
-      .catalog-thumb-box { width: 100%; height: 160px; background: transparent !important; }
+      .catalog-thumb-box { width: 100%; height: 160px; }
     }
 
     .catalog-thumb-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background-color: transparent !important;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
-      transition: transform 0.35s ease, filter 0.35s ease;
+      background: transparent;
+      border-radius: 8px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+      transition: transform 0.35s ease;
       display: block;
-      position: relative;
-      z-index: 3;
     }
-
-    .catalog-card:hover { transform: translateY(-3px); }
-    .catalog-card:hover .catalog-thumb-box img { 
-      transform: scale(1.08); 
-      filter: drop-shadow(0 6px 14px rgba(0, 210, 255, 0.35));
-    }
-    .catalog-card:active { transform: scale(0.98); }
 
     .catalog-info {
       display: flex;
@@ -481,6 +445,9 @@
       flex: 1;
       min-width: 0;
     }
+
+    .catalog-card:hover { transform: translateY(-3px); }
+    .catalog-card:hover .catalog-thumb-box img { transform: scale(1.06); }
 
     .catalog-card h3 {
       font-size: clamp(14px, 1.6vw, 18px);
@@ -500,7 +467,7 @@
     }
 
     .specs-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-    .spec-tag { background: #1e3a5f; color: #dce5ee; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+    .spec-tag { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; }
     .badge-3d { background: rgba(0, 210, 255, 0.15); border: 1px solid #00d2ff; color: #0070ff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 12px; white-space: nowrap; }
 
     /* Diferenciais */
@@ -508,12 +475,12 @@
     @media (max-width: 680px) { .diferenciais-grid { grid-template-columns: 1fr; } }
 
     .dif-card {
-      background: rgba(255, 255, 255, 0.6);
+      background: #f8fafc;
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 14px;
       padding: 20px;
       text-align: left;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
     .dif-card h3 { font-size: 13px; font-weight: 800; color: #1c3144; text-transform: uppercase; margin-bottom: 6px; }
     .dif-card p { font-size: 12px; color: #475569; line-height: 1.5; }
@@ -538,9 +505,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .pdf-catalog-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5); background: linear-gradient(145deg, #33deff 0%, #338dff 100%); }
-    .pdf-catalog-btn:active { transform: scale(0.98); }
-    .pdf-catalog-btn svg { width: 20px; height: 20px; fill: #ffffff; }
+    .pdf-catalog-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 112, 255, 0.5); }
 
     /* Feed do Instagram */
     .instagram-feed-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; }
@@ -549,24 +514,24 @@
     @media (max-width: 480px) { .instagram-feed-grid { grid-template-columns: 1fr; } }
 
     .insta-embed-card {
-      background: rgba(12, 28, 44, 0.95);
-      border: 1px solid #223b52;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 14px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
     .insta-iframe { width: 100%; height: 480px; border: none; display: block; background: #000; }
     .insta-direct-link {
-      width: 100%; padding: 10px; background: #0f2233; color: #00d2ff; font-size: 11px;
-      font-weight: 700; text-decoration: none; display: flex; align-items: center;
-      justify-content: center; gap: 6px; border-top: 1px solid #223b52; transition: all 0.2s ease;
-      text-transform: uppercase; letter-spacing: 0.5px;
+      width: 100%; padding: 12px; background: #f8fafc; color: #0070ff; font-size: 11px;
+      font-weight: 800; text-decoration: none; display: flex; align-items: center;
+      justify-content: center; gap: 6px; border-top: 1px solid #e2e8f0; transition: all 0.2s ease;
+      text-transform: uppercase;
     }
-    .insta-direct-link:hover { background: #00d2ff; color: #000; }
+    .insta-direct-link:hover { background: #0070ff; color: #ffffff; }
 
     /* =========================================
        RODAPÉ RETRÁTIL
@@ -595,268 +560,323 @@
     @media (max-width: 640px) { .contact-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
 
     .contact-btn {
-      background: rgba(20, 32, 44, 0.8); border: 1px solid rgba(40, 58, 76, 0.8); color: #ffffff;
-      text-decoration: none; padding: 12px 6px; border-radius: 12px; display: flex; flex-direction: column;
+      background: #14202c; border: 1px solid #283a4c; color: #ffffff;
+      text-decoration: none; padding: 10px 6px; border-radius: 10px; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px; font-size: clamp(10px, 1.1vw, 11px);
-      font-weight: 600; min-height: 52px; transition: all 0.25s ease; text-align: center;
+      font-weight: 600; min-height: 44px; transition: all 0.25s ease; text-align: center;
     }
-    .contact-btn svg { width: 22px; height: 22px; transition: transform 0.25s ease; }
+    .contact-btn svg { width: 18px; height: 18px; fill: #ffffff; }
     .contact-btn:hover { background: #00d2ff; color: #000000; border-color: #00d2ff; transform: translateY(-2px); }
-    .contact-btn:hover svg { transform: scale(1.1); }
-    .contact-btn:hover svg path { fill: #000000 !important; }
-    .contact-btn:active { transform: scale(0.96); }
+    .contact-btn:hover svg { fill: #000000; }
 
     .corporate-footer {
-      background: rgba(6, 17, 29, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px;
-      padding: 12px 14px; text-align: center; font-size: clamp(9px, 0.9vw, 10.5px); color: #8fa0b5; line-height: 1.5;
+      background: #f8fafc; border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 10px;
+      padding: 12px 14px; text-align: center; font-size: clamp(9px, 0.9vw, 10.5px); color: #475569; line-height: 1.5;
       width: 100%; max-width: 980px; margin: 0 auto;
     }
-    .corporate-footer h4 { color: #ffffff; font-size: clamp(10.5px, 1.1vw, 11.5px); font-weight: 700; margin-bottom: 2px; }
+    .corporate-footer h4 { color: #1c3144; font-size: clamp(10.5px, 1.1vw, 11.5px); font-weight: 700; margin-bottom: 2px; }
   </style>
 </head>
 <body>
 
   <!-- IMAGEM DE FUNDO FIXA -->
-  <img class="fixed-bg" src="background2.jpg" alt="Fundo Marítimo Gran Fish" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.png', 'background.jpg'])">
+  <img class="fixed-bg" src="background2.png" alt="Fundo Marítimo" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.jpg', 'background.png'])">
   <div class="fixed-bg-overlay"></div>
 
-  <!-- TELA DE ABERTURA / SPLASH SCREEN -->
-  <div id="splash-screen" onclick="fecharSplash()">
-    <video autoplay muted playsinline loop>
-      <source src="intro.mp4" type="video/mp4">
+  <!-- ABA LATERAL DO MENU MOBILE -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-menu" id="sidebar-menu">
+    <div class="sidebar-header">
+      <span>Menu</span>
+      <button onclick="closeSidebar()">✕</button>
+    </div>
+    <div class="sidebar-links">
+      <a href="#modelos-3d" onclick="closeSidebar()">Modelos 3D</a>
+      <a href="#diferenciais" onclick="closeSidebar()">Estaleiro</a>
+      <a href="#instagram-feed" onclick="closeSidebar()">Instagram</a>
+      <a href="#" onclick="closeSidebar(); toggleFooter(); return false;">Contato</a>
+    </div>
+  </div>
+
+  <!-- ABERTURA COM VÍDEO -->
+  <div id="splash-screen" title="Toque para entrar">
+    <video id="intro-video" autoplay muted playsinline webkit-playsinline>
+      <source src="logoanimada.mp4" type="video/mp4">
     </video>
     <div class="welcome-overlay">
       <div class="welcome-text">
-        <h1>Gran Fish</h1>
-        <p>Engenharia e Construção Naval de Alto Nível</p>
+        <h1>Bem-vindo à Gran Fish</h1>
+        <p>Inovação, Segurança e Engenharia Náutica</p>
       </div>
-      <button class="skip-notice" type="button" onclick="fecharSplash()">Entrar no Portal</button>
+      <div class="skip-notice">Acessar Catálogo ➔</div>
     </div>
   </div>
 
   <!-- CABEÇALHO SUPERIOR -->
-  <header class="header-container">
+  <div class="header-container">
     <div class="header-logo-box">
-      <img src="logo.png" alt="Gran Fish Logo" class="header-logo" onerror="tentarCarregarImagem(this, ['logo.webp', 'assets/logo.png', 'img/logo.png'])">
-      <span class="header-text">Gran Fish</span>
-    </div>
-
-    <nav class="header-nav">
-      <a href="#modelos">Modelos 3D</a>
-      <a href="#diferenciais">Diferenciais</a>
-      <a href="#catalogo">Catálogo PDF</a>
-      <a href="#social">Instagram</a>
-    </nav>
-
-    <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="header-cta">Falar com Consultor</a>
-
-    <div class="mobile-menu-btn" onclick="toggleSidebar()">
-      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-    </div>
-  </header>
-
-  <!-- SIDEBAR MOBILE -->
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-  <aside class="sidebar-menu" id="sidebar-menu">
-    <div class="sidebar-header">
-      <span>Menu</span>
-      <button onclick="toggleSidebar()">&times;</button>
-    </div>
-    <div class="sidebar-links">
-      <a href="#modelos" onclick="toggleSidebar()">Modelos 3D</a>
-      <a href="#diferenciais" onclick="toggleSidebar()">Diferenciais</a>
-      <a href="#catalogo" onclick="toggleSidebar()">Catálogo PDF</a>
-      <a href="#social" onclick="toggleSidebar()">Instagram</a>
-      <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" style="color: #00d2ff;">Atendimento WhatsApp</a>
-    </div>
-  </aside>
-
-  <!-- ÁREA DE ROLAGEM PRINCIPAL -->
-  <main class="scrollable-content" id="main-content">
-    <div class="main-container">
-
-      <!-- HERO -->
-      <section class="hero-section">
-        <div class="hero-content">
-          <span class="hero-badge">Engenharia de Precisão</span>
-          <h2>Inovação, estabilidade e conforto em alto-mar.</h2>
-          <p>Conheça nossas embarcações desenvolvidas com processos avançados de hidrodinâmica, estrutura reforçada e personalização total de layout.</p>
-        </div>
-      </section>
-
-      <!-- MODELOS 3D (TRANSPARÊNCIA E PRIORIDADE LOCAL) -->
-      <section id="modelos">
-        <div class="section-title">Modelos & Visualizações Interativas</div>
-        <div class="catalogs-grid" style="margin-top: 20px;">
-
-          <!-- Card 1: Hurricane 60 SL -->
-          <a href="#catalogo-hurricane" class="catalog-card">
-            <div class="catalog-thumb-box">
-              <img 
-                src="Hurricane60SL_Catalogo.png" 
-                alt="Hurricane 60 SL" 
-                loading="eager" 
-                fetchpriority="high"
-                decoding="sync"
-                onerror="tentarCarregarImagem(this, ['img/Hurricane60SL_Catalogo.png', 'assets/Hurricane60SL_Catalogo.png', 'Hurricane60SL_Catalogo.webp'])"
-              >
-            </div>
-            <div class="catalog-info">
-              <h3>Hurricane 60 SL <span class="badge-3d">3D Interativo</span></h3>
-              <p>Linha esportiva de alto desempenho oceânico com casco em V profundo e cabine otimizada.</p>
-              <div class="specs-list">
-                <span class="spec-tag">60 Pés</span>
-                <span class="spec-tag">Alta Performance</span>
-              </div>
-            </div>
-          </a>
-
-          <!-- Card 2: Pontoon Config -->
-          <a href="#catalogo-pontoon" class="catalog-card">
-            <div class="catalog-thumb-box">
-              <img 
-                src="Pontoon_Config.png" 
-                alt="Pontoon Configuração" 
-                loading="eager" 
-                fetchpriority="high"
-                decoding="sync"
-                onerror="tentarCarregarImagem(this, ['img/Pontoon_Config.png', 'assets/Pontoon_Config.png', 'Pontoon_Config.webp'])"
-              >
-            </div>
-            <div class="catalog-info">
-              <h3>Pontoon Custom <span class="badge-3d">3D Interativo</span></h3>
-              <p>Estrutura modular de pontoon para lazer e navegabilidade estável em águas abrigadas.</p>
-              <div class="specs-list">
-                <span class="spec-tag">Modular</span>
-                <span class="spec-tag">Lazer / Família</span>
-              </div>
-            </div>
-          </a>
-
-        </div>
-      </section>
-
-      <!-- DIFERENCIAIS -->
-      <section id="diferenciais">
-        <div class="section-title">Diferenciais Construtivos</div>
-        <div class="diferenciais-grid" style="margin-top: 20px;">
-          <div class="dif-card">
-            <h3>Construção Estrutural</h3>
-            <p>Laminação com materiais de última geração, garantindo rigidez, leveza e alta durabilidade sob esforço constante.</p>
-          </div>
-          <div class="dif-card">
-            <h3>Eficiência Hidrodinâmica</h3>
-            <p>Cascos calculados para menor arrasto, proporcionando planeio rápido e economia substancial de combustível.</p>
-          </div>
-          <div class="dif-card">
-            <h3>Customização Completa</h3>
-            <p>Opções de acabamentos nobres, instrumentação moderna e configurações exclusivas para pesca ou passeio.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CATÁLOGO PDF -->
-      <section id="catalogo">
-        <a href="catalogo.pdf" target="_blank" download class="pdf-catalog-btn">
-          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          Baixar Catálogo Técnico Completo (PDF)
-        </a>
-      </section>
-
-      <!-- REDES SOCIAIS -->
-      <section id="social">
-        <div class="section-title">Acompanhe no Instagram</div>
-        <div class="instagram-feed-grid" style="margin-top: 20px;">
-          <div class="insta-embed-card">
-            <div style="padding: 40px 20px; text-align: center; color: #8fa0b5; font-size: 13px;">
-              Bastidores e Testes de Água
-            </div>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Ver no Instagram</a>
-          </div>
-          <div class="insta-embed-card">
-            <div style="padding: 40px 20px; text-align: center; color: #8fa0b5; font-size: 13px;">
-              Entregas e Navegações
-            </div>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Ver no Instagram</a>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <!-- RODAPÉ RETRÁTIL -->
-  <footer class="panel-controls" id="panel-controls">
-    <div class="footer-handle" onclick="toggleFooterPanel()">
-      <div class="handle-bar"></div>
-      <span class="handle-text">Canais de Contato & Informações</span>
+      <img src="logo GF.png" class="header-logo" alt="Logo Gran Fish" onerror="tentarCarregarImagem(this, ['logo%20GF.png', 'logo.png', 'logo_GF.png'])">
+      <span class="header-text">Engenharia Naval & Embarcações</span>
     </div>
     
-    <div class="panel-controls-inner">
+    <nav class="header-nav">
+      <a href="#modelos-3d">Modelos</a>
+      <a href="#diferenciais">Estaleiro</a>
+      <a href="#instagram-feed">Instagram</a>
+      <a href="#" onclick="toggleFooter(); return false;">Contato</a>
+    </nav>
+    
+    <a href="https://wa.me/5535999999999" target="_blank" class="header-cta">
+      Falar com o estaleiro
+    </a>
+
+    <div class="mobile-menu-btn" onclick="openSidebar()">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ÁREA CENTRAL DO SITE (CORPO) -->
+  <div class="scrollable-content" id="main-content">
+    <div class="main-container">
+
+      <!-- Seção Inicial Hero -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <span class="hero-badge">Engenharia naval brasileira</span>
+          <h2>Embarcações projetadas para durar. Configuradas do seu jeito.</h2>
+          <p>Inovação, estabilidade e conforto em alto-mar. Conheça nossas embarcações desenvolvidas com processos avançados de hidrodinâmica, estrutura reforçada e personalização total de layout.</p>
+        </div>
+      </section>
+      
+      <!-- Catálogos 3D Livres e Transparentes -->
+      <div style="width: 100%;" id="modelos-3d">
+        <div class="section-title">Modelos & Configuradores 3D</div>
+        
+        <div class="catalogs-grid">
+          <a href="h60sltest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
+            <div class="catalog-thumb-box">
+              <img src="Hurricane60SL_Catalogo.png" alt="Hurricane 60 SL" 
+                   onerror="tentarCarregarImagem(this, ['Hurricane60SL_Catalogo.jpg', 'Hurricane60SL_Catalogo.PNG', 'Hurricane60SL_Catalogo.jpeg'])">
+            </div>
+            <div class="catalog-info">
+              <h3>Hurricane 60 SL <span class="badge-3d">3D ↗</span></h3>
+              <p>Configurador interativo de cascos, tintas marítimas e decalques em tempo real.</p>
+              <div class="specs-list">
+                <span class="spec-tag">60 pés</span>
+                <span class="spec-tag">Casco laminado</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="poontoontest4.html" target="_blank" rel="noopener noreferrer" class="catalog-card">
+            <div class="catalog-thumb-box">
+              <img src="pontoon_config.png" alt="Poontoon Gran Fish" 
+                   onerror="tentarCarregarImagem(this, ['Pontoon_Config.png', 'Pontoon_Config.jpg', 'pontoon_config.jpg'])">
+            </div>
+            <div class="catalog-info">
+              <h3>Linha Pontoon <span class="badge-3d">3D ↗</span></h3>
+              <p>Personalize faixas de acabamento, paleta oceânica e texturas de piso.</p>
+              <div class="specs-list">
+                <span class="spec-tag">Lazer & pesca</span>
+                <span class="spec-tag">Alumínio naval</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Botão de Catálogo em PDF -->
+      <a href="catalogo.pdf" target="_blank" rel="noopener noreferrer" class="pdf-catalog-btn">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #ffffff;">
+          <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 6V9c0-.55-.45-1-1-1h-2v5h2c.55 0 1-.45 1-1zm-2-3h1v3h-1V9zm4 2h1v-1h-1V9h1V8h-2v5h1v-2zM11 9H9v5h1v-2h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-1 2h1v-1h-1v1z"/>
+        </svg>
+        Conheça nosso Catálogo em PDF
+      </a>
+
+      <!-- Diferenciais do Estaleiro -->
+      <div style="width: 100%;" id="diferenciais">
+        <div class="section-title">Por que a Gran Fish</div>
+        <div class="diferenciais-grid">
+          <div class="dif-card">
+            <h3>Engenharia própria</h3>
+            <p>Projetos hidrodinâmicos desenvolvidos e testados internamente.</p>
+          </div>
+          <div class="dif-card">
+            <h3>Acabamento sob medida</h3>
+            <p>Cores, decalques e materiais definidos por você, item a item.</p>
+          </div>
+          <div class="dif-card">
+            <h3>Pós-venda direto</h3>
+            <p>Assistência falando com quem construiu a sua embarcação.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed do Instagram (10 Publicações Originais Restauradas) -->
+      <div style="width: 100%;" id="instagram-feed">
+        <div class="section-title" style="margin-top: 10px;">Últimas do Estaleiro (@granfishoficial)</div>
+        <div class="instagram-feed-grid">
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DcmESjDFT3_/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DcmESjDFT3_/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DcGaIQOlRSb/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DcGaIQOlRSb/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/Dbd_u9hFb8e/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/Dbd_u9hFb8e/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DbL8O6SlZyw/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DbL8O6SlZyw/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/reel/DbEXftxpsiq/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/reel/DbEXftxpsiq/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/Dan460NFTzL/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/Dan460NFTzL/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DaVwi53lZd5/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DaVwi53lZd5/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DaK_6CWlYk6/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DaK_6CWlYk6/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/p/DZyJJx7D2hs/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/p/DZyJJx7D2hs/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Abrir Publicação ↗</a>
+          </div>
+          <div class="insta-embed-card">
+            <iframe data-src="https://www.instagram.com/reel/DXMSBBFh8Fm/embed/" class="insta-iframe lazy-iframe" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+            <a href="https://www.instagram.com/reel/DXMSBBFh8Fm/" target="_blank" rel="noopener noreferrer" class="insta-direct-link">Assistir Reel ↗</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="corporate-footer">
+        <h4>Gran Fish Indústria e Comércio de Embarcações LTDA</h4>
+        <p><b>Nome Fantasia:</b> Gran Fish | <b>CNPJ:</b> 59.593.605/0001-86 | <b>Tipo:</b> LTDA</p>
+        <p><b>Sede:</b> Rua das Primaveras, 50 — Pratápolis - MG, CEP 37.970-000</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RODAPÉ RETRÁTIL -->
+  <div class="panel-controls" id="footer-panel">
+    <div class="footer-handle" onclick="toggleFooter()">
+      <div class="handle-bar"></div>
+      <span class="handle-text">Contatos & Informações</span>
+    </div>
+    <div class="panel-controls-inner" id="footer-inner">
       <div class="contact-grid">
-        <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24"><path fill="#00d2ff" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-          WhatsApp
+        <a href="https://wa.me/5535999999999" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.33 7.34 9 7.42 8.72 7.73C8.44 8.04 7.65 8.78 7.65 10.28C7.65 11.78 8.74 13.23 8.89 13.43C9.05 13.64 11.03 16.7 14.1 17.89C16.65 18.88 17.17 18.68 17.72 18.63C18.28 18.58 19.5 17.9 19.76 17.18C20.01 16.47 20.01 15.86 19.93 15.73C19.86 15.6 19.66 15.53 19.35 15.37C19.05 15.22 17.56 14.49 17.28 14.39C17 14.29 16.8 14.24 16.6 14.54C16.4 14.85 15.84 15.53 15.67 15.73C15.5 15.93 15.34 15.96 15.03 15.81C14.73 15.66 13.76 15.34 12.61 14.31C11.72 13.51 11.11 12.53 10.96 12.27C10.81 12.01 10.94 11.87 11.1 11.72C11.23 11.58 11.4 11.37 11.55 11.19C11.7 11.01 11.75 10.89 11.85 10.68C11.96 10.48 11.91 10.3 11.83 10.15C11.75 10 11.15 8.52 10.89 7.92C10.65 7.34 10.4 7.42 10.22 7.41C10.05 7.4 9.85 7.34 9.53 7.34Z"/></svg>
+          <span>WhatsApp</span>
         </a>
-        <a href="tel:+5500000000000" class="contact-btn">
-          <svg viewBox="0 0 24 24"><path fill="#00d2ff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-          Telefone
+        <a href="https://www.instagram.com/granfishoficial/" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 17.6 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5-5 5 5 0 0 1-5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3Z"/></svg>
+          <span>Instagram</span>
         </a>
         <a href="mailto:contato@granfish.com.br" class="contact-btn">
-          <svg viewBox="0 0 24 24"><path fill="#00d2ff" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          E-mail
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span>Orçamentos</span>
         </a>
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg viewBox="0 0 24 24"><path fill="#00d2ff" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.79-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          Instagram
+        <a href="https://maps.google.com/?q=Rua+das+Primaveras,+50,+Pratapolis+-+MG" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <span>Fábrica</span>
         </a>
-      </div>
-
-      <div class="corporate-footer">
-        <h4>Gran Fish Embarcações</h4>
-        <p>Projetos e Construção Naval de Alta Performance</p>
       </div>
     </div>
-  </footer>
+  </div>
 
-  <!-- SCRIPTS DE INTERATIVIDADE E FALLBACK -->
   <script>
-    function tentarCarregarImagem(imgElement, alternativas) {
-      if (!alternativas || alternativas.length === 0) return;
-      const proximo = alternativas.shift();
-      imgElement.onerror = function() {
-        tentarCarregarImagem(imgElement, alternativas);
-      };
-      imgElement.src = proximo;
+    const video = document.getElementById('intro-video');
+    const splashScreen = document.getElementById('splash-screen');
+    const mainContent = document.getElementById('main-content');
+    
+    // Sidebar Mobile
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const sidebarMenu = document.getElementById('sidebar-menu');
+
+    function openSidebar() {
+      sidebarOverlay.classList.add('active');
+      sidebarMenu.classList.add('active');
     }
 
-    function fecharSplash() {
-      const splash = document.getElementById('splash-screen');
-      const content = document.getElementById('main-content');
-      if (!splash) return;
-      
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-        if (content) {
-          content.classList.add('visible');
-        }
-      }, 500);
+    function closeSidebar() {
+      sidebarOverlay.classList.remove('active');
+      sidebarMenu.classList.remove('active');
     }
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar-menu');
-      const overlay = document.getElementById('sidebar-overlay');
-      if (sidebar && overlay) {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
+    // Rodapé Animado
+    const footerPanel = document.getElementById('footer-panel');
+    const footerInner = document.getElementById('footer-inner');
+    let footerTimer;
+    let videoFinalizado = false;
+
+    function resetFooterTimer() {
+      clearTimeout(footerTimer);
+      if (footerPanel.classList.contains('expanded')) {
+        footerTimer = setTimeout(() => {
+          footerPanel.classList.remove('expanded');
+        }, 5000);
       }
     }
 
-    function toggleFooterPanel() {
-      const panel = document.getElementById('panel-controls');
-      if (panel) {
-        panel.classList.toggle('expanded');
+    function toggleFooter() {
+      footerPanel.classList.toggle('expanded');
+      resetFooterTimer();
+    }
+
+    document.addEventListener('click', (e) => {
+      if (footerPanel.classList.contains('expanded') && !footerPanel.contains(e.target)) {
+        footerPanel.classList.remove('expanded');
+        clearTimeout(footerTimer);
+      }
+    });
+
+    footerPanel.addEventListener('mouseenter', () => clearTimeout(footerTimer));
+    footerPanel.addEventListener('mouseleave', resetFooterTimer);
+
+    // Encerramento da tela de vídeo
+    function fecharAbertura() {
+      if (videoFinalizado) return;
+      videoFinalizado = true;
+      splashScreen.style.opacity = '0';
+      setTimeout(() => {
+        splashScreen.style.display = 'none';
+        carregarIframes();
+      }, 400);
+    }
+
+    video.onended = fecharAbertura;
+    video.onerror = fecharAbertura;
+    splashScreen.addEventListener('click', fecharAbertura);
+    setTimeout(fecharAbertura, 4000);
+
+    function carregarIframes() {
+      document.querySelectorAll('.lazy-iframe').forEach(iframe => {
+        if (iframe.dataset.src) iframe.src = iframe.dataset.src;
+      });
+    }
+
+    function tentarCarregarImagem(imgEl, extensoes) {
+      if (!imgEl.dataset.tentativa) imgEl.dataset.tentativa = 0;
+      let t = parseInt(imgEl.dataset.tentativa);
+      if (t < extensoes.length) {
+        imgEl.dataset.tentativa = t + 1;
+        imgEl.src = extensoes[t];
+      } else {
+        imgEl.style.display = 'none';
       }
     }
   </script>
