@@ -62,3 +62,35 @@ body, html {
   transition: all 0.2s; 
 }
 .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
+
+/* Remove qualquer sombra dos cards e imagens do menu 3D */
+.catalog-card,
+.catalog-card:hover,
+.catalog-thumb-box,
+.catalog-thumb-box img {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Centralização perfeita do contêiner principal */
+.site-wrapper {
+  max-width: 1200px;
+  margin: 0 auto !important; /* Centraliza horizontalmente na janela */
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Centralização do grid das publicações do Instagram */
+.instagram-feed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center; /* Centraliza as colunas */
+  justify-items: center;   /* Centraliza cada cartão na sua respectiva coluna */
+}
+
+.insta-embed-card {
+  width: 100%;
+  max-width: 380px; /* Evita que o card estique excessivamente */
+}
