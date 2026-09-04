@@ -50,7 +50,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh; height: 100dvh;
-      background: linear-gradient(135deg, rgba(0,42,41,0.28) 0%, rgba(0,42,41,0.12) 100%);
+      background: linear-gradient(135deg, rgba(0,42,41,0.08) 0%, rgba(0,42,41,0.02) 100%);
       z-index: 2;
       pointer-events: none;
     }
@@ -300,7 +300,9 @@
 
     /* Container Principal em Branco Puro */
     .main-container {
-      background: rgba(255, 255, 255, 0.86); 
+      background: rgba(255, 255, 255, 0.52); 
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 20px;
       padding: clamp(24px, 4vw, 40px);
