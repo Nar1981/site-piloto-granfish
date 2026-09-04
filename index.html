@@ -40,8 +40,11 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh; height: 100dvh;
-      object-fit: cover;
-      object-position: center center;
+      background-color: #002a29;
+      background-image: url("background2.webp"), url("background2.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       z-index: 1;
       pointer-events: none;
     }
@@ -300,7 +303,7 @@
 
     /* Container Principal em Branco Puro */
     .main-container {
-      background: rgba(255, 255, 255, 0.52); 
+      background: rgba(255, 255, 255, 0.78); 
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       border: 1px solid rgba(0, 0, 0, 0.08);
@@ -660,7 +663,7 @@
 <body>
 
   <!-- IMAGEM DE FUNDO FIXA -->
-  <img class="fixed-bg" src="background2.webp" alt="Fundo Marítimo" onerror="tentarCarregarImagem(this, ['background2.png', 'background2.jpeg', 'background2.JPG', 'background.jpg', 'background.png'])">
+  <div class="fixed-bg" role="img" aria-label="Fundo Marítimo"></div>
   <div class="fixed-bg-overlay"></div>
 
   <!-- ABA LATERAL DO MENU MOBILE -->
