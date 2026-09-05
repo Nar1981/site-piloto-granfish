@@ -17,9 +17,31 @@
     .seu-container-do-3d { flex: 1; position: relative; width: 100%; height: 100%; }
     .btn-reset-cam { position: absolute; top: 16px; left: 16px; background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .btn-reset-cam:active { transform: scale(0.95); background: #00d2ff; color: #000; }
-    .watermark-logo { position: absolute; bottom: 36px; right: 16px; width: 110px; z-index: 999; opacity: 0.9; pointer-events: none; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); display: block; }
+    .watermark-logo { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 110px; z-index: 4; opacity: 0.88; pointer-events: none; filter: drop-shadow(0 3px 7px rgba(0,0,0,0.48)); display: block; }
     @media (max-width: 768px) { .watermark-logo { width: 80px; } }
     #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
+
+    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: none; }
+    .summary-heading { display: block; margin-bottom: 8px; color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .summary-graphic { display: flex; flex-direction: column; gap: 2px; padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid rgba(155, 235, 223, 0.2); }
+    .summary-label { color: #a9c2c6; font-size: 10px; font-weight: 700; }
+    .summary-value { overflow: hidden; color: #ffffff; font-size: 12px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .summary-colors { display: grid; gap: 7px; }
+    .summary-color { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .summary-swatch { width: 19px; height: 19px; flex: 0 0 19px; border: 1px solid rgba(255,255,255,0.78); border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.28); }
+    .summary-color-copy { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+    .summary-color-copy .summary-value { font: 11px Consolas, monospace; }
+    @media (max-width: 520px) {
+      .watermark-logo { left: 50%; right: auto; bottom: 7px; width: 72px; opacity: 0.82; }
+      .selection-summary { top: auto; right: 8px; bottom: 8px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
+      .summary-heading, .summary-label { display: none; }
+      .summary-graphic { display: inline-flex; padding: 0; margin: 0 8px 0 0; border: 0; vertical-align: middle; }
+      .summary-value { font-size: 10px; }
+      .summary-colors { display: inline-flex; gap: 5px; vertical-align: middle; }
+      .summary-color { gap: 0; }
+      .summary-swatch { width: 15px; height: 15px; flex-basis: 15px; border-radius: 4px; }
+      .summary-color-copy { display: none; }
+    }
 
     /* Painel Inferior Compacto */
     .panel-controls { width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; }
@@ -62,6 +84,9 @@
     .preview-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 14px; font-weight: 800; }
     .preview-hex { color: #b8ced1; font: 12px Consolas, monospace; }
+    .texture-reference { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 12px; background: rgba(4, 18, 24, 0.5); }
+    .texture-reference-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .texture-reference-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 13px; font-weight: 800; text-align: right; }
 
     /* Barra Inferior */
     .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
@@ -138,6 +163,27 @@
   
   <div class="seu-container-do-3d">
     <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
+    <aside class="selection-summary" aria-live="polite" aria-label="Resumo da configuração escolhida">
+      <span class="summary-heading">Configuração escolhida</span>
+      <div class="summary-graphic">
+        <span class="summary-label">Grafismo</span>
+        <strong class="summary-value" id="summary-texture">Padrão REF0001</strong>
+      </div>
+      <div class="summary-colors">
+        <div class="summary-color">
+          <span class="summary-swatch" id="summary-swatch-base"></span>
+          <div class="summary-color-copy"><span class="summary-label">Fundo base</span><strong class="summary-value" id="summary-color-base">#686B73</strong></div>
+        </div>
+        <div class="summary-color">
+          <span class="summary-swatch" id="summary-swatch-cor1"></span>
+          <div class="summary-color-copy"><span class="summary-label">Pintura 1</span><strong class="summary-value" id="summary-color-cor1">#E74C3C</strong></div>
+        </div>
+        <div class="summary-color">
+          <span class="summary-swatch" id="summary-swatch-cor2"></span>
+          <div class="summary-color-copy"><span class="summary-label">Pintura 2</span><strong class="summary-value" id="summary-color-cor2">#FFFFFF</strong></div>
+        </div>
+      </div>
+    </aside>
     <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
          id="logoGF" 
          class="watermark-logo" 
@@ -184,6 +230,10 @@
 
     <!-- ABA 2: TEXTURA -->
     <div id="tab-tex" class="tab-content">
+      <div class="texture-reference">
+        <span class="texture-reference-label">Grafismo escolhido</span>
+        <strong class="texture-reference-name" id="texture-reference-name">Nenhum adesivo (Apenas Cor Base)</strong>
+      </div>
       <div class="select-wrapper" style="width: 100%;">
         <select class="custom-select" style="padding-left: 10px;" id="select-textura-decalque1" onchange="aplicarTexturaAPI(this.value)">
           <option value="">Nenhum adesivo (Apenas Cor Base)</option>
@@ -511,7 +561,18 @@
         });
       },
       error: function() { document.getElementById('status').innerText = 'Erro ao conectar com Sketchfab.'; },
-      autostart: 1, transparent: 1, ui_controls: 1, ui_infos: 0
+      autostart: 1,
+      transparent: 1,
+      ui_controls: 0,
+      ui_infos: 0,
+      ui_stop: 0,
+      ui_help: 0,
+      ui_settings: 0,
+      ui_annotations: 0,
+      ui_vr: 0,
+      ui_fullscreen: 0,
+      ui_inspector: 0,
+      ui_watermark: 0
     });
 
     function definirQualidadeTextura(qualidade) {
@@ -527,6 +588,14 @@
 
     function aplicarTexturaAPI(urlTextura) {
       decalqueState.textureUrl = urlTextura;
+      const selectTextura = document.getElementById('select-textura-decalque1');
+      const nomeReferencia = document.getElementById('texture-reference-name');
+      const resumoGrafismo = document.getElementById('summary-texture');
+      const nomeGrafismo = selectTextura && selectTextura.options[selectTextura.selectedIndex] ? selectTextura.options[selectTextura.selectedIndex].text : 'Nenhum adesivo (Apenas Cor Base)';
+      if (selectTextura && nomeReferencia) {
+        nomeReferencia.textContent = nomeGrafismo;
+      }
+      if (resumoGrafismo) resumoGrafismo.textContent = nomeGrafismo;
       atualizarMaterialDecalque();
     }
 
@@ -649,8 +718,13 @@
       const swatch = document.getElementById('swatch-' + idHTML);
       const previewHex = document.getElementById('preview-hex-' + idHTML);
       const previewName = document.getElementById('preview-name-' + idHTML);
+      const summaryId = idHTML === 'decalque1' ? 'base' : idHTML === 'decalque-cor1' ? 'cor1' : 'cor2';
+      const summarySwatch = document.getElementById('summary-swatch-' + summaryId);
+      const summaryColor = document.getElementById('summary-color-' + summaryId);
       if (swatch) swatch.style.backgroundColor = hex;
       if (previewHex) previewHex.textContent = hex.toUpperCase();
+      if (summarySwatch) summarySwatch.style.backgroundColor = hex;
+      if (summaryColor) summaryColor.textContent = hex.toUpperCase();
       if (previewName) {
         const selectedOption = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex] : null;
         previewName.textContent = selectedOption && selectedOption.value ? selectedOption.textContent.replace(/^[^\s]+\s/, '') : 'Cor personalizada';
