@@ -15,13 +15,14 @@
 
     /* Container do 3D e Logo */
     .seu-container-do-3d { flex: 1; position: relative; width: 100%; height: 100%; }
-    .btn-reset-cam { position: absolute; top: 16px; left: 16px; background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .btn-reset-cam { background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     .btn-reset-cam:active { transform: scale(0.95); background: #00d2ff; color: #000; }
     .watermark-logo { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 110px; z-index: 4; opacity: 0.88; pointer-events: none; filter: drop-shadow(0 3px 7px rgba(0,0,0,0.48)); display: block; }
     @media (max-width: 768px) { .watermark-logo { width: 80px; } }
     #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
 
-    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: none; }
+    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: auto; }
+    .selection-summary .btn-reset-cam { position: static; width: 100%; justify-content: center; margin-top: 12px; }
     .summary-heading { display: block; margin-bottom: 8px; color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
     .summary-graphic { display: flex; flex-direction: column; gap: 2px; padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid rgba(155, 235, 223, 0.2); }
     .summary-label { color: #a9c2c6; font-size: 10px; font-weight: 700; }
@@ -44,7 +45,22 @@
     }
 
     /* Painel Inferior Compacto */
-    .panel-controls { width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; }
+    .panel-controls { position: absolute; left: 0; bottom: 0; width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; transform: translateY(calc(100% - 58px)); transition: transform 0.3s ease; }
+    .panel-controls.is-open { transform: translateY(0); }
+    .drawer-handle { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin: -5px 0 12px; padding: 8px 12px; border: 1px solid rgba(155, 235, 223, 0.45); border-radius: 12px; background: rgba(4, 18, 24, 0.55); color: #9bebdf; font: 700 12px "Trebuchet MS", sans-serif; cursor: pointer; }
+    .drawer-handle::before { content: "⌃"; font-size: 18px; line-height: 10px; transition: transform 0.3s ease; }
+    .panel-controls.is-open .drawer-handle::before { transform: rotate(180deg); }
+    .drawer-handle-text::after { content: "Abrir escolhas"; }
+    .panel-controls.is-open .drawer-handle-text::after { content: "Fechar escolhas"; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (min-width: 521px) {
+      .panel-controls { position: fixed; top: 0; right: auto; bottom: 0; left: 0; width: min(420px, 38vw); max-height: none; border-radius: 0 22px 22px 0; transform: translateX(calc(-100% + 34px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { width: 42px; height: 150px; margin: 0; position: absolute; top: 50%; right: -42px; transform: translateY(-50%); border-radius: 0 12px 12px 0; writing-mode: vertical-rl; }
+      .drawer-handle::before { transform: rotate(90deg); }
+      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
+      #choice-panel { height: 100%; overflow-y: auto; padding-top: 17px; }
+    }
     
     /* Abas */
     .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 13px; }
@@ -90,6 +106,12 @@
 
     /* Barra Inferior */
     .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
+    @media (max-width: 520px) {
+      .panel-controls { position: fixed; width: min(calc(100% - 16px), 420px); left: 8px; max-height: 70dvh; border-radius: 18px 18px 0 0; transform: translateY(calc(100% - 54px)); }
+      .panel-controls.is-open { transform: translateY(0); }
+      .drawer-handle { margin-bottom: 10px; border-radius: 14px; }
+      #choice-panel { max-height: calc(70dvh - 64px); overflow-y: auto; overscroll-behavior: contain; }
+    }
     .quality-btn { flex: 1; background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 10px; cursor: pointer; transition: all 0.2s ease; }
     .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000000; font-weight: 700; }
     .btn-capture { flex: 2; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
@@ -162,7 +184,6 @@
   <div class="header-title">Configurador Hurricane 60 SL <button class="btn-help" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
-    <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo da configuração escolhida">
       <span class="summary-heading">Configuração escolhida</span>
       <div class="summary-graphic">
@@ -183,6 +204,7 @@
           <div class="summary-color-copy"><span class="summary-label">Pintura 2</span><strong class="summary-value" id="summary-color-cor2">#FFFFFF</strong></div>
         </div>
       </div>
+      <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
     </aside>
     <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
          id="logoGF" 
@@ -190,10 +212,12 @@
          alt="Logo Gran Fish" 
          crossorigin="anonymous"
          onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
-    <iframe id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
+    <iframe id="api-frame" tabindex="0" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
   </div>
 
   <div class="panel-controls">
+    <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
+    <div id="choice-panel">
     <div id="status" class="status-bar">Carregando modelo 3D...</div>
     
     <!-- Menu de Abas -->
@@ -274,6 +298,7 @@
           <div class="preview-swatch" id="swatch-decalque-cor2"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor2">Branco Puro</strong><span class="preview-hex" id="preview-hex-decalque-cor2">#FFFFFF</span></div>
         </div>
+        </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-decalque-cor2"></div>
           <select class="custom-select has-color" id="select-decalque-cor2" onchange="selecionarCor('decalque-cor2', this.value)"></select>
@@ -297,6 +322,7 @@
       <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
       <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">📸 Salvar Projeto</button>
     </div>
+  </div>
   </div>
 
   <!-- Modais -->
@@ -330,6 +356,15 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
+    }
+
+    function toggleChoiceDrawer(handle) {
+      const panel = handle.closest('.panel-controls');
+      const isOpen = panel.classList.toggle('is-open');
+      handle.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) {
+        document.getElementById('api-frame').focus({ preventScroll: true });
+      }
     }
 
     const modelUid = '38cdf0bb7bbc4e90a0062a64d86cd1b0';
@@ -804,46 +839,103 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0);
 
-            const inputHexCor = document.getElementById('hex-decalque1').value;
-            const inputHexDecal1 = document.getElementById('hex-decalque-cor1').value;
-            const inputHexDecal2 = document.getElementById('hex-decalque-cor2').value;
-
-            const selTex = document.getElementById('select-textura-decalque1');
-            let nomeTex = "Nenhuma (Cor Sólida)";
-            if (selTex.selectedIndex > 0) {
-              nomeTex = selTex.options[selTex.selectedIndex].text;
-            }
+            // ===== Etiqueta igual à do visualizador 3D ("Configuração escolhida") =====
+            const hexCor = document.getElementById('summary-color-base').textContent;
+            const hexCor1 = document.getElementById('summary-color-cor1').textContent;
+            const hexCor2 = document.getElementById('summary-color-cor2').textContent;
+            const nomeGrafismo = document.getElementById('summary-texture').textContent;
+            const nomeCorBase = document.getElementById('preview-name-decalque1').textContent;
+            const nomeCor1 = document.getElementById('preview-name-decalque-cor1').textContent;
+            const nomeCor2 = document.getElementById('preview-name-decalque-cor2').textContent;
 
             const agora = new Date();
             const dataStr = agora.toLocaleDateString('pt-BR');
             const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-            ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-            ctx.fillRect(80, 2160 - 540, 1050, 460);
-
-            ctx.fillStyle = "white";
-            ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-            ctx.shadowBlur = 10;
-            ctx.font = "bold 64px sans-serif";
-            ctx.fillText("HURRICANE 60 SL", 120, 2160 - 430);
-            ctx.font = "34px sans-serif";
-            ctx.fillText(`Gerado em: ${dataStr} às ${horaStr}`, 120, 2160 - 375);
-
-            ctx.font = "bold 44px sans-serif";
-            ctx.fillText("Configurações do Projeto:", 120, 2160 - 300);
-
-            ctx.font = "36px sans-serif";
-            ctx.fillText("Cor Base (Fundo): " + inputHexCor, 120, 2160 - 230);
-            ctx.fillText("Adesivo Padrão: " + nomeTex, 120, 2160 - 170);
-            ctx.fillText("Adesivo Cor 1: " + inputHexDecal1, 120, 2160 - 110);
-            ctx.fillText("Adesivo Cor 2: " + inputHexDecal2, 120, 2160 - 50);
+            const cardX = 100, cardY = canvas.height - 810, cardW = 1080, cardH = 700, cardR = 44;
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
+            ctx.shadowBlur = 40;
+            ctx.shadowOffsetY = 12;
+            ctx.fillStyle = "rgba(4, 25, 31, 0.88)";
+            ctx.beginPath();
+            ctx.moveTo(cardX + cardR, cardY);
+            ctx.arcTo(cardX + cardW, cardY, cardX + cardW, cardY + cardH, cardR);
+            ctx.arcTo(cardX + cardW, cardY + cardH, cardX, cardY + cardH, cardR);
+            ctx.arcTo(cardX, cardY + cardH, cardX, cardY, cardR);
+            ctx.arcTo(cardX, cardY, cardX + cardW, cardY, cardR);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = "rgba(155, 235, 223, 0.6)";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            ctx.restore();
 
             const logoDOM = document.getElementById('logoGF');
             if (logoDOM && logoDOM.complete && logoDOM.naturalWidth > 0) {
-              const logoW = 550;
+              const logoW = 180;
               const logoH = (logoDOM.naturalHeight / logoDOM.naturalWidth) * logoW;
-              ctx.drawImage(logoDOM, canvas.width - logoW - 120, canvas.height - logoH - 180);
+              ctx.drawImage(logoDOM, cardX + cardW - logoW - 50, cardY + 35, logoW, logoH);
             }
+
+            ctx.textAlign = "left";
+            ctx.font = "bold 40px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "#9bebdf";
+            ctx.fillText("CONFIGURAÇÃO ESCOLHIDA", cardX + 60, cardY + 90);
+
+            ctx.font = "36px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "#a9c2c6";
+            ctx.fillText("Grafismo", cardX + 60, cardY + 160);
+            ctx.font = "bold 46px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "#ffffff";
+            ctx.fillText(nomeGrafismo, cardX + 60, cardY + 215);
+
+            // Linha divisória
+            ctx.strokeStyle = "rgba(155, 235, 223, 0.28)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(cardX + 50, cardY + 250);
+            ctx.lineTo(cardX + cardW - 50, cardY + 250);
+            ctx.stroke();
+
+            ctx.textBaseline = "middle";
+            const linhas = [
+              { hex: hexCor,  nome: nomeCorBase,  rotulo: "Fundo base", bordo: "rgba(255,255,255,0.78)" },
+              { hex: hexCor1, nome: nomeCor1, rotulo: "Pintura 1", bordo: "rgba(255,255,255,0.78)" },
+              { hex: hexCor2, nome: nomeCor2, rotulo: "Pintura 2", bordo: "rgba(255,255,255,0.78)" }
+            ];
+            let linhaY = cardY + 320;
+            linhas.forEach(l => {
+              // Amostra de cor (swatch)
+              ctx.fillStyle = l.hex;
+              ctx.strokeStyle = l.bordo;
+              ctx.lineWidth = 4;
+              const sw = 48, sx = cardX + 60, sy = linhaY - sw / 2, sr = 12;
+              ctx.beginPath();
+              ctx.moveTo(sx + sr, sy);
+              ctx.arcTo(sx + sw, sy, sx + sw, sy + sw, sr);
+              ctx.arcTo(sx + sw, sy + sw, sx, sy + sw, sr);
+              ctx.arcTo(sx, sy + sw, sx, sy, sr);
+              ctx.arcTo(sx, sy, sx + sw, sy, sr);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+              // Rótulo + Hex/Nome
+              ctx.font = "32px Trebuchet MS, sans-serif";
+              ctx.fillStyle = "#a9c2c6";
+              ctx.fillText(l.rotulo, cardX + 140, linhaY - 20);
+              ctx.font = "bold 38px Consolas, monospace";
+              ctx.fillStyle = "#ffffff";
+              ctx.fillText(l.hex + "  ·  " + l.nome, cardX + 140, linhaY + 24);
+              linhaY += 120;
+            });
+            ctx.textBaseline = "alphabetic";
+
+            // Rodapé com data/hora
+            ctx.font = "32px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "rgba(169, 194, 198, 0.85)";
+            ctx.fillText(`Gerado em: ${dataStr} às ${horaStr}`, cardX + 60, cardY + cardH - 30);
 
             ultimaImagemBase64 = canvas.toDataURL('image/png');
             document.getElementById('capturePreview').src = ultimaImagemBase64;
