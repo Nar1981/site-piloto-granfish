@@ -6,10 +6,10 @@
   <title>Configurador Hurricane 60 SL - Compacto</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-    body, html { width: 100%; height: 100%; height: 100dvh; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #ffffff; display: flex; flex-direction: column; overflow: hidden; }
+    body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "Trebuchet MS", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
 
     /* Barra Superior */
-    .header-title { width: 100%; background-color: #1c3144; color: #ffffff; text-align: center; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 1px solid #222222; z-index: 10; position: relative; }
+    .header-title { width: 100%; background: linear-gradient(110deg, #082d39, #0d5260); color: #ffffff; text-align: center; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 14px 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.6px; border-bottom: 1px solid rgba(151, 235, 223, 0.25); z-index: 10; position: relative; }
     .btn-help { position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px)); background: #27272e; border: 1px solid #3d3d47; color: #00d2ff; border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
     .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
 
@@ -22,42 +22,49 @@
     #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
 
     /* Painel Inferior Compacto */
-    .panel-controls { width: 100%; background: #1c3144; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 48vh; }
+    .panel-controls { width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; }
     
     /* Abas */
-    .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; border-bottom: 1px solid #2e2e36; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
+    .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 13px; }
     .tabs-container::-webkit-scrollbar { display: none; }
-    .tab-btn { background: #27272e; color: #a0a0a8; border: 1px solid #3d3d47; border-radius: 20px; font-size: 12px; font-weight: 700; padding: 8px 16px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
-    .tab-btn.active { background: #00d2ff; color: #000; border-color: #00d2ff; }
+    .tab-btn { background: rgba(5, 18, 24, 0.58); color: #a9c2c6; border: 1px solid rgba(151, 235, 223, 0.22); border-radius: 12px; font-size: 12px; font-weight: 700; padding: 9px 15px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .tab-btn.active { background: #9bebdf; color: #07353c; border-color: #9bebdf; box-shadow: 0 4px 14px rgba(155, 235, 223, 0.2); }
 
     .tab-content { display: none; flex-direction: column; gap: 12px; overflow-y: auto; }
     .tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Inputs de Cor e Seleção */
-    .color-row { display: flex; align-items: center; gap: 12px; position: relative; width: 100%; }
+    .color-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 11px; position: relative; width: 100%; }
     .select-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
     .color-indicator { position: absolute; left: 8px; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none; }
     
-    .custom-select { background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #ffffff; font-size: 13px; font-weight: bold; padding: 10px 10px 10px 32px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
+    .custom-select { background: #102f37; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 10px; color: #ffffff; font-size: 13px; font-weight: bold; padding: 11px 10px 11px 32px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
     .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
     .custom-select option { background: #27272e; color: #ffffff; }
 
-    .picker-btn-wrapper { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 2px dashed #00d2ff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ff0077, #7700ff, #00d2ff); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .picker-btn-wrapper { position: relative; width: 47px; height: 47px; border-radius: 13px; border: 2px solid rgba(255,255,255,0.8); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e74c3c, #f1c40f, #2ecc71, #3498db); box-shadow: 0 5px 14px rgba(0,0,0,0.3); overflow: hidden; }
     .picker-btn-wrapper span { font-size: 16px; pointer-events: none; }
     .picker-btn-wrapper input[type="color"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
     /* Entradas Manuais Ocultas (Sanfona) */
-    details { margin-top: 5px; background: rgba(0,0,0,0.15); border-radius: 8px; padding: 8px; border: 1px dashed #3d3d47; }
+    details { margin-top: 6px; background: rgba(3, 16, 22, 0.42); border-radius: 10px; padding: 9px; border: 1px dashed rgba(151, 235, 223, 0.25); }
     summary { font-size: 11px; font-weight: 600; color: #a0a0a8; cursor: pointer; outline: none; }
     .inputs-row { display: flex; gap: 8px; margin-top: 10px; }
     .custom-input { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 5px; color: #ffffff; font-size: 12px; font-family: monospace; padding: 8px; width: 50%; outline: none; }
     .custom-input:focus, .custom-select:focus { border-color: #00d2ff; }
 
-    .status-bar { font-size: 11px; color: #4cd964; text-align: center; margin-bottom: 8px; font-weight: 600; }
+    .status-bar { font-size: 11px; color: #9bebdf; text-align: center; margin-bottom: 8px; font-weight: 700; }
+
+    .color-preview { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-height: 70px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 14px; background: rgba(4, 18, 24, 0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+    .preview-swatch { width: 50px; height: 50px; flex: 0 0 50px; border-radius: 11px; border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+    .preview-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .preview-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 14px; font-weight: 800; }
+    .preview-hex { color: #b8ced1; font: 12px Consolas, monospace; }
 
     /* Barra Inferior */
-    .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid #2e2e36; }
+    .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
     .quality-btn { flex: 1; background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 10px; cursor: pointer; transition: all 0.2s ease; }
     .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000000; font-weight: 700; }
     .btn-capture { flex: 2; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
@@ -154,6 +161,10 @@
     <!-- ABA 1: FUNDO BASE -->
     <div id="tab-base" class="tab-content active">
       <div class="color-row">
+        <div class="color-preview" id="preview-decalque1">
+          <div class="preview-swatch" id="swatch-decalque1"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque1">Cinza Nardo</strong><span class="preview-hex" id="preview-hex-decalque1">#686B73</span></div>
+        </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-decalque1"></div>
           <select class="custom-select has-color" id="select-decalque1" onchange="selecionarCor('decalque1', this.value)"></select>
@@ -184,6 +195,10 @@
     <div id="tab-adesivo1" class="tab-content">
       <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Escuras do PNG</div>
       <div class="color-row">
+        <div class="color-preview" id="preview-decalque-cor1">
+          <div class="preview-swatch" id="swatch-decalque-cor1"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor1">Vermelho</strong><span class="preview-hex" id="preview-hex-decalque-cor1">#E74C3C</span></div>
+        </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-decalque-cor1"></div>
           <select class="custom-select has-color" id="select-decalque-cor1" onchange="selecionarCor('decalque-cor1', this.value)"></select>
@@ -205,6 +220,10 @@
     <div id="tab-adesivo2" class="tab-content">
       <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Claras do PNG</div>
       <div class="color-row">
+        <div class="color-preview" id="preview-decalque-cor2">
+          <div class="preview-swatch" id="swatch-decalque-cor2"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor2">Branco Puro</strong><span class="preview-hex" id="preview-hex-decalque-cor2">#FFFFFF</span></div>
+        </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-decalque-cor2"></div>
           <select class="custom-select has-color" id="select-decalque-cor2" onchange="selecionarCor('decalque-cor2', this.value)"></select>
@@ -386,6 +405,7 @@
         selectTex.appendChild(opt);
       }
 
+      sincronizarInputs('decalque1', '#686b73', '104, 107, 115');
       sincronizarInputs('decalque-cor1', '#e74c3c', '231, 76, 60');
       sincronizarInputs('decalque-cor2', '#ffffff', '255, 255, 255');
     }
@@ -625,6 +645,16 @@
       if (rgbInput) rgbInput.value = rgbTexto;
       if (picker) picker.value = hex;
       if (indicator) indicator.style.backgroundColor = hex;
+
+      const swatch = document.getElementById('swatch-' + idHTML);
+      const previewHex = document.getElementById('preview-hex-' + idHTML);
+      const previewName = document.getElementById('preview-name-' + idHTML);
+      if (swatch) swatch.style.backgroundColor = hex;
+      if (previewHex) previewHex.textContent = hex.toUpperCase();
+      if (previewName) {
+        const selectedOption = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex] : null;
+        previewName.textContent = selectedOption && selectedOption.value ? selectedOption.textContent.replace(/^[^\s]+\s/, '') : 'Cor personalizada';
+      }
 
       if (select) {
         let encontrado = false;
