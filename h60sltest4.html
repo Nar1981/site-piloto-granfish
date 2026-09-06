@@ -522,28 +522,59 @@
 
     function toggleChoiceDrawer(handle) {
       const panel = handle.closest('.panel-controls');
+      const wasOpen = panel.classList.contains('is-open');
+      const stage = document.querySelector('.seu-container-do-3d');
+      const stageHeightBefore = stage ? stage.getBoundingClientRect().height : 0;
       const isOpen = panel.classList.toggle('is-open');
       handle.setAttribute('aria-expanded', String(isOpen));
       if (window.matchMedia('(max-width: 520px)').matches) {
         document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
         document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
         document.body.classList.toggle('mobile-drawer-open', isOpen);
-        window.setTimeout(ajustarCameraParaGaveta, 320);
+        prepararCameraParaGaveta(isOpen, wasOpen, stageHeightBefore);
       }
       if (isOpen) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
     }
 
-    function ajustarCameraParaGaveta() {
+    let cameraAntesDaGaveta = null;
+    let alturaDoPalcoAntesDaGaveta = 0;
+
+    function prepararCameraParaGaveta(isOpen, wasOpen, stageHeightBefore) {
+      if (!apiInstance || !apiInstance.getCameraLookAt) return;
+      if (isOpen && !wasOpen) {
+        apiInstance.getCameraLookAt(function(err, camera) {
+          if (!err && camera) {
+            cameraAntesDaGaveta = camera;
+            alturaDoPalcoAntesDaGaveta = stageHeightBefore;
+          }
+          window.setTimeout(() => ajustarCameraParaGaveta(true), 320);
+        });
+      } else {
+        window.setTimeout(() => ajustarCameraParaGaveta(false), 320);
+      }
+    }
+
+    function ajustarCameraParaGaveta(isOpen) {
       if (!apiInstance) return;
       if (!apiInstance.resize) return;
-      apiInstance.getCameraLookAt(function(err, camera) {
-        apiInstance.resize();
-        if (!err && camera && apiInstance.setCameraLookAt) {
-          apiInstance.setCameraLookAt(camera.position, camera.target, 0);
-        }
-      });
+      apiInstance.resize();
+      if (!apiInstance.setCameraLookAt) return;
+      if (!isOpen && cameraAntesDaGaveta) {
+        apiInstance.setCameraLookAt(cameraAntesDaGaveta.position, cameraAntesDaGaveta.target, 0);
+        cameraAntesDaGaveta = null;
+        return;
+      }
+      if (!isOpen || !cameraAntesDaGaveta || !alturaDoPalcoAntesDaGaveta) return;
+      const stage = document.querySelector('.seu-container-do-3d');
+      const alturaAtual = stage ? stage.getBoundingClientRect().height : 0;
+      if (!alturaAtual) return;
+      const escala = Math.min(3, Math.max(1, alturaDoPalcoAntesDaGaveta / alturaAtual));
+      const position = cameraAntesDaGaveta.position;
+      const target = cameraAntesDaGaveta.target;
+      const adjustedPosition = position.map((value, index) => target[index] + (value - target[index]) * escala);
+      apiInstance.setCameraLookAt(adjustedPosition, target, 0);
     }
 
     const modelUid = '38cdf0bb7bbc4e90a0062a64d86cd1b0';
