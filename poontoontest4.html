@@ -449,7 +449,18 @@
       const select = document.getElementById('select-' + idHTML);
       if (select) {
         select.focus({ preventScroll: true });
-        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (typeof select.showPicker === 'function') {
+          try {
+            select.showPicker();
+          } catch (error) {
+            select.click();
+          }
+        } else {
+          select.click();
+        }
+        window.setTimeout(() => {
+          select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 0);
       }
       if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
     }
@@ -478,7 +489,13 @@
 
     function ajustarCameraParaGaveta() {
       if (!apiInstance) return;
-      if (apiInstance.resize) apiInstance.resize();
+      if (!apiInstance.resize) return;
+      apiInstance.getCameraLookAt(function(err, camera) {
+        apiInstance.resize();
+        if (!err && camera && apiInstance.setCameraLookAt) {
+          apiInstance.setCameraLookAt(camera.position, camera.target, 0);
+        }
+      });
     }
 
     const modelUid = '871922e1678141d9b5f9e76775a11dc8';

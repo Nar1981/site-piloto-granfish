@@ -287,6 +287,27 @@
       .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
       .panel-controls { max-height: 72dvh; }
       #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
+      .seu-container-do-3d { min-height: 0; transition: height .3s ease; }
+      body.mobile-drawer-open .seu-container-do-3d {
+        flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
+        height: calc(100dvh - var(--header-height) - var(--drawer-height));
+      }
+    }
+    .selection-summary { border-radius: 18px; }
+    .panel-controls { border-radius: 22px; }
+    .drawer-handle { border-radius: 14px; }
+    .color-preview { border-radius: 14px; }
+    .custom-select, .custom-input { border-radius: 10px; }
+    .texture-reference { border-radius: 12px; }
+    details { border-radius: 12px; }
+    .picker-btn-wrapper { border-radius: 12px; }
+    .quality-btn, .btn-capture { border-radius: 10px; }
+    @media (min-width: 521px) {
+      .drawer-handle { border-radius: 14px 0 0 14px; }
+    }
+    @media (max-width: 520px) {
+      .selection-summary { border-radius: 16px; }
+      .panel-controls { border-radius: 22px 22px 0 0; }
     }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
@@ -476,7 +497,18 @@
       const select = document.getElementById('select-' + idHTML);
       if (select) {
         select.focus({ preventScroll: true });
-        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (typeof select.showPicker === 'function') {
+          try {
+            select.showPicker();
+          } catch (error) {
+            select.click();
+          }
+        } else {
+          select.click();
+        }
+        window.setTimeout(() => {
+          select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 0);
       }
       if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
     }
@@ -492,9 +524,26 @@
       const panel = handle.closest('.panel-controls');
       const isOpen = panel.classList.toggle('is-open');
       handle.setAttribute('aria-expanded', String(isOpen));
+      if (window.matchMedia('(max-width: 520px)').matches) {
+        document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
+        document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
+        document.body.classList.toggle('mobile-drawer-open', isOpen);
+        window.setTimeout(ajustarCameraParaGaveta, 320);
+      }
       if (isOpen) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
+    }
+
+    function ajustarCameraParaGaveta() {
+      if (!apiInstance) return;
+      if (!apiInstance.resize) return;
+      apiInstance.getCameraLookAt(function(err, camera) {
+        apiInstance.resize();
+        if (!err && camera && apiInstance.setCameraLookAt) {
+          apiInstance.setCameraLookAt(camera.position, camera.target, 0);
+        }
+      });
     }
 
     const modelUid = '38cdf0bb7bbc4e90a0062a64d86cd1b0';
