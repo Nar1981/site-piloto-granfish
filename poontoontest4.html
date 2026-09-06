@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Poontoon Atelier | Gran Fish</title>
+  <title>Configurador Poontoon - Compacto</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "Trebuchet MS", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
@@ -21,7 +21,7 @@
     @media (max-width: 768px) { .watermark-logo { width: 80px; } }
     #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
 
-    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: auto; }
+    .selection-summary { position: absolute; right: 16px; bottom: 76px; width: min(204px, calc(100% - 32px)); padding: 10px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 12px; background: rgba(4, 25, 31, 0.76); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(8px); z-index: 5; pointer-events: auto; }
     .selection-summary .btn-reset-cam { position: static; width: 100%; justify-content: center; margin-top: 12px; }
     .summary-heading { display: block; margin-bottom: 8px; color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
     .summary-colors { display: grid; gap: 7px; }
@@ -32,7 +32,7 @@
     .summary-value { overflow: hidden; color: #ffffff; font: 11px Consolas, monospace; text-overflow: ellipsis; white-space: nowrap; }
     @media (max-width: 520px) {
       .watermark-logo { left: 50%; right: auto; bottom: 7px; width: 72px; opacity: 0.82; }
-      .selection-summary { top: auto; right: 8px; bottom: 8px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
+      .selection-summary { right: 8px; bottom: 62px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
       .summary-heading, .summary-label { display: none; }
       .summary-colors { display: inline-flex; gap: 5px; }
       .summary-color { gap: 0; }
@@ -170,136 +170,88 @@
     .help-content h3,
     .help-content li::before { color: #8be0bd; }
 
-    /* Direção visual premium */
-    :root { --ink: #10242c; --ink-soft: #52636a; --panel: #ffffff; --line: #e4eaec; --accent: #bd9250; --accent-dark: #8e672d; }
-    body, html { background: #f4f7f7; color: var(--ink); font-family: Inter, "Segoe UI", Arial, sans-serif; }
-    .header-title { height: 64px; display: flex; align-items: center; justify-content: center; padding: 0 60px; background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--line); font-size: 15px; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 2px 12px rgba(16,36,44,.05); }
-    .header-brand { position: absolute; left: 24px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
-    .btn-help { top: 18px; right: 22px; width: 28px; height: 28px; background: #f3f5f5; border: 1px solid var(--line); color: var(--ink); font-size: 13px; }
-    .seu-container-do-3d, #api-frame { background: #f8faf9; }
-    .watermark-logo { width: 92px; opacity: .62; filter: none; }
-    .selection-summary { top: 24px; right: 28px; width: 258px; padding: 20px; border: 1px solid rgba(16,36,44,.08); border-radius: 16px; background: rgba(255,255,255,.94); box-shadow: 0 14px 36px rgba(16,36,44,.12); backdrop-filter: blur(14px); }
-    .summary-heading { color: var(--accent-dark); font-size: 9px; letter-spacing: .16em; }
-    .summary-label { color: var(--ink-soft); }
+    /* Direcao visual compartilhada com o configurador Hurricane */
+    :root {
+      --bg: #f2f4f1;
+      --panel: rgba(255,255,255,.94);
+      --panel-strong: #fff;
+      --ink: #102a2d;
+      --muted: #667578;
+      --line: rgba(16,42,45,.12);
+      --accent: #123f42;
+      --accent-soft: #c58755;
+      --accent-soft-2: #e0b17c;
+      --shadow: 0 18px 45px rgba(16,42,45,.13);
+    }
+    body, html { background: #edf1ef; color: var(--ink); font-family: "DM Sans", "Segoe UI", sans-serif; }
+    .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 66px;
+      padding: calc(10px + env(safe-area-inset-top, 0px)) 58px 10px 18px;
+      background: rgba(255,255,255,.96);
+      color: var(--ink);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      font-size: 13px;
+      letter-spacing: .14em;
+      box-shadow: 0 5px 20px rgba(16,42,45,.06);
+    }
+    .header-title::before { content: ""; width: 88px; height: 30px; background: url("logo GF.png") center/contain no-repeat; }
+    .btn-help { top: calc(18px + env(safe-area-inset-top, 0px)); width: 30px; height: 30px; border: 1px solid var(--line); color: var(--accent); background: #fff; box-shadow: none; }
+    .seu-container-do-3d { background: radial-gradient(circle at 50% 35%, #fff 0, #eef2f0 55%, #e4eae8 100%); }
+    .selection-summary { right: 20px; bottom: 76px; width: min(204px, calc(100% - 40px)); padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.93); box-shadow: var(--shadow); }
+    .selection-summary::before { content: "POONTOON  /  CONFIGURADOR"; display: block; margin-bottom: 12px; color: var(--accent-soft); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
+    .summary-heading { color: var(--ink); font-size: 10px; letter-spacing: .1em; }
+    .summary-label { color: var(--muted); }
     .summary-value { color: var(--ink); }
-    .summary-color-copy .summary-value { color: var(--ink); }
-    .summary-swatch { border-color: rgba(16,36,44,.22); }
-    .selection-summary .btn-reset-cam { background: transparent; color: var(--ink); border: 1px solid var(--line); box-shadow: none; font-size: 11px; }
-    .panel-controls { background: var(--panel); border: 1px solid var(--line); box-shadow: 0 14px 40px rgba(16,36,44,.14); padding: 24px 22px calc(20px + env(safe-area-inset-bottom, 0px)) 22px; }
-    .panel-intro { display: flex; flex-direction: column; gap: 5px; padding: 2px 0 18px; }
-    .panel-intro strong { color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
-    .panel-intro span { color: var(--ink-soft); font-size: 12px; }
-    .drawer-handle { background: #f5f8f8; border-color: var(--line); color: var(--ink); text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
-    .tabs-container { border-color: var(--line); gap: 6px; }
-    .tab-btn { background: transparent; border-color: transparent; color: var(--ink-soft); border-radius: 8px; font-size: 11px; padding: 10px 12px; }
-    .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: none; }
-    .status-bar { color: var(--accent-dark) !important; letter-spacing: .02em; }
-    .color-preview { background: #f8faf9; border-color: var(--line); border-radius: 12px; }
-    .preview-label { color: var(--accent-dark); }
+    .summary-swatch { border-color: rgba(16,42,45,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+    .selection-summary .btn-reset-cam { border-radius: 7px; padding: 10px; background: var(--accent); color: #fff; border-color: var(--accent); }
+    .panel-controls { background: rgba(255,255,255,.97); border: 1px solid var(--line); box-shadow: 0 -12px 36px rgba(16,42,45,.12); }
+    .drawer-handle { background: var(--accent); border: 0; border-radius: 8px; color: #fff; letter-spacing: .04em; }
+    .drawer-handle-text::after { content: "Personalizar"; }
+    .panel-controls.is-open .drawer-handle-text::after { content: "Fechar"; }
+    .tabs-container, .action-bar { border-color: var(--line); }
+    .tab-btn { border-radius: 7px; padding: 9px 12px; background: #f1f4f2; color: var(--muted); border-color: var(--line); }
+    .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: none; }
+    .custom-select, .custom-input { background: #fff; color: var(--ink); border-color: var(--line); border-radius: 7px; }
+    .custom-select option { background: #fff; color: var(--ink); }
+    .custom-select optgroup { background: #f3f5f6; color: var(--accent); }
+    .color-indicator { border-color: rgba(16,42,45,.15); }
+    .picker-btn-wrapper { border: 1px solid rgba(16,42,45,.14); border-radius: 8px; box-shadow: none; }
+    details { background: rgba(244,246,247,.9); border-color: rgba(16,42,45,.15); }
+    summary { color: var(--muted); }
+    .status-bar { color: #1c7a60; }
+    .color-preview { border-color: var(--line); border-radius: 8px; background: linear-gradient(135deg, #f8f9fa, #eef2f2); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
+    .preview-swatch { border: 1px solid rgba(16,42,45,.12); box-shadow: inset 0 1px 0 rgba(255,255,255,.25); }
+    .preview-label { color: var(--muted); }
     .preview-name { color: var(--ink); }
-    .preview-hex { color: var(--ink-soft); }
-    .custom-select, .custom-input { background: #fff; border-color: var(--line); color: var(--ink); border-radius: 8px; box-shadow: 0 2px 5px rgba(16,36,44,.04); }
-    .custom-select option, .custom-select optgroup { background: #fff; color: var(--ink); }
-    details { background: #f8faf9; border-color: var(--line); }
-    summary { color: var(--ink-soft); }
-    .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
-    .action-bar { border-color: var(--line); }
-    .quality-btn { background: #f5f8f8; border-color: var(--line); color: var(--ink-soft); }
-    .quality-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
-    .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
-    @media (min-width: 521px) {
-      .panel-controls { top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw); border-radius: 18px; transform: translateX(calc(100% + 24px)); }
-      .panel-controls.is-open { transform: translateX(0); }
-      .drawer-handle { width: 40px; height: 132px; right: auto; left: -41px; border-radius: 10px 0 0 10px; writing-mode: vertical-rl; background: var(--panel); box-shadow: -4px 8px 18px rgba(16,36,44,.08); }
-      .drawer-handle::before { transform: rotate(90deg); }
-      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
-    }
+    .preview-hex { color: var(--muted); }
+    .quality-btn { background: #f5f7f7; color: var(--ink); border-color: var(--line); border-radius: 7px; }
+    .quality-btn.active, .btn-capture { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-capture { box-shadow: 0 8px 18px rgba(18,63,66,.18); border-radius: 7px; }
+    .help-modal { background: rgba(17,24,27,.75); }
+    .help-content { background: #fff; border-color: var(--line); color: var(--ink); box-shadow: var(--shadow); }
+    .help-content h3 { color: var(--accent); }
+    .help-content li::before { color: var(--accent-soft); }
+    .btn-close-help { background: var(--accent); color: #fff; }
     @media (max-width: 520px) {
-      .header-title { height: 56px; font-size: 12px; }
-      .header-brand { left: 14px; font-size: 9px; }
-      .btn-help { top: 14px; right: 14px; }
-      .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
-      .panel-controls { background: var(--panel); border-color: var(--line); }
-    }
-
-    /* Conceito autoral: Atelier Náutico */
-    :root { --atelier-bg: #ffffff; --atelier-panel: #ffffff; --atelier-line: #e5eaeb; --atelier-coral: #f07d62; --atelier-mint: #277d70; }
-    body, html { background: #ffffff; color: #10242c; }
-    .header-title { height: 72px; justify-content: flex-start; gap: 18px; padding-left: 34px; background: #ffffff; color: #10242c; border-bottom: 1px solid var(--atelier-line); box-shadow: 0 2px 14px rgba(16,36,44,.06); text-align: left; }
-    .header-title > span:not(.header-brand) { font-size: 12px; letter-spacing: .2em; }
-    .header-brand { position: static; color: var(--atelier-coral); font-size: 10px; letter-spacing: .25em; padding-right: 18px; border-right: 1px solid var(--atelier-line); }
-    .btn-help { top: 22px; right: 30px; background: #ffffff; border-color: var(--atelier-line); color: var(--atelier-mint); }
-    .seu-container-do-3d, #api-frame { background: #ffffff; }
-    .watermark-logo { bottom: 24px; width: 84px; opacity: .32; filter: none; }
-    .selection-summary { top: 28px; right: 30px; width: 238px; padding: 18px; border: 1px solid var(--atelier-line); border-radius: 18px; background: rgba(255,255,255,.94); color: #10242c; box-shadow: 0 18px 50px rgba(16,36,44,.12); backdrop-filter: blur(16px); }
-    .summary-heading { color: var(--atelier-coral); letter-spacing: .2em; }
-    .summary-label { color: #8ba6aa; }
-    .summary-value { color: #10242c; }
-    .summary-swatch { border-color: rgba(255,255,255,.5); border-radius: 2px; }
-    .selection-summary .btn-reset-cam { background: transparent; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 3px; box-shadow: none; }
-    .panel-controls { background: var(--atelier-panel); border: 1px solid var(--atelier-line); border-radius: 22px; box-shadow: 0 20px 60px rgba(16,36,44,.16); padding: 22px 22px 18px; backdrop-filter: blur(18px); }
-    .panel-intro { padding-bottom: 16px; border-bottom: 1px solid var(--atelier-line); }
-    .panel-intro strong { color: #10242c; font-size: 19px; letter-spacing: .01em; }
-    .panel-intro span { color: #6d7d81; }
-    .drawer-handle { background: #ffffff; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 14px; }
-    .tabs-container { border-color: var(--atelier-line); padding-top: 14px; }
-    .tab-btn { color: #6d7d81; border-radius: 3px; background: transparent; border-color: transparent; }
-    .tab-btn.active { background: var(--atelier-coral); border-color: var(--atelier-coral); color: #ffffff; box-shadow: none; }
-    .status-bar { color: var(--atelier-mint) !important; text-align: left; font-size: 10px; }
-    .color-preview { background: #ffffff; border-color: rgba(255,255,255,.82); border-radius: 14px; cursor: pointer; }
-    .color-preview:hover { border-color: var(--atelier-coral); box-shadow: 0 0 0 2px rgba(240,125,98,.18); }
-    details { background: rgba(4, 16, 22, .46); border-color: var(--atelier-line); border-radius: 12px; }
-    .preview-label { color: var(--atelier-coral); }
-    .preview-name, .texture-reference-name { color: #10242c; }
-    .preview-hex { color: #6d7d81; }
-    .custom-select, .custom-input { background: #ffffff; border-color: var(--atelier-line); color: #10242c; border-radius: 10px; box-shadow: none; }
-    .custom-select option, .custom-select optgroup { background: #ffffff; color: #10242c; }
-    .texture-reference { background: #ffffff; border-color: var(--atelier-line); border-radius: 12px; }
-    .texture-reference-label, summary { color: var(--atelier-mint); }
-    .picker-btn-wrapper { border-color: var(--atelier-line); border-radius: 12px; box-shadow: none; }
-    .action-bar { border-color: var(--atelier-line); }
-    .quality-btn { background: #ffffff; border-color: var(--atelier-line); color: #6d7d81; border-radius: 10px; }
-    .quality-btn.active { background: var(--atelier-mint); border-color: var(--atelier-mint); color: #10252b; }
-    .btn-capture { background: var(--atelier-coral) !important; color: #1c1110; border-radius: 10px; box-shadow: 0 8px 22px rgba(240,125,98,.2); }
-    @media (min-width: 521px) {
-      .panel-controls { top: 96px; right: 30px; bottom: 28px; width: min(400px, 35vw); border-radius: 22px; transform: translateX(calc(100% + 30px)); }
-      .panel-controls.is-open { transform: translateX(0); }
-      .drawer-handle { left: -43px; right: auto; width: 42px; height: 148px; border-radius: 14px 0 0 14px; background: #ffffff; }
-    }
-    @media (max-width: 520px) {
-      .header-title { height: 60px; padding-left: 16px; gap: 11px; }
-      .header-brand { font-size: 8px; padding-right: 11px; }
-      .header-title > span:not(.header-brand) { font-size: 10px; }
-      .selection-summary { background: rgba(255,255,255,.94); top: 12px; right: 12px; }
-      .panel-controls { background: #ffffff; }
-    }
-    @media (max-width: 520px) {
-      .selection-summary {
-        top: 70px; right: 10px; bottom: auto; left: 10px; width: auto;
-        height: auto; max-height: none; padding: 8px 10px; border-radius: 16px;
-      }
-      .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
-      .panel-controls { max-height: 72dvh; }
-      #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
-      .seu-container-do-3d { min-height: 0; transition: height .3s ease; }
-      body.mobile-drawer-open .seu-container-do-3d {
-        flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
-        height: calc(100dvh - var(--header-height) - var(--drawer-height));
-      }
-    }
-    @media (min-width: 521px) {
-      .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
+      .header-title { justify-content: flex-start; font-size: 11px; letter-spacing: .1em; }
+      .header-title::before { width: 68px; height: 25px; }
+      .selection-summary { right: 10px; bottom: 62px; width: auto; max-width: calc(100% - 20px); padding: 8px 10px; }
+      .selection-summary::before { display: none; }
     }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH / ATELIER</span><span>Poontoon sob medida</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+  <div class="header-title">Poontoon by GRAN FISH <button class="btn-help" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo das cores escolhidas">
-      <span class="summary-heading">Sua composição</span>
+      <span class="summary-heading">Cores escolhidas</span>
       <div class="summary-colors">
         <div class="summary-color"><span class="summary-swatch" id="summary-swatch-cinza2"></span><div class="summary-color-copy"><span class="summary-label">Faixa 1</span><strong class="summary-value" id="summary-color-cinza2">#25282A</strong></div></div>
         <div class="summary-color"><span class="summary-swatch" id="summary-swatch-Azul"></span><div class="summary-color-copy"><span class="summary-label">Faixa 2</span><strong class="summary-value" id="summary-color-Azul">#0D1B2A</strong></div></div>
@@ -319,8 +271,7 @@
   <div class="panel-controls">
     <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
     <div id="choice-panel">
-    <div class="panel-intro"><strong>Monte sua assinatura</strong><span>Três faixas. Uma identidade única.</span></div>
-    <div id="status" class="status-bar">Preparando sua configuração...</div>
+    <div id="status" class="status-bar">Carregando modelo 3D...</div>
     
     <!-- Menu de Abas -->
     <div class="tabs-container">
@@ -332,7 +283,7 @@
     <!-- ABA 1: FAIXA 1 -->
     <div id="tab-faixa1" class="tab-content active">
       <div class="color-row">
-        <div class="color-preview" id="preview-cinza2" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 1" onclick="abrirSelecaoCor('cinza2', 'tab-faixa1', this)" onkeydown="ativarSelecaoCor(event, 'cinza2', 'tab-faixa1', this)">
+        <div class="color-preview" id="preview-cinza2">
           <div class="preview-swatch" id="swatch-cinza2"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza2">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza2">#25282A</span></div>
         </div>
@@ -356,7 +307,7 @@
     <!-- ABA 2: FAIXA 2 -->
     <div id="tab-faixa2" class="tab-content">
       <div class="color-row">
-        <div class="color-preview" id="preview-Azul" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 2" onclick="abrirSelecaoCor('Azul', 'tab-faixa2', this)" onkeydown="ativarSelecaoCor(event, 'Azul', 'tab-faixa2', this)">
+        <div class="color-preview" id="preview-Azul">
           <div class="preview-swatch" id="swatch-Azul"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-Azul">Azul Marinho</strong><span class="preview-hex" id="preview-hex-Azul">#0D1B2A</span></div>
         </div>
@@ -380,9 +331,10 @@
     <!-- ABA 3: FAIXA 3 -->
     <div id="tab-faixa3" class="tab-content">
       <div class="color-row">
-        <div class="color-preview" id="preview-cinza" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 3" onclick="abrirSelecaoCor('cinza', 'tab-faixa3', this)" onkeydown="ativarSelecaoCor(event, 'cinza', 'tab-faixa3', this)">
+        <div class="color-preview" id="preview-cinza">
           <div class="preview-swatch" id="swatch-cinza"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza">#25282A</span></div>
+        </div>
         </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-cinza"></div>
@@ -405,7 +357,7 @@
     <div class="action-bar">
       <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">HD</button>
       <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
-      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
+      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">📸 Salvar Imagem</button>
     </div>
   </div>
   </div>
@@ -443,59 +395,13 @@
       btn.classList.add('active');
     }
 
-    function abrirSelecaoCor(idHTML, tabId, preview) {
-      const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
-      if (tabButton) openTab(tabId, tabButton);
-      const select = document.getElementById('select-' + idHTML);
-      if (select) {
-        select.focus({ preventScroll: true });
-        if (typeof select.showPicker === 'function') {
-          try {
-            select.showPicker();
-          } catch (error) {
-            select.click();
-          }
-        } else {
-          select.click();
-        }
-        window.setTimeout(() => {
-          select.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 0);
-      }
-      if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
-    }
-
-    function ativarSelecaoCor(event, idHTML, tabId, preview) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        abrirSelecaoCor(idHTML, tabId, preview);
-      }
-    }
-
     function toggleChoiceDrawer(handle) {
       const panel = handle.closest('.panel-controls');
       const isOpen = panel.classList.toggle('is-open');
       handle.setAttribute('aria-expanded', String(isOpen));
-      if (window.matchMedia('(max-width: 520px)').matches) {
-        document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
-        document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
-        document.body.classList.toggle('mobile-drawer-open', isOpen);
-        window.setTimeout(ajustarCameraParaGaveta, 320);
-      }
       if (isOpen) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
-    }
-
-    function ajustarCameraParaGaveta() {
-      if (!apiInstance) return;
-      if (!apiInstance.resize) return;
-      apiInstance.getCameraLookAt(function(err, camera) {
-        apiInstance.resize();
-        if (!err && camera && apiInstance.setCameraLookAt) {
-          apiInstance.setCameraLookAt(camera.position, camera.target, 0);
-        }
-      });
     }
 
     const modelUid = '871922e1678141d9b5f9e76775a11dc8';
@@ -895,12 +801,6 @@
     function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Pontoon_Configurado.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
     async function compartilharImagem() { const res = await fetch(ultimaImagemBase64); const blob = await res.blob(); const file = new File([blob], 'Pontoon.png', { type: 'image/png' }); await navigator.share({ title: 'Configuração Pontoon', files: [file] }); fecharShareModal(); }
 
-    if (window.innerWidth >= 521) {
-      const panel = document.querySelector('.panel-controls');
-      const handle = document.querySelector('.drawer-handle');
-      panel.classList.add('is-open');
-      handle.setAttribute('aria-expanded', 'true');
-    }
     popularSelects();
   </script>
 </body>
