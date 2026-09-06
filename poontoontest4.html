@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Poontoon | Gran Fish</title>
+  <title>Poontoon Atelier | Gran Fish</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "Trebuchet MS", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
@@ -221,16 +221,85 @@
       .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
       .panel-controls { background: var(--panel); border-color: var(--line); }
     }
+
+    /* Conceito autoral: Atelier Náutico */
+    :root { --atelier-bg: #ffffff; --atelier-panel: #ffffff; --atelier-line: #e5eaeb; --atelier-coral: #f07d62; --atelier-mint: #277d70; }
+    body, html { background: #ffffff; color: #10242c; }
+    .header-title { height: 72px; justify-content: flex-start; gap: 18px; padding-left: 34px; background: #ffffff; color: #10242c; border-bottom: 1px solid var(--atelier-line); box-shadow: 0 2px 14px rgba(16,36,44,.06); text-align: left; }
+    .header-title > span:not(.header-brand) { font-size: 12px; letter-spacing: .2em; }
+    .header-brand { position: static; color: var(--atelier-coral); font-size: 10px; letter-spacing: .25em; padding-right: 18px; border-right: 1px solid var(--atelier-line); }
+    .btn-help { top: 22px; right: 30px; background: #ffffff; border-color: var(--atelier-line); color: var(--atelier-mint); }
+    .seu-container-do-3d, #api-frame { background: #ffffff; }
+    .watermark-logo { bottom: 24px; width: 84px; opacity: .32; filter: none; }
+    .selection-summary { top: 28px; right: 30px; width: 238px; padding: 18px; border: 1px solid var(--atelier-line); border-radius: 18px; background: rgba(255,255,255,.94); color: #10242c; box-shadow: 0 18px 50px rgba(16,36,44,.12); backdrop-filter: blur(16px); }
+    .summary-heading { color: var(--atelier-coral); letter-spacing: .2em; }
+    .summary-label { color: #8ba6aa; }
+    .summary-value { color: #10242c; }
+    .summary-swatch { border-color: rgba(255,255,255,.5); border-radius: 2px; }
+    .selection-summary .btn-reset-cam { background: transparent; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 3px; box-shadow: none; }
+    .panel-controls { background: var(--atelier-panel); border: 1px solid var(--atelier-line); border-radius: 22px; box-shadow: 0 20px 60px rgba(16,36,44,.16); padding: 22px 22px 18px; backdrop-filter: blur(18px); }
+    .panel-intro { padding-bottom: 16px; border-bottom: 1px solid var(--atelier-line); }
+    .panel-intro strong { color: #10242c; font-size: 19px; letter-spacing: .01em; }
+    .panel-intro span { color: #6d7d81; }
+    .drawer-handle { background: #ffffff; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 14px; }
+    .tabs-container { border-color: var(--atelier-line); padding-top: 14px; }
+    .tab-btn { color: #6d7d81; border-radius: 3px; background: transparent; border-color: transparent; }
+    .tab-btn.active { background: var(--atelier-coral); border-color: var(--atelier-coral); color: #ffffff; box-shadow: none; }
+    .status-bar { color: var(--atelier-mint) !important; text-align: left; font-size: 10px; }
+    .color-preview { background: #ffffff; border-color: rgba(255,255,255,.82); border-radius: 14px; cursor: pointer; }
+    .color-preview:hover { border-color: var(--atelier-coral); box-shadow: 0 0 0 2px rgba(240,125,98,.18); }
+    details { background: rgba(4, 16, 22, .46); border-color: var(--atelier-line); border-radius: 12px; }
+    .preview-label { color: var(--atelier-coral); }
+    .preview-name, .texture-reference-name { color: #10242c; }
+    .preview-hex { color: #6d7d81; }
+    .custom-select, .custom-input { background: #ffffff; border-color: var(--atelier-line); color: #10242c; border-radius: 10px; box-shadow: none; }
+    .custom-select option, .custom-select optgroup { background: #ffffff; color: #10242c; }
+    .texture-reference { background: #ffffff; border-color: var(--atelier-line); border-radius: 12px; }
+    .texture-reference-label, summary { color: var(--atelier-mint); }
+    .picker-btn-wrapper { border-color: var(--atelier-line); border-radius: 12px; box-shadow: none; }
+    .action-bar { border-color: var(--atelier-line); }
+    .quality-btn { background: #ffffff; border-color: var(--atelier-line); color: #6d7d81; border-radius: 10px; }
+    .quality-btn.active { background: var(--atelier-mint); border-color: var(--atelier-mint); color: #10252b; }
+    .btn-capture { background: var(--atelier-coral) !important; color: #1c1110; border-radius: 10px; box-shadow: 0 8px 22px rgba(240,125,98,.2); }
+    @media (min-width: 521px) {
+      .panel-controls { top: 96px; right: 30px; bottom: 28px; width: min(400px, 35vw); border-radius: 22px; transform: translateX(calc(100% + 30px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { left: -43px; right: auto; width: 42px; height: 148px; border-radius: 14px 0 0 14px; background: #ffffff; }
+    }
+    @media (max-width: 520px) {
+      .header-title { height: 60px; padding-left: 16px; gap: 11px; }
+      .header-brand { font-size: 8px; padding-right: 11px; }
+      .header-title > span:not(.header-brand) { font-size: 10px; }
+      .selection-summary { background: rgba(255,255,255,.94); top: 12px; right: 12px; }
+      .panel-controls { background: #ffffff; }
+    }
+    @media (max-width: 520px) {
+      .selection-summary {
+        top: 70px; right: 10px; bottom: auto; left: 10px; width: auto;
+        height: auto; max-height: none; padding: 8px 10px; border-radius: 16px;
+      }
+      .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
+      .panel-controls { max-height: 72dvh; }
+      #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
+      .seu-container-do-3d { min-height: 0; transition: height .3s ease; }
+      body.mobile-drawer-open .seu-container-do-3d {
+        flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
+        height: calc(100dvh - var(--header-height) - var(--drawer-height));
+      }
+    }
+    @media (min-width: 521px) {
+      .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
+    }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Poontoon</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+  <div class="header-title"><span class="header-brand">GRAN FISH / ATELIER</span><span>Poontoon sob medida</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo das cores escolhidas">
-      <span class="summary-heading">Cores escolhidas</span>
+      <span class="summary-heading">Sua composição</span>
       <div class="summary-colors">
         <div class="summary-color"><span class="summary-swatch" id="summary-swatch-cinza2"></span><div class="summary-color-copy"><span class="summary-label">Faixa 1</span><strong class="summary-value" id="summary-color-cinza2">#25282A</strong></div></div>
         <div class="summary-color"><span class="summary-swatch" id="summary-swatch-Azul"></span><div class="summary-color-copy"><span class="summary-label">Faixa 2</span><strong class="summary-value" id="summary-color-Azul">#0D1B2A</strong></div></div>
@@ -250,7 +319,7 @@
   <div class="panel-controls">
     <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
     <div id="choice-panel">
-    <div class="panel-intro"><strong>Personalize seu Poontoon</strong><span>Escolha as cores e veja o resultado em tempo real.</span></div>
+    <div class="panel-intro"><strong>Monte sua assinatura</strong><span>Três faixas. Uma identidade única.</span></div>
     <div id="status" class="status-bar">Preparando sua configuração...</div>
     
     <!-- Menu de Abas -->
@@ -263,7 +332,7 @@
     <!-- ABA 1: FAIXA 1 -->
     <div id="tab-faixa1" class="tab-content active">
       <div class="color-row">
-        <div class="color-preview" id="preview-cinza2">
+        <div class="color-preview" id="preview-cinza2" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 1" onclick="abrirSelecaoCor('cinza2', 'tab-faixa1', this)" onkeydown="ativarSelecaoCor(event, 'cinza2', 'tab-faixa1', this)">
           <div class="preview-swatch" id="swatch-cinza2"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza2">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza2">#25282A</span></div>
         </div>
@@ -287,7 +356,7 @@
     <!-- ABA 2: FAIXA 2 -->
     <div id="tab-faixa2" class="tab-content">
       <div class="color-row">
-        <div class="color-preview" id="preview-Azul">
+        <div class="color-preview" id="preview-Azul" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 2" onclick="abrirSelecaoCor('Azul', 'tab-faixa2', this)" onkeydown="ativarSelecaoCor(event, 'Azul', 'tab-faixa2', this)">
           <div class="preview-swatch" id="swatch-Azul"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-Azul">Azul Marinho</strong><span class="preview-hex" id="preview-hex-Azul">#0D1B2A</span></div>
         </div>
@@ -311,7 +380,7 @@
     <!-- ABA 3: FAIXA 3 -->
     <div id="tab-faixa3" class="tab-content">
       <div class="color-row">
-        <div class="color-preview" id="preview-cinza">
+        <div class="color-preview" id="preview-cinza" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 3" onclick="abrirSelecaoCor('cinza', 'tab-faixa3', this)" onkeydown="ativarSelecaoCor(event, 'cinza', 'tab-faixa3', this)">
           <div class="preview-swatch" id="swatch-cinza"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza">#25282A</span></div>
         </div>
@@ -374,13 +443,42 @@
       btn.classList.add('active');
     }
 
+    function abrirSelecaoCor(idHTML, tabId, preview) {
+      const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (tabButton) openTab(tabId, tabButton);
+      const select = document.getElementById('select-' + idHTML);
+      if (select) {
+        select.focus({ preventScroll: true });
+        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
+    }
+
+    function ativarSelecaoCor(event, idHTML, tabId, preview) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        abrirSelecaoCor(idHTML, tabId, preview);
+      }
+    }
+
     function toggleChoiceDrawer(handle) {
       const panel = handle.closest('.panel-controls');
       const isOpen = panel.classList.toggle('is-open');
       handle.setAttribute('aria-expanded', String(isOpen));
+      if (window.matchMedia('(max-width: 520px)').matches) {
+        document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
+        document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
+        document.body.classList.toggle('mobile-drawer-open', isOpen);
+        window.setTimeout(ajustarCameraParaGaveta, 320);
+      }
       if (isOpen) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
+    }
+
+    function ajustarCameraParaGaveta() {
+      if (!apiInstance) return;
+      if (apiInstance.resize) apiInstance.resize();
     }
 
     const modelUid = '871922e1678141d9b5f9e76775a11dc8';

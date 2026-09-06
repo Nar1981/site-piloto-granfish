@@ -272,6 +272,22 @@
       .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
       .panel-controls { background: var(--panel); border-color: var(--line); }
     }
+    body, html { background: #ffffff; }
+    .seu-container-do-3d, #api-frame { background: #ffffff; }
+    .color-preview { background: #ffffff; border-color: var(--line); cursor: pointer; }
+    .color-preview:hover { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(189,146,80,.16); }
+    @media (min-width: 521px) {
+      .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
+    }
+    @media (max-width: 520px) {
+      .selection-summary {
+        top: 70px; right: 10px; bottom: auto; left: 10px; width: auto;
+        height: auto; max-height: none; padding: 8px 10px; border-radius: 8px;
+      }
+      .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
+      .panel-controls { max-height: 72dvh; }
+      #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
+    }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
@@ -328,7 +344,7 @@
     <!-- ABA 1: FUNDO BASE -->
     <div id="tab-base" class="tab-content active">
       <div class="color-row">
-        <div class="color-preview" id="preview-decalque1">
+        <div class="color-preview" id="preview-decalque1" role="button" tabindex="0" aria-label="Selecionar cor do fundo base" onclick="abrirSelecaoCor('decalque1', 'tab-base', this)" onkeydown="ativarSelecaoCor(event, 'decalque1', 'tab-base', this)">
           <div class="preview-swatch" id="swatch-decalque1"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque1">Cinza Nardo</strong><span class="preview-hex" id="preview-hex-decalque1">#686B73</span></div>
         </div>
@@ -366,7 +382,7 @@
     <div id="tab-adesivo1" class="tab-content">
       <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Escuras do PNG</div>
       <div class="color-row">
-        <div class="color-preview" id="preview-decalque-cor1">
+        <div class="color-preview" id="preview-decalque-cor1" role="button" tabindex="0" aria-label="Selecionar pintura 1" onclick="abrirSelecaoCor('decalque-cor1', 'tab-adesivo1', this)" onkeydown="ativarSelecaoCor(event, 'decalque-cor1', 'tab-adesivo1', this)">
           <div class="preview-swatch" id="swatch-decalque-cor1"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor1">Vermelho</strong><span class="preview-hex" id="preview-hex-decalque-cor1">#E74C3C</span></div>
         </div>
@@ -391,7 +407,7 @@
     <div id="tab-adesivo2" class="tab-content">
       <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Claras do PNG</div>
       <div class="color-row">
-        <div class="color-preview" id="preview-decalque-cor2">
+        <div class="color-preview" id="preview-decalque-cor2" role="button" tabindex="0" aria-label="Selecionar pintura 2" onclick="abrirSelecaoCor('decalque-cor2', 'tab-adesivo2', this)" onkeydown="ativarSelecaoCor(event, 'decalque-cor2', 'tab-adesivo2', this)">
           <div class="preview-swatch" id="swatch-decalque-cor2"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor2">Branco Puro</strong><span class="preview-hex" id="preview-hex-decalque-cor2">#FFFFFF</span></div>
         </div>
@@ -452,6 +468,24 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
+    }
+
+    function abrirSelecaoCor(idHTML, tabId, preview) {
+      const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (tabButton) openTab(tabId, tabButton);
+      const select = document.getElementById('select-' + idHTML);
+      if (select) {
+        select.focus({ preventScroll: true });
+        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
+    }
+
+    function ativarSelecaoCor(event, idHTML, tabId, preview) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        abrirSelecaoCor(idHTML, tabId, preview);
+      }
     }
 
     function toggleChoiceDrawer(handle) {
