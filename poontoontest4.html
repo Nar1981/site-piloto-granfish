@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Configurador Poontoon - Compacto</title>
+  <title>Poontoon | Gran Fish</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
     body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "Trebuchet MS", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
@@ -169,12 +169,64 @@
     .btn-action[style*="4cd964"] { background: #002a29 !important; color: #ffffff; box-shadow: 0 4px 10px rgba(0, 42, 41, 0.4); }
     .help-content h3,
     .help-content li::before { color: #8be0bd; }
+
+    /* Direção visual premium */
+    :root { --ink: #10242c; --ink-soft: #52636a; --panel: #ffffff; --line: #e4eaec; --accent: #bd9250; --accent-dark: #8e672d; }
+    body, html { background: #f4f7f7; color: var(--ink); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+    .header-title { height: 64px; display: flex; align-items: center; justify-content: center; padding: 0 60px; background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--line); font-size: 15px; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 2px 12px rgba(16,36,44,.05); }
+    .header-brand { position: absolute; left: 24px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+    .btn-help { top: 18px; right: 22px; width: 28px; height: 28px; background: #f3f5f5; border: 1px solid var(--line); color: var(--ink); font-size: 13px; }
+    .seu-container-do-3d, #api-frame { background: #f8faf9; }
+    .watermark-logo { width: 92px; opacity: .62; filter: none; }
+    .selection-summary { top: 24px; right: 28px; width: 258px; padding: 20px; border: 1px solid rgba(16,36,44,.08); border-radius: 16px; background: rgba(255,255,255,.94); box-shadow: 0 14px 36px rgba(16,36,44,.12); backdrop-filter: blur(14px); }
+    .summary-heading { color: var(--accent-dark); font-size: 9px; letter-spacing: .16em; }
+    .summary-label { color: var(--ink-soft); }
+    .summary-value { color: var(--ink); }
+    .summary-color-copy .summary-value { color: var(--ink); }
+    .summary-swatch { border-color: rgba(16,36,44,.22); }
+    .selection-summary .btn-reset-cam { background: transparent; color: var(--ink); border: 1px solid var(--line); box-shadow: none; font-size: 11px; }
+    .panel-controls { background: var(--panel); border: 1px solid var(--line); box-shadow: 0 14px 40px rgba(16,36,44,.14); padding: 24px 22px calc(20px + env(safe-area-inset-bottom, 0px)) 22px; }
+    .panel-intro { display: flex; flex-direction: column; gap: 5px; padding: 2px 0 18px; }
+    .panel-intro strong { color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
+    .panel-intro span { color: var(--ink-soft); font-size: 12px; }
+    .drawer-handle { background: #f5f8f8; border-color: var(--line); color: var(--ink); text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+    .tabs-container { border-color: var(--line); gap: 6px; }
+    .tab-btn { background: transparent; border-color: transparent; color: var(--ink-soft); border-radius: 8px; font-size: 11px; padding: 10px 12px; }
+    .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: none; }
+    .status-bar { color: var(--accent-dark) !important; letter-spacing: .02em; }
+    .color-preview { background: #f8faf9; border-color: var(--line); border-radius: 12px; }
+    .preview-label { color: var(--accent-dark); }
+    .preview-name { color: var(--ink); }
+    .preview-hex { color: var(--ink-soft); }
+    .custom-select, .custom-input { background: #fff; border-color: var(--line); color: var(--ink); border-radius: 8px; box-shadow: 0 2px 5px rgba(16,36,44,.04); }
+    .custom-select option, .custom-select optgroup { background: #fff; color: var(--ink); }
+    details { background: #f8faf9; border-color: var(--line); }
+    summary { color: var(--ink-soft); }
+    .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
+    .action-bar { border-color: var(--line); }
+    .quality-btn { background: #f5f8f8; border-color: var(--line); color: var(--ink-soft); }
+    .quality-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
+    @media (min-width: 521px) {
+      .panel-controls { top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw); border-radius: 18px; transform: translateX(calc(100% + 24px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { width: 40px; height: 132px; right: auto; left: -41px; border-radius: 10px 0 0 10px; writing-mode: vertical-rl; background: var(--panel); box-shadow: -4px 8px 18px rgba(16,36,44,.08); }
+      .drawer-handle::before { transform: rotate(90deg); }
+      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
+    }
+    @media (max-width: 520px) {
+      .header-title { height: 56px; font-size: 12px; }
+      .header-brand { left: 14px; font-size: 9px; }
+      .btn-help { top: 14px; right: 14px; }
+      .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
+      .panel-controls { background: var(--panel); border-color: var(--line); }
+    }
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
 <body>
 
-  <div class="header-title">Poontoon by GRAN FISH <button class="btn-help" onclick="toggleHelp()">?</button></div>
+  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Poontoon</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo das cores escolhidas">
@@ -198,7 +250,8 @@
   <div class="panel-controls">
     <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
     <div id="choice-panel">
-    <div id="status" class="status-bar">Carregando modelo 3D...</div>
+    <div class="panel-intro"><strong>Personalize seu Poontoon</strong><span>Escolha as cores e veja o resultado em tempo real.</span></div>
+    <div id="status" class="status-bar">Preparando sua configuração...</div>
     
     <!-- Menu de Abas -->
     <div class="tabs-container">
@@ -262,7 +315,6 @@
           <div class="preview-swatch" id="swatch-cinza"></div>
           <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza">#25282A</span></div>
         </div>
-        </div>
         <div class="select-wrapper">
           <div class="color-indicator" id="indicator-cinza"></div>
           <select class="custom-select has-color" id="select-cinza" onchange="selecionarCor('cinza', this.value)"></select>
@@ -284,7 +336,7 @@
     <div class="action-bar">
       <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">HD</button>
       <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
-      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">📸 Salvar Imagem</button>
+      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
     </div>
   </div>
   </div>
@@ -728,6 +780,12 @@
     function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Pontoon_Configurado.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
     async function compartilharImagem() { const res = await fetch(ultimaImagemBase64); const blob = await res.blob(); const file = new File([blob], 'Pontoon.png', { type: 'image/png' }); await navigator.share({ title: 'Configuração Pontoon', files: [file] }); fecharShareModal(); }
 
+    if (window.innerWidth >= 521) {
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      panel.classList.add('is-open');
+      handle.setAttribute('aria-expanded', 'true');
+    }
     popularSelects();
   </script>
 </body>
