@@ -254,6 +254,7 @@
     .preview-hex { color: #6d7d81; }
     .custom-select, .custom-input { background: #ffffff; border-color: var(--atelier-line); color: #10242c; border-radius: 10px; box-shadow: none; }
     .custom-select option, .custom-select optgroup { background: #ffffff; color: #10242c; }
+    .custom-select option:checked { background-color: var(--select-color, #ffffff); color: var(--select-contrast, #10242c); }
     .texture-reference { background: #ffffff; border-color: var(--atelier-line); border-radius: 12px; }
     .texture-reference-label, summary { color: var(--atelier-mint); }
     .picker-btn-wrapper { border-color: var(--atelier-line); border-radius: 12px; box-shadow: none; }
@@ -285,6 +286,11 @@
       body.mobile-drawer-open .seu-container-do-3d {
         flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
         height: calc(100dvh - var(--header-height) - var(--drawer-height));
+      }
+      .seu-container-do-3d.is-3d-focused .selection-summary {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
       }
     }
     @media (min-width: 521px) {
@@ -417,6 +423,7 @@
       <ul>
         <li><b>Girar Câmera:</b> Clique/Toque e arraste.</li>
         <li><b>Aproximar/Afastar:</b> Use scroll do mouse ou movimento de pinça.</li>
+        <li><b>Fechar escolhas:</b> Deslize para baixo sobre o 3D.</li>
         <li><b>Feedback Visual:</b> Ao alterar uma cor ou clicar no barco, a área selecionada piscará com um brilho de destaque.</li>
       </ul>
       <button class="btn-close-help" onclick="toggleHelp()">Entendi!</button>
@@ -470,6 +477,49 @@
         event.preventDefault();
         abrirSelecaoCor(idHTML, tabId, preview);
       }
+    }
+
+    function atualizarFoco3D(isFocused) {
+      if (!window.matchMedia('(max-width: 520px)').matches) return;
+      const stage = document.querySelector('.seu-container-do-3d');
+      if (stage) stage.classList.toggle('is-3d-focused', isFocused);
+    }
+
+    function configurarInteracaoMobile() {
+      const stage = document.querySelector('.seu-container-do-3d');
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      if (!stage || !panel || !handle) return;
+
+      let pointerStart = null;
+      const isControlArea = target => target.closest('.panel-controls, .selection-summary');
+
+      stage.addEventListener('focusin', event => {
+        if (!isControlArea(event.target)) atualizarFoco3D(true);
+      });
+      stage.addEventListener('focusout', event => {
+        if (!stage.contains(event.relatedTarget)) atualizarFoco3D(false);
+      });
+      stage.addEventListener('pointerdown', event => {
+        if (isControlArea(event.target)) return;
+        atualizarFoco3D(true);
+        pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      }, { passive: true });
+      stage.addEventListener('pointermove', event => {
+        if (!pointerStart || pointerStart.id !== event.pointerId || !panel.classList.contains('is-open')) return;
+        const deltaY = event.clientY - pointerStart.y;
+        const deltaX = Math.abs(event.clientX - pointerStart.x);
+        if (deltaY > 28 && deltaY > deltaX * 0.8) {
+          pointerStart = null;
+          toggleChoiceDrawer(handle);
+        }
+      }, { passive: true });
+      stage.addEventListener('pointerup', event => {
+        if (pointerStart && pointerStart.id === event.pointerId) pointerStart = null;
+      }, { passive: true });
+      stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
+      iframe.addEventListener('focus', () => atualizarFoco3D(true));
+      iframe.addEventListener('blur', () => atualizarFoco3D(false));
     }
 
     function toggleChoiceDrawer(handle) {
@@ -757,8 +807,16 @@
           if(select.options[i].value.toLowerCase() === hex.toLowerCase()) { select.selectedIndex=i; achou=true; break; } 
         } 
         if(!achou) select.value=''; 
+        const contraste = calcularContraste(hex);
+        const selectedOption = select.options[select.selectedIndex];
         select.style.backgroundColor = hex;
-        select.style.color = calcularContraste(hex);
+        select.style.color = contraste;
+        select.style.setProperty('--select-color', hex);
+        select.style.setProperty('--select-contrast', contraste);
+        if (selectedOption) {
+          selectedOption.style.backgroundColor = hex;
+          selectedOption.style.color = contraste;
+        }
       }
     }
 
@@ -902,6 +960,7 @@
       handle.setAttribute('aria-expanded', 'true');
     }
     popularSelects();
+    configurarInteracaoMobile();
   </script>
 </body>
 </html>
