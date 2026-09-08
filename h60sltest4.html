@@ -32,7 +32,7 @@
     .summary-swatch { width: 19px; height: 19px; flex: 0 0 19px; border: 1px solid rgba(255,255,255,0.78); border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.28); }
     .summary-color-copy { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
     .summary-color-copy .summary-value { font: 11px Consolas, monospace; }
-    @media (max-width: 520px) {
+    @media (max-width: 767px) {
       .watermark-logo { left: 50%; right: auto; bottom: 7px; width: 72px; opacity: 0.82; }
       .selection-summary { top: auto; right: 8px; bottom: 8px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
       .summary-heading, .summary-label { display: none; }
@@ -53,7 +53,7 @@
     .drawer-handle-text::after { content: "Abrir escolhas"; }
     .panel-controls.is-open .drawer-handle-text::after { content: "Fechar escolhas"; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    @media (min-width: 521px) {
+    @media (min-width: 768px) {
       .panel-controls { position: fixed; top: 0; right: auto; bottom: 0; left: 0; width: min(420px, 38vw); max-height: none; border-radius: 0 22px 22px 0; transform: translateX(calc(-100% + 34px)); }
       .panel-controls.is-open { transform: translateX(0); }
       .drawer-handle { width: 42px; height: 150px; margin: 0; position: absolute; top: 50%; right: -42px; transform: translateY(-50%); border-radius: 0 12px 12px 0; writing-mode: vertical-rl; }
@@ -63,9 +63,9 @@
     }
     
     /* Abas */
-    .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 13px; }
+    .tabs-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); margin-bottom: 13px; }
     .tabs-container::-webkit-scrollbar { display: none; }
-    .tab-btn { background: rgba(5, 18, 24, 0.58); color: #a9c2c6; border: 1px solid rgba(151, 235, 223, 0.22); border-radius: 12px; font-size: 12px; font-weight: 700; padding: 9px 15px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .tab-btn { width: 100%; min-height: 42px; background: rgba(5, 18, 24, 0.58); color: #a9c2c6; border: 1px solid rgba(151, 235, 223, 0.22); border-radius: 12px; font-size: 12px; font-weight: 700; line-height: 1.2; padding: 9px 8px; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: #9bebdf; color: #07353c; border-color: #9bebdf; box-shadow: 0 4px 14px rgba(155, 235, 223, 0.2); }
 
     .tab-content { display: none; flex-direction: column; gap: 12px; overflow-y: auto; }
@@ -106,15 +106,13 @@
 
     /* Barra Inferior */
     .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
-    @media (max-width: 520px) {
+    @media (max-width: 767px) {
       .panel-controls { position: fixed; width: min(calc(100% - 16px), 420px); left: 8px; max-height: 70dvh; border-radius: 18px 18px 0 0; transform: translateY(calc(100% - 54px)); }
       .panel-controls.is-open { transform: translateY(0); }
       .drawer-handle { margin-bottom: 10px; border-radius: 14px; }
       #choice-panel { max-height: calc(70dvh - 64px); overflow-y: auto; overscroll-behavior: contain; }
     }
-    .quality-btn { flex: 1; background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 10px; cursor: pointer; transition: all 0.2s ease; }
-    .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000000; font-weight: 700; }
-    .btn-capture { flex: 2; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
+    .btn-capture { flex: 1; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
     .btn-capture:active { opacity: 0.8; }
 
     /* Modais */
@@ -140,24 +138,20 @@
     .tab-btn,
     .custom-select,
     .custom-input,
-    .quality-btn,
     .help-content { background: #001f1e; }
     .btn-help,
     .btn-reset-cam,
     .tab-btn,
     .custom-select,
     .custom-input,
-    .quality-btn,
     details,
     .help-content { border-color: rgba(255, 255, 255, 0.24); }
     .btn-help,
     .btn-reset-cam,
     .tab-btn.active,
-    .quality-btn.active,
     .btn-close-help,
     .btn-action[style*="00d2ff"] { color: #ffffff; background: #002a29; border-color: #002a29; }
     .tab-btn,
-    .quality-btn,
     .custom-select,
     .custom-input,
     .custom-select option,
@@ -230,10 +224,10 @@
       background: #f5f8f8; border-color: var(--line); color: var(--ink); text-transform: uppercase;
       letter-spacing: .08em; font-size: 10px;
     }
-    .tabs-container { border-color: var(--line); gap: 6px; }
+    .tabs-container { border-color: var(--line); gap: 9px; }
     .tab-btn {
       background: transparent; border-color: transparent; color: var(--ink-soft);
-      border-radius: 8px; font-size: 11px; padding: 10px 12px;
+      border-radius: 8px; font-size: 11px; padding: 10px 8px;
     }
     .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: none; }
     .status-bar { color: var(--accent-dark) !important; letter-spacing: .02em; }
@@ -252,10 +246,8 @@
     summary { color: var(--ink-soft); }
     .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
     .action-bar { border-color: var(--line); }
-    .quality-btn { background: #f5f8f8; border-color: var(--line); color: var(--ink-soft); }
-    .quality-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
     .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
-    @media (min-width: 521px) {
+    @media (min-width: 768px) {
       .panel-controls {
         top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw);
         border-radius: 18px; transform: translateX(calc(100% + 24px));
@@ -268,7 +260,7 @@
       .drawer-handle::before { transform: rotate(90deg); }
       .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
     }
-    @media (max-width: 520px) {
+    @media (max-width: 767px) {
       .header-title { height: 56px; font-size: 12px; }
       .header-brand { left: 14px; font-size: 9px; }
       .btn-help { top: 14px; right: 14px; }
@@ -280,10 +272,10 @@
     .seu-container-do-3d, #api-frame { background: #ffffff; }
     .color-preview { background: #ffffff; border-color: var(--line); cursor: pointer; }
     .color-preview:hover { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(189,146,80,.16); }
-    @media (min-width: 521px) {
+    @media (min-width: 768px) {
       .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
     }
-    @media (max-width: 520px) {
+    @media (max-width: 767px) {
       .selection-summary {
           top: 8px; right: 10px; bottom: auto; left: 10px; width: auto;
         height: auto; max-height: none; padding: 8px 10px; border-radius: 8px;
@@ -305,11 +297,10 @@
     .texture-reference { border-radius: 12px; }
     details { border-radius: 12px; }
     .picker-btn-wrapper { border-radius: 12px; }
-    .quality-btn, .btn-capture { border-radius: 10px; }
-    @media (min-width: 521px) {
+    @media (min-width: 768px) {
       .drawer-handle { border-radius: 14px 0 0 14px; }
     }
-    @media (max-width: 520px) {
+    @media (max-width: 767px) {
       .selection-summary { border-radius: 16px; }
       .panel-controls { border-radius: 22px 22px 0 0; }
       .seu-container-do-3d.is-3d-focused .selection-summary {
@@ -365,14 +356,14 @@
     
     <!-- Menu de Abas -->
     <div class="tabs-container">
-      <button class="tab-btn active" onclick="openTab('tab-base', this)">Fundo Base</button>
-      <button class="tab-btn" onclick="openTab('tab-tex', this)">Grafismos</button>
+      <button class="tab-btn active" onclick="openTab('tab-tex', this)">Grafismos</button>
+      <button class="tab-btn" onclick="openTab('tab-base', this)">Fundo Base</button>
       <button class="tab-btn" onclick="openTab('tab-adesivo1', this)">Pintura (Cor 1)</button>
       <button class="tab-btn" onclick="openTab('tab-adesivo2', this)">Pintura (Cor 2)</button>
     </div>
 
     <!-- ABA 1: FUNDO BASE -->
-    <div id="tab-base" class="tab-content active">
+    <div id="tab-base" class="tab-content">
       <div class="color-row">
         <div class="color-preview" id="preview-decalque1" role="button" tabindex="0" aria-label="Selecionar cor do fundo base" onclick="abrirSelecaoCor('decalque1', 'tab-base', this)" onkeydown="ativarSelecaoCor(event, 'decalque1', 'tab-base', this)">
           <div class="preview-swatch" id="swatch-decalque1"></div>
@@ -396,7 +387,7 @@
     </div>
 
     <!-- ABA 2: TEXTURA -->
-    <div id="tab-tex" class="tab-content">
+    <div id="tab-tex" class="tab-content active">
       <div class="texture-reference">
         <span class="texture-reference-label">Grafismo escolhido</span>
         <strong class="texture-reference-name" id="texture-reference-name">Nenhum adesivo (Apenas Cor Base)</strong>
@@ -460,8 +451,6 @@
 
     <!-- Barra Inferior de Ações -->
     <div class="action-bar">
-      <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">HD</button>
-      <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
       <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
     </div>
   </div>
@@ -531,7 +520,7 @@
     }
 
     function atualizarFoco3D(isFocused) {
-      if (!window.matchMedia('(max-width: 520px)').matches) return;
+      if (!window.matchMedia('(max-width: 767px)').matches) return;
       const stage = document.querySelector('.seu-container-do-3d');
       if (stage) stage.classList.toggle('is-3d-focused', isFocused);
     }
@@ -580,13 +569,13 @@
       const stageHeightBefore = stage ? stage.getBoundingClientRect().height : 0;
       const isOpen = panel.classList.toggle('is-open');
       handle.setAttribute('aria-expanded', String(isOpen));
-      if (window.matchMedia('(max-width: 520px)').matches) {
+      if (window.matchMedia('(max-width: 767px)').matches) {
         document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
         document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
         document.body.classList.toggle('mobile-drawer-open', isOpen);
         prepararCameraParaGaveta(isOpen, wasOpen, stageHeightBefore);
       }
-      if (isOpen) {
+      if (isOpen && !window.matchMedia('(max-width: 767px)').matches) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
     }
@@ -650,8 +639,10 @@
       textureUrl: ''
     };
 
-    const BASE_URL_TEXTURAS = 'https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/';
+    const BASE_URL_TEXTURAS = 'https://github.com/Nar1981/minhas-texturas/raw/refs/heads/main/';
+    const API_URL_TEXTURAS = 'https://api.github.com/repos/Nar1981/minhas-texturas/git/trees/main?recursive=1';
     const EXTENSAO_ARQUIVO = '.png';
+    const REFERENCIA_PADRAO = 'ref0002';
 
     const catalogoCores = {
       'Cores Clássicas & Base': {
@@ -723,8 +714,53 @@
       modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
     }
 
-    function inicializarInterface() {
-      if (window.innerWidth >= 521) {
+    async function carregarReferenciasTextura() {
+      const selectTex = document.getElementById('select-textura-decalque1');
+      const referencias = [];
+
+      try {
+        const controlador = new AbortController();
+        const timeout = window.setTimeout(() => controlador.abort(), 5000);
+        const resposta = await fetch(`${API_URL_TEXTURAS}&_=${Date.now()}`, {
+          cache: 'no-store',
+          headers: { Accept: 'application/vnd.github+json' },
+          signal: controlador.signal
+        });
+        window.clearTimeout(timeout);
+        if (!resposta.ok) throw new Error(`GitHub retornou HTTP ${resposta.status}`);
+        const arvore = await resposta.json();
+        if (!Array.isArray(arvore.tree)) throw new Error('Resposta da árvore do GitHub inválida');
+        arvore.tree
+          .filter(arquivo => arquivo.type === 'blob' && /^ref\d+\.png$/i.test(arquivo.path))
+          .sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true }))
+          .forEach(arquivo => {
+            const nomeArquivo = arquivo.path.split('/').pop();
+            referencias.push({
+              nome: nomeArquivo.replace(/\.png$/i, ''),
+              url: `https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/${encodeURIComponent(nomeArquivo)}`
+            });
+          });
+      } catch (erro) {
+        console.warn('Não foi possível consultar as referências no GitHub. Usando a lista local.', erro);
+        for (let i = 1; i <= 9; i++) {
+          const nome = 'ref' + String(i).padStart(4, '0');
+          referencias.push({ nome, url: BASE_URL_TEXTURAS + nome + EXTENSAO_ARQUIVO });
+        }
+      }
+
+      selectTex.innerHTML = '<option value="">Nenhum adesivo (Apenas Cor Base)</option>';
+      referencias.forEach(referencia => {
+        const opt = document.createElement('option');
+        opt.value = referencia.url;
+        opt.textContent = 'Padrão ' + referencia.nome.toUpperCase();
+        selectTex.appendChild(opt);
+      });
+      const referenciaPadrao = referencias.find(referencia => referencia.nome.toLowerCase() === REFERENCIA_PADRAO);
+      if (referenciaPadrao) selectTex.value = referenciaPadrao.url;
+    }
+
+    async function inicializarInterface() {
+      if (window.innerWidth >= 768) {
         const panel = document.querySelector('.panel-controls');
         const handle = document.querySelector('.drawer-handle');
         panel.classList.add('is-open');
@@ -749,15 +785,7 @@
         }
       });
 
-      const selectTex = document.getElementById('select-textura-decalque1');
-      for (let i = 1; i <= 6; i++) {
-        let numFormatado = String(i).padStart(4, '0');
-        let nomeRef = 'ref' + numFormatado;
-        let opt = document.createElement('option');
-        opt.value = BASE_URL_TEXTURAS + nomeRef + EXTENSAO_ARQUIVO;
-        opt.textContent = 'Padrão ' + nomeRef.toUpperCase();
-        selectTex.appendChild(opt);
-      }
+      await carregarReferenciasTextura();
 
       sincronizarInputs('decalque1', '#686b73', '104, 107, 115');
       sincronizarInputs('decalque-cor1', '#e74c3c', '231, 76, 60');
@@ -841,7 +869,7 @@
 
             setTimeout(() => {
               aplicarHexComSincronizacao('decalque1', '#686b73');
-              const urlInicial = BASE_URL_TEXTURAS + 'ref0001' + EXTENSAO_ARQUIVO;
+              const urlInicial = BASE_URL_TEXTURAS + REFERENCIA_PADRAO + EXTENSAO_ARQUIVO;
               document.getElementById('select-textura-decalque1').value = urlInicial;
               aplicarTexturaAPI(urlInicial);
             }, 300);
@@ -855,8 +883,8 @@
                   if (panel && handle && !panel.classList.contains('is-open')) {
                     toggleChoiceDrawer(handle);
                   }
-                  const tabBtns = document.querySelectorAll('.tab-btn');
-                  if (tabBtns[0]) openTab('tab-base', tabBtns[0]);
+                  const tabBaseButton = document.querySelector('.tab-btn[onclick*="\'tab-base\'"]');
+                  if (tabBaseButton) openTab('tab-base', tabBaseButton);
                   const sel = document.getElementById('select-decalque1');
                   const picker = document.getElementById('picker-decalque1');
                   if (isMobile) { if (sel) sel.focus(); } else { if (picker) picker.click(); }
@@ -864,7 +892,6 @@
               }
             }, { pick: 'fast' });
 
-            definirQualidadeTextura(1);
             document.getElementById('status').innerText = '✓ Modelo e Texturas Prontos.';
           });
         });
@@ -883,17 +910,6 @@
       ui_inspector: 0,
       ui_watermark: 0
     });
-
-    function definirQualidadeTextura(qualidade) {
-      if (apiInstance && apiInstance.setTextureQuality) {
-        apiInstance.setTextureQuality(qualidade ? 'hd' : 'ld', function(err) {
-          if (!err) {
-            document.getElementById('btn-tex-hd').classList.toggle('active', qualidade === 1);
-            document.getElementById('btn-tex-sd').classList.toggle('active', qualidade === 0);
-          }
-        });
-      }
-    }
 
     function aplicarTexturaAPI(urlTextura) {
       decalqueState.textureUrl = urlTextura;

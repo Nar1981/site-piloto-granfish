@@ -105,9 +105,7 @@
       .drawer-handle { margin-bottom: 10px; border-radius: 14px; }
       #choice-panel { max-height: calc(70dvh - 64px); overflow-y: auto; overscroll-behavior: contain; }
     }
-    .quality-btn { flex: 1; background: #27272e; border: 1px solid #3d3d47; border-radius: 8px; color: #a0a0a8; font-size: 11px; font-weight: 600; padding: 10px; cursor: pointer; transition: all 0.2s ease; }
-    .quality-btn.active { background: #00d2ff; border-color: #00d2ff; color: #000000; font-weight: 700; }
-    .btn-capture { flex: 2; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
+    .btn-capture { flex: 1; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
     .btn-capture:active { opacity: 0.8; }
 
     /* Modais */
@@ -133,24 +131,20 @@
     .tab-btn,
     .custom-select,
     .custom-input,
-    .quality-btn,
     .help-content { background: #001f1e; }
     .btn-help,
     .btn-reset-cam,
     .tab-btn,
     .custom-select,
     .custom-input,
-    .quality-btn,
     details,
     .help-content { border-color: rgba(255, 255, 255, 0.24); }
     .btn-help,
     .btn-reset-cam,
     .tab-btn.active,
-    .quality-btn.active,
     .btn-close-help,
     .btn-action[style*="00d2ff"] { color: #ffffff; background: #002a29; border-color: #002a29; }
     .tab-btn,
-    .quality-btn,
     .custom-select,
     .custom-input,
     .custom-select option,
@@ -204,8 +198,6 @@
     summary { color: var(--ink-soft); }
     .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
     .action-bar { border-color: var(--line); }
-    .quality-btn { background: #f5f8f8; border-color: var(--line); color: var(--ink-soft); }
-    .quality-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
     .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
     @media (min-width: 521px) {
       .panel-controls { top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw); border-radius: 18px; transform: translateX(calc(100% + 24px)); }
@@ -262,8 +254,6 @@
     .texture-reference-label, summary { color: var(--atelier-mint); }
     .picker-btn-wrapper { border-color: var(--atelier-line); border-radius: 12px; box-shadow: none; }
     .action-bar { border-color: var(--atelier-line); }
-    .quality-btn { background: #ffffff; border-color: var(--atelier-line); color: #6d7d81; border-radius: 10px; }
-    .quality-btn.active { background: var(--atelier-mint); border-color: var(--atelier-mint); color: #10252b; }
     .btn-capture { background: var(--atelier-coral) !important; color: #1c1110; border-radius: 10px; box-shadow: 0 8px 22px rgba(240,125,98,.2); }
     @media (min-width: 521px) {
       .panel-controls { top: 96px; right: 30px; bottom: 28px; width: min(400px, 35vw); border-radius: 22px; transform: translateX(calc(100% + 30px)); }
@@ -413,8 +403,6 @@
 
     <!-- Barra Inferior de Ações -->
     <div class="action-bar">
-      <button type="button" class="quality-btn active" id="btn-tex-hd" onclick="definirQualidadeTextura(1)">HD</button>
-      <button type="button" class="quality-btn" id="btn-tex-sd" onclick="definirQualidadeTextura(0)">SD</button>
       <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
     </div>
   </div>
@@ -750,7 +738,6 @@
               }
             }, { pick: 'fast' });
 
-            definirQualidadeTextura(1);
             document.getElementById('status').innerText = '✓ Selecione as cores ou toque no modelo.';
           });
         });
@@ -770,17 +757,6 @@
       ui_inspector: 0,
       ui_watermark: 0
     });
-
-    function definirQualidadeTextura(qualidade) {
-      if (apiInstance && apiInstance.setTextureQuality) {
-        apiInstance.setTextureQuality(qualidade ? 'hd' : 'ld', function(err) {
-          if (!err) {
-            document.getElementById('btn-tex-hd').classList.toggle('active', qualidade === 1);
-            document.getElementById('btn-tex-sd').classList.toggle('active', qualidade === 0);
-          }
-        });
-      }
-    }
 
     function sincronizarInputs(nomeMaterial, hex, rgbTexto) {
       const hexInput = document.getElementById('hex-' + nomeMaterial), rgbInput = document.getElementById('rgb-' + nomeMaterial), select = document.getElementById('select-' + nomeMaterial), picker = document.getElementById('picker-' + nomeMaterial), indicator = document.getElementById('indicator-' + nomeMaterial); 
