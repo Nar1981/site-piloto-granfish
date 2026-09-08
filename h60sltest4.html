@@ -100,7 +100,7 @@
     .preview-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 14px; font-weight: 800; }
     .preview-hex { color: #b8ced1; font: 12px Consolas, monospace; }
-    .texture-reference { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 12px; background: rgba(4, 18, 24, 0.5); }
+    .texture-reference { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 12px; background: rgba(4, 18, 24, 0.5); cursor: pointer; }
     .texture-reference-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .texture-reference-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 13px; font-weight: 800; text-align: right; }
 
@@ -388,7 +388,7 @@
 
     <!-- ABA 2: TEXTURA -->
     <div id="tab-tex" class="tab-content active">
-      <div class="texture-reference">
+      <div class="texture-reference" role="button" tabindex="0" aria-label="Selecionar grafismo" onclick="abrirSelecaoTextura(this)" onkeydown="ativarSelecaoTextura(event, this)">
         <span class="texture-reference-label">Grafismo escolhido</span>
         <strong class="texture-reference-name" id="texture-reference-name">Nenhum adesivo (Apenas Cor Base)</strong>
       </div>
@@ -519,6 +519,29 @@
       }
     }
 
+    function abrirSelecaoTextura(reference) {
+      const select = document.getElementById('select-textura-decalque1');
+      if (!select) return;
+      select.focus({ preventScroll: true });
+      if (typeof select.showPicker === 'function') {
+        try {
+          select.showPicker();
+        } catch (error) {
+          select.click();
+        }
+      } else {
+        select.click();
+      }
+      reference.setAttribute('aria-label', 'Seleção de grafismo aberta');
+    }
+
+    function ativarSelecaoTextura(event, reference) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        abrirSelecaoTextura(reference);
+      }
+    }
+
     function atualizarFoco3D(isFocused) {
       if (!window.matchMedia('(max-width: 767px)').matches) return;
       const stage = document.querySelector('.seu-container-do-3d');
@@ -639,7 +662,7 @@
       textureUrl: ''
     };
 
-    const BASE_URL_TEXTURAS = 'https://github.com/Nar1981/minhas-texturas/raw/refs/heads/main/';
+    const BASE_URL_TEXTURAS = 'https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/';
     const API_URL_TEXTURAS = 'https://api.github.com/repos/Nar1981/minhas-texturas/git/trees/main?recursive=1';
     const EXTENSAO_ARQUIVO = '.png';
     const REFERENCIA_PADRAO = 'ref0002';
@@ -756,7 +779,10 @@
         selectTex.appendChild(opt);
       });
       const referenciaPadrao = referencias.find(referencia => referencia.nome.toLowerCase() === REFERENCIA_PADRAO);
-      if (referenciaPadrao) selectTex.value = referenciaPadrao.url;
+      if (referenciaPadrao) {
+        selectTex.value = referenciaPadrao.url;
+        if (apiInstance) aplicarTexturaAPI(referenciaPadrao.url);
+      }
     }
 
     async function inicializarInterface() {
@@ -869,8 +895,9 @@
 
             setTimeout(() => {
               aplicarHexComSincronizacao('decalque1', '#686b73');
-              const urlInicial = BASE_URL_TEXTURAS + REFERENCIA_PADRAO + EXTENSAO_ARQUIVO;
-              document.getElementById('select-textura-decalque1').value = urlInicial;
+              const selectTextura = document.getElementById('select-textura-decalque1');
+              const urlInicial = selectTextura.value || BASE_URL_TEXTURAS + REFERENCIA_PADRAO + EXTENSAO_ARQUIVO;
+              selectTextura.value = urlInicial;
               aplicarTexturaAPI(urlInicial);
             }, 300);
 
