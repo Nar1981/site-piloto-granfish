@@ -194,6 +194,9 @@
       text-transform: uppercase; box-shadow: 0 2px 12px rgba(16,36,44,.05);
     }
     .header-brand { position: absolute; left: 24px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+      .btn-home { position: absolute; top: 18px; right: 58px; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: #f3f5f5; text-decoration: none; padding: 0; line-height: 1; }
+      .btn-home svg { width: 14px; height: 14px; display: block; }
+      .btn-home:active { transform: scale(.92); }
     .panel-intro { display: flex; flex-direction: column; gap: 5px; padding: 2px 0 18px; }
     .panel-intro strong { color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
     .panel-intro span { color: var(--ink-soft); font-size: 12px; }
@@ -269,6 +272,7 @@
       .header-title { height: 56px; font-size: 12px; }
       .header-brand { left: 14px; font-size: 9px; }
       .btn-help { top: 14px; right: 14px; }
+        .btn-home { top: 14px; right: 48px; width: 26px; height: 26px; font-size: 15px; }
       .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
       .panel-controls { background: var(--panel); border-color: var(--line); }
     }
@@ -281,7 +285,7 @@
     }
     @media (max-width: 520px) {
       .selection-summary {
-        top: 70px; right: 10px; bottom: auto; left: 10px; width: auto;
+          top: 8px; right: 10px; bottom: auto; left: 10px; width: auto;
         height: auto; max-height: none; padding: 8px 10px; border-radius: 8px;
       }
       .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
@@ -319,7 +323,7 @@
 </head>
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><a class="btn-home" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 3 11.5v8.5a1 1 0 0 0 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor"/></svg></a><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo da configuração escolhida">

@@ -229,6 +229,9 @@
     .header-title > span:not(.header-brand) { font-size: 12px; letter-spacing: .2em; }
     .header-brand { position: static; color: var(--atelier-coral); font-size: 10px; letter-spacing: .25em; padding-right: 18px; border-right: 1px solid var(--atelier-line); }
     .btn-help { top: 22px; right: 30px; background: #ffffff; border-color: var(--atelier-line); color: var(--atelier-mint); }
+    .btn-home { position: absolute; top: 18px; right: 68px; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--atelier-line); border-radius: 50%; color: var(--atelier-mint); background: #ffffff; text-decoration: none; padding: 0; line-height: 1; }
+    .btn-home svg { width: 14px; height: 14px; display: block; }
+    .btn-home:active { transform: scale(.92); }
     .seu-container-do-3d, #api-frame { background: #ffffff; }
     .watermark-logo { bottom: 24px; width: 84px; opacity: .32; filter: none; }
     .selection-summary { top: 28px; right: 30px; width: 238px; padding: 18px; border: 1px solid var(--atelier-line); border-radius: 18px; background: rgba(255,255,255,.94); color: #10242c; box-shadow: 0 18px 50px rgba(16,36,44,.12); backdrop-filter: blur(16px); }
@@ -272,11 +275,12 @@
       .header-brand { font-size: 8px; padding-right: 11px; }
       .header-title > span:not(.header-brand) { font-size: 10px; }
       .selection-summary { background: rgba(255,255,255,.94); top: 12px; right: 12px; }
+      .btn-home { top: 16px; right: 50px; width: 26px; height: 26px; font-size: 15px; }
       .panel-controls { background: #ffffff; }
     }
     @media (max-width: 520px) {
       .selection-summary {
-        top: 70px; right: 10px; bottom: auto; left: 10px; width: auto;
+        top: 8px; right: 10px; bottom: auto; left: 10px; width: auto;
         height: auto; max-height: none; padding: 8px 10px; border-radius: 16px;
       }
       .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
@@ -301,7 +305,7 @@
 </head>
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH / ATELIER</span><span>Poontoon sob medida</span><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+  <div class="header-title"><span class="header-brand">GRAN FISH / ATELIER</span><span>Poontoon sob medida</span><a class="btn-home" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 3 11.5v8.5a1 1 0 0 0 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor"/></svg></a><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
   
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo das cores escolhidas">
