@@ -58,14 +58,7 @@
       #choice-panel { height: 100%; overflow-y: auto; padding-top: 17px; }
     }
      
-    /* Abas */
-    .tabs-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-bottom: 13px; }
-    .tabs-container::-webkit-scrollbar { display: none; }
-    .tab-btn { background: rgba(5, 18, 24, 0.58); color: #a9c2c6; border: 1px solid rgba(151, 235, 223, 0.22); border-radius: 12px; font-size: 12px; font-weight: 700; padding: 9px 15px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
-    .tab-btn.active { background: #9bebdf; color: #07353c; border-color: #9bebdf; box-shadow: 0 4px 14px rgba(155, 235, 223, 0.2); }
-
-    .tab-content { display: none; flex-direction: column; gap: 12px; overflow-y: auto; }
-    .tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
+    .tab-content { display: flex; flex-direction: column; gap: 12px; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Inputs de Cor e Seleção */
@@ -83,6 +76,8 @@
 
     /* Entradas Manuais Ocultas (Sanfona) */
     details { margin-top: 6px; background: rgba(3, 16, 22, 0.42); border-radius: 10px; padding: 9px; border: 1px dashed rgba(151, 235, 223, 0.25); }
+    .manual-color-details { display: none; }
+    .manual-color-details.is-selected { display: block; }
     summary { font-size: 11px; font-weight: 600; color: #a0a0a8; cursor: pointer; outline: none; }
     .inputs-row { display: flex; gap: 8px; margin-top: 10px; }
     .custom-input { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 5px; color: #ffffff; font-size: 12px; font-family: monospace; padding: 8px; width: 50%; outline: none; }
@@ -322,14 +317,7 @@
     <div class="panel-intro"><strong>Monte sua assinatura</strong><span>Três faixas. Uma identidade única.</span></div>
     <div id="status" class="status-bar">Preparando sua configuração...</div>
     
-    <!-- Menu de Abas -->
-    <div class="tabs-container">
-      <button class="tab-btn active" onclick="openTab('tab-faixa1', this)">Faixa 1</button>
-      <button class="tab-btn" onclick="openTab('tab-faixa2', this)">Faixa 2</button>
-      <button class="tab-btn" onclick="openTab('tab-faixa3', this)">Faixa 3</button>
-    </div>
-
-    <!-- ABA 1: FAIXA 1 -->
+    <!-- Seleção das três faixas -->
     <div id="tab-faixa1" class="tab-content active">
       <div class="color-row">
         <div class="color-preview" id="preview-cinza2" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 1" onclick="abrirSelecaoCor('cinza2', 'tab-faixa1', this)" onkeydown="ativarSelecaoCor(event, 'cinza2', 'tab-faixa1', this)">
@@ -340,12 +328,12 @@
           <div class="color-indicator" id="indicator-cinza2"></div>
           <select class="custom-select has-color" id="select-cinza2" onchange="selecionarCor('cinza2', this.value)"></select>
         </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('cinza2')">
           <span>🎨</span>
           <input type="color" id="picker-cinza2" value="#25282a" oninput="aplicarHexComSincronizacao('cinza2', this.value)">
         </div>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+      <details class="manual-color-details" data-color-id="cinza2"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
         <div class="inputs-row">
           <input type="text" class="custom-input" id="hex-cinza2" placeholder="HEX" onchange="digitarHex('cinza2', this.value)">
           <input type="text" class="custom-input" id="rgb-cinza2" placeholder="RGB" onchange="digitarRgb('cinza2', this.value)">
@@ -364,12 +352,12 @@
           <div class="color-indicator" id="indicator-Azul"></div>
           <select class="custom-select has-color" id="select-Azul" onchange="selecionarCor('Azul', this.value)"></select>
         </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('Azul')">
           <span>🎨</span>
           <input type="color" id="picker-Azul" value="#0d1b2a" oninput="aplicarHexComSincronizacao('Azul', this.value)">
         </div>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+      <details class="manual-color-details" data-color-id="Azul"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
         <div class="inputs-row">
           <input type="text" class="custom-input" id="hex-Azul" placeholder="HEX" onchange="digitarHex('Azul', this.value)">
           <input type="text" class="custom-input" id="rgb-Azul" placeholder="RGB" onchange="digitarRgb('Azul', this.value)">
@@ -388,12 +376,12 @@
           <div class="color-indicator" id="indicator-cinza"></div>
           <select class="custom-select has-color" id="select-cinza" onchange="selecionarCor('cinza', this.value)"></select>
         </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('cinza')">
           <span>🎨</span>
           <input type="color" id="picker-cinza" value="#25282a" oninput="aplicarHexComSincronizacao('cinza', this.value)">
         </div>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+      <details class="manual-color-details" data-color-id="cinza"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
         <div class="inputs-row">
           <input type="text" class="custom-input" id="hex-cinza" placeholder="HEX" onchange="digitarHex('cinza', this.value)">
           <input type="text" class="custom-input" id="rgb-cinza" placeholder="RGB" onchange="digitarRgb('cinza', this.value)">
@@ -443,6 +431,7 @@
     }
 
     function abrirSelecaoCor(idHTML, tabId, preview) {
+      mostrarCaixaHex(idHTML);
       const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
       if (tabButton) openTab(tabId, tabButton);
       const select = document.getElementById('select-' + idHTML);
@@ -464,6 +453,22 @@
       if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
     }
 
+    function mostrarCaixaHex(idHTML) {
+      document.querySelectorAll('.manual-color-details').forEach(details => {
+        details.classList.toggle('is-selected', details.dataset.colorId === idHTML);
+      });
+    }
+
+    function esconderCaixasHex() {
+      document.querySelectorAll('.manual-color-details').forEach(details => {
+        details.classList.remove('is-selected');
+      });
+    }
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.color-row, .manual-color-details')) esconderCaixasHex();
+    });
+
     function ativarSelecaoCor(event, idHTML, tabId, preview) {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
@@ -484,6 +489,7 @@
       if (!stage || !panel || !handle) return;
 
       let pointerStart = null;
+      let drawerPointerStart = null;
       const isControlArea = target => target.closest('.panel-controls, .selection-summary');
 
       stage.addEventListener('focusin', event => {
@@ -498,10 +504,12 @@
         pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
       }, { passive: true });
       stage.addEventListener('pointermove', event => {
-        if (!pointerStart || pointerStart.id !== event.pointerId || !panel.classList.contains('is-open')) return;
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
         const deltaY = event.clientY - pointerStart.y;
         const deltaX = Math.abs(event.clientX - pointerStart.x);
-        if (deltaY > 28 && deltaY > deltaX * 0.8) {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
           pointerStart = null;
           toggleChoiceDrawer(handle);
         }
@@ -510,6 +518,33 @@
         if (pointerStart && pointerStart.id === event.pointerId) pointerStart = null;
       }, { passive: true });
       stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
+      panel.addEventListener('pointerdown', event => {
+        if (!panel.classList.contains('is-open')) return;
+        drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      }, { passive: true });
+      panel.addEventListener('pointermove', event => {
+        if (!drawerPointerStart || drawerPointerStart.id !== event.pointerId) return;
+        const deltaY = event.clientY - drawerPointerStart.y;
+        const deltaX = Math.abs(event.clientX - drawerPointerStart.x);
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
+          drawerPointerStart = null;
+          toggleChoiceDrawer(handle);
+        }
+      }, { passive: true });
+      panel.addEventListener('pointerup', event => {
+        if (drawerPointerStart && drawerPointerStart.id === event.pointerId) drawerPointerStart = null;
+      }, { passive: true });
+      panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
+      panel.addEventListener('wheel', event => {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((drawerIsOpen && event.deltaY > 0) || (!drawerIsOpen && event.deltaY < 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
+      stage.addEventListener('wheel', event => {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((!drawerIsOpen && event.deltaY < 0) || (drawerIsOpen && event.deltaY > 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
       iframe.addEventListener('focus', () => atualizarFoco3D(true));
       iframe.addEventListener('blur', () => atualizarFoco3D(false));
     }
@@ -800,7 +835,11 @@
       }
     }
 
-    function selecionarCor(nomeMaterial, hex) { if (hex) aplicarHexComSincronizacao(nomeMaterial, hex); }
+    function selecionarCor(nomeMaterial, hex) {
+      if (!hex) return;
+      mostrarCaixaHex(nomeMaterial);
+      aplicarHexComSincronizacao(nomeMaterial, hex);
+    }
     function aplicarHexComSincronizacao(nomeMaterial, hex) { 
       const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); 
       sincronizarInputs(nomeMaterial, hex, `${r}, ${g}, ${b}`); 

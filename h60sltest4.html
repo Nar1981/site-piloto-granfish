@@ -1,175 +1,1058 @@
+<!--
+import pygame
+import time
+
+# Inicializa a biblioteca Pygame
+pygame.init()
+
+# Configurações da janela
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Cores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Configurações da gaveta
+GAVETA_PIN = 17
+
+def fechar_gaveta():
+pygame.draw.rect(screen, BLACK, [300, 400, 200, 100]) # Fechar a gaveta
+
+def abrir_gaveta():
+pygame.draw.rect(screen, WHITE, [300, 400, 200, 100]) # Manter a gaveta aberta
+
+# Loop principal
+running = True
+while running:
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+running = False
+
+# Simulação de detecção de movimento (substitua pelo seu método real)
+if detecta_movimento(): # Simulação de detecção de movimento
+fechar_gaveta()
+
+else:
+abrir_gaveta()
+
+pygame.display.flip() # Atualiza a tela
+
+pygame.quit()pip install pygamedef detecta_movimento():
+# Simulação de detecção de movimento (substitua pelo seu método real)
+return True # Substitua por sua lógica real de detecção de movimento
+
+# Função para simular a distância do objeto
+def get_distance_cm():
+# Simulação da distância em centímetros (substitua pela sua lógica real)
+return 20 # Substitua pelo valor real da distância
+
+# Loop principal
+running = True
+while running:
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+running = False
+
+# Simulação de detecção de movimento (substitua pelo seu método real)
+if detecta_movimento(): # Simulação de detecção de movimento
+fechar_gaveta()
+
+else:
+abrir_gaveta()
+
+pygame.display.flip() # Atualiza a tela
+
+pygame.quit()import pygame
+import time
+
+# Inicializa a biblioteca Pygame
+pygame.init()
+
+# Configurações da janela
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Cores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Configurações da gaveta
+GAVETA_PIN = 17
+
+def fechar_gaveta():
+pygame.draw.rect(screen, BLACK, [300, 400, 200, 100]) # Fechar a gaveta
+
+def abrir_gaveta():
+pygame.draw.rect(screen, WHITE, [300, 400, 200, 100]) # Manter a gaveta aberta
+
+# Loop principal
+running = True
+while running:
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+running = False
+
+# Simulação de detecção de movimento (substitua pelo seu método real)
+if detecta_movimento(): # Simulação de detecção de movimento
+fechar_gaveta()
+
+else:
+abrir_gaveta()
+
+pygame.display.flip() # Atualiza a tela
+
+pygame.quit()pip install pygameimport pygame
+import time
+
+# Inicializa a biblioteca Pygame
+pygame.init()
+
+# Configurações da janela
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Cores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Configurações da gaveta
+GAVETA_PIN = 17
+
+def fechar_gaveta():
+pygame.draw.rect(screen, BLACK, [300, 400, 200, 100]) # Fechar a gaveta
+
+def abrir_gaveta():
+pygame.draw.rect(screen, WHITE, [300, 400, 200, 100]) # Manter a gaveta aberta
+
+# Loop principal
+running = True
+while running:
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+running = False
+
+# Simulação de detecção de movimento (substitua pelo seu método real)
+if detecta_movimento(): # Simulação de detecção de movimento
+fechar_gaveta()
+
+else:
+abrir_gaveta()
+
+pygame.display.flip() # Atualiza a tela
+
+pygame.quit()def detecta_movimento():
+# Simulação de detecção de movimento (substitua pelo seu método real)
+return True # Substitua por sua lógica real de detecção de movimento
+
+# Função para simular a distância do objeto
+def get_distance_cm():
+# Simulação da distância em centímetros (substitua pela sua lógica real)
+return 20 # Substitua pelo valor real da distância
+
+# Loop principal
+running = True
+while running:
+for event in pygame.event.get():
+if event.type == pygame.QUIT:
+running = False
+
+# Simulação de detecção de movimento (substitua pelo seu método real)
+if detecta_movimento(): # Simulação de detecção de movimento
+fechar_gaveta()
+
+else:
+abrir_gaveta()
+
+pygame.display.flip() # Atualiza a tela
+
+pygame.quit()
+-->
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Hurricane 60 SL | Gran Fish</title>
   <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-    body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "Trebuchet MS", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      background-color: #071b24;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: #f7fbfc;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
     /* Barra Superior */
-    .header-title { width: 100%; background: linear-gradient(110deg, #082d39, #0d5260); color: #ffffff; text-align: center; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 14px 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.6px; border-bottom: 1px solid rgba(151, 235, 223, 0.25); z-index: 10; position: relative; }
-    .btn-help { position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px)); background: #27272e; border: 1px solid #3d3d47; color: #00d2ff; border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
-    .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
+    .header-title {
+      width: 100%;
+      background: linear-gradient(110deg, #082d39, #0d5260);
+      color: #ffffff;
+      text-align: center;
+      padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 14px 16px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid rgba(151, 235, 223, 0.25);
+      z-index: 10;
+      position: relative;
+    }
+
+    .btn-help {
+      position: absolute;
+      right: 16px;
+      top: calc(8px + env(safe-area-inset-top, 0px));
+      background: #27272e;
+      border: 1px solid #3d3d47;
+      color: #00d2ff;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: all 0.2s;
+    }
+
+    .btn-help:active {
+      transform: scale(0.9);
+      background: #00d2ff;
+      color: #000;
+    }
 
     /* Container do 3D e Logo */
-    .seu-container-do-3d { flex: 1; position: relative; width: 100%; height: 100%; }
-    .btn-reset-cam { background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .btn-reset-cam:active { transform: scale(0.95); background: #00d2ff; color: #000; }
-    .watermark-logo { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 110px; z-index: 4; opacity: 0.88; pointer-events: none; filter: drop-shadow(0 3px 7px rgba(0,0,0,0.48)); display: block; }
-    @media (max-width: 768px) { .watermark-logo { width: 80px; } }
-    #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
+    .seu-container-do-3d {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
-    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: auto; }
-    .selection-summary .btn-reset-cam { position: static; width: 100%; justify-content: center; margin-top: 12px; }
-    .summary-heading { display: block; margin-bottom: 8px; color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-    .summary-graphic { display: flex; flex-direction: column; gap: 2px; padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid rgba(155, 235, 223, 0.2); }
-    .summary-label { color: #a9c2c6; font-size: 10px; font-weight: 700; }
-    .summary-value { overflow: hidden; color: #ffffff; font-size: 12px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
-    .summary-colors { display: grid; gap: 7px; }
-    .summary-color { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .summary-swatch { width: 19px; height: 19px; flex: 0 0 19px; border: 1px solid rgba(255,255,255,0.78); border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.28); }
-    .summary-color-copy { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
-    .summary-color-copy .summary-value { font: 11px Consolas, monospace; }
+    .btn-reset-cam {
+      background: rgba(28, 49, 68, 0.85);
+      border: 1px solid #3d3d47;
+      color: #00d2ff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-reset-cam:active {
+      transform: scale(0.95);
+      background: #00d2ff;
+      color: #000;
+    }
+
+    .watermark-logo {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      z-index: 4;
+      opacity: 0.88;
+      pointer-events: none;
+      filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.48));
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .watermark-logo {
+        width: 80px;
+      }
+    }
+
+    #api-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .selection-summary {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: min(224px, calc(100% - 32px));
+      padding: 12px;
+      border: 1px solid rgba(155, 235, 223, 0.5);
+      border-radius: 15px;
+      background: rgba(4, 25, 31, 0.82);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      z-index: 5;
+      pointer-events: auto;
+    }
+
+    .selection-summary .btn-reset-cam {
+      position: static;
+      width: 100%;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .summary-heading {
+      display: block;
+      margin-bottom: 8px;
+      color: #9bebdf;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .summary-graphic {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 9px;
+      margin-bottom: 9px;
+      border-bottom: 1px solid rgba(155, 235, 223, 0.2);
+    }
+
+    .summary-label {
+      color: #a9c2c6;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .summary-value {
+      overflow: hidden;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .summary-colors {
+      display: grid;
+      gap: 7px;
+    }
+
+    .summary-color {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .summary-swatch {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 19px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+    }
+
+    .summary-color-copy {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      gap: 1px;
+    }
+
+    .summary-color-copy .summary-value {
+      font: 11px Consolas, monospace;
+    }
+
     @media (max-width: 767px) {
-      .watermark-logo { left: 50%; right: auto; bottom: 7px; width: 72px; opacity: 0.82; }
-      .selection-summary { top: auto; right: 8px; bottom: 8px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
-      .summary-heading, .summary-label { display: none; }
-      .summary-graphic { display: inline-flex; padding: 0; margin: 0 8px 0 0; border: 0; vertical-align: middle; }
-      .summary-value { font-size: 10px; }
-      .summary-colors { display: inline-flex; gap: 5px; vertical-align: middle; }
-      .summary-color { gap: 0; }
-      .summary-swatch { width: 15px; height: 15px; flex-basis: 15px; border-radius: 4px; }
-      .summary-color-copy { display: none; }
+      .watermark-logo {
+        left: 50%;
+        right: auto;
+        bottom: 7px;
+        width: 72px;
+        opacity: 0.82;
+      }
+
+      .selection-summary {
+        top: auto;
+        right: 8px;
+        bottom: 8px;
+        width: auto;
+        max-width: calc(100% - 16px);
+        padding: 7px 9px;
+        border-radius: 10px;
+        opacity: 0.86;
+      }
+
+      .summary-heading,
+      .summary-label {
+        display: none;
+      }
+
+      .summary-graphic {
+        display: inline-flex;
+        padding: 0;
+        margin: 0 8px 0 0;
+        border: 0;
+        vertical-align: middle;
+      }
+
+      .summary-value {
+        font-size: 10px;
+      }
+
+      .summary-colors {
+        display: inline-flex;
+        gap: 5px;
+        vertical-align: middle;
+      }
+
+      .summary-color {
+        gap: 0;
+      }
+
+      .summary-swatch {
+        width: 15px;
+        height: 15px;
+        flex-basis: 15px;
+        border-radius: 4px;
+      }
+
+      .summary-color-copy {
+        display: none;
+      }
     }
 
     /* Painel Inferior Compacto */
-    .panel-controls { position: absolute; left: 0; bottom: 0; width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; transform: translateY(calc(100% - 58px)); transition: transform 0.3s ease; }
-    .panel-controls.is-open { transform: translateY(0); }
-    .drawer-handle { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin: -5px 0 12px; padding: 8px 12px; border: 1px solid rgba(155, 235, 223, 0.45); border-radius: 12px; background: rgba(4, 18, 24, 0.55); color: #9bebdf; font: 700 12px "Trebuchet MS", sans-serif; cursor: pointer; }
-    .drawer-handle::before { content: "⌃"; font-size: 18px; line-height: 10px; transition: transform 0.3s ease; }
-    .panel-controls.is-open .drawer-handle::before { transform: rotate(180deg); }
-    .drawer-handle-text::after { content: "Abrir escolhas"; }
-    .panel-controls.is-open .drawer-handle-text::after { content: "Fechar escolhas"; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    @media (min-width: 768px) {
-      .panel-controls { position: fixed; top: 0; right: auto; bottom: 0; left: 0; width: min(420px, 38vw); max-height: none; border-radius: 0 22px 22px 0; transform: translateX(calc(-100% + 34px)); }
-      .panel-controls.is-open { transform: translateX(0); }
-      .drawer-handle { width: 42px; height: 150px; margin: 0; position: absolute; top: 50%; right: -42px; transform: translateY(-50%); border-radius: 0 12px 12px 0; writing-mode: vertical-rl; }
-      .drawer-handle::before { transform: rotate(90deg); }
-      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
-      #choice-panel { height: 100%; overflow-y: auto; padding-top: 17px; }
+    .panel-controls {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(145deg, #0b3039, #08232d);
+      border-radius: 22px 22px 0 0;
+      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.38);
+      padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      max-height: 52vh;
+      transform: translateY(calc(100% - 58px));
+      transition: transform 0.3s ease;
     }
-    
-    /* Abas */
-    .tabs-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding-bottom: 11px; border-bottom: 1px solid rgba(151, 235, 223, 0.2); margin-bottom: 13px; }
-    .tabs-container::-webkit-scrollbar { display: none; }
-    .tab-btn { width: 100%; min-height: 42px; background: rgba(5, 18, 24, 0.58); color: #a9c2c6; border: 1px solid rgba(151, 235, 223, 0.22); border-radius: 12px; font-size: 12px; font-weight: 700; line-height: 1.2; padding: 9px 8px; cursor: pointer; transition: all 0.2s; }
-    .tab-btn.active { background: #9bebdf; color: #07353c; border-color: #9bebdf; box-shadow: 0 4px 14px rgba(155, 235, 223, 0.2); }
 
-    .tab-content { display: none; flex-direction: column; gap: 12px; overflow-y: auto; }
-    .tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-controls.is-open {
+      transform: translateY(0);
+    }
+
+    .drawer-handle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin: -5px 0 12px;
+      padding: 8px 12px;
+      border: 1px solid rgba(155, 235, 223, 0.45);
+      border-radius: 12px;
+      background: rgba(4, 18, 24, 0.55);
+      color: #9bebdf;
+      font: 700 12px "Trebuchet MS", sans-serif;
+      cursor: pointer;
+    }
+
+    .drawer-handle::before {
+      content: "⌃";
+      font-size: 18px;
+      line-height: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .panel-controls.is-open .drawer-handle::before {
+      transform: rotate(180deg);
+    }
+
+    .drawer-handle-text::after {
+      content: "Abrir escolhas";
+    }
+
+    .panel-controls.is-open .drawer-handle-text::after {
+      content: "Fechar escolhas";
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 768px) {
+      .panel-controls {
+        position: fixed;
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: min(420px, 38vw);
+        max-height: none;
+        border-radius: 0 22px 22px 0;
+        transform: translateX(calc(-100% + 34px));
+      }
+
+      .panel-controls.is-open {
+        transform: translateX(0);
+      }
+
+      .drawer-handle {
+        width: 42px;
+        height: 150px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        right: -42px;
+        transform: translateY(-50%);
+        border-radius: 0 12px 12px 0;
+        writing-mode: vertical-rl;
+      }
+
+      .drawer-handle::before {
+        transform: rotate(90deg);
+      }
+
+      .panel-controls.is-open .drawer-handle::before {
+        transform: rotate(270deg);
+      }
+
+      #choice-panel {
+        height: 100%;
+        overflow-y: auto;
+        padding-top: 17px;
+      }
+    }
+
+    /* Abas */
+    .tabs-container {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      padding-bottom: 11px;
+      border-bottom: 1px solid rgba(151, 235, 223, 0.2);
+      margin-bottom: 13px;
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      width: 100%;
+      min-height: 42px;
+      background: rgba(5, 18, 24, 0.58);
+      color: #a9c2c6;
+      border: 1px solid rgba(151, 235, 223, 0.22);
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      padding: 9px 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: #9bebdf;
+      color: #07353c;
+      border-color: #9bebdf;
+      box-shadow: 0 4px 14px rgba(155, 235, 223, 0.2);
+    }
+
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .tab-content.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     /* Inputs de Cor e Seleção */
-    .color-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 11px; position: relative; width: 100%; }
-    .select-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
-    .color-indicator { position: absolute; left: 8px; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none; }
-    
-    .custom-select { background: #102f37; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 10px; color: #ffffff; font-size: 13px; font-weight: bold; padding: 11px 10px 11px 32px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
-    .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
-    .custom-select option { background: #27272e; color: #ffffff; }
+    .color-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 11px;
+      position: relative;
+      width: 100%;
+    }
 
-    .picker-btn-wrapper { position: relative; width: 47px; height: 47px; border-radius: 13px; border: 2px solid rgba(255,255,255,0.8); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e74c3c, #f1c40f, #2ecc71, #3498db); box-shadow: 0 5px 14px rgba(0,0,0,0.3); overflow: hidden; }
-    .picker-btn-wrapper span { font-size: 16px; pointer-events: none; }
-    .picker-btn-wrapper input[type="color"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .select-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .color-indicator {
+      position: absolute;
+      left: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+    }
+
+    .custom-select {
+      background: #102f37;
+      border: 1px solid rgba(151, 235, 223, 0.25);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 11px 10px 11px 32px;
+      width: 100%;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .custom-select optgroup {
+      background: #1e1e24;
+      color: #00d2ff;
+      font-weight: 700;
+    }
+
+    .custom-select option {
+      background: #27272e;
+      color: #ffffff;
+    }
+
+    .picker-btn-wrapper {
+      position: relative;
+      width: 47px;
+      height: 47px;
+      border-radius: 13px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #e74c3c, #f1c40f, #2ecc71, #3498db);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .picker-btn-wrapper span {
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .picker-btn-wrapper input[type="color"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
 
     /* Entradas Manuais Ocultas (Sanfona) */
-    details { margin-top: 6px; background: rgba(3, 16, 22, 0.42); border-radius: 10px; padding: 9px; border: 1px dashed rgba(151, 235, 223, 0.25); }
-    summary { font-size: 11px; font-weight: 600; color: #a0a0a8; cursor: pointer; outline: none; }
-    .inputs-row { display: flex; gap: 8px; margin-top: 10px; }
-    .custom-input { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 5px; color: #ffffff; font-size: 12px; font-family: monospace; padding: 8px; width: 50%; outline: none; }
-    .custom-input:focus, .custom-select:focus { border-color: #00d2ff; }
+    details {
+      margin-top: 6px;
+      background: rgba(3, 16, 22, 0.42);
+      border-radius: 10px;
+      padding: 9px;
+      border: 1px dashed rgba(151, 235, 223, 0.25);
+    }
 
-    .status-bar { font-size: 11px; color: #9bebdf; text-align: center; margin-bottom: 8px; font-weight: 700; }
+    summary {
+      font-size: 11px;
+      font-weight: 600;
+      color: #a0a0a8;
+      cursor: pointer;
+      outline: none;
+    }
 
-    .color-preview { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-height: 70px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 14px; background: rgba(4, 18, 24, 0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
-    .preview-swatch { width: 50px; height: 50px; flex: 0 0 50px; border-radius: 11px; border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
-    .preview-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-    .preview-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-    .preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 14px; font-weight: 800; }
-    .preview-hex { color: #b8ced1; font: 12px Consolas, monospace; }
-    .texture-reference { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 12px; background: rgba(4, 18, 24, 0.5); cursor: pointer; }
-    .texture-reference-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-    .texture-reference-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 13px; font-weight: 800; text-align: right; }
+    .inputs-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .custom-input {
+      background: #1a1a1e;
+      border: 1px solid #3d3d47;
+      border-radius: 5px;
+      color: #ffffff;
+      font-size: 12px;
+      font-family: monospace;
+      padding: 8px;
+      width: 50%;
+      outline: none;
+    }
+
+    .custom-input:focus,
+    .custom-select:focus {
+      border-color: #00d2ff;
+    }
+
+    .status-bar {
+      font-size: 11px;
+      color: #9bebdf;
+      text-align: center;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .color-preview {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 70px;
+      padding: 10px 12px;
+      border: 1px solid rgba(151, 235, 223, 0.25);
+      border-radius: 14px;
+      background: rgba(4, 18, 24, 0.5);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .preview-swatch {
+      width: 50px;
+      height: 50px;
+      flex: 0 0 50px;
+      border-radius: 11px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .preview-copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .preview-label {
+      color: #9bebdf;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .preview-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .preview-hex {
+      color: #b8ced1;
+      font: 12px Consolas, monospace;
+    }
+
+    .texture-reference {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+      padding: 10px 12px;
+      border: 1px solid rgba(151, 235, 223, 0.25);
+      border-radius: 12px;
+      background: rgba(4, 18, 24, 0.5);
+      cursor: pointer;
+    }
+
+    .texture-reference-label {
+      color: #9bebdf;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .texture-reference-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: right;
+    }
 
     /* Barra Inferior */
-    .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
-    @media (max-width: 767px) {
-      .panel-controls { position: fixed; width: min(calc(100% - 16px), 420px); left: 8px; max-height: 70dvh; border-radius: 18px 18px 0 0; transform: translateY(calc(100% - 54px)); }
-      .panel-controls.is-open { transform: translateY(0); }
-      .drawer-handle { margin-bottom: 10px; border-radius: 14px; }
-      #choice-panel { max-height: calc(70dvh - 64px); overflow-y: auto; overscroll-behavior: contain; }
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid rgba(151, 235, 223, 0.2);
     }
-    .btn-capture { flex: 1; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
-    .btn-capture:active { opacity: 0.8; }
+
+    @media (max-width: 767px) {
+      .panel-controls {
+        position: fixed;
+        width: min(calc(100% - 16px), 420px);
+        left: 8px;
+        max-height: 70dvh;
+        border-radius: 18px 18px 0 0;
+        transform: translateY(calc(100% - 54px));
+      }
+
+      .panel-controls.is-open {
+        transform: translateY(0);
+      }
+
+      .drawer-handle {
+        margin-bottom: 10px;
+        border-radius: 14px;
+      }
+
+      #choice-panel {
+        max-height: calc(70dvh - 64px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+    }
+
+    .btn-capture {
+      flex: 1;
+      background: #4cd964;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3);
+      transition: opacity 0.2s;
+    }
+
+    .btn-capture:active {
+      opacity: 0.8;
+    }
 
     /* Modais */
-    .help-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-    .help-content { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 12px; padding: 24px; max-width: 360px; width: 100%; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .help-content h3 { margin-bottom: 16px; color: #00d2ff; font-size: 18px; text-align: center; }
-    .help-content ul { padding-left: 0; margin-bottom: 24px; list-style: none; }
-    .help-content li { margin-bottom: 14px; font-size: 13px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; }
-    .help-content li::before { content: "➔"; color: #00d2ff; font-weight: bold; }
-    .btn-close-help, .btn-action { border: none; color: #000; padding: 12px 16px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-size: 14px; transition: opacity 0.2s; }
-    .btn-close-help { background: #00d2ff; }
+    .help-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .help-content {
+      background: #1a1a1e;
+      border: 1px solid #3d3d47;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 360px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .help-content h3 {
+      margin-bottom: 16px;
+      color: #00d2ff;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .help-content ul {
+      padding-left: 0;
+      margin-bottom: 24px;
+      list-style: none;
+    }
+
+    .help-content li {
+      margin-bottom: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .help-content li::before {
+      content: "➔";
+      color: #00d2ff;
+      font-weight: bold;
+    }
+
+    .btn-close-help,
+    .btn-action {
+      border: none;
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      font-size: 14px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-close-help {
+      background: #00d2ff;
+    }
 
     @media (hover: hover) and (pointer: fine) {
-      .picker-btn-wrapper:hover, .custom-select:hover, .tab-btn:hover, .seu-container-do-3d:hover { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important; }
+
+      .picker-btn-wrapper:hover,
+      .custom-select:hover,
+      .tab-btn:hover,
+      .seu-container-do-3d:hover {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important;
+      }
     }
 
     /* Tema Gran Fish */
-    body, html { background-color: #002a29; }
+    body,
+    html {
+      background-color: #002a29;
+    }
+
     .header-title,
-    .panel-controls { background-color: #002a29; }
+    .panel-controls {
+      background-color: #002a29;
+    }
+
     .btn-help,
     .btn-reset-cam,
     .tab-btn,
     .custom-select,
     .custom-input,
-    .help-content { background: #001f1e; }
+    .help-content {
+      background: #001f1e;
+    }
+
     .btn-help,
     .btn-reset-cam,
     .tab-btn,
     .custom-select,
     .custom-input,
     details,
-    .help-content { border-color: rgba(255, 255, 255, 0.24); }
+    .help-content {
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+
     .btn-help,
     .btn-reset-cam,
     .tab-btn.active,
     .btn-close-help,
-    .btn-action[style*="00d2ff"] { color: #ffffff; background: #002a29; border-color: #002a29; }
+    .btn-action[style*="00d2ff"] {
+      color: #ffffff;
+      background: #002a29;
+      border-color: #002a29;
+    }
+
     .tab-btn,
     .custom-select,
     .custom-input,
     .custom-select option,
-    .custom-select optgroup { color: #ffffff; }
+    .custom-select optgroup {
+      color: #ffffff;
+    }
+
     .tabs-container,
-    .action-bar { border-color: rgba(255, 255, 255, 0.2); }
+    .action-bar {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
     .btn-help,
     .btn-reset-cam,
     .custom-select:focus,
     .custom-input:focus,
     .picker-btn-wrapper,
     .help-content h3,
-    .help-content li::before { border-color: #002a29; color: #ffffff; }
-    .status-bar { color: #8be0bd !important; }
+    .help-content li::before {
+      border-color: #002a29;
+      color: #ffffff;
+    }
+
+    .status-bar {
+      color: #8be0bd !important;
+    }
+
     .btn-capture,
-    .btn-action[style*="4cd964"] { background: #002a29 !important; color: #ffffff; box-shadow: 0 4px 10px rgba(0, 42, 41, 0.4); }
+    .btn-action[style*="4cd964"] {
+      background: #002a29 !important;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 42, 41, 0.4);
+    }
+
     .help-content h3,
-    .help-content li::before { color: #8be0bd; }
+    .help-content li::before {
+      color: #8be0bd;
+    }
 
     /* Direção visual premium */
     :root {
@@ -180,129 +1063,444 @@
       --accent: #bd9250;
       --accent-dark: #8e672d;
     }
-    body, html { background: #f4f7f7; color: var(--ink); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+
+    body,
+    html {
+      background: #f4f7f7;
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
     .header-title {
-      height: 64px; display: flex; align-items: center; justify-content: center;
-      padding: 0 60px; background: var(--panel); color: var(--ink);
-      border-bottom: 1px solid var(--line); font-size: 15px; letter-spacing: .04em;
-      text-transform: uppercase; box-shadow: 0 2px 12px rgba(16,36,44,.05);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 60px;
+      background: var(--panel);
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 12px rgba(16, 36, 44, .05);
     }
-    .header-brand { position: absolute; left: 24px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
-      .btn-home { position: absolute; top: 18px; right: 58px; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: #f3f5f5; text-decoration: none; padding: 0; line-height: 1; }
-      .btn-home svg { width: 14px; height: 14px; display: block; }
-      .btn-home:active { transform: scale(.92); }
-    .panel-intro { display: flex; flex-direction: column; gap: 5px; padding: 2px 0 18px; }
-    .panel-intro strong { color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
-    .panel-intro span { color: var(--ink-soft); font-size: 12px; }
+
+    .header-brand {
+      position: absolute;
+      left: 24px;
+      color: var(--accent-dark);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+
+    .btn-home {
+      position: absolute;
+      top: 18px;
+      right: 58px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: #f3f5f5;
+      text-decoration: none;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .btn-home svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .btn-home:active {
+      transform: scale(.92);
+    }
+
+    .panel-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 2px 0 18px;
+    }
+
+    .panel-intro strong {
+      color: var(--ink);
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .panel-intro span {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
     .btn-help {
-      top: 18px; right: 22px; width: 28px; height: 28px; background: #f3f5f5;
-      border: 1px solid var(--line); color: var(--ink); font-size: 13px;
+      top: 18px;
+      right: 22px;
+      width: 28px;
+      height: 28px;
+      background: #f3f5f5;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 13px;
     }
-    .seu-container-do-3d { background: #f8faf9; }
-    #api-frame { background: #f8faf9; }
-    .watermark-logo { width: 92px; opacity: .62; filter: none; }
+
+    .seu-container-do-3d {
+      background: #f8faf9;
+    }
+
+    #api-frame {
+      background: #f8faf9;
+    }
+
+    .watermark-logo {
+      width: 92px;
+      opacity: .62;
+      filter: none;
+    }
+
     .selection-summary {
-      top: 24px; right: 28px; width: 258px; padding: 20px;
-      border: 1px solid rgba(16,36,44,.08); border-radius: 16px; background: rgba(255,255,255,.94);
-      box-shadow: 0 14px 36px rgba(16,36,44,.12); backdrop-filter: blur(14px);
+      top: 24px;
+      right: 28px;
+      width: 258px;
+      padding: 20px;
+      border: 1px solid rgba(16, 36, 44, .08);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 14px 36px rgba(16, 36, 44, .12);
+      backdrop-filter: blur(14px);
     }
-    .summary-heading { color: var(--accent-dark); font-size: 9px; letter-spacing: .16em; }
-    .summary-label { color: var(--ink-soft); }
-    .summary-value { color: var(--ink); }
-    .summary-graphic { border-color: var(--line); }
-    .summary-color-copy .summary-value { color: var(--ink); }
-    .summary-swatch { border-color: rgba(16,36,44,.22); }
+
+    .summary-heading {
+      color: var(--accent-dark);
+      font-size: 9px;
+      letter-spacing: .16em;
+    }
+
+    .summary-label {
+      color: var(--ink-soft);
+    }
+
+    .summary-value {
+      color: var(--ink);
+    }
+
+    .summary-graphic {
+      border-color: var(--line);
+    }
+
+    .summary-color-copy .summary-value {
+      color: var(--ink);
+    }
+
+    .summary-swatch {
+      border-color: rgba(16, 36, 44, .22);
+    }
+
     .selection-summary .btn-reset-cam {
-      background: transparent; color: var(--ink); border: 1px solid var(--line);
-      box-shadow: none; font-size: 11px;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: none;
+      font-size: 11px;
     }
+
     .panel-controls {
-      background: var(--panel); border: 1px solid var(--line); box-shadow: 0 14px 40px rgba(16,36,44,.14);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 40px rgba(16, 36, 44, .14);
       padding: 24px 22px calc(20px + env(safe-area-inset-bottom, 0px)) 22px;
     }
+
     .drawer-handle {
-      background: #f5f8f8; border-color: var(--line); color: var(--ink); text-transform: uppercase;
-      letter-spacing: .08em; font-size: 10px;
+      background: #f5f8f8;
+      border-color: var(--line);
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 10px;
     }
-    .tabs-container { border-color: var(--line); gap: 9px; }
+
+    .tabs-container {
+      border-color: var(--line);
+      gap: 9px;
+    }
+
     .tab-btn {
-      background: transparent; border-color: transparent; color: var(--ink-soft);
-      border-radius: 8px; font-size: 11px; padding: 10px 8px;
+      background: transparent;
+      border-color: transparent;
+      color: var(--ink-soft);
+      border-radius: 8px;
+      font-size: 11px;
+      padding: 10px 8px;
     }
-    .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: none; }
-    .status-bar { color: var(--accent-dark) !important; letter-spacing: .02em; }
-    .color-preview, .texture-reference {
-      background: #f8faf9; border-color: var(--line); border-radius: 12px;
+
+    .tab-btn.active {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+      box-shadow: none;
     }
-    .preview-label, .texture-reference-label { color: var(--accent-dark); }
-    .preview-name, .texture-reference-name { color: var(--ink); }
-    .preview-hex { color: var(--ink-soft); }
-    .custom-select, .custom-input {
-      background: #fff; border-color: var(--line); color: var(--ink);
-      border-radius: 8px; box-shadow: 0 2px 5px rgba(16,36,44,.04);
+
+    .status-bar {
+      color: var(--accent-dark) !important;
+      letter-spacing: .02em;
     }
-    .custom-select option, .custom-select optgroup { background: #fff; color: var(--ink); }
-    details { background: #f8faf9; border-color: var(--line); }
-    summary { color: var(--ink-soft); }
-    .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
-    .action-bar { border-color: var(--line); }
-    .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
+
+    .color-preview,
+    .texture-reference {
+      background: #f8faf9;
+      border-color: var(--line);
+      border-radius: 12px;
+    }
+
+    .preview-label,
+    .texture-reference-label {
+      color: var(--accent-dark);
+    }
+
+    .preview-name,
+    .texture-reference-name {
+      color: var(--ink);
+    }
+
+    .preview-hex {
+      color: var(--ink-soft);
+    }
+
+    .custom-select,
+    .custom-input {
+      background: #fff;
+      border-color: var(--line);
+      color: var(--ink);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(16, 36, 44, .04);
+    }
+
+    .custom-select option,
+    .custom-select optgroup {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    details {
+      background: #f8faf9;
+      border-color: var(--line);
+    }
+
+    summary {
+      color: var(--ink-soft);
+    }
+
+    .picker-btn-wrapper {
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .action-bar {
+      border-color: var(--line);
+    }
+
+    .btn-capture {
+      background: var(--accent) !important;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(189, 146, 80, .25);
+    }
+
     @media (min-width: 768px) {
       .panel-controls {
-        top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw);
-        border-radius: 18px; transform: translateX(calc(100% + 24px));
+        top: 84px;
+        left: auto;
+        right: 24px;
+        bottom: 24px;
+        width: min(390px, 34vw);
+        border-radius: 18px;
+        transform: translateX(calc(100% + 24px));
       }
-      .panel-controls.is-open { transform: translateX(0); }
+
+      .panel-controls.is-open {
+        transform: translateX(0);
+      }
+
       .drawer-handle {
-        width: 40px; height: 132px; right: auto; left: -41px; border-radius: 10px 0 0 10px;
-        writing-mode: vertical-rl; background: var(--panel); box-shadow: -4px 8px 18px rgba(16,36,44,.08);
+        width: 40px;
+        height: 132px;
+        right: auto;
+        left: -41px;
+        border-radius: 10px 0 0 10px;
+        writing-mode: vertical-rl;
+        background: var(--panel);
+        box-shadow: -4px 8px 18px rgba(16, 36, 44, .08);
       }
-      .drawer-handle::before { transform: rotate(90deg); }
-      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
+
+      .drawer-handle::before {
+        transform: rotate(90deg);
+      }
+
+      .panel-controls.is-open .drawer-handle::before {
+        transform: rotate(270deg);
+      }
     }
+
     @media (max-width: 767px) {
-      .header-title { height: 56px; font-size: 12px; }
-      .header-brand { left: 14px; font-size: 9px; }
-      .btn-help { top: 14px; right: 14px; }
-        .btn-home { top: 14px; right: 48px; width: 26px; height: 26px; font-size: 15px; }
-      .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
-      .panel-controls { background: var(--panel); border-color: var(--line); }
+      .header-title {
+        height: 56px;
+        font-size: 12px;
+      }
+
+      .header-brand {
+        left: 14px;
+        font-size: 9px;
+      }
+
+      .btn-help {
+        top: 14px;
+        right: 14px;
+      }
+
+      .btn-home {
+        top: 14px;
+        right: 48px;
+        width: 26px;
+        height: 26px;
+        font-size: 15px;
+      }
+
+      .selection-summary {
+        top: 12px;
+        right: 12px;
+        background: rgba(255, 255, 255, .92);
+      }
+
+      .panel-controls {
+        background: var(--panel);
+        border-color: var(--line);
+      }
     }
-    body, html { background: #ffffff; }
-    .seu-container-do-3d, #api-frame { background: #ffffff; }
-    .color-preview { background: #ffffff; border-color: var(--line); cursor: pointer; }
-    .color-preview:hover { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(189,146,80,.16); }
+
+    body,
+    html {
+      background: #ffffff;
+    }
+
+    .seu-container-do-3d,
+    #api-frame {
+      background: #ffffff;
+    }
+
+    .color-preview {
+      background: #ffffff;
+      border-color: var(--line);
+      cursor: pointer;
+    }
+
+    .color-preview:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(189, 146, 80, .16);
+    }
+
     @media (min-width: 768px) {
-      .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
+      .selection-summary {
+        top: 24px;
+        left: 24px;
+        right: auto;
+        width: 230px;
+      }
     }
+
     @media (max-width: 767px) {
       .selection-summary {
-          top: 8px; right: 10px; bottom: auto; left: 10px; width: auto;
-        height: auto; max-height: none; padding: 8px 10px; border-radius: 8px;
+        top: 8px;
+        right: 10px;
+        bottom: auto;
+        left: 10px;
+        width: auto;
+        height: auto;
+        max-height: none;
+        padding: 8px 10px;
+        border-radius: 8px;
       }
-      .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
-      .panel-controls { max-height: 72dvh; }
-      #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
-      .seu-container-do-3d { min-height: 0; transition: height .3s ease; }
+
+      .selection-summary .btn-reset-cam {
+        margin-top: 7px;
+        padding: 7px 10px;
+      }
+
+      .panel-controls {
+        max-height: 72dvh;
+      }
+
+      #choice-panel {
+        max-height: calc(72dvh - 64px);
+        overflow-y: auto;
+      }
+
+      .seu-container-do-3d {
+        min-height: 0;
+        transition: height .3s ease;
+      }
+
       body.mobile-drawer-open .seu-container-do-3d {
         flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
         height: calc(100dvh - var(--header-height) - var(--drawer-height));
       }
     }
-    .selection-summary { border-radius: 18px; }
-    .panel-controls { border-radius: 22px; }
-    .drawer-handle { border-radius: 14px; }
-    .color-preview { border-radius: 14px; }
-    .custom-select, .custom-input { border-radius: 10px; }
-    .texture-reference { border-radius: 12px; }
-    details { border-radius: 12px; }
-    .picker-btn-wrapper { border-radius: 12px; }
-    @media (min-width: 768px) {
-      .drawer-handle { border-radius: 14px 0 0 14px; }
+
+    .selection-summary {
+      border-radius: 18px;
     }
+
+    .panel-controls {
+      border-radius: 22px;
+    }
+
+    .drawer-handle {
+      border-radius: 14px;
+    }
+
+    .color-preview {
+      border-radius: 14px;
+    }
+
+    .custom-select,
+    .custom-input {
+      border-radius: 10px;
+    }
+
+    .texture-reference {
+      border-radius: 12px;
+    }
+
+    details {
+      border-radius: 12px;
+    }
+
+    .picker-btn-wrapper {
+      border-radius: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .drawer-handle {
+        border-radius: 14px 0 0 14px;
+      }
+    }
+
     @media (max-width: 767px) {
-      .selection-summary { border-radius: 16px; }
-      .panel-controls { border-radius: 22px 22px 0 0; }
+      .selection-summary {
+        border-radius: 16px;
+      }
+
+      .panel-controls {
+        border-radius: 22px 22px 0 0;
+      }
+
       .seu-container-do-3d.is-3d-focused .selection-summary {
         opacity: 0;
         visibility: hidden;
@@ -312,10 +1510,15 @@
   </style>
   <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 </head>
+
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><a class="btn-home" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 3 11.5v8.5a1 1 0 0 0 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor"/></svg></a><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
-  
+  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><a class="btn-home"
+      href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg
+        viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3.5 3 11.5v8.5a1 1 0 0 0 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor" />
+      </svg></a><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+
   <div class="seu-container-do-3d">
     <aside class="selection-summary" aria-live="polite" aria-label="Resumo da configuração escolhida">
       <span class="summary-heading">Configuração escolhida</span>
@@ -326,134 +1529,167 @@
       <div class="summary-colors">
         <div class="summary-color">
           <span class="summary-swatch" id="summary-swatch-base"></span>
-          <div class="summary-color-copy"><span class="summary-label">Fundo base</span><strong class="summary-value" id="summary-color-base">#686B73</strong></div>
+          <div class="summary-color-copy"><span class="summary-label">Fundo base</span><strong class="summary-value"
+              id="summary-color-base">#686B73</strong></div>
         </div>
         <div class="summary-color">
           <span class="summary-swatch" id="summary-swatch-cor1"></span>
-          <div class="summary-color-copy"><span class="summary-label">Pintura 1</span><strong class="summary-value" id="summary-color-cor1">#E74C3C</strong></div>
+          <div class="summary-color-copy"><span class="summary-label">Pintura 1</span><strong class="summary-value"
+              id="summary-color-cor1">#E74C3C</strong></div>
         </div>
         <div class="summary-color">
           <span class="summary-swatch" id="summary-swatch-cor2"></span>
-          <div class="summary-color-copy"><span class="summary-label">Pintura 2</span><strong class="summary-value" id="summary-color-cor2">#FFFFFF</strong></div>
+          <div class="summary-color-copy"><span class="summary-label">Pintura 2</span><strong class="summary-value"
+              id="summary-color-cor2">#FFFFFF</strong></div>
         </div>
       </div>
       <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
     </aside>
-    <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
-         id="logoGF" 
-         class="watermark-logo" 
-         alt="Logo Gran Fish" 
-         crossorigin="anonymous"
-         onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
-    <iframe id="api-frame" tabindex="0" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
+    <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" id="logoGF"
+      class="watermark-logo" alt="Logo Gran Fish" crossorigin="anonymous"
+      onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
+    <iframe id="api-frame" tabindex="0" allow="autoplay; fullscreen; xr-spatial-tracking"
+      execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
   </div>
 
   <div class="panel-controls">
-    <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
+    <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel"
+      onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span
+        class="sr-only">Abrir ou fechar menu de escolhas</span></button>
     <div id="choice-panel">
-    <div class="panel-intro"><strong>Personalize seu Hurricane</strong><span>Visualize cada detalhe antes de decidir.</span></div>
-    <div id="status" class="status-bar">Preparando sua configuração...</div>
-    
-    <!-- Menu de Abas -->
-    <div class="tabs-container">
-      <button class="tab-btn active" onclick="openTab('tab-tex', this)">Grafismos</button>
-      <button class="tab-btn" onclick="openTab('tab-base', this)">Fundo Base</button>
-      <button class="tab-btn" onclick="openTab('tab-adesivo1', this)">Pintura (Cor 1)</button>
-      <button class="tab-btn" onclick="openTab('tab-adesivo2', this)">Pintura (Cor 2)</button>
-    </div>
+      <div class="panel-intro"><strong>Personalize seu Hurricane</strong><span>Visualize cada detalhe antes de
+          decidir.</span></div>
+      <div id="status" class="status-bar">Preparando sua configuração...</div>
 
-    <!-- ABA 1: FUNDO BASE -->
-    <div id="tab-base" class="tab-content">
-      <div class="color-row">
-        <div class="color-preview" id="preview-decalque1" role="button" tabindex="0" aria-label="Selecionar cor do fundo base" onclick="abrirSelecaoCor('decalque1', 'tab-base', this)" onkeydown="ativarSelecaoCor(event, 'decalque1', 'tab-base', this)">
-          <div class="preview-swatch" id="swatch-decalque1"></div>
-          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque1">Cinza Nardo</strong><span class="preview-hex" id="preview-hex-decalque1">#686B73</span></div>
+      <!-- Menu de Abas -->
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="openTab('tab-tex', this)">Grafismos</button>
+        <button class="tab-btn" onclick="openTab('tab-base', this)">Fundo Base</button>
+        <button class="tab-btn" onclick="openTab('tab-adesivo1', this)">Pintura (Cor 1)</button>
+        <button class="tab-btn" onclick="openTab('tab-adesivo2', this)">Pintura (Cor 2)</button>
+      </div>
+
+      <!-- ABA 1: FUNDO BASE -->
+      <div id="tab-base" class="tab-content">
+        <div class="color-row">
+          <div class="color-preview" id="preview-decalque1" role="button" tabindex="0"
+            aria-label="Selecionar cor do fundo base" onclick="abrirSelecaoCor('decalque1', 'tab-base', this)"
+            onkeydown="ativarSelecaoCor(event, 'decalque1', 'tab-base', this)">
+            <div class="preview-swatch" id="swatch-decalque1"></div>
+            <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name"
+                id="preview-name-decalque1">Cinza Nardo</strong><span class="preview-hex"
+                id="preview-hex-decalque1">#686B73</span></div>
+          </div>
+          <div class="select-wrapper">
+            <div class="color-indicator" id="indicator-decalque1"></div>
+            <select class="custom-select has-color" id="select-decalque1"
+              onchange="selecionarCor('decalque1', this.value)"></select>
+          </div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque1" value="#686b73"
+              oninput="aplicarHexComSincronizacao('decalque1', this.value)">
+          </div>
         </div>
-        <div class="select-wrapper">
-          <div class="color-indicator" id="indicator-decalque1"></div>
-          <select class="custom-select has-color" id="select-decalque1" onchange="selecionarCor('decalque1', this.value)"></select>
+        <details>
+          <summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+          <div class="inputs-row">
+            <input type="text" class="custom-input" id="hex-decalque1" placeholder="HEX"
+              onchange="digitarHex('decalque1', this.value)">
+            <input type="text" class="custom-input" id="rgb-decalque1" placeholder="RGB"
+              onchange="digitarRgb('decalque1', this.value)">
+          </div>
+        </details>
+      </div>
+
+      <!-- ABA 2: TEXTURA -->
+      <div id="tab-tex" class="tab-content active">
+        <div class="texture-reference" role="button" tabindex="0" aria-label="Selecionar grafismo"
+          onclick="abrirSelecaoTextura(this)" onkeydown="ativarSelecaoTextura(event, this)">
+          <span class="texture-reference-label">Grafismo escolhido</span>
+          <strong class="texture-reference-name" id="texture-reference-name">Nenhum adesivo (Apenas Cor Base)</strong>
         </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
-          <span>🎨</span>
-          <input type="color" id="picker-decalque1" value="#686b73" oninput="aplicarHexComSincronizacao('decalque1', this.value)">
+        <div class="select-wrapper" style="width: 100%;">
+          <select class="custom-select" style="padding-left: 10px;" id="select-textura-decalque1"
+            onchange="aplicarTexturaAPI(this.value)">
+            <option value="">Nenhum adesivo (Apenas Cor Base)</option>
+          </select>
         </div>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
-        <div class="inputs-row">
-          <input type="text" class="custom-input" id="hex-decalque1" placeholder="HEX" onchange="digitarHex('decalque1', this.value)">
-          <input type="text" class="custom-input" id="rgb-decalque1" placeholder="RGB" onchange="digitarRgb('decalque1', this.value)">
-        </div>
-      </details>
-    </div>
 
-    <!-- ABA 2: TEXTURA -->
-    <div id="tab-tex" class="tab-content active">
-      <div class="texture-reference" role="button" tabindex="0" aria-label="Selecionar grafismo" onclick="abrirSelecaoTextura(this)" onkeydown="ativarSelecaoTextura(event, this)">
-        <span class="texture-reference-label">Grafismo escolhido</span>
-        <strong class="texture-reference-name" id="texture-reference-name">Nenhum adesivo (Apenas Cor Base)</strong>
+      <!-- ABA 3: COR 1 (ÁREAS ESCURAS) -->
+      <div id="tab-adesivo1" class="tab-content">
+        <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Escuras do PNG</div>
+        <div class="color-row">
+          <div class="color-preview" id="preview-decalque-cor1" role="button" tabindex="0"
+            aria-label="Selecionar pintura 1" onclick="abrirSelecaoCor('decalque-cor1', 'tab-adesivo1', this)"
+            onkeydown="ativarSelecaoCor(event, 'decalque-cor1', 'tab-adesivo1', this)">
+            <div class="preview-swatch" id="swatch-decalque-cor1"></div>
+            <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name"
+                id="preview-name-decalque-cor1">Vermelho</strong><span class="preview-hex"
+                id="preview-hex-decalque-cor1">#E74C3C</span></div>
+          </div>
+          <div class="select-wrapper">
+            <div class="color-indicator" id="indicator-decalque-cor1"></div>
+            <select class="custom-select has-color" id="select-decalque-cor1"
+              onchange="selecionarCor('decalque-cor1', this.value)"></select>
+          </div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque-cor1" value="#e74c3c"
+              oninput="aplicarHexComSincronizacao('decalque-cor1', this.value)">
+          </div>
+        </div>
+        <details>
+          <summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+          <div class="inputs-row">
+            <input type="text" class="custom-input" id="hex-decalque-cor1" placeholder="HEX"
+              onchange="digitarHex('decalque-cor1', this.value)">
+            <input type="text" class="custom-input" id="rgb-decalque-cor1" placeholder="RGB"
+              onchange="digitarRgb('decalque-cor1', this.value)">
+          </div>
+        </details>
       </div>
-      <div class="select-wrapper" style="width: 100%;">
-        <select class="custom-select" style="padding-left: 10px;" id="select-textura-decalque1" onchange="aplicarTexturaAPI(this.value)">
-          <option value="">Nenhum adesivo (Apenas Cor Base)</option>
-        </select>
-      </div>
-    </div>
 
-    <!-- ABA 3: COR 1 (ÁREAS ESCURAS) -->
-    <div id="tab-adesivo1" class="tab-content">
-      <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Escuras do PNG</div>
-      <div class="color-row">
-        <div class="color-preview" id="preview-decalque-cor1" role="button" tabindex="0" aria-label="Selecionar pintura 1" onclick="abrirSelecaoCor('decalque-cor1', 'tab-adesivo1', this)" onkeydown="ativarSelecaoCor(event, 'decalque-cor1', 'tab-adesivo1', this)">
-          <div class="preview-swatch" id="swatch-decalque-cor1"></div>
-          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor1">Vermelho</strong><span class="preview-hex" id="preview-hex-decalque-cor1">#E74C3C</span></div>
+      <!-- ABA 4: COR 2 (ÁREAS CLARAS) -->
+      <div id="tab-adesivo2" class="tab-content">
+        <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Claras do PNG</div>
+        <div class="color-row">
+          <div class="color-preview" id="preview-decalque-cor2" role="button" tabindex="0"
+            aria-label="Selecionar pintura 2" onclick="abrirSelecaoCor('decalque-cor2', 'tab-adesivo2', this)"
+            onkeydown="ativarSelecaoCor(event, 'decalque-cor2', 'tab-adesivo2', this)">
+            <div class="preview-swatch" id="swatch-decalque-cor2"></div>
+            <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name"
+                id="preview-name-decalque-cor2">Branco Puro</strong><span class="preview-hex"
+                id="preview-hex-decalque-cor2">#FFFFFF</span></div>
+          </div>
+          <div class="select-wrapper">
+            <div class="color-indicator" id="indicator-decalque-cor2"></div>
+            <select class="custom-select has-color" id="select-decalque-cor2"
+              onchange="selecionarCor('decalque-cor2', this.value)"></select>
+          </div>
+          <div class="picker-btn-wrapper" title="Paleta Livre">
+            <span>🎨</span>
+            <input type="color" id="picker-decalque-cor2" value="#ffffff"
+              oninput="aplicarHexComSincronizacao('decalque-cor2', this.value)">
+          </div>
         </div>
-        <div class="select-wrapper">
-          <div class="color-indicator" id="indicator-decalque-cor1"></div>
-          <select class="custom-select has-color" id="select-decalque-cor1" onchange="selecionarCor('decalque-cor1', this.value)"></select>
-        </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
-          <span>🎨</span>
-          <input type="color" id="picker-decalque-cor1" value="#e74c3c" oninput="aplicarHexComSincronizacao('decalque-cor1', this.value)">
-        </div>
+        <details>
+          <summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+          <div class="inputs-row">
+            <input type="text" class="custom-input" id="hex-decalque-cor2" placeholder="HEX"
+              onchange="digitarHex('decalque-cor2', this.value)">
+            <input type="text" class="custom-input" id="rgb-decalque-cor2" placeholder="RGB"
+              onchange="digitarRgb('decalque-cor2', this.value)">
+          </div>
+        </details>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
-        <div class="inputs-row">
-          <input type="text" class="custom-input" id="hex-decalque-cor1" placeholder="HEX" onchange="digitarHex('decalque-cor1', this.value)">
-          <input type="text" class="custom-input" id="rgb-decalque-cor1" placeholder="RGB" onchange="digitarRgb('decalque-cor1', this.value)">
-        </div>
-      </details>
-    </div>
 
-    <!-- ABA 4: COR 2 (ÁREAS CLARAS) -->
-    <div id="tab-adesivo2" class="tab-content">
-      <div style="font-size: 11px; color: #a0a0a8; margin-bottom: -5px;">Mapeamento: Áreas Claras do PNG</div>
-      <div class="color-row">
-        <div class="color-preview" id="preview-decalque-cor2" role="button" tabindex="0" aria-label="Selecionar pintura 2" onclick="abrirSelecaoCor('decalque-cor2', 'tab-adesivo2', this)" onkeydown="ativarSelecaoCor(event, 'decalque-cor2', 'tab-adesivo2', this)">
-          <div class="preview-swatch" id="swatch-decalque-cor2"></div>
-          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-decalque-cor2">Branco Puro</strong><span class="preview-hex" id="preview-hex-decalque-cor2">#FFFFFF</span></div>
-        </div>
-        <div class="select-wrapper">
-          <div class="color-indicator" id="indicator-decalque-cor2"></div>
-          <select class="custom-select has-color" id="select-decalque-cor2" onchange="selecionarCor('decalque-cor2', this.value)"></select>
-        </div>
-        <div class="picker-btn-wrapper" title="Paleta Livre">
-          <span>🎨</span>
-          <input type="color" id="picker-decalque-cor2" value="#ffffff" oninput="aplicarHexComSincronizacao('decalque-cor2', this.value)">
-        </div>
+      <!-- Barra Inferior de Ações -->
+      <div class="action-bar">
+        <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
       </div>
-      <details><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
-        <div class="inputs-row">
-          <input type="text" class="custom-input" id="hex-decalque-cor2" placeholder="HEX" onchange="digitarHex('decalque-cor2', this.value)">
-          <input type="text" class="custom-input" id="rgb-decalque-cor2" placeholder="RGB" onchange="digitarRgb('decalque-cor2', this.value)">
-        </div>
-      </details>
     </div>
-
-    <!-- Barra Inferior de Ações -->
-    <div class="action-bar">
-      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
-    </div>
-  </div>
   </div>
 
   <!-- Modais -->
@@ -464,7 +1700,8 @@
         <li><b>Girar Câmera:</b> Clique/Toque e arraste.</li>
         <li><b>Aproximar/Afastar:</b> Use scroll do mouse ou movimento de pinça.</li>
         <li><b>Fechar escolhas:</b> Deslize para baixo sobre o 3D.</li>
-        <li><b>Feedback Visual:</b> Ao alterar uma cor ou clicar no barco, a área selecionada piscará com um brilho de destaque.</li>
+        <li><b>Feedback Visual:</b> Ao alterar uma cor ou clicar no barco, a área selecionada piscará com um brilho de
+          destaque.</li>
       </ul>
       <button class="btn-close-help" onclick="toggleHelp()">Entendi!</button>
     </div>
@@ -473,12 +1710,15 @@
   <div id="shareModal" class="help-modal">
     <div class="help-content" style="text-align: center;">
       <h3>Imagem Pronta!</h3>
-      <img id="capturePreview" style="width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d47;" />
+      <img id="capturePreview"
+        style="width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d47;" />
       <div style="display: flex; gap: 10px; margin-bottom: 10px;">
         <button class="btn-action" onclick="baixarImagem()" style="background: #4cd964; flex: 1;">📥 Baixar</button>
-        <button class="btn-action" id="btnShareNative" onclick="compartilharImagem()" style="background: #00d2ff; flex: 1; display: none;">🔗 Compartilhar</button>
+        <button class="btn-action" id="btnShareNative" onclick="compartilharImagem()"
+          style="background: #00d2ff; flex: 1; display: none;">🔗 Compartilhar</button>
       </div>
-      <button class="btn-close-help" onclick="fecharShareModal()" style="background: transparent; border: 1px solid #3d3d47; color: #a0a0a8;">Cancelar</button>
+      <button class="btn-close-help" onclick="fecharShareModal()"
+        style="background: transparent; border: 1px solid #3d3d47; color: #a0a0a8;">Cancelar</button>
     </div>
   </div>
 
@@ -555,6 +1795,7 @@
       if (!stage || !panel || !handle) return;
 
       let pointerStart = null;
+      let drawerPointerStart = null;
       const isControlArea = target => target.closest('.panel-controls, .selection-summary');
 
       stage.addEventListener('focusin', event => {
@@ -569,10 +1810,12 @@
         pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
       }, { passive: true });
       stage.addEventListener('pointermove', event => {
-        if (!pointerStart || pointerStart.id !== event.pointerId || !panel.classList.contains('is-open')) return;
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
         const deltaY = event.clientY - pointerStart.y;
         const deltaX = Math.abs(event.clientX - pointerStart.x);
-        if (deltaY > 28 && deltaY > deltaX * 0.8) {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
           pointerStart = null;
           toggleChoiceDrawer(handle);
         }
@@ -581,6 +1824,33 @@
         if (pointerStart && pointerStart.id === event.pointerId) pointerStart = null;
       }, { passive: true });
       stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
+      panel.addEventListener('pointerdown', event => {
+        if (!panel.classList.contains('is-open')) return;
+        drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      }, { passive: true });
+      panel.addEventListener('pointermove', event => {
+        if (!drawerPointerStart || drawerPointerStart.id !== event.pointerId) return;
+        const deltaY = event.clientY - drawerPointerStart.y;
+        const deltaX = Math.abs(event.clientX - drawerPointerStart.x);
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
+          drawerPointerStart = null;
+          toggleChoiceDrawer(handle);
+        }
+      }, { passive: true });
+      panel.addEventListener('pointerup', event => {
+        if (drawerPointerStart && drawerPointerStart.id === event.pointerId) drawerPointerStart = null;
+      }, { passive: true });
+      panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
+      panel.addEventListener('wheel', event => {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((drawerIsOpen && event.deltaY > 0) || (!drawerIsOpen && event.deltaY < 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
+      stage.addEventListener('wheel', event => {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((!drawerIsOpen && event.deltaY < 0) || (drawerIsOpen && event.deltaY > 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
       iframe.addEventListener('focus', () => atualizarFoco3D(true));
       iframe.addEventListener('blur', () => atualizarFoco3D(false));
     }
@@ -609,7 +1879,7 @@
     function prepararCameraParaGaveta(isOpen, wasOpen, stageHeightBefore) {
       if (!apiInstance || !apiInstance.getCameraLookAt) return;
       if (isOpen && !wasOpen) {
-        apiInstance.getCameraLookAt(function(err, camera) {
+        apiInstance.getCameraLookAt(function (err, camera) {
           if (!err && camera) {
             cameraAntesDaGaveta = camera;
             alturaDoPalcoAntesDaGaveta = stageHeightBefore;
@@ -724,12 +1994,12 @@
       }
       if (n.includes('branco') || n.includes('off') || n.includes('pérola')) return '⬜';
       if (n.includes('cinza') || n.includes('grafite') || n.includes('asfalto') || n.includes('carbono') || n.includes('chumbo') || n.includes('nardo') || n.includes('cimento') || n.includes('preto') || n.includes('ônix')) return '⬛';
-      return '⬛'; 
+      return '⬛';
     }
 
     function calcularContraste(hex) {
-      const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-      return (((r*299)+(g*587)+(b*114))/1000 >= 128) ? '#000000' : '#ffffff';
+      const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      return (((r * 299) + (g * 587) + (b * 114)) / 1000 >= 128) ? '#000000' : '#ffffff';
     }
 
     function toggleHelp() {
@@ -838,7 +2108,7 @@
 
     function destacarMaterialVisualmente(materialAlvo) {
       if (!apiInstance || !materialAlvo) return;
-      
+
       if (materialAlvo.channels.EmitColor) {
         materialAlvo.channels.EmitColor.enable = true;
         materialAlvo.channels.EmitColor.color = [0, 0.8, 1];
@@ -864,16 +2134,16 @@
     }
 
     client.init(modelUid, {
-      success: function(api) {
+      success: function (api) {
         apiInstance = api;
         api.start();
 
-        api.addEventListener('viewerready', function() {
+        api.addEventListener('viewerready', function () {
           if (api.setBackground) api.setBackground({ color: [1.0, 1.0, 1.0, 1.0] });
 
           setTimeout(() => {
             if (api.getCameraLookAt) {
-              api.getCameraLookAt(function(err, camera) {
+              api.getCameraLookAt(function (err, camera) {
                 if (!err && camera) {
                   cameraInicial = { position: camera.position, target: camera.target };
                 }
@@ -881,7 +2151,7 @@
             }
           }, 500);
 
-          api.getMaterialList(function(err, materials) {
+          api.getMaterialList(function (err, materials) {
             if (err) return;
             materiaisCarregados = materials;
 
@@ -901,7 +2171,7 @@
               aplicarTexturaAPI(urlInicial);
             }, 300);
 
-            api.addEventListener('click', function(info) {
+            api.addEventListener('click', function (info) {
               if (info && info.material && info.material.name) {
                 if (isMaterialDecalque(info.material.name)) {
                   destacarMaterialVisualmente(info.material);
@@ -923,7 +2193,7 @@
           });
         });
       },
-      error: function() { document.getElementById('status').innerText = 'Erro ao conectar com Sketchfab.'; },
+      error: function () { document.getElementById('status').innerText = 'Erro ao conectar com Sketchfab.'; },
       autostart: 1,
       transparent: 1,
       ui_controls: 0,
@@ -984,7 +2254,7 @@
       const img = new Image();
       img.crossOrigin = "anonymous";
 
-      img.onload = function() {
+      img.onload = function () {
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = img.width;
         tempCanvas.height = img.height;
@@ -1000,7 +2270,7 @@
         for (let i = 0; i < data.length; i += 4) {
           if (data[i + 3] === 0) continue;
           const brightness = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
-          data[i]     = color1.r * (1 - brightness) + color2.r * brightness;
+          data[i] = color1.r * (1 - brightness) + color2.r * brightness;
           data[i + 1] = color1.g * (1 - brightness) + color2.g * brightness;
           data[i + 2] = color1.b * (1 - brightness) + color2.b * brightness;
         }
@@ -1020,7 +2290,7 @@
         ctx.drawImage(tempCanvas, 0, 0);
         ctx.restore();
 
-        apiInstance.addTexture(canvas.toDataURL('image/png'), function(err, textureUid) {
+        apiInstance.addTexture(canvas.toDataURL('image/png'), function (err, textureUid) {
           if (err) {
             status.innerText = 'Erro ao processar imagem!';
             status.style.color = '#ff4444';
@@ -1047,7 +2317,7 @@
         });
       };
 
-      img.onerror = function() {
+      img.onerror = function () {
         status.innerText = 'Erro ao carregar imagem do GitHub!';
         status.style.color = '#ff4444';
       };
@@ -1144,10 +2414,10 @@
       btnCapture.innerHTML = '⏳ Processando...';
       btnCapture.disabled = true;
 
-      apiInstance.getScreenShot(3840, 2160, function(err, base64Image) {
+      apiInstance.getScreenShot(3840, 2160, function (err, base64Image) {
         if (!err) {
           const img = new Image();
-          img.onload = function() {
+          img.onload = function () {
             const canvas = document.createElement('canvas');
             canvas.width = 3840;
             canvas.height = 2160;
@@ -1218,7 +2488,7 @@
 
             ctx.textBaseline = "middle";
             const linhas = [
-              { hex: hexCor,  nome: nomeCorBase,  rotulo: "Fundo base", bordo: "rgba(255,255,255,0.78)" },
+              { hex: hexCor, nome: nomeCorBase, rotulo: "Fundo base", bordo: "rgba(255,255,255,0.78)" },
               { hex: hexCor1, nome: nomeCor1, rotulo: "Pintura 1", bordo: "rgba(255,255,255,0.78)" },
               { hex: hexCor2, nome: nomeCor2, rotulo: "Pintura 2", bordo: "rgba(255,255,255,0.78)" }
             ];
@@ -1296,4 +2566,5 @@
     configurarInteracaoMobile();
   </script>
 </body>
+
 </html>
