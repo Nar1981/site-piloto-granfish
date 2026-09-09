@@ -484,6 +484,7 @@ pygame.quit()
       color: #9bebdf;
       font: 700 12px "Trebuchet MS", sans-serif;
       cursor: pointer;
+      touch-action: none;
     }
 
     .drawer-handle::before {
@@ -1113,6 +1114,30 @@ pygame.quit()
       line-height: 1;
     }
 
+    .btn-fullscreen {
+      position: absolute;
+      top: 18px;
+      right: 94px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: #f3f5f5;
+      padding: 0;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .btn-fullscreen svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
     .btn-home svg {
       width: 14px;
       height: 14px;
@@ -1120,6 +1145,10 @@ pygame.quit()
     }
 
     .btn-home:active {
+      transform: scale(.92);
+    }
+
+    .btn-fullscreen:active {
       transform: scale(.92);
     }
 
@@ -1513,7 +1542,12 @@ pygame.quit()
 
 <body>
 
-  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><a class="btn-home"
+  <div class="header-title"><span class="header-brand">GRAN FISH</span><span>Hurricane 60 SL</span><button class="btn-fullscreen"
+      type="button" aria-label="Entrar em tela cheia" title="Entrar em tela cheia" onclick="alternarTelaCheia()"><svg
+        viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg></button><a class="btn-home"
       href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg
         viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 3.5 3 11.5v8.5a1 1 0 0 0 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor" />
@@ -1723,6 +1757,29 @@ pygame.quit()
   </div>
 
   <script>
+    function atualizarBotaoTelaCheia() {
+      const botao = document.querySelector('.btn-fullscreen');
+      if (!botao) return;
+      const emTelaCheia = Boolean(document.fullscreenElement);
+      botao.setAttribute('aria-label', emTelaCheia ? 'Sair da tela cheia' : 'Entrar em tela cheia');
+      botao.setAttribute('title', emTelaCheia ? 'Sair da tela cheia' : 'Entrar em tela cheia');
+    }
+
+    async function alternarTelaCheia() {
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {
+        console.warn('Não foi possível alternar para tela cheia.', error);
+      }
+      atualizarBotaoTelaCheia();
+    }
+
+    document.addEventListener('fullscreenchange', atualizarBotaoTelaCheia);
+
     function openTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -1824,26 +1881,48 @@ pygame.quit()
         if (pointerStart && pointerStart.id === event.pointerId) pointerStart = null;
       }, { passive: true });
       stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
-      panel.addEventListener('pointerdown', event => {
-        if (event.target.closest('#choice-panel')) return;
-        if (!panel.classList.contains('is-open')) return;
-        drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      }, { passive: true });
-      panel.addEventListener('pointermove', event => {
-        if (!drawerPointerStart || drawerPointerStart.id !== event.pointerId) return;
-        const deltaY = event.clientY - drawerPointerStart.y;
-        const deltaX = Math.abs(event.clientX - drawerPointerStart.x);
+      const processDrawerSwipe = (startX, startY, endX, endY) => {
+        const deltaY = endY - startY;
+        const deltaX = Math.abs(endX - startX);
         const drawerIsOpen = panel.classList.contains('is-open');
         const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
         if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
           drawerPointerStart = null;
           toggleChoiceDrawer(handle);
         }
+      };
+      handle.addEventListener('pointerdown', event => {
+        drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+        if (handle.setPointerCapture) handle.setPointerCapture(event.pointerId);
       }, { passive: true });
-      panel.addEventListener('pointerup', event => {
+      handle.addEventListener('pointermove', event => {
+        if (!drawerPointerStart || drawerPointerStart.id !== event.pointerId) return;
+        processDrawerSwipe(drawerPointerStart.x, drawerPointerStart.y, event.clientX, event.clientY);
+      }, { passive: true });
+      handle.addEventListener('pointerup', event => {
         if (drawerPointerStart && drawerPointerStart.id === event.pointerId) drawerPointerStart = null;
+        if (handle.hasPointerCapture && handle.hasPointerCapture(event.pointerId)) {
+          handle.releasePointerCapture(event.pointerId);
+        }
       }, { passive: true });
-      panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
+      handle.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
+      handle.addEventListener('touchstart', event => {
+        const touch = event.touches[0];
+        if (touch) drawerPointerStart = { id: touch.identifier, x: touch.clientX, y: touch.clientY };
+      }, { passive: true });
+      handle.addEventListener('touchmove', event => {
+        const touch = Array.from(event.touches).find(item => item.identifier === drawerPointerStart?.id);
+        if (touch && drawerPointerStart) {
+          processDrawerSwipe(drawerPointerStart.x, drawerPointerStart.y, touch.clientX, touch.clientY);
+        }
+      }, { passive: true });
+      handle.addEventListener('touchend', event => {
+        const touch = Array.from(event.changedTouches).find(item => item.identifier === drawerPointerStart?.id);
+        if (touch && drawerPointerStart) {
+          processDrawerSwipe(drawerPointerStart.x, drawerPointerStart.y, touch.clientX, touch.clientY);
+        }
+        drawerPointerStart = null;
+      }, { passive: true });
       panel.addEventListener('wheel', event => {
         if (event.target.closest('#choice-panel')) return;
         const drawerIsOpen = panel.classList.contains('is-open');
