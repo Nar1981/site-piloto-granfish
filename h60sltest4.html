@@ -1825,6 +1825,7 @@ pygame.quit()
       }, { passive: true });
       stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
       panel.addEventListener('pointerdown', event => {
+        if (event.target.closest('#choice-panel')) return;
         if (!panel.classList.contains('is-open')) return;
         drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
       }, { passive: true });
@@ -1844,6 +1845,7 @@ pygame.quit()
       }, { passive: true });
       panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
       panel.addEventListener('wheel', event => {
+        if (event.target.closest('#choice-panel')) return;
         const drawerIsOpen = panel.classList.contains('is-open');
         if ((drawerIsOpen && event.deltaY > 0) || (!drawerIsOpen && event.deltaY < 0)) toggleChoiceDrawer(handle);
       }, { passive: true });
@@ -2093,6 +2095,19 @@ pygame.quit()
       return nomeMaterial.toLowerCase().replace(/[^a-z0-9]/g, '').includes('decalque');
     }
 
+    function abrirGavetaComCor(idHTML, tabId) {
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (tabButton) openTab(tabId, tabButton);
+
+      if (panel && handle && !panel.classList.contains('is-open')) toggleChoiceDrawer(handle);
+
+      const select = document.getElementById('select-' + idHTML);
+      const picker = document.getElementById('picker-' + idHTML);
+      if (isMobile) { if (select) select.focus({ preventScroll: true }); } else { if (picker) picker.click(); if (select) select.focus({ preventScroll: true }); }
+    }
+
     function srgbToLinear(val) {
       const c = val / 255;
       return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
@@ -2175,16 +2190,7 @@ pygame.quit()
               if (info && info.material && info.material.name) {
                 if (isMaterialDecalque(info.material.name)) {
                   destacarMaterialVisualmente(info.material);
-                  const panel = document.querySelector('.panel-controls');
-                  const handle = document.querySelector('.drawer-handle');
-                  if (panel && handle && !panel.classList.contains('is-open')) {
-                    toggleChoiceDrawer(handle);
-                  }
-                  const tabBaseButton = document.querySelector('.tab-btn[onclick*="\'tab-base\'"]');
-                  if (tabBaseButton) openTab('tab-base', tabBaseButton);
-                  const sel = document.getElementById('select-decalque1');
-                  const picker = document.getElementById('picker-decalque1');
-                  if (isMobile) { if (sel) sel.focus(); } else { if (picker) picker.click(); }
+                  abrirGavetaComCor('decalque1', 'tab-base');
                 }
               }
             }, { pick: 'fast' });

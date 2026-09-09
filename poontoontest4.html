@@ -519,6 +519,7 @@
       }, { passive: true });
       stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
       panel.addEventListener('pointerdown', event => {
+        if (event.target.closest('#choice-panel')) return;
         if (!panel.classList.contains('is-open')) return;
         drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
       }, { passive: true });
@@ -538,6 +539,7 @@
       }, { passive: true });
       panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
       panel.addEventListener('wheel', event => {
+        if (event.target.closest('#choice-panel')) return;
         const drawerIsOpen = panel.classList.contains('is-open');
         if ((drawerIsOpen && event.deltaY > 0) || (!drawerIsOpen && event.deltaY < 0)) toggleChoiceDrawer(handle);
       }, { passive: true });
@@ -562,6 +564,20 @@
       if (isOpen) {
         document.getElementById('api-frame').focus({ preventScroll: true });
       }
+    }
+
+    function abrirGavetaComCor(idHTML, tabId) {
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      const tabEl = document.getElementById(tabId);
+      if (tabEl) tabEl.classList.add('active');
+
+      if (panel && handle && !panel.classList.contains('is-open')) toggleChoiceDrawer(handle);
+
+      const select = document.getElementById('select-' + idHTML);
+      const picker = document.getElementById('picker-' + idHTML);
+      if (isMobile) { if (select) select.focus({ preventScroll: true }); } else { if (picker) picker.click(); if (select) select.focus({ preventScroll: true }); }
     }
 
     function ajustarCameraParaGaveta() {
@@ -763,12 +779,7 @@
                   if (matchedObj) destacarMaterialVisualmente(matchedObj);
 
                   const tabBtnIndex = matIds.indexOf(matchedMat);
-                  const tabBtns = document.querySelectorAll('.tab-btn');
-                  if(tabBtns[tabBtnIndex]) openTab(`tab-faixa${tabBtnIndex+1}`, tabBtns[tabBtnIndex]);
-
-                  const select = document.getElementById('select-' + matchedMat);
-                  const picker = document.getElementById('picker-' + matchedMat);
-                  if (isMobile) { if (select) select.focus(); } else { if (picker) picker.click(); if (select) select.focus(); }
+                  abrirGavetaComCor(matchedMat, `tab-faixa${tabBtnIndex + 1}`);
                 }
               }
             }, { pick: 'fast' });
