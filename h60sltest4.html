@@ -2450,6 +2450,15 @@ pygame.quit()
       atualizarMaterialDecalque();
     }
 
+    // Aumenta o brilho/reflexo especular do casco ajustando os canais PBR disponíveis no material.
+    function intensificarReflexoCasco(channels) {
+      if (channels.GlossinessPBR) { channels.GlossinessPBR.enable = true; channels.GlossinessPBR.factor = 1; }
+      if (channels.RoughnessPBR) { channels.RoughnessPBR.enable = true; channels.RoughnessPBR.factor = 0.08; }
+      if (channels.SpecularPBR) { channels.SpecularPBR.enable = true; channels.SpecularPBR.factor = 1; }
+      if (channels.ClearcoatPBR) { channels.ClearcoatPBR.enable = true; channels.ClearcoatPBR.factor = 1; }
+      if (channels.ClearcoatRoughnessPBR) { channels.ClearcoatRoughnessPBR.enable = true; channels.ClearcoatRoughnessPBR.factor = 0.05; }
+    }
+
     function atualizarMaterialDecalque() {
       if (!apiInstance || materiaisCarregados.length === 0) return;
       const status = document.getElementById('status');
@@ -2469,6 +2478,7 @@ pygame.quit()
               material.channels.DiffuseColor.color = rgbArray;
               material.channels.DiffuseColor.texture = null;
             }
+            intensificarReflexoCasco(material.channels);
             apiInstance.setMaterial(material);
           }
         });
@@ -2496,12 +2506,20 @@ pygame.quit()
         const color1 = hexToRgb(decalqueState.decalHex1);
         const color2 = hexToRgb(decalqueState.decalHex2);
 
+        // Zona de transição estreita ao redor do limiar: evita que as duas cores se
+        // misturem em tons intermediários e garante que cada pixel fique fiel a
+        // uma das cores escolhidas (exceto uma faixa mínima para suavizar a borda).
+        const THRESHOLD = 0.5;
+        const FEATHER = 0.06;
+
         for (let i = 0; i < data.length; i += 4) {
           if (data[i + 3] === 0) continue;
           const brightness = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
-          data[i] = color1.r * (1 - brightness) + color2.r * brightness;
-          data[i + 1] = color1.g * (1 - brightness) + color2.g * brightness;
-          data[i + 2] = color1.b * (1 - brightness) + color2.b * brightness;
+          let t = (brightness - (THRESHOLD - FEATHER)) / (2 * FEATHER);
+          t = Math.min(1, Math.max(0, t));
+          data[i] = color1.r * (1 - t) + color2.r * t;
+          data[i + 1] = color1.g * (1 - t) + color2.g * t;
+          data[i + 2] = color1.b * (1 - t) + color2.b * t;
         }
 
         tempCtx.putImageData(imgData, 0, 0);
@@ -2537,6 +2555,7 @@ pygame.quit()
                 material.channels.DiffuseColor.color = [1, 1, 1];
                 material.channels.DiffuseColor.texture = { uid: textureUid };
               }
+              intensificarReflexoCasco(material.channels);
               apiInstance.setMaterial(material);
               destacarMaterialVisualmente(material);
             }
