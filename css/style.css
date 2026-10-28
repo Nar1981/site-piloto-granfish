@@ -127,6 +127,8 @@ main { outline: none; min-height: 60vh; }
 .filtros button { transition: transform .15s, box-shadow .15s; }
 .filtros button:hover { transform: translateY(-2px) scale(1.06); box-shadow: 0 8px 18px rgba(30,60,120,.22); }
 .capa img { transition: opacity .2s; }
+.capa__nav, .capa__cap { display: none; }
+.capa__nav { align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fff; color: var(--brand); font-size: 1.8rem; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 .idx img { width: 118px; aspect-ratio: 118 / 44; object-fit: contain; flex: none; }
 .idx b { display: block; font-size: 1.05rem; }
 .idx small { color: var(--muted); font-size: .8rem; }
@@ -144,9 +146,12 @@ img[loading="lazy"].ok { opacity: 1; }
   .busca { order: 3; flex: 1 1 100%; max-width: none; margin-left: 0; }
   .barra__site { min-height: 40px; padding: 0 14px; margin-left: auto; }
   .ref-grid { grid-template-columns: minmax(0, 1fr); }
-  .capa__inner { grid-template-columns: 1fr; padding: .6rem 0; }
+  .capa__inner { grid-template-columns: 44px minmax(0, 1fr) 44px; gap: .5rem; padding: .6rem 0; }
   .capa__inner > div { display: none; }
   .capa img { max-height: 20vh; padding: .5rem; }
+  .capa__nav { display: flex; }
+  .capa__cap:not([hidden]) { display: block; grid-column: 1 / -1; text-align: center; color: #fff; font-weight: 600; font-size: .9rem; }
+  .idx[aria-current] { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand); }
   .cor .am { height: 80px; }
   .paleta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   .paleta h2 { grid-column: 1 / -1; }

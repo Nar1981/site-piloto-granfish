@@ -50,7 +50,10 @@
       '<section class="capa"><div class="wrap capa__inner"><div>' +
       '<div class="marca">GRAN FISH</div><h1>Catálogo de <b>Cores</b></h1>' +
       '<p>Linhas de barcos · Referências · Paletas de cores</p></div>' +
+      '<button type="button" class="capa__nav capa__nav--prev" aria-label="Linha anterior">‹</button>' +
       img('b', hero.item.variants[hero.vi].slug, '', 'Barco Gran Fish', false) +
+      '<button type="button" class="capa__nav capa__nav--next" aria-label="Próxima linha">›</button>' +
+      '<a class="capa__cap" id="capaCap" href="#/" hidden></a>' +
       '</div></section>' +
       '<div class="wrap"><div class="sec-tit"><h2>Linhas do catálogo</h2></div>' +
       '<div class="filtros" role="group" aria-label="Filtrar por linha">' +
@@ -79,13 +82,32 @@
     indice.addEventListener('mouseleave', restore);
     indice.addEventListener('focusout', restore);
 
+    /* botões ‹ › ao lado do principal: navegam pelas linhas visíveis e mostram o modelo */
+    var cap = app.querySelector('#capaCap'), cur = -1;
+    function visiveis() { return Array.prototype.filter.call(app.querySelectorAll('.idx'), function (a) { return !a.hidden; }); }
+    function go(step) {
+      var v = visiveis(); if (!v.length) return;
+      cur = cur < 0 ? (step > 0 ? 0 : v.length - 1) : (cur + step + v.length) % v.length;
+      var a = v[cur];
+      app.querySelectorAll('.idx[aria-current]').forEach(function (x) { x.removeAttribute('aria-current'); });
+      a.setAttribute('aria-current', 'true');
+      capaOrig = 'img/b/' + a.getAttribute('data-slug') + '.webp';
+      capaImg.setAttribute('src', capaOrig);
+      cap.hidden = false; cap.href = a.getAttribute('href');
+      cap.textContent = a.querySelector('b').textContent + ' · ' + a.querySelector('small').textContent + ' — ver referência';
+      a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    app.querySelector('.capa__nav--prev').addEventListener('click', function () { go(-1); });
+    app.querySelector('.capa__nav--next').addEventListener('click', function () { go(1); });
+
     var box = app.querySelector('.filtros');
     box.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       var g = b.getAttribute('data-g');
       app.querySelectorAll('.idx').forEach(function (a) { a.hidden = !!g && a.getAttribute('data-g') !== g; });
-    });
+            cur = -1; cap.hidden = true;
+          });
     document.title = 'Catálogo de Cores · Gran Fish';
   }
 
