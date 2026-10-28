@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de Cores · Gran Fish</title>
+<meta name="description" content="Catálogo de cores e grafismos Gran Fish: linhas Gran Bass, Hurricane 6.0 e Linha Sem, com paletas HEX e CMYK.">
+<meta name="theme-color" content="#3963ab">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%233963ab'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%23fff'%3EGF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="img/cabecalho.webp" fetchpriority="high">
+</head>
+<body>
+<header class="topo">
+  <a class="topo__img" href="#/" aria-label="Gran Fish - Catálogo de Cores">
+    <img src="img/cabecalho.webp" alt="Gran Fish - Catálogo de Cores" width="2000" height="267" fetchpriority="high">
+    <span class="sr-only">Catálogo de Cores</span>
+  </a>
+</header>
+<nav class="barra" aria-label="Navegação">
+  <div class="barra__inner">
+    <a class="barra__home" href="#/">Início</a>
+    <form class="busca" role="search" id="busca">
+      <input type="search" id="q" placeholder="Buscar referência ou nome (ex.: 0007, Navy)" autocomplete="off" aria-label="Buscar">
+      <ul class="busca__res" id="res" hidden></ul>
+    </form>
+  </div>
+</nav>
+
+<main id="app" tabindex="-1" aria-live="polite"></main>
+
+<footer class="rodape">
+  <span>GRAN FISH &nbsp;·&nbsp; Catálogo de Cores</span>
+  <span>Gran Fish Indústria e Comércio de Embarcações Ltda · Rua das Primaveras, 50 - Pratápolis, MG</span>
+</footer>
+<noscript><p style="padding:2rem">Este catálogo precisa de JavaScript habilitado.</p></noscript>
+<script src="js/app.js" defer></script>
+</body>
+</html>
