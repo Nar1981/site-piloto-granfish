@@ -146,10 +146,10 @@ img[loading="lazy"].ok { opacity: 1; }
   .busca { order: 3; flex: 1 1 100%; max-width: none; margin-left: 0; }
   .barra__site { min-height: 40px; padding: 0 14px; margin-left: auto; }
   .ref-grid { grid-template-columns: minmax(0, 1fr); }
-  .capa__inner { grid-template-columns: 44px minmax(0, 1fr) 44px; gap: .5rem; padding: .6rem 0; }
+  .capa__inner { grid-template-columns: 30px minmax(0, 1fr) 30px; gap: .35rem; padding: .6rem 0; }
   .capa__inner > div { display: none; }
-  .capa img { max-height: 20vh; padding: .5rem; }
-  .capa__nav { display: flex; }
+  .capa img { max-height: 30vh; padding: .4rem; }
+  .capa__nav { display: flex; width: 30px; height: 30px; font-size: 1.3rem; }
   .capa__cap:not([hidden]) { display: block; grid-column: 1 / -1; text-align: center; color: #fff; font-weight: 600; font-size: .9rem; }
   .idx[aria-current] { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand); }
   .cor .am { height: 80px; }
