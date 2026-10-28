@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gran Fish | Estaleiro Náutico de Luxo com Configurador 3D Interativo.">
+  <title>Gran Fish | Estaleiro Náutico Luxury 3D</title>
+
+  <!-- Google Fonts: Cinzel (Luxo Régio) & Plus Jakarta Sans (Moderno e Limpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Three.js CDN para Renderização 3D Realtime -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg-deep: #03080e;
+      --bg-surface: #071520;
+      --bg-surface-elevated: #0c1e2d;
+      --gold: #d4af37;
+      --gold-light: #f5e5b8;
+      --gold-dark: #997c22;
+      --copper: #e08e58;
+      --teal: #0eb39c;
+      --teal-glow: rgba(14, 179, 156, 0.25);
+      --gold-glow: rgba(212, 175, 55, 0.25);
+      --text-main: #f0f5f8;
+      --text-muted: #8ca3b0;
+      --border-gold: rgba(212, 175, 55, 0.22);
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --glass: rgba(8, 24, 36, 0.65);
+      --glass-hover: rgba(12, 34, 50, 0.85);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --font-display: 'Cinzel', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(14, 179, 156, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(212, 175, 55, 0.06) 0%, transparent 45%),
+        linear-gradient(180deg, #02060a 0%, #05111a 50%, #03080e 100%);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-width: 320px;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Scrollbar personalizada de luxo */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    a { text-decoration: none; color: inherit; }
+
+    .wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ----------------------------------------------------
+       TOPBAR & NAVEGAÇÃO VIP
+    ---------------------------------------------------- */
+    .topbar-wrapper {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      padding: 0 24px;
+      margin-bottom: 20px;
+    }
+
+    .topbar {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 28px;
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+      background: rgba(5, 18, 28, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .topbar:hover {
+      border-color: rgba(212, 175, 55, 0.45);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px var(--gold-glow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-symbol {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #03080e;
+      font-weight: 900;
+      font-size: 1.1rem;
+      box-shadow: 0 0 14px var(--gold-glow);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 60%, var(--gold) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 700;
+      margin-top: -2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.25s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 26px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .cta.primary {
+      background: linear-gradient(135deg, #e5be59 0%, var(--gold) 50%, #aa7e18 100%);
+      color: #040d14;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.28);
+    }
+
+    .cta.primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 32px rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, #fff0aa 0%, #e0bd4f 50%, #b88d22 100%);
+    }
+
+    .cta.secondary {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      border: 1px solid var(--border-gold);
+      backdrop-filter: blur(10px);
+    }
+
+    .cta.secondary:hover {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: var(--gold);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ----------------------------------------------------
+       HERO VIP COM VISUALIZADOR 3D REALTIME
+    ---------------------------------------------------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 82vh;
+      padding: 30px 0 60px;
+      position: relative;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(14, 179, 156, 0.12);
+      border: 1px solid rgba(14, 179, 156, 0.3);
+      color: var(--teal);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(14, 179, 156, 0.15);
+    }
+
+    .status-badge .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(14, 179, 156, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(14, 179, 156, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(14, 179, 156, 0); }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5.2vw, 5.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #e2ebf0 50%, var(--gold-light) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .lead {
+      max-width: 540px;
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+    }
+
+    /* CONTÊINER DO VIEWPORT 3D NO HERO */
+    .hero-3d-container {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(12, 34, 50, 0.5) 0%, rgba(3, 12, 20, 0.8) 100%);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(212, 175, 55, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #hero-3d-canvas {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: grab;
+    }
+
+    #hero-3d-canvas:active {
+      cursor: grabbing;
+    }
+
+    .badge-overlay-3d {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(3, 12, 20, 0.75);
+      border: 1px solid var(--border-gold);
+      backdrop-filter: blur(12px);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      pointer-events: none;
+    }
+
+    .color-picker-3d {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      background: rgba(3, 12, 20, 0.85);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+    }
+
+    .color-picker-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .color-options {
+      display: flex;
+      gap: 10px;
+    }
+
+    .color-swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .color-swatch:hover, .color-swatch.active {
+      transform: scale(1.25);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    /* ----------------------------------------------------
+       CONTEÚDO E SEÇÕES LUXO
+    ---------------------------------------------------- */
+    .content-area {
+      position: relative;
+      z-index: 2;
+      margin-top: 40px;
+      padding: 60px 0 100px;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 60px;
+    }
+
+    .section-eyebrow {
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* ----------------------------------------------------
+       CARDS MODELO 3D TILT EFFECT
+    ---------------------------------------------------- */
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .card-3d-wrap {
+      perspective: 1000px;
+    }
+
+    .card-3d {
+      background: var(--glass);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 480px;
+    }
+
+    .card-3d:hover {
+      border-color: rgba(212, 175, 55, 0.6);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.15);
+    }
+
+    .card-glare {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-badge {
+      align-self: flex-start;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      transform: translateZ(20px);
+    }
+
+    .card-visual-3d {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at 50% 50%, rgba(14, 179, 156, 0.15), rgba(3, 12, 20, 0.9));
+      border: 1px solid var(--border-glass);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      transform: translateZ(30px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-visual-3d canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      transform: translateZ(25px);
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      transform: translateZ(15px);
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      transform: translateZ(20px);
+    }
+
+    .card-tag {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-cta {
+      transform: translateZ(35px);
+      width: 100%;
+    }
+
+    /* ----------------------------------------------------
+       ATELIÊ NÁUTICO / CRAFTSMANSHIP 3D
+    ---------------------------------------------------- */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .principle-card {
+      background: var(--glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .principle-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-gold);
+      background: var(--glass-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .principle-card:hover::before {
+      opacity: 1;
+    }
+
+    .principle-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .principle-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .principle-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    /* ----------------------------------------------------
+       BAND DE CONTATO LUXO / CONCIERGE VIP
+    ---------------------------------------------------- */
+    .contact-band {
+      background: linear-gradient(135deg, rgba(12, 34, 50, 0.9) 0%, rgba(3, 12, 20, 0.95) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 50px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 0 40px rgba(212, 175, 55, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-band::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 500px;
+    }
+
+    /* ----------------------------------------------------
+       FOOTER LUXUOSO
+    ---------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--border-glass);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    footer strong {
+      color: var(--gold-light);
+      font-family: var(--font-display);
+      letter-spacing: 0.1em;
+    }
+
+    /* MEDIA QUERIES RESPONSIVAS */
+    @media (max-width: 992px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+      .hero-3d-container {
+        height: 420px;
+      }
+      .model-grid {
+        grid-template-columns: 1fr;
+      }
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-band {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 10px 18px;
+      }
+      nav { display: none; }
+      h1 { font-size: 2.6rem; }
+      .hero-stats { grid-template-columns: 1fr; gap: 12px; }
+      .hero-3d-container { height: 350px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGAÇÃO VIP -->
+  <div class="topbar-wrapper">
+    <header class="topbar">
+      <a href="#" class="brand" aria-label="Gran Fish Início">
+        <div class="brand-symbol">⚓</div>
+        <div class="brand-text">
+          <span class="brand-title">Gran Fish</span>
+          <span class="brand-sub">Luxury Yachts</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navegação principal">
+        <a href="#modelos">Modelos 3D</a>
+        <a href="#atelie">Ateliê Náutico</a>
+        <a href="#estaleiro">Engenharia</a>
+        <a href="#contato">Concierge VIP</a>
+      </nav>
+
+      <a class="cta primary" href="#contato">
+        <span>Agendar Visita</span>
+        <span>→</span>
+      </a>
+    </header>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- HERO SECTION COM VISUALIZADOR 3D INTERATIVO REALTIME -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="status-badge">
+          <span class="pulse"></span>
+          <span>Configurador 3D Realtime Ativo</span>
+        </div>
+
+        <h1>O horizonte perfeito começa na sua imaginação.</h1>
+        <p class="lead">
+          Conheça o estaleiro que une engenharia de alta performance, acabamento artesanal e personalização em 3D em tempo real. Cada detalhe construído sob medida para a sua jornada marítima.
+        </p>
+
+        <div class="hero-actions">
+          <a class="cta primary" href="#modelos">Explorar Coleção 3D</a>
+          <a class="cta secondary" href="#atelie">Conhecer o Ateliê</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">60′</span>
+            <span class="stat-label">Huracán Flagship</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Laminado a Vácuo</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">VIP</span>
+            <span class="stat-label">Atendimento Exclusivo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEWPORT THREE.JS 3D EM TEMPO REAL -->
+      <div class="hero-3d-container">
+        <div class="badge-overlay-3d">
+          <span>↻ Gire em 3D com o Mouse ou Toque</span>
+        </div>
+
+        <canvas id="hero-3d-canvas"></canvas>
+
+        <div class="color-picker-3d">
+          <span class="color-picker-label">Cor do Casco 3D:</span>
+          <div class="color-options">
+            <div class="color-swatch active" style="background: #0a3052;" data-color="0x0a3052" title="Azul Safira Imperial"></div>
+            <div class="color-swatch" style="background: #11161f;" data-color="0x11161f" title="Preto Ônix Metálico"></div>
+            <div class="color-swatch" style="background: #d4af37;" data-color="0xd4af37" title="Ouro Gran Fish"></div>
+            <div class="color-swatch" style="background: #e8ecef;" data-color="0xe8ecef" title="Branco Pérola Nobre"></div>
+            <div class="color-swatch" style="background: #0b4539;" data-color="0x0b4539" title="Verde Esmeralda"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="content-area">
+
+      <!-- COLEÇÃO DE MODELOS EM 3D -->
+      <section class="section" id="modelos">
+        <div class="section-header">
+          <span class="section-eyebrow">Frota Exclusiva Gran Fish</span>
+          <h2>Escolha a embarcação. Personalize cada centímetro em 3D.</h2>
+          <p>Modelos desenhados para unir estabilidade incomparável, linhas dinâmicas e o máximo luxo para seus momentos no mar ou na represa.</p>
+        </div>
+
+        <div class="model-grid">
+
+          <!-- MODELO 1: HURRICANE 60 SL -->
+          <div class="card-3d-wrap">
+            <article class="card-3d" id="card-hurricane">
+              <div class="card-glare"></div>
+              <span class="card-badge">Configurador 3D Interativo</span>
+
+              <div class="card-visual-3d">
+                <canvas id="model-canvas-1"></canvas>
+              </div>
+
+              <div>
+                <h3 class="card-title">Hurricane 60 SL</h3>
+                <p class="card-desc">
+                  O auge da engenharia Gran Fish. Presença imponente, navegação suave mesmo em mar aberto e acabamento premium digno de superiates.
+                </p>
+
+                <div class="card-tags">
+                  <span class="card-tag">60 Pés</span>
+                  <span class="card-tag">Casco Infusão Vácuo</span>
+                  <span class="card-tag">Dual V12 Power</span>
+                  <span class="card-tag">Cabine Master VIP</span>
+                </div>
+              </div>
+
+              <div class="card-cta">
+                <a class="cta primary" href="../h60sltest4.html" target="_blank" style="width: 100%;">
+                  <span>Abrir Configurador 3D</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- MODELO 2: LINHA PONTOON LUXURY -->
+          <div class="card-3d-wrap">
+            <article class="card-3d" id="card-pontoon">
+              <div class="card-glare"></div>
+              <span class="card-badge">Configurador 3D Interativo</span>
+
+              <div class="card-visual-3d">
+                <canvas id="model-canvas-2"></canvas>
+              </div>
+
+              <div>
+                <h3 class="card-title">Linha Pontoon Grand Luxury</h3>
+                <p class="card-desc">
+                  Amplo espaço gourmet, estrutura em alumínio naval 5052 e conforto incomparável para transformar encontros em celebrações inesquecíveis.
+                </p>
+
+                <div class="card-tags">
+                  <span class="card-tag">Alumínio Naval 5052</span>
+                  <span class="card-tag">Deck Teak Gourmet</span>
+                  <span class="card-tag">Som Premium JL Audio</span>
+                  <span class="card-tag">Até 16 Pessoas</span>
+                </div>
+              </div>
+
+              <div class="card-cta">
+                <a class="cta secondary" href="../poontoontest4.html" target="_blank" style="width: 100%;">
+                  <span>Personalizar Pontoon 3D</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ATELIÊ NÁUTICO E DIFERENCIAIS DE ENGENHARIA -->
+      <section class="section" id="atelie">
+        <div class="section-header">
+          <span class="section-eyebrow">Ateliê &amp; Estaleiro</span>
+          <h2>A nobreza dos materiais aliada à alta precisão.</h2>
+          <p>Conheça os pilares que fazem de cada embarcação Gran Fish uma obra de arte náutica duradoura.</p>
+        </div>
+
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="principle-icon">⚡</div>
+            <h3>Laminação a Vácuo</h3>
+            <p>Processo de infusão de resina viniléster sob vácuo constante. Garante leveza estrutural, máxima rigidez e eliminação de bolhas no casco.</p>
+          </div>
+
+          <div class="principle-card">
+            <div class="principle-icon">🛥️</div>
+            <h3>Acabamento em Teak &amp; Couro</h3>
+            <p>Madeira Teak legítima e estofados náuticos com costura dupla italiana resfriada, resistentes aos raios UV e ao ambiente marinho severo.</p>
+          </div>
+
+          <div class="principle-card">
+            <div class="principle-icon">📡</div>
+            <h3>Aviônica &amp; Tecnologia</h3>
+            <p>Telas duplas de navegação touchscreen Garmin, sonar 3D de varredura lateral e controle por joystick para manobras perfeitas em marinas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BAND DE CONTATO / CONCIERGE -->
+      <section class="section" id="contato">
+        <div class="contact-band">
+          <div class="contact-info">
+            <h3>Pronto para projetar seu próximo horizonte?</h3>
+            <p>Fale diretamente com nossa equipe de engenharia e receba uma consultoria exclusiva e personalizada.</p>
+          </div>
+          <a class="cta primary" href="https://wa.me/5535999999999" target="_blank" rel="noopener noreferrer">
+            <span>Falar com Concierge VIP</span>
+            <span>📱</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>
+        <strong>GRAN FISH INDÚSTRIA NÁUTICA DE ALTO PADRÃO LTDA</strong><br>
+        Engenharia, Personalização e Construção de Embarcações Exclusivas.<br>
+        Pratápolis - MG | CNPJ: 59.593.605/0001-86 | Todos os direitos reservados.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPT THREE.JS PARA A CENA 3D DO HERO & CARDS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* =================================-----------------
+         1. CENA 3D DO HERO (THREE.JS YACHT MODEL)
+      ================================------------------ */
+      const container = document.querySelector('.hero-3d-container');
+      const canvas = document.getElementById('hero-3d-canvas');
+      if (!canvas) return;
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x03080e, 0.025);
+
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.height || (container.clientWidth / 520), 0.1, 1000);
+      camera.position.set(0, 3.5, 11);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+
+      // Iluminação de Luxo
+      const ambientLight = new THREE.AmbientLight(0xd4af37, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xfff5db, 1.8);
+      dirLight.position.set(10, 15, 10);
+      scene.add(dirLight);
+
+      const spotLightBlue = new THREE.PointLight(0x0eb39c, 2.5, 25);
+      spotLightBlue.position.set(-8, -2, 5);
+      scene.add(spotLightBlue);
+
+      // Grupo da Embarcação 3D
+      const boatGroup = new THREE.Group();
+
+      // Material do Casco (Dinamico)
+      let hullMaterial = new THREE.MeshStandardMaterial({
+        color: 0x0a3052,
+        roughness: 0.1,
+        metalness: 0.85
+      });
+
+      // 1. Geometria do Casco Elegante Tapered
+      const hullShape = new THREE.Shape();
+      hullShape.moveTo(0, 3.2);
+      hullShape.bezierCurveTo(0.8, 2.0, 1.1, 0, 1.1, -3.0);
+      hullShape.lineTo(-1.1, -3.0);
+      hullShape.bezierCurveTo(-1.1, 0, -0.8, 2.0, 0, 3.2);
+
+      const extrudeSettings = { depth: 0.9, bevelEnabled: true, bevelSegments: 4, steps: 2, bevelSize: 0.25, bevelThickness: 0.3 };
+      const hullGeo = new THREE.ExtrudeGeometry(hullShape, extrudeSettings);
+      hullGeo.rotateX(Math.PI / 2);
+
+      const hullMesh = new THREE.Mesh(hullGeo, hullMaterial);
+      hullMesh.position.y = -0.4;
+      boatGroup.add(hullMesh);
+
+      // 2. Deck de Teak
+      const deckGeo = new THREE.BoxGeometry(1.9, 0.08, 5.5);
+      const deckMat = new THREE.MeshStandardMaterial({ color: 0x8a582b, roughness: 0.6 });
+      const deckMesh = new THREE.Mesh(deckGeo, deckMat);
+      deckMesh.position.set(0, 0.2, -0.2);
+      boatGroup.add(deckMesh);
+
+      // 3. Cabine Aerodinâmica de Vidro Fumê
+      const cabinGeo = new THREE.BoxGeometry(1.4, 0.75, 2.6);
+      const cabinMat = new THREE.MeshStandardMaterial({ color: 0x111e2e, roughness: 0.05, metalness: 0.9, transparent: true, opacity: 0.85 });
+      const cabinMesh = new THREE.Mesh(cabinGeo, cabinMat);
+      cabinMesh.position.set(0, 0.6, -0.2);
+      boatGroup.add(cabinMesh);
+
+      // 4. Detalhes Dourados (Friso de Luxo)
+      const railGeo = new THREE.CylinderGeometry(0.02, 0.02, 5.8);
+      const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.1, metalness: 0.95 });
+      const railLeft = new THREE.Mesh(railGeo, goldMat);
+      railLeft.rotation.x = Math.PI / 2;
+      railLeft.position.set(0.92, 0.25, -0.1);
+      boatGroup.add(railLeft);
+
+      const railRight = railLeft.clone();
+      railRight.position.x = -0.92;
+      boatGroup.add(railRight);
+
+      boatGroup.position.set(0, -0.2, 0);
+      boatGroup.rotation.y = -Math.PI / 5;
+      scene.add(boatGroup);
+
+      // Espelho / Plano da Água Oceanica
+      const oceanGeo = new THREE.PlaneGeometry(60, 60);
+      const oceanMat = new THREE.MeshStandardMaterial({ color: 0x03121c, roughness: 0.1, metalness: 0.8 });
+      const ocean = new THREE.Mesh(oceanGeo, oceanMat);
+      ocean.rotation.x = -Math.PI / 2;
+      ocean.position.y = -1.2;
+      scene.add(ocean);
+
+      // Partículas Brilhantes do Mar
+      const particlesGeo = new THREE.BufferGeometry();
+      const count = 150;
+      const positions = new Float32Array(count * 3);
+      for(let i=0; i<count*3; i+=3) {
+        positions[i] = (Math.random() - 0.5) * 20;
+        positions[i+1] = Math.random() * 3 - 1;
+        positions[i+2] = (Math.random() - 0.5) * 20;
+      }
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particlesMat = new THREE.PointsMaterial({ size: 0.05, color: 0xd4af37, transparent: true, opacity: 0.7 });
+      const particles = new THREE.Points(particlesGeo, particlesMat);
+      scene.add(particles);
+
+      // Interação de Rotação por Mouse/Toque no 3D
+      let isDragging = false;
+      let previousMousePosition = { x: 0, y: 0 };
+
+      const onMouseDown = (e) => {
+        isDragging = true;
+        previousMousePosition = { x: e.clientX || e.touches[0].clientX, y: e.clientY || e.touches[0].clientY };
+      };
+
+      const onMouseMove = (e) => {
+        if (!isDragging) return;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        if(!clientX) return;
+
+        const deltaX = clientX - previousMousePosition.x;
+        const deltaY = clientY - previousMousePosition.y;
+
+        boatGroup.rotation.y += deltaX * 0.008;
+        boatGroup.rotation.x += deltaY * 0.004;
+
+        // Limita inclinação
+        boatGroup.rotation.x = Math.max(-0.4, Math.min(0.4, boatGroup.rotation.x));
+
+        previousMousePosition = { x: clientX, y: clientY };
+      };
+
+      const onMouseUp = () => { isDragging = false; };
+
+      canvas.addEventListener('mousedown', onMouseDown);
+      canvas.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+
+      canvas.addEventListener('touchstart', onMouseDown, {passive: true});
+      canvas.addEventListener('touchmove', onMouseMove, {passive: true});
+      window.addEventListener('touchend', onMouseUp);
+
+      // Color Swatches Selector
+      const swatches = document.querySelectorAll('.color-swatch');
+      swatches.forEach(swatch => {
+        swatch.addEventListener('click', (e) => {
+          swatches.forEach(s => s.classList.remove('active'));
+          swatch.classList.add('active');
+          const hexColor = parseInt(swatch.getAttribute('data-color'));
+          hullMaterial.color.setHex(hexColor);
+        });
+      });
+
+      // Loop de Animação 3D Render
+      let clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+
+        if (!isDragging) {
+          boatGroup.rotation.y += 0.003;
+          boatGroup.position.y = -0.2 + Math.sin(elapsedTime * 1.5) * 0.08;
+          boatGroup.rotation.z = Math.sin(elapsedTime * 1.2) * 0.02;
+        }
+
+        particles.rotation.y = elapsedTime * 0.02;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Ajuste Responsivo do Canvas
+      window.addEventListener('resize', () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      });
+
+
+      /* =================================-----------------
+         2. CARDS 3D TILT EFFECT & MINI CANVASES
+      ================================------------------ */
+      const cards = document.querySelectorAll('.card-3d');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (centerY - y) / 16;
+          const rotateY = (x - centerX) / 16;
+
+          card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+      });
+
+      // Mini 3D Canvases para os Cards
+      function setupMiniCanvas(canvasId, modelColor) {
+        const miniCanvas = document.getElementById(canvasId);
+        if(!miniCanvas) return;
+
+        const mScene = new THREE.Scene();
+        const mCam = new THREE.PerspectiveCamera(45, miniCanvas.clientWidth / miniCanvas.clientHeight, 0.1, 100);
+        mCam.position.set(0, 2.5, 6);
+
+        const mRenderer = new THREE.WebGLRenderer({ canvas: miniCanvas, antialias: true, alpha: true });
+        mRenderer.setSize(miniCanvas.clientWidth, miniCanvas.clientHeight);
+
+        const amb = new THREE.AmbientLight(0xffffff, 0.8);
+        mScene.add(amb);
+
+        const dir = new THREE.DirectionalLight(0xd4af37, 1.5);
+        dir.position.set(5, 5, 5);
+        mScene.add(dir);
+
+        const mesh = new THREE.Mesh(
+          new THREE.BoxGeometry(1.2, 0.5, 3.2),
+          new THREE.MeshStandardMaterial({ color: modelColor, roughness: 0.2, metalness: 0.8 })
+        );
+        mesh.rotation.y = Math.PI / 4;
+        mScene.add(mesh);
+
+        function renderMini() {
+          requestAnimationFrame(renderMini);
+          mesh.rotation.y += 0.01;
+          mRenderer.render(mScene, mCam);
+        }
+        renderMini();
+      }
+
+      setupMiniCanvas('model-canvas-1', 0x0a3052);
+      setupMiniCanvas('model-canvas-2', 0xd4af37);
+
+    });
+  </script>
+</body>
+</html>
