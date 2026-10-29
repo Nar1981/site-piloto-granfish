@@ -106,7 +106,7 @@ main { outline: none; min-height: 60vh; }
 .sem-card .cor span { align-self: start; }
 
 /* Início */
-.capa { background: var(--brand); color: #fff; position: sticky; top: var(--barra-h, 57px); z-index: 10; box-shadow: 0 6px 18px rgba(20,40,80,.25); }
+.capa { background: #071d26; color: #fff; position: sticky; top: var(--barra-h, 57px); z-index: 10; box-shadow: 0 6px 18px rgba(20,40,80,.25); }
 .capa__inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; align-items: center; padding: 1rem 0; }
 .capa img { max-height: 36vh; }
 .capa .marca { font-weight: 700; letter-spacing: .4em; font-size: clamp(.8rem, 1.6vw, 1.3rem); color: #bec8ff; }
