@@ -95,10 +95,25 @@
       capaImg.setAttribute('src', capaOrig);
       cap.hidden = false; cap.href = a.getAttribute('href');
       cap.textContent = a.querySelector('b').textContent + ' · ' + a.querySelector('small').textContent + ' — ver referência';
-      a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      a.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
-    app.querySelector('.capa__nav--prev').addEventListener('click', function () { go(-1); });
-    app.querySelector('.capa__nav--next').addEventListener('click', function () { go(1); });
+    app.querySelector('.capa__nav--prev').addEventListener('click', function () { parado = true; go(-1); });
+    app.querySelector('.capa__nav--next').addEventListener('click', function () { parado = true; go(1); });
+
+    /* avanço automático a cada 3s; pausa com mouse/foco sobre as linhas ou o destaque, e para ao usar os botões */
+    var parado = false, pausa = false;
+    var capaBox = app.querySelector('.capa');
+    [indice, capaBox].forEach(function (el) {
+      el.addEventListener('mouseenter', function () { pausa = true; });
+      el.addEventListener('mouseleave', function () { pausa = false; });
+      el.addEventListener('focusin', function () { pausa = true; });
+      el.addEventListener('focusout', function () { pausa = false; });
+    });
+    var timer = setInterval(function () {
+      if (!document.body.contains(capaImg)) { clearInterval(timer); return; }
+      if (parado || pausa || document.hidden) return;
+      go(1);
+    }, 3000);
 
     var box = app.querySelector('.filtros');
     box.addEventListener('click', function (e) {
