@@ -25,3 +25,5 @@ Cadastros ficam em `cadastros-admin.html` (login da equipe, filtro, alteração 
 - Depois de criar o usuário, autorize-o rodando no SQL Editor: `insert into public.equipe (user_id) select id from auth.users where email = 'SEU_EMAIL';`. Só quem está em `public.equipe` lê ou altera cadastros (RLS).
 - Ative MFA e use senha forte em **Authentication**; mantenha o cadastro público desativado.
 - O painel exige login, expira a sessão em 1 h ou 15 min sem atividade, bloqueia por 5 min após 5 erros e só funciona com o banco conectado (fora do localhost).
+
+Execute tambem `instagram.sql` (tabelas das publicacoes do Instagram exibidas no site, gerenciadas em `instagram-admin.html`).
