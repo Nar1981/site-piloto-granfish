@@ -51,7 +51,11 @@
       const a = document.createElement('a');
       a.href = p.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
       a.textContent = p.url.replace('https://www.instagram.com/', '');
-      td1.appendChild(a);
+      const prev = document.createElement('iframe');
+      prev.className = 'insta-prev'; prev.loading = 'lazy';
+      prev.title = 'Prévia: ' + a.textContent;
+      prev.src = p.url + 'embed/captioned/';
+      td1.append(prev, a);
 
       const td2 = document.createElement('td');
       const ordem = document.createElement('input');
