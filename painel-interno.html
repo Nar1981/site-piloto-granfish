@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; base-uri 'self'; form-action 'self';">
+<title>Painel interno · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
+  <nav class="topnav" aria-label="Navegação interna">
+    <a href="painel-interno.html" aria-current="page">Painel</a>
+    <a href="cadastros-admin.html">Cadastros recebidos</a>
+    <a href="usuarios-admin.html">Administradores</a>
+  </nav>
+  <a class="button" href="index.html">← Site</a>
+</header>
+
+<main class="wrap" style="padding:36px 0 70px">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Painel interno</h1>
+  <p style="color:var(--muted);margin:0 0 22px">Todos os acessos do site Gran Fish em um só lugar. Uso exclusivo da equipe.</p>
+
+  <section id="painel" hidden>
+    <h2 class="card-title">Área interna</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px">
+      <a class="card" href="cadastros-admin.html" style="text-decoration:none;color:inherit"><h3 class="card-title">Cadastros recebidos</h3><p class="nota">Ver, filtrar, mudar status e exportar CSV dos cadastros.</p></a>
+      <a class="card" href="usuarios-admin.html" style="text-decoration:none;color:inherit"><h3 class="card-title">Administradores</h3><p class="nota">Criar e remover usuários administradores.</p></a>
+    </div>
+
+    <h2 class="card-title">Site público</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px">
+      <a class="card" href="index.html" style="text-decoration:none;color:inherit"><h3 class="card-title">Página inicial</h3><p class="nota">Site Gran Fish.</p></a>
+      <a class="card" href="cadastro.html" style="text-decoration:none;color:inherit"><h3 class="card-title">Ficha cadastral</h3><p class="nota">Formulário público de cadastro de clientes e empresas.</p></a>
+      <a class="card" href="ficha-cadastral-granfish.pptx" style="text-decoration:none;color:inherit"><h3 class="card-title">Ficha editável (PPTX)</h3><p class="nota">Modelo para download.</p></a>
+    </div>
+
+    <h2 class="card-title">Serviços externos</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px">
+      <a class="card" href="https://supabase.com/dashboard/project/eqlvmxtoqavglfrtfhfx" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><h3 class="card-title">Supabase (banco de dados)</h3><p class="nota">Projeto granfish-cadastros: tabelas, usuários, MFA e backups.</p></a>
+      <a class="card" href="https://github.com/Nar1981/site-piloto-granfish" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><h3 class="card-title">GitHub (código do site)</h3><p class="nota">Repositório Nar1981/site-piloto-granfish.</p></a>
+    </div>
+
+    <p class="nota">Por segurança, senhas não são exibidas nem guardadas nesta página.</p>
+  </section>
+
+  <section id="negado" class="card" hidden>
+    <h2 class="card-title">Acesso restrito</h2>
+    <p>Entre primeiro na área interna para ver o painel.</p>
+    <a class="button button--copper" href="cadastros-admin.html">Entrar</a>
+  </section>
+</main>
+
+<script src="js/painel-interno.js" defer></script>
+</body>
+</html>
