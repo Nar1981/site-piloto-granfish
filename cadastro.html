@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self';">
+<title>Ficha Cadastral · Gran Fish</title>
+<meta name="description" content="Ficha cadastral Gran Fish para clientes, fornecedores, prestadores de serviços e parceiros comerciais.">
+<meta name="theme-color" content="#071d26">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
+  <nav class="topnav" aria-label="Navegação principal">
+    <a href="index.html">Início</a>
+    <a href="index.html#modelos">Modelos</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="cadastro.html" aria-current="page">Cadastro</a>
+    <a href="index.html#contato">Contato</a>
+  </nav>
+  <a class="button" href="index.html">← Voltar ao site</a>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Cadastro Gran Fish</span>
+      <h1>Ficha Cadastral</h1>
+      <p>Cadastro de clientes, fornecedores, prestadores de serviços e parceiros comerciais. Preencha os campos aplicáveis; os dados da Gran Fish permanecem válidos até nova atualização.</p>
+      <div class="head-actions">
+        <a class="button button--copper" href="#form">Preencher cadastro ↓</a>
+        <a class="text-link" href="ficha-cadastral-granfish.pptx" download>Baixar ficha editável (PPTX)</a>
+        <button class="text-link" type="button" id="imprimir">Imprimir ficha em branco</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="card empresa" aria-labelledby="empresa-t">
+      <h2 id="empresa-t" class="card-title">Dados cadastrais da empresa</h2>
+      <dl class="empresa-grid">
+        <div class="full"><dt>Razão social</dt><dd>GRAN FISH INDÚSTRIA E COMÉRCIO DE EMBARCAÇÕES LTDA</dd></div>
+        <div class="full"><dt>Nome fantasia</dt><dd>GRAN FISH INDÚSTRIA E COMÉRCIO DE EMBARCAÇÕES LTDA</dd></div>
+        <div><dt>CNPJ</dt><dd>59.593.605/0001-86</dd></div>
+        <div><dt>Inscrição estadual</dt><dd>51275170064</dd></div>
+        <div><dt>Endereço</dt><dd>Rua das Primaveras, 50</dd></div>
+        <div><dt>Bairro</dt><dd>Parque das Oliveiras</dd></div>
+        <div><dt>CEP</dt><dd>37970-000</dd></div>
+        <div><dt>Cidade / UF</dt><dd>Pratápolis / MG</dd></div>
+        <div><dt>Telefone</dt><dd>(35) 9 9726-4772</dd></div>
+        <div><dt>E-mail</dt><dd>contato@granfish.com.br · financeiro@granfish.com.br</dd></div>
+      </dl>
+    </section>
+
+    <form id="form" class="ficha" novalidate autocomplete="on">
+      <div id="aviso" class="aviso" role="status" hidden></div>
+
+      <section class="bloco">
+        <h2 class="sec"><span>01</span>Finalidade do cadastro</h2>
+        <div class="checks" id="finalidades">
+          <label><input type="checkbox" name="finalidades" value="Cliente"> Cliente</label>
+          <label><input type="checkbox" name="finalidades" value="Fornecedor"> Fornecedor</label>
+          <label><input type="checkbox" name="finalidades" value="Prestador de serviços"> Prestador de serviços</label>
+          <label><input type="checkbox" name="finalidades" value="Parceiro comercial"> Parceiro comercial</label>
+          <label><input type="checkbox" name="finalidades" value="Outro"> Outro</label>
+        </div>
+        <div class="grid" id="outro-wrap" hidden>
+          <label class="f full">Especificar<input name="finalidade_outro" maxlength="200"></label>
+        </div>
+        <p class="erro" data-erro="finalidades"></p>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>02</span>Tipo de cadastro</h2>
+        <div class="checks">
+          <label><input type="radio" name="tipo" value="Pessoa Física" required> Pessoa Física</label>
+          <label><input type="radio" name="tipo" value="Pessoa Jurídica"> Pessoa Jurídica</label>
+        </div>
+        <p class="erro" data-erro="tipo"></p>
+      </section>
+
+      <section class="bloco" id="sec-pf" hidden>
+        <h2 class="sec"><span>03</span>Dados da pessoa física</h2>
+        <div class="grid">
+          <label class="f full">Nome completo<input name="pf_nome" maxlength="200" autocomplete="name"></label>
+          <label class="f">CPF<input name="pf_cpf" inputmode="numeric" maxlength="14" data-mask="cpf" placeholder="000.000.000-00"></label>
+          <label class="f">RG ou outro documento de identificação<input name="pf_rg" maxlength="40"></label>
+          <label class="f">Data de nascimento<input type="date" name="pf_nascimento"></label>
+          <label class="f">Profissão<input name="pf_profissao" maxlength="80"></label>
+          <label class="f">Estado civil
+            <select name="pf_estado_civil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Viúvo(a)</option></select>
+          </label>
+        </div>
+      </section>
+
+      <section class="bloco" id="sec-pj" hidden>
+        <h2 class="sec"><span>04</span>Dados da pessoa jurídica</h2>
+        <div class="grid">
+          <label class="f full">Razão social<input name="pj_razao" maxlength="200" autocomplete="organization"></label>
+          <label class="f full">Nome fantasia<input name="pj_fantasia" maxlength="200"></label>
+          <label class="f">CNPJ<input name="pj_cnpj" inputmode="numeric" maxlength="18" data-mask="cnpj" placeholder="00.000.000/0000-00"></label>
+          <label class="f">Inscrição estadual (número ou isento)<input name="pj_ie" maxlength="30"></label>
+          <label class="f">Inscrição municipal (número ou não se aplica)<input name="pj_im" maxlength="30"></label>
+          <label class="f">Data de fundação<input type="date" name="pj_fundacao"></label>
+          <label class="f full">Atividade principal<textarea name="pj_atividade" rows="2" maxlength="400"></textarea></label>
+          <label class="f full">Nome do representante legal<input name="pj_rep_nome" maxlength="200"></label>
+          <label class="f">CPF do representante legal<input name="pj_rep_cpf" inputmode="numeric" maxlength="14" data-mask="cpf" placeholder="000.000.000-00"></label>
+          <label class="f">Cargo do representante legal<input name="pj_rep_cargo" maxlength="80"></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>05</span>Endereço</h2>
+        <div class="grid">
+          <label class="f full">Logradouro (rua, avenida, estrada etc.)<input name="end_logradouro" maxlength="200" autocomplete="address-line1"></label>
+          <label class="f">Número<input name="end_numero" maxlength="20"></label>
+          <label class="f">Complemento<input name="end_complemento" maxlength="80"></label>
+          <label class="f">Bairro<input name="end_bairro" maxlength="80"></label>
+          <label class="f">Cidade / UF<input name="end_cidade" maxlength="80" autocomplete="address-level2"></label>
+          <label class="f">CEP<input name="end_cep" inputmode="numeric" maxlength="9" data-mask="cep" placeholder="00000-000" autocomplete="postal-code"></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>06</span>Contatos</h2>
+        <div class="grid">
+          <label class="f">Telefone principal (com DDD)<input name="telefone" type="tel" inputmode="tel" maxlength="20" data-mask="tel" placeholder="(00) 00000-0000" autocomplete="tel" required></label>
+          <label class="f">Telefone alternativo (com DDD)<input name="telefone_alt" type="tel" inputmode="tel" maxlength="20" data-mask="tel" placeholder="(00) 00000-0000"></label>
+          <label class="f full">E-mail<input name="email" type="email" maxlength="200" autocomplete="email" required></label>
+          <label class="f">Site, se houver<input name="site" maxlength="200" placeholder="https://"></label>
+          <label class="f">Nome do contato responsável<input name="contato_nome" maxlength="200"></label>
+          <label class="f full">Cargo ou função<input name="contato_cargo" maxlength="80"></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>07</span>Dados comerciais e financeiros</h2>
+        <div class="grid">
+          <label class="f full">Ramo de atividade<input name="ramo" maxlength="200"></label>
+          <label class="f full">Produtos ou serviços de interesse / fornecidos<textarea name="produtos" rows="2" maxlength="600"></textarea></label>
+          <label class="f full">Condição de pagamento pretendida ou acordada<textarea name="pagamento" rows="2" maxlength="600"></textarea></label>
+          <label class="f">Limite de crédito solicitado, se aplicável (R$)<input name="limite_credito" inputmode="decimal" maxlength="20"></label>
+          <label class="f">Banco<input name="banco" maxlength="80"></label>
+          <label class="f">Agência<input name="agencia" maxlength="20"></label>
+          <label class="f">Conta<input name="conta" maxlength="30"></label>
+          <label class="f full">Chave Pix, se necessário<input name="pix" maxlength="120"></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>08</span>Referências comerciais <small>(se necessário)</small></h2>
+        <div class="grid">
+          <label class="f">Empresa / contato 1<input name="ref1_nome" maxlength="200"></label>
+          <label class="f">Telefone / e-mail<input name="ref1_contato" maxlength="200"></label>
+          <label class="f">Empresa / contato 2<input name="ref2_nome" maxlength="200"></label>
+          <label class="f">Telefone / e-mail<input name="ref2_contato" maxlength="200"></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2 class="sec"><span>09</span>Declaração e ciência sobre dados pessoais</h2>
+        <p class="decl">Declaro que as informações fornecidas nesta ficha são verdadeiras, completas e atualizadas, responsabilizando-me pela comunicação de eventuais alterações.</p>
+        <p class="decl">Declaro estar ciente de que os dados informados serão tratados pela Gran Fish Indústria e Comércio de Embarcações Ltda exclusivamente para as finalidades relacionadas ao cadastro de clientes, fornecedores, prestadores de serviços e parceiros comerciais, incluindo contato, execução de contratos, emissão de documentos fiscais, cobrança, pagamento, cumprimento de obrigações legais e demais atividades legítimas vinculadas à relação mantida entre as partes. Para dúvidas ou solicitações sobre seus dados, escreva para contato@granfish.com.br.</p>
+        <div class="grid">
+          <label class="f">Local (cidade)<input name="assin_local" maxlength="80"></label>
+          <label class="f">Nome completo do titular ou representante legal<input name="assin_nome" maxlength="200"></label>
+          <label class="f">CPF do signatário<input name="assin_cpf" inputmode="numeric" maxlength="14" data-mask="cpf" placeholder="000.000.000-00"></label>
+        </div>
+        <label class="aceite"><input type="checkbox" name="aceite_lgpd" required> Li e declaro estar de acordo com os termos acima.</label>
+        <p class="erro" data-erro="aceite_lgpd"></p>
+      </section>
+
+      <div class="enviar">
+        <button class="button button--copper" type="submit" id="enviar">Enviar cadastro</button>
+        <p class="nota" id="modo-nota"></p>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer class="rodape">
+  <span><strong>Gran Fish Indústria e Comércio de Embarcações LTDA</strong> · CNPJ 59.593.605/0001-86</span>
+  <span>Rua das Primaveras, 50, Pratápolis - MG, CEP 37.970-000 · <a href="cadastros-admin.html">Área da equipe</a></span>
+</footer>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/cadastro.js" defer></script>
+</body>
+</html>

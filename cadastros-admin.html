@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self';">
+<title>Cadastros recebidos · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
+  <nav class="topnav" aria-label="Navegação principal">
+    <a href="index.html">Início</a>
+    <a href="cadastro.html">Cadastro</a>
+    <a href="cadastros-admin.html" aria-current="page">Cadastros recebidos</a>
+  </nav>
+  <a class="button" href="cadastro.html">← Ficha cadastral</a>
+</header>
+
+<main class="wrap" style="padding:36px 0 70px">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Cadastros recebidos</h1>
+  <p id="modo" style="color:var(--muted);margin:0 0 22px"></p>
+
+  <section id="login" class="card login" hidden>
+    <h2 class="card-title">Acesso da equipe</h2>
+    <form id="login-form">
+      <label class="f">E-mail<input type="email" name="email" required autocomplete="username"></label>
+      <label class="f">Senha<input type="password" name="senha" required autocomplete="current-password"></label>
+      <p class="erro" id="login-erro"></p>
+      <button class="button button--copper" type="submit">Entrar</button>
+    </form>
+  </section>
+
+  <section id="painel" hidden>
+    <div class="admin-bar">
+      <input type="search" id="filtro" placeholder="Buscar por nome, documento ou e-mail" aria-label="Buscar">
+      <div style="display:flex;gap:10px">
+        <button class="button" type="button" id="csv">Exportar CSV</button>
+        <button class="button button--copper" type="button" id="sair">Sair</button>
+      </div>
+    </div>
+    <div class="card tabela-wrap">
+      <table class="lista">
+        <thead><tr><th>Data</th><th>Tipo</th><th>Nome / Razão social</th><th>Documento</th><th>Contato</th><th>Finalidade</th><th>Status</th><th></th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table>
+    </div>
+    <p id="vazio" class="nota" hidden style="margin-top:16px">Nenhum cadastro encontrado.</p>
+  </section>
+</main>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/cadastros-admin.js" defer></script>
+</body>
+</html>
