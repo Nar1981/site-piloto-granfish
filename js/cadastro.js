@@ -135,7 +135,6 @@
       method: 'POST',
       headers: {
         apikey: cfg.supabaseAnonKey,
-        Authorization: 'Bearer ' + cfg.supabaseAnonKey,
         'Content-Type': 'application/json',
         Prefer: 'return=minimal'
       },
