@@ -11,6 +11,7 @@
   const STATUS = ['Pendente', 'Aprovado', 'Atualização necessária'];
   const $ = (id) => document.getElementById(id);
   let rows = [];
+  let statusFiltro = '';
 
   // ── Sessão ──
   const token = () => {
@@ -81,7 +82,12 @@
     const q = $('filtro').value.trim().toLowerCase();
     const body = $('linhas');
     body.replaceChildren();
-    const list = rows.filter((r) => !q || [r.nome, r.documento, r.email].join(' ').toLowerCase().includes(q));
+    $('n-total').textContent = rows.length;
+    $('n-pend').textContent = rows.filter((r) => r.status === 'Pendente').length;
+    $('n-apr').textContent = rows.filter((r) => r.status === 'Aprovado').length;
+    $('n-atu').textContent = rows.filter((r) => r.status === 'Atualização necessária').length;
+    document.querySelectorAll('#stats .stat').forEach((b) => b.classList.toggle('on', b.dataset.f === statusFiltro));
+    const list = rows.filter((r) => (!statusFiltro || r.status === statusFiltro) && (!q || [r.nome, r.documento, r.email].join(' ').toLowerCase().includes(q)));
     $('vazio').hidden = list.length > 0;
     for (const r of list) {
       const tr = document.createElement('tr');
@@ -99,19 +105,50 @@
         o.selected = s === r.status;
         sel.appendChild(o);
       }
+      sel.addEventListener('change', async () => {
+        sel.disabled = true;
+        try {
+          await setStatus(r.id, sel.value);
+          r.status = sel.value;
+          if (window.GFToast) GFToast('Status salvo: ' + sel.value);
+          render();
+        } catch (e) {
+          sel.value = r.status;
+          sel.disabled = false;
+          if (window.GFToast) GFToast('Não foi possível salvar.', true);
+        }
+      });
       const tdS = document.createElement('td');
       tdS.appendChild(sel);
       tr.appendChild(tdS);
       const tdA = document.createElement('td');
       const b = document.createElement('button');
       b.type = 'button';
-      b.className = 'acao';
-      b.textContent = 'Salvar';
-      b.addEventListener('click', async () => {
-        b.disabled = true;
-        try { await setStatus(r.id, sel.value); r.status = sel.value; b.textContent = 'Salvo ✓'; }
-        catch (e) { b.textContent = 'Erro'; }
-        setTimeout(() => { b.textContent = 'Salvar'; b.disabled = false; }, 1400);
+      b.className = 'ver';
+      b.textContent = 'Detalhes';
+      let det = null;
+      b.addEventListener('click', () => {
+        if (det) { det.remove(); det = null; b.textContent = 'Detalhes'; return; }
+        det = document.createElement('tr');
+        det.className = 'det';
+        const td = document.createElement('td');
+        td.colSpan = 8;
+        const dl = document.createElement('dl');
+        const itens = Object.entries(r.dados || {}).filter(([, v]) => v !== '' && v != null);
+        if (!itens.length) itens.push(['Detalhes', 'Sem dados adicionais.']);
+        for (const [k, v] of itens) {
+          const box = document.createElement('div');
+          const dt = document.createElement('dt');
+          dt.textContent = k.replace(/_/g, ' ');
+          const dd = document.createElement('dd');
+          dd.textContent = Array.isArray(v) ? v.join(', ') : String(v);
+          box.append(dt, dd);
+          dl.appendChild(box);
+        }
+        td.appendChild(dl);
+        det.appendChild(td);
+        tr.after(det);
+        b.textContent = 'Ocultar';
       });
       tdA.appendChild(b);
       tr.appendChild(tdA);
@@ -146,6 +183,7 @@
     }
     $('login').hidden = true;
     $('painel').hidden = false;
+    if (live) $('modo').textContent = 'Acompanhe e organize os cadastros recebidos pelo site.';
     render();
     resetIdle();
   }
@@ -157,7 +195,7 @@
 
   $('filtro').addEventListener('input', render);
   $('csv').addEventListener('click', csv);
-  $('sair').addEventListener('click', () => (live ? logout() : (window.location.href = 'cadastro.html')));
+  document.querySelectorAll('#stats .stat').forEach((b) => b.addEventListener('click', () => { statusFiltro = b.dataset.f; render(); }));
   ['click', 'keydown', 'mousemove'].forEach((ev) => document.addEventListener(ev, resetIdle, { passive: true }));
 
   $('login-form').addEventListener('submit', async (e) => {
@@ -181,7 +219,9 @@
     const j = await r.json();
     sessionStorage.setItem(TOKEN_KEY, JSON.stringify({ t: j.access_token, exp: Date.now() + Math.min(j.expires_in || 3600, 3600) * 1000 }));
     f.senha.value = '';
-    showPanel();
+    const next = new URLSearchParams(location.search).get('next');
+    const destino = next && /^[a-z0-9-]+\.html$/.test(next) && next !== 'cadastros-admin.html' ? next : 'painel-interno.html';
+    location.href = destino;
   });
 
   if (live) {

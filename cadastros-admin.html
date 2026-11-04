@@ -10,22 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/cadastro.css">
+<link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="index.html" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
-  <nav class="topnav" aria-label="Navegação principal">
-    <a href="index.html">Início</a>
-    <a href="cadastro.html">Cadastro</a>
-    <a href="painel-interno.html">Painel</a>
-    <a href="cadastros-admin.html" aria-current="page">Cadastros recebidos</a>
-    <a href="usuarios-admin.html">Administradores</a>
-    <a href="instagram-admin.html">Instagram</a>
-    <a href="personalizar-admin.html">Personalizar</a>
-  </nav>
-  <a class="button" href="cadastro.html">← Ficha cadastral</a>
-</header>
-
 <main class="wrap" style="padding:36px 0 70px">
   <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Cadastros recebidos</h1>
   <p id="modo" style="color:var(--muted);margin:0 0 22px"></p>
@@ -41,11 +28,16 @@
   </section>
 
   <section id="painel" hidden>
+    <div class="stats" id="stats">
+      <button type="button" class="stat" data-f=""><b id="n-total">0</b><span>Total</span></button>
+      <button type="button" class="stat stat--pend" data-f="Pendente"><b id="n-pend">0</b><span>Pendentes</span></button>
+      <button type="button" class="stat" data-f="Aprovado"><b id="n-apr">0</b><span>Aprovados</span></button>
+      <button type="button" class="stat" data-f="Atualização necessária"><b id="n-atu">0</b><span>Atualizar</span></button>
+    </div>
     <div class="admin-bar">
       <input type="search" id="filtro" placeholder="Buscar por nome, documento ou e-mail" aria-label="Buscar">
       <div style="display:flex;gap:10px">
         <button class="button" type="button" id="csv">Exportar CSV</button>
-        <button class="button button--copper" type="button" id="sair">Sair</button>
       </div>
     </div>
     <div class="card tabela-wrap">
@@ -61,5 +53,6 @@
 <script src="js/cadastro-config.js"></script>
 <script src="js/cadastros-admin.js" defer></script>
 <script src="js/site-campos.js"></script><script src="js/site-personalizar.js" defer></script>
+<script src="js/admin-shell.js" defer></script>
 </body>
 </html>
