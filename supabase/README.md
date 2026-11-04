@@ -27,3 +27,5 @@ Cadastros ficam em `cadastros-admin.html` (login da equipe, filtro, alteração 
 - O painel exige login, expira a sessão em 1 h ou 15 min sem atividade, bloqueia por 5 min após 5 erros e só funciona com o banco conectado (fora do localhost).
 
 Execute tambem `instagram.sql` (tabelas das publicacoes do Instagram exibidas no site, gerenciadas em `instagram-admin.html`).
+
+Execute tambem `conteudo.sql` (textos, cores e configuracoes do site, editados em `personalizar-admin.html`).
