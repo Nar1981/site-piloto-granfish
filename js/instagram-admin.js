@@ -61,27 +61,28 @@
       const ordem = document.createElement('input');
       ordem.type = 'number'; ordem.value = p.ordem; ordem.style.width = '70px';
       ordem.setAttribute('aria-label', 'Ordem');
-      ordem.addEventListener('change', async () => {
-        try { await api('instagram_posts?id=eq.' + p.id, 'PATCH', { ordem: parseInt(ordem.value, 10) || 0 }, 'return=minimal'); }
-        catch (e) { alert(msg(e)); }
-      });
-      const mover = async (dir) => {
-        const j = idx + dir;
-        if (j < 0 || j >= lista.length) return;
+      const mover = async (destino) => {
+        const j = Math.min(Math.max(destino, 0), lista.length - 1);
+        if (j === idx) { ordem.value = p.ordem; return; }
         const novo = lista.slice();
-        [novo[idx], novo[j]] = [novo[j], novo[idx]];
+        novo.splice(j, 0, novo.splice(idx, 1)[0]);
         try {
-          // renumera em sequência para evitar ordens repetidas
+          // renumera todas em sequência (1, 2, 3…) para evitar ordens repetidas
           await Promise.all(novo.map((x, k) => (x.ordem === k + 1 ? null :
             api('instagram_posts?id=eq.' + x.id, 'PATCH', { ordem: k + 1 }, 'return=minimal'))));
-          await carregarPosts();
         } catch (e) { alert(msg(e)); }
+        await carregarPosts();
       };
+      ordem.addEventListener('change', () => {
+        const n = parseInt(ordem.value, 10);
+        if (isNaN(n)) { ordem.value = p.ordem; return; }
+        mover(n - 1);
+      });
       const setaBtn = (txt, rotulo, dir, off) => {
         const bt = document.createElement('button');
         bt.type = 'button'; bt.className = 'acao'; bt.textContent = txt;
         bt.setAttribute('aria-label', rotulo); bt.title = rotulo; bt.disabled = off;
-        bt.addEventListener('click', () => mover(dir));
+        bt.addEventListener('click', () => mover(idx + dir));
         return bt;
       };
       td2.append(ordem, ' ', setaBtn('↑', 'Subir', -1, idx === 0), ' ', setaBtn('↓', 'Descer', 1, idx === lista.length - 1));
