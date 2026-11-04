@@ -14,6 +14,8 @@ window.GF_CADASTRO = {
 };
 ```
 
+Depois, execute também `admins.sql`: cria as funções que a página `usuarios-admin.html` usa para listar, criar e remover administradores (apenas a equipe autenticada; senha mínima de 12 caracteres com maiúscula, minúscula e número; ninguém remove a si mesmo).
+
 A chave `anon` é pública por design; a segurança vem das políticas RLS do `schema.sql`. Nunca use a chave `service_role` no site.
 
 Cadastros ficam em `cadastros-admin.html` (login da equipe, filtro, alteração de status e exportação CSV).

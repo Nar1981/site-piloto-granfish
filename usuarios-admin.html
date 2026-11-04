@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self';">
+<title>Administradores · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
+  <nav class="topnav" aria-label="Navegação interna">
+    <a href="cadastros-admin.html">Cadastros recebidos</a>
+    <a href="usuarios-admin.html" aria-current="page">Administradores</a>
+  </nav>
+  <a class="button" href="cadastros-admin.html">← Cadastros</a>
+</header>
+
+<main class="wrap" style="padding:36px 0 70px">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Administradores</h1>
+  <p id="modo" style="color:var(--muted);margin:0 0 22px">Gerencie quem pode acessar os cadastros internos.</p>
+
+  <section id="painel" hidden>
+    <div class="card" style="margin-bottom:22px">
+      <h2 class="card-title">Novo administrador</h2>
+      <form id="novo-form" autocomplete="off">
+        <label class="f">E-mail<input type="email" name="email" required autocomplete="off"></label>
+        <label class="f">Senha inicial<input type="password" name="senha" required minlength="12" autocomplete="new-password"></label>
+        <p class="nota">Mínimo de 12 caracteres, com letra maiúscula, minúscula e número. Informe a senha à pessoa por um canal seguro e peça para trocá-la.</p>
+        <p class="erro" id="novo-erro"></p>
+        <p id="novo-ok" class="nota" style="color:var(--teal)"></p>
+        <button class="button button--copper" type="submit">Criar administrador</button>
+      </form>
+    </div>
+
+    <div class="card tabela-wrap">
+      <table class="lista">
+        <thead><tr><th>E-mail</th><th>Criado em</th><th>Último acesso</th><th></th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="negado" class="card" hidden>
+    <h2 class="card-title">Acesso restrito</h2>
+    <p>Entre primeiro na área interna para gerenciar administradores.</p>
+    <a class="button button--copper" href="cadastros-admin.html">Entrar</a>
+  </section>
+</main>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/usuarios-admin.js" defer></script>
+</body>
+</html>
