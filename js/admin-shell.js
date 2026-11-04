@@ -9,6 +9,7 @@
     cadastros: '<path d="M8 4h8l4 4v12H8z"/><path d="M5 8v12h11"/><path d="M12 12h5M12 16h5"/>',
     instagram: '<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".6"/>',
     personalizar: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>',
+    site: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/>',
     equipe: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6s6 2.6 6 6"/><path d="M16 5.2a3 3 0 010 5.6M18 14.4c1.8.8 3 2.6 3 5.6"/>'
   };
   const ITENS = [
@@ -92,6 +93,15 @@
     tabs.className = 'adm-tabs';
     tabs.setAttribute('aria-label', 'Menu inferior');
     ITENS.forEach(([h, r, i]) => tabs.appendChild(link(h, r, i)));
+    tabs.appendChild(link('index.html?pular', 'Ver site', 'site'));
+
+    const foot = document.createElement('footer');
+    foot.className = 'adm-foot';
+    const ver = document.createElement('a');
+    ver.className = 'button button--copper';
+    ver.href = 'index.html?pular';
+    ver.textContent = 'Ver o site ↗';
+    foot.appendChild(ver);
 
     const toast = document.createElement('div');
     toast.className = 'adm-toast';
@@ -99,7 +109,7 @@
     toast.setAttribute('aria-live', 'polite');
 
     document.body.prepend(top);
-    document.body.append(tabs, toast);
+    document.body.append(foot, tabs, toast);
 
     let t;
     window.GFToast = (texto, erro) => {
