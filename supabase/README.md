@@ -17,3 +17,9 @@ window.GF_CADASTRO = {
 A chave `anon` é pública por design; a segurança vem das políticas RLS do `schema.sql`. Nunca use a chave `service_role` no site.
 
 Cadastros ficam em `cadastros-admin.html` (login da equipe, filtro, alteração de status e exportação CSV).
+
+## Acesso interno e segurança
+
+- Depois de criar o usuário, autorize-o rodando no SQL Editor: `insert into public.equipe (user_id) select id from auth.users where email = 'SEU_EMAIL';`. Só quem está em `public.equipe` lê ou altera cadastros (RLS).
+- Ative MFA e use senha forte em **Authentication**; mantenha o cadastro público desativado.
+- O painel exige login, expira a sessão em 1 h ou 15 min sem atividade, bloqueia por 5 min após 5 erros e só funciona com o banco conectado (fora do localhost).

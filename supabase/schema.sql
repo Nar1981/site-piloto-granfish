@@ -25,14 +25,29 @@ create policy "visitante envia cadastro" on public.cadastros
   for insert to anon
   with check (status = 'Pendente' and responsavel is null and observacoes is null and aceite_lgpd);
 
--- Equipe autenticada (Supabase Auth) lê e atualiza.
+-- Somente usuários listados em public.equipe acessam os dados, mesmo que alguém consiga criar uma conta.
+create table if not exists public.equipe (
+  user_id uuid primary key references auth.users(id) on delete cascade
+);
+alter table public.equipe enable row level security;
+revoke all on public.equipe from anon, authenticated;
+
+create or replace function public.eh_equipe() returns boolean
+language sql security definer set search_path = public stable
+as $$ select exists (select 1 from public.equipe where user_id = auth.uid()) $$;
+revoke all on function public.eh_equipe() from public, anon;
+grant execute on function public.eh_equipe() to authenticated;
+
 drop policy if exists "equipe le cadastros" on public.cadastros;
 create policy "equipe le cadastros" on public.cadastros
-  for select to authenticated using (true);
+  for select to authenticated using (public.eh_equipe());
 
 drop policy if exists "equipe atualiza cadastros" on public.cadastros;
 create policy "equipe atualiza cadastros" on public.cadastros
-  for update to authenticated using (true) with check (true);
+  for update to authenticated using (public.eh_equipe()) with check (public.eh_equipe());
 
 grant insert on public.cadastros to anon;
 grant select, update on public.cadastros to authenticated;
+
+-- Depois de criar o usuário em Authentication > Users, autorize-o:
+-- insert into public.equipe (user_id) select id from auth.users where email = 'SEU_EMAIL_AQUI';

@@ -1,11 +1,41 @@
 (function () {
   const cfg = window.GF_CADASTRO || {};
   const live = Boolean(cfg.supabaseUrl && cfg.supabaseAnonKey);
+  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const IDLE_MS = 15 * 60 * 1000;
+  const MAX_TRIES = 5;
+  const LOCK_MS = 5 * 60 * 1000;
+  let idleTimer;
   const LOCAL_KEY = 'gf_cadastros_demo';
   const TOKEN_KEY = 'gf_admin_token';
   const STATUS = ['Pendente', 'Aprovado', 'Atualização necessária'];
   const $ = (id) => document.getElementById(id);
   let rows = [];
+
+  // ── Sessão ──
+  const token = () => {
+    const s = JSON.parse(sessionStorage.getItem(TOKEN_KEY) || 'null');
+    if (!s || s.exp < Date.now()) { sessionStorage.removeItem(TOKEN_KEY); return null; }
+    return s.t;
+  };
+
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    if (!live || $('painel').hidden) return;
+    idleTimer = setTimeout(() => logout('Sessão encerrada por inatividade.'), IDLE_MS);
+  }
+
+  async function logout(msg) {
+    const t = token();
+    sessionStorage.removeItem(TOKEN_KEY);
+    rows = [];
+    $('linhas').replaceChildren();
+    if (t) fetch(cfg.supabaseUrl + '/auth/v1/logout', { method: 'POST', headers: headers(t) }).catch(() => {});
+    showLogin();
+    $('login-erro').textContent = msg || '';
+  }
+
+  const lockLeft = () => Math.max(0, Number(localStorage.getItem('gf_admin_lock') || 0) - Date.now());
 
   // ── Dados ──
   const headers = (token) => ({
@@ -16,7 +46,8 @@
 
   async function load() {
     if (!live) return JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
-    const r = await fetch(cfg.supabaseUrl + '/rest/v1/cadastros?select=*&order=created_at.desc', { headers: headers(sessionStorage.getItem(TOKEN_KEY)) });
+    if (!token()) throw new Error('auth');
+    const r = await fetch(cfg.supabaseUrl + '/rest/v1/cadastros?select=*&order=created_at.desc', { headers: headers(token()) });
     if (r.status === 401 || r.status === 403) throw new Error('auth');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
@@ -32,7 +63,7 @@
     }
     const r = await fetch(cfg.supabaseUrl + '/rest/v1/cadastros?id=eq.' + encodeURIComponent(id), {
       method: 'PATCH',
-      headers: { ...headers(sessionStorage.getItem(TOKEN_KEY)), Prefer: 'return=minimal' },
+      headers: { ...headers(token()), Prefer: 'return=minimal' },
       body: JSON.stringify({ status })
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -109,13 +140,14 @@
     try {
       rows = await load();
     } catch (e) {
-      if (e.message === 'auth') { sessionStorage.removeItem(TOKEN_KEY); return showLogin(); }
+      if (e.message === 'auth') return logout('Sessão expirada. Entre novamente.');
       $('modo').textContent = 'Não foi possível carregar os cadastros.';
       return;
     }
     $('login').hidden = true;
     $('painel').hidden = false;
     render();
+    resetIdle();
   }
 
   function showLogin() {
@@ -125,26 +157,38 @@
 
   $('filtro').addEventListener('input', render);
   $('csv').addEventListener('click', csv);
-  $('sair').addEventListener('click', () => { sessionStorage.removeItem(TOKEN_KEY); live ? showLogin() : (window.location.href = 'cadastro.html'); });
+  $('sair').addEventListener('click', () => (live ? logout() : (window.location.href = 'cadastro.html')));
+  ['click', 'keydown', 'mousemove'].forEach((ev) => document.addEventListener(ev, resetIdle, { passive: true }));
 
   $('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     $('login-erro').textContent = '';
     const f = e.target.elements;
+    if (lockLeft()) { $('login-erro').textContent = 'Muitas tentativas. Aguarde ' + Math.ceil(lockLeft() / 60000) + ' min.'; return; }
     const r = await fetch(cfg.supabaseUrl + '/auth/v1/token?grant_type=password', {
       method: 'POST',
       headers: { apikey: cfg.supabaseAnonKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: f.email.value, password: f.senha.value })
-    });
-    if (!r.ok) { $('login-erro').textContent = 'E-mail ou senha inválidos.'; return; }
-    sessionStorage.setItem(TOKEN_KEY, (await r.json()).access_token);
+    }).catch(() => ({ ok: false }));
+    if (!r.ok) {
+      const n = Number(sessionStorage.getItem('gf_admin_fail') || 0) + 1;
+      sessionStorage.setItem('gf_admin_fail', n);
+      if (n >= MAX_TRIES) { localStorage.setItem('gf_admin_lock', Date.now() + LOCK_MS); sessionStorage.removeItem('gf_admin_fail'); }
+      $('login-erro').textContent = 'E-mail ou senha inválidos.';
+      return;
+    }
+    sessionStorage.removeItem('gf_admin_fail');
+    const j = await r.json();
+    sessionStorage.setItem(TOKEN_KEY, JSON.stringify({ t: j.access_token, exp: Date.now() + Math.min(j.expires_in || 3600, 3600) * 1000 }));
     f.senha.value = '';
     showPanel();
   });
 
   if (live) {
     $('modo').textContent = 'Banco de dados conectado. Entre com a conta da equipe para ver os cadastros.';
-    sessionStorage.getItem(TOKEN_KEY) ? showPanel() : showLogin();
+    token() ? showPanel() : showLogin();
+  } else if (!local) {
+    $('modo').textContent = 'Acesso indisponível: o banco de dados ainda não foi conectado. Veja supabase/README.md.';
   } else {
     $('modo').textContent = 'Modo demonstração: mostrando apenas cadastros salvos neste navegador. Conecte o banco de dados (veja supabase/README.md) para receber cadastros de todos os visitantes.';
     showPanel();
