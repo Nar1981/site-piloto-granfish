@@ -33,11 +33,7 @@
       const nodes = [];
       if (c && c.modo === 'automatico' && /^[A-Za-z0-9_.]{1,30}$/.test(c.perfil || '')) {
         const perfil = 'https://www.instagram.com/' + c.perfil + '/';
-        const n = card(perfil + 'embed/', perfil, 'Perfil Gran Fish no Instagram', '640px');
-        n.style.gridColumn = '1 / -1';
-        n.style.maxWidth = '540px';
-        n.style.margin = '0 auto';
-        nodes.push(n);
+        nodes.push(card(perfil + 'embed/', perfil, 'Perfil Gran Fish no Instagram'));
       } else {
         posts.forEach((p, i) => {
           if (/^https:\/\/www\.instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/$/.test(p.url)) {

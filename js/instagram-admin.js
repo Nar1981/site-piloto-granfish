@@ -45,7 +45,7 @@
   async function carregarPosts() {
     const lista = await api('instagram_posts?select=id,url,ativo,ordem&order=ordem.asc,id.asc');
     $('linhas').replaceChildren();
-    for (const p of lista) {
+    lista.forEach((p, idx) => {
       const tr = document.createElement('tr');
       const td1 = document.createElement('td');
       const a = document.createElement('a');
@@ -61,7 +61,26 @@
         try { await api('instagram_posts?id=eq.' + p.id, 'PATCH', { ordem: parseInt(ordem.value, 10) || 0 }, 'return=minimal'); }
         catch (e) { alert(msg(e)); }
       });
-      td2.appendChild(ordem);
+      const mover = async (dir) => {
+        const j = idx + dir;
+        if (j < 0 || j >= lista.length) return;
+        const novo = lista.slice();
+        [novo[idx], novo[j]] = [novo[j], novo[idx]];
+        try {
+          // renumera em sequência para evitar ordens repetidas
+          await Promise.all(novo.map((x, k) => (x.ordem === k + 1 ? null :
+            api('instagram_posts?id=eq.' + x.id, 'PATCH', { ordem: k + 1 }, 'return=minimal'))));
+          await carregarPosts();
+        } catch (e) { alert(msg(e)); }
+      };
+      const setaBtn = (txt, rotulo, dir, off) => {
+        const bt = document.createElement('button');
+        bt.type = 'button'; bt.className = 'acao'; bt.textContent = txt;
+        bt.setAttribute('aria-label', rotulo); bt.title = rotulo; bt.disabled = off;
+        bt.addEventListener('click', () => mover(dir));
+        return bt;
+      };
+      td2.append(ordem, ' ', setaBtn('↑', 'Subir', -1, idx === 0), ' ', setaBtn('↓', 'Descer', 1, idx === lista.length - 1));
 
       const td3 = document.createElement('td');
       const chk = document.createElement('input');
@@ -85,7 +104,7 @@
 
       tr.append(td1, td2, td3, td4);
       $('linhas').appendChild(tr);
-    }
+    });
   }
 
   $('modo-form').addEventListener('submit', async (e) => {
