@@ -406,14 +406,8 @@
 
   // Catálogo de embarcações (fichas técnicas e itens de série)
   let barcos = null;
-  let catPublico = false;
-  let statusPedido = false;
+  let catPublico = true;
   function carregarBarcos() {
-    if (!statusPedido && cfg.supabaseUrl) {
-      statusPedido = true;
-      fetch(cfg.supabaseUrl + '/rest/v1/rpc/catalogo_publico_status', { method: 'POST', headers: { apikey: cfg.supabaseAnonKey || '', 'Content-Type': 'application/json' }, body: '{}' })
-        .then((r) => r.json()).then((v) => { catPublico = v === true; }).catch(() => {});
-    }
     if (barcos) return Promise.resolve(barcos);
     return new Promise((ok) => {
       if (window.GF_CATALOGO) return ok((barcos = window.GF_CATALOGO));
