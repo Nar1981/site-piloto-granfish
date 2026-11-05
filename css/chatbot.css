@@ -1,4 +1,4 @@
-.gfc { position: fixed; left: 18px; bottom: 18px; z-index: 80; font-family: "DM Sans", system-ui, sans-serif; }
+.gfc { position: fixed; left: 18px; bottom: 18px; z-index: 2147483000; font-family: "DM Sans", system-ui, sans-serif; }
 .gfc-fab { position: relative; display: block; width: 68px; height: 68px; padding: 0; border: 3px solid #fff; border-radius: 50%; overflow: visible; background: #0c7c7a; box-shadow: 0 10px 28px rgba(0,0,0,.35); cursor: pointer; animation: gfc-pulso 2.6s ease-out infinite; transition: transform .2s; }
 .gfc-fab:hover { transform: scale(1.06); }
 .gfc-fab img { display: block; width: 100%; height: 100%; border-radius: 50%; }
