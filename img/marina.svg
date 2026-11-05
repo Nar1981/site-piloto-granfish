@@ -10,8 +10,12 @@
     <path d="M24 50c-2-22 10-32 24-32s26 10 24 32c-1 14 3 22 6 28H18c3-6 7-14 6-28z" fill="#5a3320"/>
     <!-- corpo -->
     <path d="M14 96c2-16 14-24 34-24s32 8 34 24z" fill="#0b2a36"/>
-    <path d="M38 73l10 12 10-12z" fill="#fff"/>
-    <path d="M44 85l4 5 4-5-4-4z" fill="#b8693a"/>
+    <!-- gola polo e logo Gran Fish no uniforme -->
+    <path d="M38 73l10 9 10-9-3-2-7 6-7-6z" fill="#17a7a3"/>
+    <g fill="#67d9fa" transform="translate(37.4 83.2) scale(.0105) translate(-66 -48)">
+      <path d="M200 48H1958V135L340 131C230 135 190 210 200 300C210 420 270 480 336 500H950V361H783L737 275H1042V613H270C100 613 66 430 68 215C70 120 130 70 200 48Z"/>
+      <path d="M1138 220H1216V275H1857V353H1216V613H1138Z"/>
+    </g>
     <!-- pescoço -->
     <path d="M42 62h12v12c0 3-12 3-12 0z" fill="#e9b894"/>
     <!-- rosto -->
@@ -25,12 +29,5 @@
     <path d="M42 56q6 5.5 12 0" stroke="#b5483f" stroke-width="2" fill="none" stroke-linecap="round"/>
     <circle cx="37" cy="53" r="3" fill="#ee9a8a" opacity=".5"/>
     <circle cx="59" cy="53" r="3" fill="#ee9a8a" opacity=".5"/>
-    <!-- quepe de capitã -->
-    <path d="M28 30c0-12 9-18 20-18s20 6 20 18z" fill="#fff"/>
-    <rect x="27" y="27" width="42" height="7" rx="2" fill="#0b2a36"/>
-    <path d="M24 35c8 3 40 3 48 0-2 4-10 6-24 6s-22-2-24-6z" fill="#071d26"/>
-    <g stroke="#e0a36f" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="48" cy="19.5" r="1.8"/><path d="M48 21.5v8M44.5 24h7M43.5 28c1 2 8 2 9 0"/>
-    </g>
   </g>
 </svg>
