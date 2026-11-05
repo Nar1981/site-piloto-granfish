@@ -41,3 +41,5 @@ O chat (`js/chatbot.js`) chama a Edge Function `supabase/functions/chat`, que gu
 4. Publique a função: `supabase functions deploy chat --no-verify-jwt`.
 
 Opcional: `GEMINI_MODEL` troca o modelo (padrão `gemini-2.5-flash`). A função limita 8 mensagens por minuto por IP e 12 mensagens de histórico. Ajuste o texto de `SISTEMA` em `index.ts` para ensinar novos detalhes do estaleiro (modelos, prazos, políticas).
+
+Execute tambem `catalogo-publico.sql` (libera o catalogo de embarcacoes sem login; a equipe liga/desliga em `catalogo-admin.html` e fica registrado quem liberou).

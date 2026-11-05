@@ -5,9 +5,68 @@
     s = JSON.parse(sessionStorage.getItem('gf_admin_token') || 'null');
     if (s && s.exp <= Date.now()) s = null;
   } catch (e) {}
-  document.getElementById(s ? 'painel' : 'negado').hidden = false;
-  if (!s) return;
+  const publico = document.body.hasAttribute('data-publico');
+  const cfg = window.GF_CADASTRO || {};
+  const mostrar = (ok) => { document.getElementById(ok ? 'painel' : 'negado').hidden = false; };
+  if (publico) {
+    fetch(cfg.supabaseUrl + '/rest/v1/rpc/catalogo_publico_status', {
+      method: 'POST',
+      headers: { apikey: cfg.supabaseAnonKey, 'Content-Type': 'application/json' },
+      body: '{}'
+    }).then((r) => r.json()).then((ok) => { mostrar(ok === true); if (ok === true) iniciar(); })
+      .catch(() => mostrar(false));
+  } else {
+    mostrar(!!s);
+    if (s) { iniciar(); acessoPublico(); }
+  }
 
+  function acessoPublico() {
+    const caixa = document.getElementById('acesso-publico');
+    if (!caixa || !cfg.supabaseUrl) return;
+    caixa.hidden = false;
+    const H = { apikey: cfg.supabaseAnonKey, Authorization: 'Bearer ' + s.t, 'Content-Type': 'application/json' };
+    const base = cfg.supabaseUrl + '/rest/v1/';
+    const estado = document.getElementById('ap-estado');
+    const btn = document.getElementById('ap-btn');
+    const lista = document.getElementById('ap-log');
+    const quando = (d) => new Date(d).toLocaleString('pt-BR');
+    let ativo = false;
+    async function carregar() {
+      try {
+        const [c, l] = await Promise.all([
+          fetch(base + 'catalogo_publico_config?select=ativo,alterado_por,alterado_em&id=eq.1', { headers: H }).then((r) => r.json()),
+          fetch(base + 'catalogo_publico_log?select=acao,por,em&order=em.desc&limit=10', { headers: H }).then((r) => r.json())
+        ]);
+        if (!Array.isArray(c) || !c.length) throw new Error('sem tabela');
+        ativo = !!c[0].ativo;
+        estado.textContent = ativo
+          ? 'Liberado para qualquer visitante, sem senha. Liberado por ' + (c[0].alterado_por || '—') + ' em ' + quando(c[0].alterado_em) + '.'
+          : 'Bloqueado: só a equipe logada vê o catálogo.' + (c[0].alterado_por ? ' Última alteração por ' + c[0].alterado_por + ' em ' + quando(c[0].alterado_em) + '.' : '');
+        btn.textContent = ativo ? 'Bloquear acesso público' : 'Liberar acesso público';
+        btn.disabled = false;
+        lista.textContent = '';
+        (Array.isArray(l) ? l : []).forEach((x) => {
+          const li = document.createElement('li');
+          li.textContent = quando(x.em) + ' · ' + (x.acao === 'liberado' ? 'Liberado' : 'Bloqueado') + ' por ' + x.por;
+          lista.appendChild(li);
+        });
+      } catch (e) {
+        estado.textContent = 'Não foi possível carregar. Rode supabase/catalogo-publico.sql no banco.';
+        btn.disabled = true;
+      }
+    }
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try {
+        const r = await fetch(base + 'rpc/definir_catalogo_publico', { method: 'POST', headers: H, body: JSON.stringify({ p_ativo: !ativo }) });
+        if (!r.ok) throw new Error();
+      } catch (e) { estado.textContent = 'Erro ao alterar o acesso. Tente de novo.'; }
+      carregar();
+    });
+    carregar();
+  }
+
+  function iniciar() {
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, txt) => {
     const e = document.createElement(tag);
@@ -196,4 +255,5 @@
   render();
   const h = decodeURIComponent(location.hash.slice(1));
   if (h) abrir(h);
+  }
 })();

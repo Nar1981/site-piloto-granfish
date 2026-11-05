@@ -168,7 +168,7 @@
   msgs.setAttribute('aria-live', 'polite');
 
   const pag = (location.pathname.split('/').pop() || 'index.html');
-  const ctx = /-admin\.html$|^painel-interno/.test(pag) ? 'admin' : /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo/.test(pag) ? 'catalogo' : 'home';
+  const ctx = /-admin\.html$|^painel-interno/.test(pag) ? 'admin' : /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo\.html/.test(pag) ? 'catalogo' : 'home';
   const ADM = /-admin\.html$|^painel-interno/.test(pag);
   const PALETAS = [
     ['⚓ Azul marinho e branco', ['#0d1b2a', '#ffffff', '#c0c0c0']],
@@ -406,7 +406,14 @@
 
   // Catálogo de embarcações (fichas técnicas e itens de série)
   let barcos = null;
+  let catPublico = false;
+  let statusPedido = false;
   function carregarBarcos() {
+    if (!statusPedido && cfg.supabaseUrl) {
+      statusPedido = true;
+      fetch(cfg.supabaseUrl + '/rest/v1/rpc/catalogo_publico_status', { method: 'POST', headers: { apikey: cfg.supabaseAnonKey || '', 'Content-Type': 'application/json' }, body: '{}' })
+        .then((r) => r.json()).then((v) => { catPublico = v === true; }).catch(() => {});
+    }
     if (barcos) return Promise.resolve(barcos);
     return new Promise((ok) => {
       if (window.GF_CATALOGO) return ok((barcos = window.GF_CATALOGO));
@@ -447,6 +454,7 @@
   function opsFicha(b, todos) {
     const ops = [['📋 Outros da linha ' + bonito(b.linha), { linha: b.linha }], ['🎨 Cores e pinturas', { ir: 'catalogo' }], WAOP];
     if (souEquipe()) ops.unshift(['🗂️ Ficha completa (equipe)', { ir: 'barco:' + b.id }]);
+    else if (catPublico) ops.unshift(['🗂️ Ficha completa', { ir: 'barco:' + b.id }]);
     return ops;
   }
   function resumoLinha(dados, linha) {
@@ -528,7 +536,7 @@
     pendente = null;
     const { chave, cores } = p;
     if (cores.length && chave === ctx && aplicarAqui('', cores)) return;
-    let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : chave.startsWith('barco:') ? ['catalogo-admin.html#' + chave.slice(6), 'a ficha completa do modelo'] : DESTINOS[chave];
+    let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : chave.startsWith('barco:') ? [(souEquipe() ? 'catalogo-admin.html#' : 'catalogo-embarcacoes.html#') + chave.slice(6), 'a ficha completa do modelo'] : DESTINOS[chave];
     const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
     let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
     if (temCores) url += '?cores=' + cores.map((c) => c.slice(1)).join(',');

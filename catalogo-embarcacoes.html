@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; base-uri 'self'; connect-src 'self' https://*.supabase.co; form-action 'self';">
+<title>Catálogo de embarcações · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+<link rel="stylesheet" href="css/chatbot.css">
+<link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body data-publico>
+<main class="wrap" style="padding:36px 0 90px">
+  <p><a href="index.html" style="color:inherit">← Voltar ao site Gran Fish</a></p>
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Catálogo de embarcações</h1>
+  <p style="color:var(--muted);margin:0 0 22px">Fichas técnicas e itens de série de todos os modelos Gran Fish. Consulta livre, sem senha.</p>
+
+  <section id="painel" hidden>
+    <div class="stats" id="linhas"></div>
+
+    <div class="admin-bar">
+      <input type="search" id="busca" placeholder="Buscar modelo, código ou item de série (ex.: giropesca)" aria-label="Buscar">
+      <div class="cat-vista" role="group" aria-label="Modo de exibição">
+        <button type="button" class="button" id="v-cards" aria-pressed="true">Modelos</button>
+        <button type="button" class="button" id="v-tab" aria-pressed="false">Comparativo</button>
+      </div>
+    </div>
+
+    <p class="nota" id="contagem"></p>
+    <div class="cat-grid" id="cards"></div>
+
+    <div class="card tabela-wrap" id="comparativo" hidden>
+      <table class="lista cat-tab">
+        <thead><tr>
+          <th>Modelo</th><th>Compr.</th><th>Boca</th><th>Pontal</th><th>Lotação</th><th>Motorização</th><th>Peso</th><th>Carga</th><th></th>
+        </tr></thead>
+        <tbody id="tab-linhas"></tbody>
+      </table>
+    </div>
+    <p class="nota" id="vazio" hidden>Nenhum modelo encontrado.</p>
+  </section>
+
+  <section id="negado" class="card" hidden>
+    <h2 class="card-title">Catálogo indisponível</h2>
+    <p>O catálogo público não está liberado no momento. Fale com a equipe pelo WhatsApp.</p>
+    <a class="button button--copper" href="index.html#contato">Falar com a equipe</a>
+  </section>
+</main>
+
+<dialog id="modal" class="cat-modal" aria-label="Ficha do modelo"></dialog>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/catalogo-dados.js"></script>
+<script src="js/catalogo-admin.js" defer></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>
