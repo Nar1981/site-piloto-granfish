@@ -122,6 +122,19 @@
     window.GFShell = { atualizarSessao: () => { bt.hidden = !session(); em.textContent = email(); } };
   }
 
+  // Caixa "Mostrar senha" abaixo de cada campo de senha
+  function mostrarSenha() {
+    document.querySelectorAll('input[type="password"]').forEach((inp) => {
+      const lb = document.createElement('label');
+      lb.className = 'ver-senha';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.addEventListener('change', () => { inp.type = cb.checked ? 'text' : 'password'; });
+      lb.append(cb, ' Mostrar senha');
+      (inp.closest('label') || inp).after(lb);
+    });
+  }
+
   // Após entrar, volta para a página que a pessoa tentava abrir
   function voltarAposLogin() {
     document.querySelectorAll('#negado a.button').forEach((a) => {
@@ -157,5 +170,6 @@
   montar();
   voltarAposLogin();
   rotular();
+  mostrarSenha();
   vigiar();
 })();

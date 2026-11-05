@@ -98,3 +98,9 @@ body.adm { padding-bottom: 0; background: var(--paper); }
 .tile p { margin: 0; color: var(--muted); font-size: .9rem; }
 
 .lista .insta-prev { display: block; width: 100%; max-width: 340px; height: 420px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+
+.ver-senha { display: flex; align-items: center; gap: 8px; margin: -4px 0 12px; color: var(--muted); font-size: .85rem; cursor: pointer; }
+.ver-senha input { width: 18px; height: 18px; accent-color: var(--teal); }
+.recuperar { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #f1f6f6; }
+.recuperar p { margin: 4px 0; }
+.recuperar a { color: var(--teal-deep); font-weight: 700; overflow-wrap: anywhere; }
