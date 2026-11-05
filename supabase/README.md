@@ -29,3 +29,15 @@ Cadastros ficam em `cadastros-admin.html` (login da equipe, filtro, alteração 
 Execute tambem `instagram.sql` (tabelas das publicacoes do Instagram exibidas no site, gerenciadas em `instagram-admin.html`).
 
 Execute tambem `conteudo.sql` (textos, cores e configuracoes do site, editados em `personalizar-admin.html`).
+
+## Chatbot (Marina) com Gemini
+
+O chat (`js/chatbot.js`) chama a Edge Function `supabase/functions/chat`, que guarda a chave do Google Gemini (a chave nunca vai para o site). Se a IA falhar ou estourar a cota gratuita, o chat responde com regras de reserva e oferece o WhatsApp.
+
+1. Gere uma chave gratuita em https://aistudio.google.com/apikey.
+2. Instale a CLI do Supabase e faça login: `supabase login` e `supabase link --project-ref eqlvmxtoqavglfrtfhfx`.
+3. Guarde os segredos (use o endereço real do site em `ALLOWED_ORIGINS`):
+   `supabase secrets set GEMINI_API_KEY=SUA_CHAVE ALLOWED_ORIGINS=https://nar1981.github.io`
+4. Publique a função: `supabase functions deploy chat --no-verify-jwt`.
+
+Opcional: `GEMINI_MODEL` troca o modelo (padrão `gemini-2.5-flash`). A função limita 8 mensagens por minuto por IP e 12 mensagens de histórico. Ajuste o texto de `SISTEMA` em `index.ts` para ensinar novos detalhes do estaleiro (modelos, prazos, políticas).
