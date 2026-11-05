@@ -19,6 +19,55 @@
     whatsapp: [WA, 'o WhatsApp da equipe', true],
     mapa: [mapa ? mapa.href : 'https://www.google.com/maps/search/?api=1&query=Rua+das+Primaveras%2C+50%2C+Pratapolis+-+MG', 'o mapa do estaleiro', true]
   };
+  // Nomes de cores em português (fallback quando a IA não está disponível)
+  const CORES = {
+    'azul marinho': '#0d1b2a', 'azul royal': '#002366', 'azul celeste': '#48cae4', 'azul claro': '#48cae4', 'azul escuro': '#0d1b2a', 'azul petroleo': '#16252d', 'azul bebe': '#89cff0', 'azul turquesa': '#00a896', 'azul': '#0070ff',
+    'verde agua': '#0a9396', 'verde militar': '#4b5320', 'verde oliva': '#1e261d', 'verde escuro': '#0e291e', 'verde claro': '#52b788', 'verde limao': '#b5e61d', 'verde': '#27ae60',
+    'vermelho escuro': '#9b111e', 'vinho': '#401018', 'bordo': '#401018', 'vermelho': '#e74c3c',
+    'laranja': '#e67e22', 'amarelo': '#f1c40f', 'dourado': '#d4af37', 'prata': '#c0c0c0', 'bronze': '#cd7f32', 'cobre': '#b87333',
+    'rosa': '#f7cac9', 'magenta': '#d81b60', 'roxo': '#8e44ad', 'lilas': '#b39ddb', 'turquesa': '#00a896', 'ciano': '#00d2ff',
+    'cinza escuro': '#25282a', 'cinza claro': '#c0c0c0', 'grafite': '#25282a', 'chumbo': '#212529', 'cinza': '#686b73',
+    'branco perola': '#fdfcf7', 'off white': '#f4f4f0', 'branco': '#ffffff', 'preto': '#111111',
+    'marrom': '#2b1d16', 'bege': '#d8cbb5', 'areia': '#c2b280', 'creme': '#fffdd0', 'caramelo': '#b3541e'
+  };
+  const semAcento = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  function extrairCores(texto) {
+    let t = ' ' + semAcento(texto) + ' ';
+    const achadas = [];
+    Object.keys(CORES).sort((a, b) => b.length - a.length).forEach((nome) => {
+      const base = /o$/.test(nome) ? nome.slice(0, -1) + '[oa]s?' : nome + 's?';
+      const re = new RegExp('(^|[^a-z])' + base + '(?![a-z])');
+      const m = re.exec(t);
+      if (m) {
+        achadas.push([m.index, CORES[nome]]);
+        t = t.slice(0, m.index) + ' '.repeat(m[0].length) + t.slice(m.index + m[0].length);
+      }
+    });
+    const hexes = [];
+    achadas.sort((a, b) => a[0] - b[0]).forEach(([, h]) => { if (!hexes.includes(h)) hexes.push(h); });
+    return hexes.slice(0, 3);
+  }
+  const hexValido = (h) => /^#?[0-9a-f]{6}$/i.test(h);
+  const normHex = (h) => '#' + h.replace('#', '').toLowerCase();
+
+  // Catálogo: acha a referência com a paleta mais parecida com as cores pedidas
+  const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const dist = (a, b) => {
+    const [r1, g1, b1] = rgb(a), [r2, g2, b2] = rgb(b), rm = (r1 + r2) / 2;
+    return Math.sqrt((2 + rm / 256) * (r1 - r2) ** 2 + 4 * (g1 - g2) ** 2 + (2 + (255 - rm) / 256) * (b1 - b2) ** 2);
+  };
+  let catalogo = null;
+  async function melhorDoCatalogo(cores) {
+    if (!catalogo) catalogo = (await (await fetch('data.json')).json()).items;
+    let melhor = null;
+    catalogo.forEach((it) => (it.variants || []).forEach((v) => {
+      if (!v.pal || !v.pal.length) return;
+      const nota = cores.reduce((soma, c) => soma + Math.min(...v.pal.map((p) => dist(c, p.hex))), 0) / cores.length;
+      if (!melhor || nota < melhor.nota) melhor = { nota, v };
+    }));
+    return melhor && melhor.v;
+  }
+
   let pendente = null;
   const SIM = /^\s*(sim|s|pode|quero|claro|bora|vamos|ok|certo|isso|por favor|pode levar|me leve|leve)\b/i;
   const NAO = /^\s*(n[aã]o|agora n[aã]o|depois|deixa|n[aã]o precisa)\b/i;
@@ -38,6 +87,14 @@
     [/oi|ol[aá]|bom dia|boa tarde|boa noite/i, 'Olá! Que bom ter você aqui. Posso ajudar com modelos, cores, configuração, cadastro ou suporte.']
   ];
   const reserva = (t) => {
+    const cores = extrairCores(t);
+    if (cores.length && /barco|lancha|pontoon|hurricane|catalogo|cat\u00e1logo|cor|pint|deix|quer|parecid|semelhant/i.test(t)) {
+      const lista = cores.join(',');
+      if (/cat[aá]logo|parecid|semelhant|similar/i.test(t)) return 'Posso procurar no catálogo a cor mais parecida com a que você descreveu. Quer que eu faça isso?[[IR:catalogo:' + lista + ']]';
+      if (/pontoon/i.test(t)) return 'Que combinação linda! Quer que eu monte a sua Pontoon com essas cores no configurador 3D?[[IR:pontoon:' + lista + ']]';
+      if (/hurricane|lancha|60/i.test(t)) return 'Que combinação linda! Quer que eu monte a sua Hurricane 60 SL com essas cores no configurador 3D?[[IR:hurricane:' + lista + ']]';
+      return 'Anotei as cores! Para qual modelo você quer ver: Hurricane 60 SL ou Linha Pontoon? Se preferir, posso procurar algo parecido no catálogo.';
+    }
     for (const [re, r] of REGRAS) if (re.test(t)) return r;
     return 'Não tenho certeza dessa resposta, mas nossa equipe pode ajudar direto pelo WhatsApp.';
   };
@@ -111,31 +168,44 @@
     return b;
   }
 
-  function oferecer(chave) {
-    pendente = chave;
+  function oferecer(chave, cores) {
+    const alvo = pendente = { chave, cores: cores || [] };
     const linha = el('div', 'gfc-go');
     const sim = el('button', 'gfc-yes', 'Sim, me leve');
     const nao = el('button', 'gfc-no', 'Agora não');
     sim.type = nao.type = 'button';
-    sim.addEventListener('click', () => { linha.remove(); levar(chave); });
+    sim.addEventListener('click', () => { linha.remove(); levar(alvo); });
     nao.addEventListener('click', () => { linha.remove(); pendente = null; bolha('bot', 'Tudo bem! Se precisar de algo é só chamar.'); });
     linha.append(sim, nao);
     msgs.appendChild(linha);
   }
 
-  function levar(chave) {
+  async function levar(p) {
     pendente = null;
-    const [url, nome, externo] = DESTINOS[chave];
-    bolha('bot', 'Pronto, te levando para ' + nome + '! 🚤');
+    const { chave, cores } = p;
+    let [url, nome, externo] = DESTINOS[chave];
+    const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
+    let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
+    if (temCores) url += '?cores=' + cores.map((c) => c.slice(1)).join(',');
+    if (chave === 'catalogo' && cores.length) {
+      try {
+        const v = await melhorDoCatalogo(cores);
+        if (v) {
+          url = 'catalogo.html#/ref/' + v.slug;
+          aviso = 'Achei a mais parecida: ' + v.name + ' (ref. ' + v.ref + ')! Te levando até ela 🎨';
+        }
+      } catch (e) { /* segue para o catálogo geral */ }
+    }
+    bolha('bot', aviso);
     hist.push({ role: 'bot', text: 'Levei a pessoa para ' + nome + '.' });
     setTimeout(() => {
       if (externo) { window.open(url, '_blank', 'noopener'); return; }
       const [pag, hash] = url.split('#');
       const aqui = (location.pathname.split('/').pop() || 'index.html') === pag;
-      if (aqui && hash) {
-        const alvo = document.getElementById(hash);
+      const alvo = hash && document.getElementById(hash);
+      if (aqui && alvo) {
         alternar(false);
-        if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         location.href = url;
       }
@@ -159,12 +229,13 @@
       } catch (e) { /* usa resposta de reserva */ }
     }
     if (!texto) texto = reserva(hist[hist.length - 1].text);
-    const m = /\[\[IR:([a-z_]+)\]\]/i.exec(texto);
+    const m = /\[\[IR:([a-z_]+)(?::([^\]]*))?\]\]/i.exec(texto);
     const chave = m && DESTINOS[m[1].toLowerCase()] ? m[1].toLowerCase() : null;
+    const coresTag = m && m[2] ? m[2].split(',').map((x) => x.trim()).filter(hexValido).map(normHex).slice(0, 3) : [];
     texto = texto.replace(/\[\[IR:[^\]]*\]\]/gi, '').trim();
     digitando.textContent = texto;
     hist.push({ role: 'bot', text: texto });
-    if (chave) oferecer(chave);
+    if (chave) oferecer(chave, coresTag);
     msgs.scrollTop = msgs.scrollHeight;
   }
 

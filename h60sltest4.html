@@ -2309,6 +2309,17 @@ pygame.quit()
       sincronizarInputs('decalque-cor2', '#ffffff', '255, 255, 255');
     }
 
+    // Cores sugeridas pela Marina (?cores=hex1,hex2,hex3)
+    function aplicarCoresDaUrl(ids) {
+      const p = new URLSearchParams(location.search).get('cores');
+      if (!p) return;
+      const lista = p.split(',').map(h => '#' + h.trim().replace(/^#/, '')).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+      if (!lista.length) return;
+      lista.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+      const st = document.getElementById('status');
+      if (st) st.innerText = '✓ Cores sugeridas pela Marina aplicadas. Ajuste como quiser.';
+    }
+
     function isMaterialDecalque(nomeMaterial) {
       if (!nomeMaterial) return false;
       return nomeMaterial.toLowerCase().replace(/[^a-z0-9]/g, '').includes('decalque');
@@ -2404,6 +2415,7 @@ pygame.quit()
               const urlInicial = selectTextura.value || BASE_URL_TEXTURAS + REFERENCIA_PADRAO + EXTENSAO_ARQUIVO;
               selectTextura.value = urlInicial;
               aplicarTexturaAPI(urlInicial);
+              aplicarCoresDaUrl(['decalque1', 'decalque-cor1', 'decalque-cor2']);
               configuracaoPronta = true;
               atualizarBotaoDesfazer();
             }, 300);

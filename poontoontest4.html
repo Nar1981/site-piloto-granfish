@@ -906,6 +906,7 @@
               aplicarHexComSincronizacao('cinza2', '#25282a'); 
               aplicarHexComSincronizacao('Azul', '#0d1b2a'); 
               aplicarHexComSincronizacao('cinza', '#25282a');
+              aplicarCoresDaUrl(['cinza2', 'Azul', 'cinza']);
               configuracaoPronta = true;
               atualizarBotaoDesfazer();
             }, 300);
@@ -985,6 +986,17 @@
           selectedOption.style.color = contraste;
         }
       }
+    }
+
+    // Cores sugeridas pela Marina (?cores=hex1,hex2,hex3)
+    function aplicarCoresDaUrl(ids) {
+      const p = new URLSearchParams(location.search).get('cores');
+      if (!p) return;
+      const lista = p.split(',').map(h => '#' + h.trim().replace(/^#/, '')).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+      if (!lista.length) return;
+      lista.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+      const st = document.getElementById('status');
+      if (st) st.innerText = '✓ Cores sugeridas pela Marina aplicadas. Ajuste como quiser.';
     }
 
     function selecionarCor(nomeMaterial, hex) {
