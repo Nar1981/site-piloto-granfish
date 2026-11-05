@@ -29,3 +29,8 @@
 .gfc-form button:disabled { opacity: .6; }
 .gfc-wa { padding: 10px; color: #0c7c7a; font-size: .82rem; font-weight: 700; text-align: center; text-decoration: none; border-top: 1px solid #dfe7ea; }
 @media (max-width: 560px) { .gfc-box { width: calc(100vw - 24px); } .gfc { left: 12px; bottom: 12px; } .gfc-fab { width: 58px; height: 58px; } .gfc-hint { bottom: 72px; width: 168px; font-size: .82rem; padding: 10px 12px; } }
+
+.gfc-go { display: flex; gap: 8px; align-self: flex-start; }
+.gfc-go button { padding: 9px 14px; border-radius: 999px; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
+.gfc-yes { border: 0; color: #fff; background: #0c7c7a; }
+.gfc-no { border: 1px solid #c9d3d8; color: #0b1b23; background: #fff; }
