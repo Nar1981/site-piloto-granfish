@@ -16,6 +16,12 @@
     instagram: ['index.html#instagram', 'a seção do Instagram'],
     contato: ['index.html#contato', 'a seção de contato'],
     inicio: ['index.html#inicio', 'o início do site'],
+    admin: ['painel-interno.html', 'o painel administrativo'],
+    cadastros_admin: ['cadastros-admin.html', 'os cadastros recebidos'],
+    catalogo_admin: ['catalogo-admin.html', 'o catálogo de embarcações (interno)'],
+    usuarios_admin: ['usuarios-admin.html', 'a gestão de administradores'],
+    personalizar_admin: ['personalizar-admin.html', 'a personalização do site'],
+    instagram_admin: ['instagram-admin.html', 'o gerenciador do Instagram'],
     whatsapp: [WA, 'o WhatsApp da equipe', true],
     mapa: [mapa ? mapa.href : 'https://www.google.com/maps/search/?api=1&query=Rua+das+Primaveras%2C+50%2C+Pratapolis+-+MG', 'o mapa do estaleiro', true]
   };
@@ -162,7 +168,8 @@
   msgs.setAttribute('aria-live', 'polite');
 
   const pag = (location.pathname.split('/').pop() || 'index.html');
-  const ctx = /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo/.test(pag) ? 'catalogo' : 'home';
+  const ctx = /-admin\.html$|^painel-interno/.test(pag) ? 'admin' : /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo/.test(pag) ? 'catalogo' : 'home';
+  const ADM = /-admin\.html$|^painel-interno/.test(pag);
   const PALETAS = [
     ['⚓ Azul marinho e branco', ['#0d1b2a', '#ffffff', '#c0c0c0']],
     ['🖤 Preto e grafite', ['#111111', '#25282a', '#c0c0c0']],
@@ -189,6 +196,8 @@
       chip('💡 Sugestões', sugerir);
       PALETAS.forEach(([n, c]) => chip(n, () => aplicarAqui(n, c)));
       chip('📖 Catálogo', () => enviar('catálogo'));
+    } else if (ctx === 'admin') {
+      [['📥 Cadastros', 'cadastros_admin'], ['🚤 Catálogo', 'catalogo_admin'], ['📸 Instagram', 'instagram_admin'], ['🎛️ Personalizar', 'personalizar_admin'], ['👥 Admins', 'usuarios_admin'], ['🏠 Painel', 'admin']].forEach(([n, k]) => chip(n, () => { bolha('user', n); levar({ chave: k, cores: [] }); }));
     } else if (ctx === 'catalogo') {
       BUSCAS.forEach(([n, c]) => chip(n, () => { bolha('user', n); levar({ chave: 'catalogo', cores: c }); }));
       chip('🚤 Montar meu barco', () => enviar('configurar'));
@@ -231,6 +240,7 @@
     const BOAS = {
       hurricane: 'Oi! Sou a Marina. Vamos montar a sua Hurricane 60 SL? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "casco azul marinho com detalhes brancos"). Se você mexer nas cores, eu sugiro combinações!',
       pontoon: 'Oi! Sou a Marina. Vamos montar a sua Pontoon? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "faixas verde e branca"). Se você mexer nas cores, eu sugiro combinações!',
+      admin: 'Oi! Sou a Marina, no modo administrativo. Posso te levar para cadastros, catálogo de embarcações, Instagram, personalização e administradores, e responder sobre qualquer modelo (ex.: "fish 6.0 slx" ou "qual tem giropesca").',
       catalogo: 'Oi! Sou a Marina. Procurando uma cor? Toque numa busca abaixo ou descreva o que imagina (ex.: "algo parecido com azul petróleo") que eu te levo até a referência mais próxima.'
     };
     bolha('bot', BOAS[ctx] || 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
@@ -593,6 +603,14 @@
     if (pendente && NAO.test(t)) { msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove()); pendente = null; bolha('bot', 'Tudo bem! Se precisar de algo é só chamar.'); ocupado = false; env.disabled = false; return; }
     msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove());
     pendente = null;
+    const nt = ' ' + norm(t) + ' ';
+    if (/\b(admin|administrativo|administrador|administradores|area interna|area administrativa|painel interno|painel|modo admin)\b/.test(nt) && nt.trim().split(' ').length <= 5) {
+      const rota = /\b(cadastros?|leads?|recebidos)\b/.test(nt) ? 'cadastros_admin' : /\b(catalogo|barcos|modelos|embarcacoes)\b/.test(nt) ? 'catalogo_admin' : /\binstagram\b/.test(nt) ? 'instagram_admin' : /\b(personaliza\w*|site)\b/.test(nt) ? 'personalizar_admin' : /\b(usuarios?|administradores)\b/.test(nt) ? 'usuarios_admin' : 'admin';
+      ocupado = false; env.disabled = false;
+      if (ADM && rota === 'admin' && pag.indexOf('painel-interno') === 0) bolha('bot', 'Você já está no painel administrativo. Para onde quer ir?');
+      else levar({ chave: rota, cores: [] });
+      return;
+    }
     const corPedida = extrairCores(t);
     if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) { ocupado = false; env.disabled = false; campo.focus(); return; }
     const curto = norm(t).split(' ').length <= 4;

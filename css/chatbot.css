@@ -34,3 +34,4 @@
 .gfc-go button { padding: 9px 14px; border-radius: 999px; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
 .gfc-yes { border: 0; color: #fff; background: #0c7c7a; }
 .gfc-no { border: 1px solid #c9d3d8; color: #0b1b23; background: #fff; }
+@media (max-width: 900px) { body:has(.adm-tabs) .gfc { bottom: 78px; } }
