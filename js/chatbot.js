@@ -161,6 +161,7 @@
   function montarChips() {
     sug.textContent = '';
     if (ctx === 'hurricane' || ctx === 'pontoon') {
+      chip('💡 Sugestões', sugerir);
       PALETAS.forEach(([n, c]) => chip(n, () => aplicarAqui(n, c)));
       chip('📖 Ver catálogo de cores', () => enviar('Quero ver o catálogo de cores'));
     } else if (ctx === 'catalogo') {
@@ -170,10 +171,98 @@
       ['Conhecer os modelos', 'Montar meu barco com cores', 'Ver catálogo de cores', 'Preciso de suporte'].forEach((s) => chip(s, () => enviar(s)));
     }
   }
+  let propria = false;
+  let reTimer = null;
+  let reBolha = null;
+  let ultimaMudanca = null;
+  const t0 = Date.now();
+  const hsl = (hex) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, l = (mx + mn) / 2;
+    let h = 0;
+    if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return [(h * 60 + 360) % 360, d ? d / (1 - Math.abs(2 * l - 1)) : 0, l];
+  };
+  const deHsl = (h, s, l) => {
+    const k = (n) => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+    const f = (n) => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1)))).toString(16).padStart(2, '0');
+    return '#' + f(0) + f(8) + f(4);
+  };
+  const nomeDaCor = (hex) => {
+    let melhor = hex, d0 = 1e9;
+    Object.keys(CORES).forEach((n) => { const d = dist(hex, CORES[n]); if (d < d0) { d0 = d; melhor = n; } });
+    return melhor;
+  };
+  function harmonias(hex) {
+    const [h, s, l] = hsl(hex);
+    return [
+      [l > 0.5 ? 'Preto' : 'Branco', l > 0.5 ? '#111111' : '#ffffff'],
+      ['Complementar', deHsl((h + 180) % 360, Math.max(s, 0.45), 0.5)],
+      ['Análoga', deHsl((h + 30) % 360, Math.max(s, 0.4), Math.min(Math.max(l, 0.3), 0.65))]
+    ];
+  }
+  function boasVindas() {
+    if (msgs.children.length) return;
+    const BOAS = {
+      hurricane: 'Oi! Sou a Marina. Vamos montar a sua Hurricane 60 SL? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "casco azul marinho com detalhes brancos"). Se você mexer nas cores, eu sugiro combinações!',
+      pontoon: 'Oi! Sou a Marina. Vamos montar a sua Pontoon? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "faixas verde e branca"). Se você mexer nas cores, eu sugiro combinações!',
+      catalogo: 'Oi! Sou a Marina. Procurando uma cor? Toque numa busca abaixo ou descreva o que imagina (ex.: "algo parecido com azul petróleo") que eu te levo até a referência mais próxima.'
+    };
+    bolha('bot', BOAS[ctx] || 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
+  }
+  function reagir(i, hex, avisar) {
+    const c = window.marinaConfig;
+    if (!c) return;
+    boasVindas();
+    if (reBolha) { reBolha.texto.remove(); reBolha.linha.remove(); }
+    const campo = c.campos[i];
+    const proximo = (i + 1) % c.campos.length;
+    const frases = ['Gostei! ', 'Boa escolha! ', 'Ficou bonito! '];
+    const texto = bolha('bot', frases[Math.floor(Math.random() * frases.length)] + nomeDaCor(hex) + ' em ' + campo + '. Para combinar com ' + c.campos[proximo] + ', que tal:');
+    const linha = el('div', 'gfc-go gfc-ideias');
+    harmonias(hex).forEach(([n, h]) => {
+      const b = el('button', 'gfc-yes', n);
+      b.type = 'button';
+      b.style.borderLeft = '14px solid ' + h;
+      b.addEventListener('click', () => {
+        propria = true; c.aplicarUm(proximo, h); propria = false;
+        bolha('user', n + ' em ' + c.campos[proximo]);
+        bolha('bot', 'Feito! Se quiser, mexa em outra cor que eu sugiro mais combinações.');
+      });
+      linha.appendChild(b);
+    });
+    const cat = el('button', 'gfc-no', '🔎 Parecida no catálogo');
+    cat.type = 'button';
+    cat.addEventListener('click', () => { bolha('user', 'Parecida no catálogo'); levar({ chave: 'catalogo', cores: [hex] }); });
+    linha.appendChild(cat);
+    msgs.appendChild(linha);
+    msgs.scrollTop = msgs.scrollHeight;
+    reBolha = { texto, linha };
+    if (avisar && painel.hidden) {
+      chamada.textContent = 'Gostei dessa cor! 💡 Toque aqui para ver sugestões.';
+      chamada.classList.add('on');
+      setTimeout(() => chamada.classList.remove('on'), 9000);
+    }
+  }
+  window.addEventListener('marina:cor', (e) => {
+    if (propria || Date.now() - t0 < 4000 || !window.marinaConfig) return;
+    const i = window.marinaConfig.ids.indexOf(e.detail.id);
+    if (i < 0) return;
+    ultimaMudanca = [i, e.detail.hex];
+    clearTimeout(reTimer);
+    reTimer = setTimeout(() => reagir(i, e.detail.hex, true), 1200);
+  });
+  function sugerir() {
+    if (ultimaMudanca) { alternar(true); reagir(ultimaMudanca[0], ultimaMudanca[1]); return; }
+    bolha('user', 'Sugestões');
+    bolha('bot', 'Mexa em qualquer cor do barco e eu sugiro combinações para as outras. Ou toque numa combinação pronta acima.');
+  }
   function aplicarAqui(nome, cores) {
     const cfgPg = window.marinaConfig;
     if (!cfgPg) return false;
+    propria = true;
     const n = cfgPg.aplicar(cores);
+    propria = false;
     if (!n) return false;
     const rot = cfgPg.campos.slice(0, n).map((c, i) => c + ': ' + cores[i]).join(' · ');
     if (nome) bolha('user', nome);
@@ -304,14 +393,7 @@
     botao.classList.toggle('gfc-open', abrir);
     botao.setAttribute('aria-expanded', String(abrir));
     if (abrir) {
-      if (!msgs.children.length) {
-        const BOAS = {
-          hurricane: 'Oi! Sou a Marina. Vamos montar a sua Hurricane 60 SL? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "casco azul marinho com detalhes brancos").',
-          pontoon: 'Oi! Sou a Marina. Vamos montar a sua Pontoon? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "faixas verde e branca").',
-          catalogo: 'Oi! Sou a Marina. Procurando uma cor? Toque numa busca abaixo ou descreva o que imagina (ex.: "algo parecido com azul petróleo") que eu te levo até a referência mais próxima.'
-        };
-        bolha('bot', BOAS[ctx] || 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
-      }
+      boasVindas();
       campo.focus();
     }
   }
