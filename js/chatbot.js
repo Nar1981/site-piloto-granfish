@@ -37,19 +37,25 @@
   botao.type = 'button';
   botao.setAttribute('aria-label', 'Abrir chat com a Marina');
   botao.setAttribute('aria-expanded', 'false');
-  botao.textContent = '💬';
+  const foto = el('img');
+  foto.src = 'img/marina.svg'; foto.alt = ''; foto.width = 64; foto.height = 64;
+  botao.appendChild(foto);
+  const chamada = el('span', 'gfc-hint', 'Oi, eu sou a Marina! Posso ajudar?');
+  chamada.setAttribute('aria-hidden', 'true');
 
   const painel = el('div', 'gfc-box');
   painel.hidden = true;
   painel.setAttribute('role', 'dialog');
   painel.setAttribute('aria-label', 'Conversa com a Marina, assistente Gran Fish');
   const topo = el('div', 'gfc-top');
-  const tit = el('div');
+  const av = el('img', 'gfc-av');
+  av.src = 'img/marina.svg'; av.alt = ''; av.width = 40; av.height = 40;
+  const tit = el('div', 'gfc-tit');
   tit.append(el('strong', '', NOME + ' · Gran Fish'), el('small', '', 'Assistente virtual'));
   const fechar = el('button', 'gfc-x', '×');
   fechar.type = 'button';
   fechar.setAttribute('aria-label', 'Fechar chat');
-  topo.append(tit, fechar);
+  topo.append(av, tit, fechar);
 
   const msgs = el('div', 'gfc-msgs');
   msgs.setAttribute('role', 'log');
@@ -75,7 +81,9 @@
   zap.href = WA; zap.target = '_blank'; zap.rel = 'noopener noreferrer';
 
   painel.append(topo, msgs, sug, form, zap);
-  caixa.append(painel, botao);
+  caixa.append(painel, chamada, botao);
+  setTimeout(() => { if (painel.hidden) chamada.classList.add('on'); }, 3000);
+  setTimeout(() => chamada.classList.remove('on'), 15000);
   document.body.appendChild(caixa);
 
   function bolha(quem, texto) {
@@ -122,6 +130,8 @@
 
   function alternar(abrir) {
     painel.hidden = !abrir;
+    chamada.classList.remove('on');
+    botao.classList.toggle('gfc-open', abrir);
     botao.setAttribute('aria-expanded', String(abrir));
     if (abrir) {
       if (!msgs.children.length) bolha('bot', 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
