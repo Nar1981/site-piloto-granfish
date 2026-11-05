@@ -74,29 +74,54 @@
   const hist = [];
   let ocupado = false;
 
-  // Respostas de reserva (quando a IA estiver indisponível)
-  const REGRAS = [
-    [/pre[çc]o|valor|or[çc]amento|quanto custa|comprar|negoci/i, 'Para valores e orçamento, o melhor é falar direto com a nossa equipe pelo WhatsApp, que monta uma proposta para o seu projeto. Quer que eu te leve até lá?[[IR:whatsapp]]'],
-    [/hurricane|60 ?sl|lancha/i, 'A Hurricane 60 SL tem 60 pés, casco laminado e foco em presença, estabilidade e acabamento. Quer que eu te leve ao configurador 3D dela?[[IR:hurricane]]'],
-    [/pontoon|pesca|lazer|alum[ií]nio/i, 'A Linha Pontoon é em alumínio naval, pensada para lazer e pesca. Quer que eu te leve ao configurador 3D dela?[[IR:pontoon]]'],
-    [/cor|cores|cat[aá]logo|acabamento/i, 'Temos um catálogo de cores com PDF. Quer que eu te leve até ele?[[IR:catalogo]]'],
-    [/cadastr|ficha/i, 'Para se cadastrar, use a página de cadastro; nossa equipe recebe e entra em contato. Quer que eu te leve até lá?[[IR:cadastro]]'],
-    [/endere[çc]o|onde fica|visita|localiza|chegar/i, 'Estamos na Rua das Primaveras, 50, Pratápolis - MG, CEP 37.970-000. Quer que eu abra o mapa para você?[[IR:mapa]]'],
-    [/suporte|problema|defeito|p[óo]s.?venda|garantia|ajuda/i, 'Sinto muito pelo transtorno! Para suporte e pós-venda, fale direto com a equipe pelo WhatsApp. Quer que eu te leve até lá?[[IR:whatsapp]]'],
-    [/configur/i, 'Dá para montar a sua no configurador 3D e depois falar com a equipe para fechar os detalhes. Quer que eu te leve aos modelos?[[IR:modelos]]'],
-    [/oi|ol[aá]|bom dia|boa tarde|boa noite/i, 'Olá! Que bom ter você aqui. Posso ajudar com modelos, cores, configuração, cadastro ou suporte.']
+  const WAOP = ['💬 Falar no WhatsApp', { ir: 'whatsapp' }];
+  const MAPAOP = ['📍 Como chegar', { ir: 'mapa' }];
+  const MENU = [
+    ['🚤 Conhecer os modelos', { say: 'modelos' }], ['🎨 Cores e catálogo', { say: 'cores' }],
+    ['🛠️ Montar meu barco', { say: 'configurar' }], ['📞 Contato', { say: 'contato' }], ['🆘 Suporte', { say: 'suporte' }]
   ];
+  // Intenções: palavras curtas já mostram a resposta com opções clicáveis
+  const INTENCOES = [
+    { re: /\b(menu|opcoes|opcao|o que (voce )?(faz|sabe)|me ajuda|ajuda|oi|ola|bom dia|boa tarde|boa noite|e ai|hey|hello)\b/, txt: 'Oi! Eu conheço tudo sobre a Gran Fish: modelos, cores, catálogo, cadastro, contato e suporte. O que você quer ver?', ops: MENU },
+    { re: /\b(contato|contatos|telefone|fone|zap|whats|whatsapp|email|e-mail|falar com|atendente|atendimento|humano|vendedor|equipe)\b/, txt: 'Você pode falar com a equipe da Gran Fish por aqui:\n📍 Rua das Primaveras, 50, Pratápolis - MG, CEP 37.970-000\nO jeito mais rápido é o WhatsApp.', ops: [WAOP, MAPAOP, ['📇 Seção de contato', { ir: 'contato' }], ['📝 Fazer cadastro', { ir: 'cadastro' }]] },
+    { re: /\b(preco|precos|valor|valores|orcamento|quanto|custa|custo|comprar|compra|negociar|financiamento|pagamento|prazo|entrega)\b/, txt: 'Valores, prazos e condições dependem do seu projeto, então a equipe monta uma proposta sob medida. Você pode já configurar o barco para mostrar o que imagina.', ops: [WAOP, ['🛠️ Montar meu barco', { say: 'configurar' }], ['📝 Fazer cadastro', { ir: 'cadastro' }]] },
+    { re: /\b(endereco|onde fica|onde vcs|localizacao|local|mapa|chegar|visita|visitar|rota|cidade|pratapolis)\b/, txt: 'O estaleiro fica na Rua das Primaveras, 50, Pratápolis - MG, CEP 37.970-000. Visitas combinam melhor com um aviso prévio pelo WhatsApp.', ops: [MAPAOP, WAOP] },
+    { re: /\b(suporte|problema|defeito|pos.?venda|garantia|conserto|reparo|manutencao|assistencia|reclamacao|quebrou|nao funciona)\b/, txt: 'Sinto muito pelo transtorno! O pós-venda é direto com quem entende da sua embarcação. Conte o que aconteceu pelo WhatsApp, de preferência com fotos.', ops: [WAOP, ['📇 Seção de contato', { ir: 'contato' }]] },
+    { re: /\b(cadastro|cadastrar|cadastre|ficha|registrar|registro|interesse)\b/, txt: 'No cadastro você informa seus dados e o que procura; a equipe recebe e entra em contato.', ops: [['📝 Abrir o cadastro', { ir: 'cadastro' }], WAOP] },
+    { re: /\b(pdf|baixar catalogo|catalogo em pdf)\b/, txt: 'O catálogo de cores também está disponível em PDF, para baixar ou compartilhar.', ops: [['📄 Abrir o PDF', { ir: 'catalogo_pdf' }], ['🎨 Ver catálogo no site', { ir: 'catalogo' }]] },
+    { re: /\b(catalogo|referencia|referencias|ref|paleta|paletas|grafismo|grafismos|estampa|adesivo|gran bass|linha sem|sem raio)\b/, txt: 'O catálogo tem mais de 100 referências de pintura e grafismo (Gran Bass, Hurricane 6.0 e a Linha Sem), cada uma com a paleta e o código de cor. Dá para buscar por cor ou por número da referência.', ops: [['🎨 Abrir o catálogo', { ir: 'catalogo' }], ['📄 Catálogo em PDF', { ir: 'catalogo_pdf' }], ['🔎 Achar uma cor parecida', { say: 'cores' }]] },
+    { re: /\b(cor|cores|pintura|pintar|tinta|colorido|combinacao|combinacoes|paleta de cores|cor do barco)\b/, txt: 'Quer escolher as cores? Posso te mostrar o catálogo, deixar você montar ao vivo no 3D, ou sugerir combinações. Dica: me diga as cores que imagina, como "azul marinho e branco", e eu monto para você.', ops: [['🎨 Catálogo de cores', { ir: 'catalogo' }], ['🚤 Pintar a Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Pintar a Pontoon', { ir: 'pontoon' }], ['💡 Ideias de combinação', { ideias: true }]] },
+    { re: /\b(hurricane|60 ?sl|lancha|lanchas|60 pes)\b/, txt: 'A Hurricane 60 SL tem 60 pés e casco laminado, feita para quem busca presença, estabilidade e acabamento. No configurador 3D você escolhe a cor base e o grafismo.', ops: [['🚤 Configurar a Hurricane 60 SL', { ir: 'hurricane' }], ['🎨 Ver cores no catálogo', { ir: 'catalogo' }], WAOP] },
+    { re: /\b(pontoon|pontom|pesca|pescar|pescaria|lazer|aluminio|plataforma|catamara)\b/, txt: 'A Linha Pontoon é em alumínio naval, com espaço para lazer, pesca e bons encontros. No configurador 3D você pinta as três faixas.', ops: [['🛥️ Configurar a Pontoon', { ir: 'pontoon' }], ['🎨 Ver cores no catálogo', { ir: 'catalogo' }], WAOP] },
+    { re: /\b(modelo|modelos|barco|barcos|embarcacao|embarcacoes|lancha|linha|linhas|produtos|produto|frota|nautica)\b/, txt: 'Hoje temos dois modelos com configurador 3D: a Hurricane 60 SL e a Linha Pontoon. Qual você quer ver?', ops: [['🚤 Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Linha Pontoon', { ir: 'pontoon' }], ['🔎 Ver a seção de modelos', { ir: 'modelos' }]] },
+    { re: /\b(configur\w*|personaliz\w*|montar|monte|customiz\w*|3d|simulador|editar|edicao|projetar|desenhar|criar meu barco)\b/, txt: 'Dá para montar o seu barco ao vivo no configurador 3D: você troca cores e grafismos, desfaz, e salva uma imagem para mostrar à equipe. Qual modelo?', ops: [['🚤 Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Linha Pontoon', { ir: 'pontoon' }], ['💡 Ideias de combinação', { ideias: true }]] },
+    { re: /\b(estaleiro|empresa|sobre|quem (e|sao)|historia|engenharia|fabrica|fabricacao|gran fish|granfish|diferencial)\b/, txt: 'A Gran Fish é um estaleiro de Pratápolis - MG com engenharia própria, acabamento sob medida (materiais, cores e layout escolhidos por você) e pós-venda direto com quem entende da embarcação.', ops: [['⚓ Conhecer o estaleiro', { ir: 'estaleiro' }], ['📸 Ver no Instagram', { ir: 'instagram' }], ['🚤 Ver os modelos', { ir: 'modelos' }]] },
+    { re: /\b(instagram|insta|redes|rede social|novidades|lancamentos|fotos|videos|reels|bastidores)\b/, txt: 'No Instagram do estaleiro você acompanha lançamentos, bastidores e embarcações entregues.', ops: [['📸 Ver o Instagram', { ir: 'instagram' }], ['🚤 Ver os modelos', { ir: 'modelos' }]] },
+    { re: /\b(site|pagina|inicio|home|topo|voltar)\b/, txt: 'Quer voltar ao começo do site?', ops: [['🏠 Ir ao início', { ir: 'inicio' }], ...MENU.slice(0, 3)] },
+    { re: /\b(obrigad\w*|valeu|brigad\w*|show|top|legal)\b/, txt: 'Por nada! Estou por aqui se precisar de mais alguma coisa. 😊', ops: [] }
+  ];
+  const norm = (t) => semAcento(t).replace(/[^a-z0-9 .\-]/g, ' ').replace(/\s+/g, ' ').trim();
+  const intencao = (t) => {
+    const n = norm(t);
+    return INTENCOES.find((x) => x.re.test(n)) || null;
+  };
+  const opcoesCores = (cores) => [
+    ['🚤 Na Hurricane 60 SL', { ir: 'hurricane', cores }], ['🛥️ Na Pontoon', { ir: 'pontoon', cores }],
+    ['🔎 Parecida no catálogo', { ir: 'catalogo', cores }]
+  ];
+  // Respostas de reserva (quando a IA estiver indisponível): devolve {txt, ops} ou texto
   const reserva = (t) => {
     const cores = extrairCores(t);
-    if (cores.length && /barco|lancha|pontoon|hurricane|catalogo|cat\u00e1logo|cor|pint|deix|quer|parecid|semelhant/i.test(t)) {
+    if (cores.length && (/barco|lancha|pontoon|hurricane|catalogo|cat\u00e1logo|cor|pint|deix|quer|parecid|semelhant/i.test(t) || norm(t).split(' ').length <= 4)) {
       const lista = cores.join(',');
-      if (/cat[aá]logo|parecid|semelhant|similar/i.test(t)) return 'Posso procurar no catálogo a cor mais parecida com a que você descreveu. Quer que eu faça isso?[[IR:catalogo:' + lista + ']]';
-      if (/pontoon/i.test(t)) return 'Que combinação linda! Quer que eu monte a sua Pontoon com essas cores no configurador 3D?[[IR:pontoon:' + lista + ']]';
-      if (/hurricane|lancha|60/i.test(t)) return 'Que combinação linda! Quer que eu monte a sua Hurricane 60 SL com essas cores no configurador 3D?[[IR:hurricane:' + lista + ']]';
-      return 'Anotei as cores! Para qual modelo você quer ver: Hurricane 60 SL ou Linha Pontoon? Se preferir, posso procurar algo parecido no catálogo.';
+      if (/cat[aá]logo|parecid|semelhant|similar/i.test(t)) return { txt: 'Posso procurar no catálogo a cor mais parecida com a que você descreveu.', ops: [['🔎 Procurar no catálogo', { ir: 'catalogo', cores }]] };
+      if (/pontoon/i.test(t)) return { txt: 'Que combinação linda! Vou montar a sua Pontoon com essas cores no configurador 3D.', ops: [['🛥️ Montar a Pontoon', { ir: 'pontoon', cores }]].concat(opcoesCores(cores).slice(2)) };
+      if (/hurricane|lancha|60/i.test(t)) return { txt: 'Que combinação linda! Vou montar a sua Hurricane 60 SL com essas cores no configurador 3D.', ops: [['🚤 Montar a Hurricane', { ir: 'hurricane', cores }]].concat(opcoesCores(cores).slice(2)) };
+      return { txt: 'Anotei as cores! Onde você quer ver essa combinação?', ops: opcoesCores(cores) };
     }
-    for (const [re, r] of REGRAS) if (re.test(t)) return r;
-    return 'Não tenho certeza dessa resposta, mas nossa equipe pode ajudar direto pelo WhatsApp.';
+    const it = intencao(t);
+    if (it) return it;
+    return { generico: true, txt: 'Não tenho certeza dessa resposta, mas posso te levar por aqui ou chamar a nossa equipe.', ops: MENU.concat([WAOP]) };
   };
 
   const el = (tag, cls, txt) => {
@@ -163,12 +188,12 @@
     if (ctx === 'hurricane' || ctx === 'pontoon') {
       chip('💡 Sugestões', sugerir);
       PALETAS.forEach(([n, c]) => chip(n, () => aplicarAqui(n, c)));
-      chip('📖 Ver catálogo de cores', () => enviar('Quero ver o catálogo de cores'));
+      chip('📖 Catálogo', () => enviar('catálogo'));
     } else if (ctx === 'catalogo') {
       BUSCAS.forEach(([n, c]) => chip(n, () => { bolha('user', n); levar({ chave: 'catalogo', cores: c }); }));
-      chip('🚤 Montar meu barco', () => enviar('Quero montar meu barco no estaleiro'));
+      chip('🚤 Montar meu barco', () => enviar('configurar'));
     } else {
-      ['Conhecer os modelos', 'Montar meu barco com cores', 'Ver catálogo de cores', 'Preciso de suporte'].forEach((s) => chip(s, () => enviar(s)));
+      ['Modelos', 'Cores', 'Contato', 'Suporte'].forEach((s) => chip(s, () => enviar(s)));
     }
   }
   let propria = false;
@@ -296,6 +321,73 @@
     return b;
   }
 
+  function opcoes(lista) {
+    if (!lista || !lista.length) return;
+    const linha = el('div', 'gfc-go gfc-ideias');
+    lista.forEach(([rot, a]) => {
+      const b = el('button', 'gfc-yes', rot);
+      b.type = 'button';
+      b.addEventListener('click', () => executar(rot, a));
+      linha.appendChild(b);
+    });
+    msgs.appendChild(linha);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function mostrar(r) {
+    msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove());
+    bolha('bot', r.txt);
+    hist.push({ role: 'bot', text: r.txt });
+    opcoes(r.ops);
+  }
+
+  function executar(rot, a) {
+    msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove());
+    bolha('user', rot.replace(/^\S+\s/, ''));
+    if (a.ir) levar({ chave: a.ir, cores: a.cores || [] });
+    else if (a.say) { const r = intencao(a.say); if (r) mostrar(r); }
+    else if (a.ideias) ideias();
+  }
+
+  function ideias() {
+    bolha('bot', 'Aqui vão algumas combinações que ficam lindas. Toque em uma e escolha o modelo:');
+    const linha = el('div', 'gfc-go gfc-ideias');
+    PALETAS.forEach(([n, c]) => {
+      const b = el('button', 'gfc-yes', n);
+      b.type = 'button';
+      b.addEventListener('click', () => {
+        linha.remove();
+        bolha('user', n.replace(/^\S+\s/, ''));
+        if (window.marinaConfig && aplicarAqui('', c)) return;
+        bolha('bot', 'Ótima escolha! Onde você quer ver essa combinação?');
+        opcoes(opcoesCores(c));
+      });
+      linha.appendChild(b);
+    });
+    msgs.appendChild(linha);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function buscarNoCatalogo(t) {
+    const n = norm(t);
+    if (n.length < 3) return null;
+    try { if (!catalogo) catalogo = (await (await fetch('data.json')).json()).items; } catch (e) { return null; }
+    const palavras = n.split(' ').length;
+    const achados = [];
+    catalogo.forEach((it) => (it.variants || []).forEach((v) => {
+      const nome = norm(v.name || '');
+      const porRef = /\b\d{3,4}\b/.test(n) && norm(v.ref) === (n.match(/\b\d{3,4}\b/)[0].padStart(4, '0'));
+      const porNome = nome.length >= 4 && (n.includes(nome) || (palavras <= 3 && n.length >= 5 && nome.includes(n)));
+      if ((porRef || porNome) && !achados.some((a) => a.name === v.name && !porRef)) achados.push(v);
+    }));
+    if (!achados.length) return null;
+    const lista = achados.slice(0, 4);
+    return {
+      txt: lista.length === 1 ? 'Achei no catálogo: ' + lista[0].name + ' (ref. ' + lista[0].ref + ').' : 'Achei estas referências no catálogo:',
+      ops: lista.map((v) => ['🎨 ' + v.name + ' · ref. ' + v.ref, { ir: 'ref:' + v.slug }])
+    };
+  }
+
   function oferecer(chave, cores) {
     const alvo = pendente = { chave, cores: cores || [] };
     const linha = el('div', 'gfc-go');
@@ -312,7 +404,7 @@
     pendente = null;
     const { chave, cores } = p;
     if (cores.length && chave === ctx && aplicarAqui('', cores)) return;
-    let [url, nome, externo] = DESTINOS[chave];
+    let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : DESTINOS[chave];
     const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
     let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
     if (temCores) url += '?cores=' + cores.map((c) => c.slice(1)).join(',');
@@ -335,6 +427,9 @@
       if (aqui && alvo) {
         alternar(false);
         alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (aqui && !hash) {
+        alternar(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         location.href = url;
       }
@@ -357,7 +452,11 @@
         if (r.ok) texto = ((await r.json()).reply || '').trim();
       } catch (e) { /* usa resposta de reserva */ }
     }
-    if (!texto) texto = reserva(hist[hist.length - 1].text);
+    if (!texto) {
+      digitando.remove();
+      mostrar(reserva(hist[hist.length - 1].text));
+      return;
+    }
     const m = /\[\[IR:([a-z_]+)(?::([^\]]*))?\]\]/i.exec(texto);
     const chave = m && DESTINOS[m[1].toLowerCase()] ? m[1].toLowerCase() : null;
     const coresTag = m && m[2] ? m[2].split(',').map((x) => x.trim()).filter(hexValido).map(normHex).slice(0, 3) : [];
@@ -365,6 +464,7 @@
     digitando.textContent = texto;
     hist.push({ role: 'bot', text: texto });
     if (chave) oferecer(chave, coresTag);
+    else if (intencao(hist[hist.length - 2] ? hist[hist.length - 2].text : '')) opcoes(intencao(hist[hist.length - 2].text).ops);
     msgs.scrollTop = msgs.scrollHeight;
   }
 
@@ -381,6 +481,13 @@
     pendente = null;
     const corPedida = extrairCores(t);
     if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) { ocupado = false; env.disabled = false; campo.focus(); return; }
+    const curto = norm(t).split(' ').length <= 4;
+    const achado = await buscarNoCatalogo(t);
+    if (achado && (curto || /\bref/.test(norm(t)))) { mostrar(achado); ocupado = false; env.disabled = false; campo.focus(); return; }
+    if (curto) {
+      const r = reserva(t);
+      if (!r.generico) { mostrar(r); ocupado = false; env.disabled = false; campo.focus(); return; }
+    }
     await responder();
     ocupado = false; env.disabled = false; campo.focus();
   }
