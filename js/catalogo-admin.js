@@ -158,7 +158,7 @@
     modal.append(topo, corpo);
 
     bx.addEventListener('click', () => modal.close());
-    bp.addEventListener('click', () => window.print());
+    bp.addEventListener('click', () => imprimir([b], false));
     bc.addEventListener('click', () => {
       const txt = [b.nome + ' (' + b.cod + ') - Linha ' + b.linha, '']
         .concat(Object.entries(b.spec).map(([k, v]) => k + ': ' + v))
@@ -171,6 +171,134 @@
     modal.scrollTop = 0;
     history.replaceState(null, '', '#' + id);
   }
+
+  const pagina = (cls) => el('section', 'pg ' + cls);
+  const barra = () => el('div', 'pg-barra');
+  const rodape = (b, n) => {
+    const r = el('div', 'pg-rod');
+    r.append(el('span', '', 'GRAN FISH | Catálogo de Embarcações'), el('em', '', b ? 'LINHA ' + b.linha : ''), el('b', '', String(n).padStart(2, '0')));
+    return r;
+  };
+  const cab = (t) => {
+    const c = el('div', 'pg-cab');
+    const lg = el('img');
+    lg.src = 'img/catalogo/logo-impressao.png';
+    lg.alt = 'Gran Fish';
+    c.append(el('span', '', t), lg);
+    return c;
+  };
+
+  function paginaModelo(b, cargas) {
+    const p = pagina('pg-modelo');
+    const esq = el('div', 'pg-esq');
+    const dir = el('div', 'pg-dir');
+    const imgs = b.fotos.map((f) => {
+      const i = el('img');
+      i.src = 'img/catalogo/' + f;
+      i.alt = b.nome;
+      cargas.push(new Promise((r) => { i.onload = i.onerror = r; }));
+      return i;
+    });
+    const caixa = el('div', 'pg-foto');
+    const vista = el('div', 'pg-vista');
+    vista.appendChild(el('h4', '', 'VISTA SUPERIOR'));
+    const mapa = el('div', 'pg-vimg');
+    const ehTopo = (i) => i.naturalWidth / i.naturalHeight > 2;
+    Promise.all(cargas).then(() => {
+      const foto = imgs.find((i) => !ehTopo(i));
+      const topo = imgs.find(ehTopo);
+      if (foto) caixa.appendChild(foto); else caixa.appendChild(el('span', '', 'FOTO DA EMBARCAÇÃO'));
+      if (topo) mapa.appendChild(topo);
+    });
+    vista.appendChild(mapa);
+    esq.append(caixa, vista);
+
+    dir.append(el('h2', '', b.nome), el('span', 'pg-cod', b.cod), el('h3', '', 'FICHA TÉCNICA'));
+    const ul = el('ul', 'pg-spec');
+    Object.entries(b.spec).forEach(([k, v]) => {
+      const li = el('li');
+      li.append(el('span', '', k.charAt(0) + k.slice(1).toLowerCase()), el('b', '', v));
+      ul.appendChild(li);
+    });
+    dir.append(ul, el('h3', '', 'ITENS DE SÉRIE'));
+    const it = el('div', 'pg-itens');
+    const meio = Math.ceil(b.itens.length / 2);
+    [b.itens.slice(0, meio), b.itens.slice(meio)].forEach((grupo, g) => {
+      const col = el('ol');
+      col.start = g ? meio + 1 : 1;
+      grupo.forEach((t, k) => {
+        const li = el('li');
+        li.append(el('b', '', String((g ? meio : 0) + k + 1)), document.createTextNode(' - ' + t));
+        col.appendChild(li);
+      });
+      it.appendChild(col);
+    });
+    dir.appendChild(it);
+    p.append(barra(), cab('LINHA ' + b.linha), esq, dir, rodape(b, b.slide));
+    return p;
+  }
+
+  function paginasGerais(lista) {
+    const capa = pagina('pg-capa');
+    const lg = el('img', 'pg-capalogo');
+    lg.src = 'logo%20GF.png';
+    lg.alt = 'Gran Fish';
+    const chips = el('div', 'pg-chips');
+    [...new Set(lista.map((b) => b.linha))].forEach((l) => chips.appendChild(el('span', '', l)));
+    capa.append(lg, el('i', 'pg-traco'), el('p', 'pg-t1', 'CATÁLOGO DE'), el('p', 'pg-t2', 'EMBARCAÇÕES'),
+      el('p', 'pg-t3', 'Fichas técnicas e itens de série'), chips, el('p', 'pg-t4', lista.length + ' modelos'));
+
+    const ind = pagina('pg-indice');
+    ind.append(barra(), el('h2', '', 'Índice'), el('i', 'pg-traco'));
+    const cols = el('div', 'pg-cols');
+    [...new Set(lista.map((b) => b.linha))].forEach((l) => {
+      const g = el('div', 'pg-grupo');
+      g.appendChild(el('h4', '', 'LINHA ' + l));
+      lista.filter((b) => b.linha === l).forEach((b) => {
+        const li = el('div', 'pg-ind');
+        li.append(el('span', '', b.nome), el('b', '', String(b.slide).padStart(2, '0')));
+        g.appendChild(li);
+      });
+      cols.appendChild(g);
+    });
+    ind.append(cols, rodape(null, 2));
+
+    const cmp = pagina('pg-comp');
+    cmp.append(barra(), el('h2', '', 'Quadro comparativo'), el('i', 'pg-traco'));
+    const t = el('table');
+    const th = el('tr');
+    ['Modelo', 'Comprimento', 'Boca', 'Pontal', 'Lotação', 'Motor máx.', 'Peso', 'Carga'].forEach((x) => th.appendChild(el('th', '', x)));
+    t.appendChild(th);
+    lista.forEach((b) => {
+      const tr = el('tr');
+      [b.nome, sp(b, 'COMPRIMENTO'), sp(b, 'BOCA'), sp(b, 'PONTAL'), pessoas(b), motor(b), sp(b, 'PESO APROXIMADO'), sp(b, 'CAPACIDADE DE CARGA')]
+        .forEach((x) => tr.appendChild(el('td', '', x)));
+      t.appendChild(tr);
+    });
+    cmp.append(t, rodape(null, 3));
+    return [capa, ind, cmp];
+  }
+
+  function imprimir(lista, completo) {
+    const velho = $('impressao');
+    if (velho) velho.remove();
+    const raiz = el('div');
+    raiz.id = 'impressao';
+    const cargas = [];
+    if (completo) paginasGerais(lista).forEach((p) => raiz.appendChild(p));
+    lista.forEach((b) => raiz.appendChild(paginaModelo(b, cargas)));
+    document.body.appendChild(raiz);
+    document.body.classList.add('imprimindo');
+    const fim = () => { document.body.classList.remove('imprimindo'); raiz.remove(); window.removeEventListener('afterprint', fim); };
+    window.addEventListener('afterprint', fim);
+    Promise.all(cargas).then(() => setTimeout(() => window.print(), 150));
+  }
+  window.GFImprimirCatalogo = imprimir;
+
+  const bImp = el('button', 'button', 'Imprimir catálogo');
+  bImp.type = 'button';
+  $('v-tab').after(bImp);
+  bImp.addEventListener('click', () => imprimir(filtrados(), true));
 
   modal.addEventListener('close', () => history.replaceState(null, '', location.pathname));
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });

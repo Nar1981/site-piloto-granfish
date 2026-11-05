@@ -31,9 +31,7 @@ window.GF_CATALOGO = [
    "Suporte De Remo",
    "Banco Piloto/ Porta Tanque Aberto",
    "Bujão de Escoamento",
-   "Alça Amarrador",
-   "LINHA COLORADO",
-   "06"
+   "Alça Amarrador"
   ],
   "fotos": [
    "colorado-55-s-6-1.jpg"
@@ -74,9 +72,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Caixa Seca C/ Caixa De Bateria",
    "Refluxo",
-   "Alça Amarrador",
-   "LINHA COLORADO",
-   "07"
+   "Alça Amarrador"
   ],
   "fotos": [
    "colorado-55-sl1-7-1.jpg",
@@ -121,9 +117,7 @@ window.GF_CATALOGO = [
    "Acesso Porão",
    "Banco Piloto / Porta Tanque Aberto",
    "Caixa de Bateria",
-   "Refluxo D’agua",
-   "LINHA COLORADO",
-   "08"
+   "Refluxo D’agua"
   ],
   "fotos": [
    "colorado-55-sx-8-1.jpg",
@@ -165,9 +159,7 @@ window.GF_CATALOGO = [
    "Suporte de Remo",
    "Porta Tanque Fechado",
    "Bujão de Escoamento",
-   "Alça Amarrador",
-   "LINHA COLORADO",
-   "09"
+   "Alça Amarrador"
   ],
   "fotos": [
    "colorado-60-pro-9-1.jpg",
@@ -205,9 +197,7 @@ window.GF_CATALOGO = [
    "Suporte De Remo",
    "Banco Piloto/ Porta Tanque Aberto",
    "Bujão de Escoamento",
-   "Alça Amarrador",
-   "LINHA COLORADO",
-   "10"
+   "Alça Amarrador"
   ],
   "fotos": [
    "colorado-60-s-10-1.jpg",
@@ -249,9 +239,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Caixa Seca C/ Caixa De Bateria",
    "Refluxo",
-   "Alça Amarrador",
-   "LINHA COLORADO",
-   "11"
+   "Alça Amarrador"
   ],
   "fotos": [
    "colorado-60-sl1-11-1.jpg",
@@ -296,9 +284,7 @@ window.GF_CATALOGO = [
    "Acesso Porão",
    "Banco Piloto / Porta Tanque Aberto",
    "Caixa de Bateria",
-   "Refluxo D’agua",
-   "LINHA COLORADO",
-   "12"
+   "Refluxo D’agua"
   ],
   "fotos": [
    "colorado-60-sx-12-1.jpg",
@@ -346,9 +332,7 @@ window.GF_CATALOGO = [
    "Cunho De Inox",
    "Refluxo D’Água",
    "Par De Flap",
-   "Escada",
-   "LINHA FISH",
-   "14"
+   "Escada"
   ],
   "fotos": [
    "fish-55-premium-14-1.jpg"
@@ -395,9 +379,7 @@ window.GF_CATALOGO = [
    "Cunho De Inox",
    "Refluxo D’Água",
    "Par De Flap",
-   "Escada",
-   "LINHA FISH",
-   "15"
+   "Escada"
   ],
   "fotos": [
    "fish-55-s-15-1.jpg"
@@ -444,9 +426,7 @@ window.GF_CATALOGO = [
    "Cunho de Inox",
    "Refluxo D’Água",
    "Par de Flap",
-   "Escada",
-   "LINHA FISH",
-   "16"
+   "Escada"
   ],
   "fotos": [
    "fish-55-sl-16-1.jpg"
@@ -493,9 +473,7 @@ window.GF_CATALOGO = [
    "Cunho de Inox",
    "Refluxo D’Água",
    "Par de Flap",
-   "Escada",
-   "LINHA FISH",
-   "17"
+   "Escada"
   ],
   "fotos": [
    "fish-55-ss-freestyle-17-1.jpg"
@@ -542,9 +520,7 @@ window.GF_CATALOGO = [
    "Cunho de Inox",
    "Refluxo D’Água",
    "Par de Flap",
-   "Escada",
-   "LINHA FISH",
-   "18"
+   "Escada"
   ],
   "fotos": [
    "fish-60-premium-ii-18-1.jpg",
@@ -592,9 +568,7 @@ window.GF_CATALOGO = [
    "Cunho de Inox",
    "Refluxo D’Água",
    "Par de Flap",
-   "Escada",
-   "LINHA FISH",
-   "19"
+   "Escada"
   ],
   "fotos": [
    "fish-60-s-19-1.jpg"
@@ -642,9 +616,7 @@ window.GF_CATALOGO = [
    "Cunho De Inox",
    "Refluxo D’Água",
    "Par De Flap",
-   "Escada",
-   "LINHA FISH",
-   "20"
+   "Escada"
   ],
   "fotos": [
    "fish-60-sl-20-1.jpg"
@@ -691,9 +663,7 @@ window.GF_CATALOGO = [
    "Cunho De Inox",
    "Refluxo D’Água",
    "Par De Flap",
-   "Escada",
-   "LINHA FISH",
-   "21"
+   "Escada"
   ],
   "fotos": [
    "fish-60-slx-21-1.jpg"
@@ -740,9 +710,7 @@ window.GF_CATALOGO = [
    "Cunho De Inox",
    "Refluxo D’Água",
    "Par De Flap",
-   "Escada",
-   "LINHA FISH",
-   "22"
+   "Escada"
   ],
   "fotos": [
    "fish-60-ss-freestyle-22-1.jpg"
@@ -793,9 +761,7 @@ window.GF_CATALOGO = [
    "Caixas Seca",
    "Refluxo d’Água",
    "Flap",
-   "Escada",
-   "LINHA FISH",
-   "23"
+   "Escada"
   ],
   "fotos": [
    "fish-60-ss-23-1.jpg",
@@ -843,9 +809,7 @@ window.GF_CATALOGO = [
    "Refluxo d’Água",
    "Caixa Seca",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "25"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-55-plat-25-1.jpg",
@@ -890,9 +854,7 @@ window.GF_CATALOGO = [
    "Base p/ Giropesca",
    "Refluxo D’água",
    "Flap",
-   "1 Escada De Aluminio",
-   "LINHA GRAN BASS",
-   "26"
+   "1 Escada De Aluminio"
   ],
   "fotos": [
    "gran-bass-55-prime-ss-com-pedestal-26-1.jpg",
@@ -940,9 +902,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Refluxo d’Água",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "27"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-55-sx-plat-27-1.jpg",
@@ -990,9 +950,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Refluxo D’Água",
    "Flap",
-   "Escada",
-   "LINHA GRAN BASS",
-   "28"
+   "Escada"
   ],
   "fotos": [
    "gran-bass-60-sx-plat-28-1.jpg"
@@ -1041,9 +999,7 @@ window.GF_CATALOGO = [
    "Acesso ao Porão c/ Cx de Bateria",
    "Refluxo D’agua",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "29"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-55-pro-29-1.jpg",
@@ -1086,9 +1042,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Refluxo D’Água",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "30"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-55-sl-30-1.jpg",
@@ -1139,9 +1093,7 @@ window.GF_CATALOGO = [
    "Acesso ao Porão c/ Cx de Bateria",
    "Refluxo D’agua",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "31"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-60-pro-31-1.jpg",
@@ -1184,9 +1136,7 @@ window.GF_CATALOGO = [
    "Base P/ Giropesca",
    "Refluxo D’Água",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "32"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-60-sl-32-1.jpg",
@@ -1233,9 +1183,7 @@ window.GF_CATALOGO = [
    "Base p/ Giropesca",
    "Refluxo D’agua",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "33"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-55-prime-33-1.jpg",
@@ -1284,9 +1232,7 @@ window.GF_CATALOGO = [
    "Acesso ao porão com caixa de bateria",
    "Refluxo de água",
    "Flap",
-   "Escada",
-   "LINHA GRAN BASS",
-   "34"
+   "Escada"
   ],
   "fotos": [
    "gran-bass-55-s-34-1.jpg",
@@ -1335,9 +1281,7 @@ window.GF_CATALOGO = [
    "Acesso Ao Porão C/ Cx Bateria",
    "Refluxo D’agua",
    "Flap",
-   "1 Escada",
-   "LINHA GRAN BASS",
-   "35"
+   "1 Escada"
   ],
   "fotos": [
    "gran-bass-60-s-35-1.jpg",
@@ -1389,9 +1333,7 @@ window.GF_CATALOGO = [
    "Refluxo D’Água",
    "Cunho De Inox",
    "1 Par De Flap",
-   "1 Escada De Inox",
-   "LINHA HURRICANE",
-   "37"
+   "1 Escada De Inox"
   ],
   "fotos": [
    "hurricane-60-premium-37-1.jpg",
@@ -1441,9 +1383,7 @@ window.GF_CATALOGO = [
    "Tampas Porão 2 Suportes Bateria",
    "Refluxo D’Água",
    "1 Par de Flap",
-   "1 Escada",
-   "LINHA HURRICANE",
-   "38"
+   "1 Escada"
   ],
   "fotos": [
    "hurricane-60-s-38-1.jpg"
@@ -1493,9 +1433,7 @@ window.GF_CATALOGO = [
    "Refluxo D’agua",
    "Cunho de Inox",
    "1 Par de Flap",
-   "1 Escada de Inox",
-   "LINHA HURRICANE",
-   "39"
+   "1 Escada de Inox"
   ],
   "fotos": [
    "hurricane-60-sl-39-1.jpg",
@@ -1546,9 +1484,7 @@ window.GF_CATALOGO = [
    "Refluxo D’agua",
    "Cunho de Inox",
    "1 Par de Flap",
-   "1 Escada de Inox",
-   "LINHA HURRICANE",
-   "40"
+   "1 Escada de Inox"
   ],
   "fotos": [
    "hurricane-60-sl-40-1.jpg",
@@ -1595,9 +1531,7 @@ window.GF_CATALOGO = [
    "Refluxo D’Água",
    "Cunho de Inox 6'",
    "1 Par de Flap 250X180MM",
-   "1 Escada",
-   "LINHA HURRICANE",
-   "41"
+   "1 Escada"
   ],
   "fotos": [
    "hurricane-60-slx-master-41-1.jpg"
@@ -1648,9 +1582,7 @@ window.GF_CATALOGO = [
    "Refluxo D’Água",
    "Cunho De Inox",
    "1 Par De Flap",
-   "Escada De Inox - 2 Degraus",
-   "LINHA HURRICANE",
-   "42"
+   "Escada De Inox - 2 Degraus"
   ],
   "fotos": [
    "hurricane-60-slx-42-1.jpg",
@@ -1699,9 +1631,7 @@ window.GF_CATALOGO = [
    "Tampas Porão c/ 2 suportes para Bateria",
    "Refluxo D’agua",
    "1 Par de Flap",
-   "1 Escada de Inox",
-   "LINHA HURRICANE",
-   "43"
+   "1 Escada de Inox"
   ],
   "fotos": [
    "hurricane-55-ss-43-1.jpg"
@@ -1749,9 +1679,7 @@ window.GF_CATALOGO = [
    "Tampas Porão c/ 2 suportes para Bateria",
    "Refluxo D’agua",
    "1 Par de Flap",
-   "1 Escada de Inox",
-   "LINHA HURRICANE",
-   "44"
+   "1 Escada de Inox"
   ],
   "fotos": [
    "hurricane-55-s-44-1.jpg"
@@ -1797,9 +1725,7 @@ window.GF_CATALOGO = [
    "Base p/ Giropesca",
    "Refluxo D’água",
    "Flap",
-   "1 Escada",
-   "LINHA VELOSTER",
-   "46"
+   "1 Escada"
   ],
   "fotos": [
    "veloster-60-46-1.jpg",

@@ -52,9 +52,64 @@
   .cat-vista .button { flex: 1; }
 }
 
+#impressao{display:none}
 @media print {
-  body > main, .adm-top, .adm-tabs, .adm-toast, .cat-modal .acoes { display: none !important; }
-  .cat-modal { position: static; width: 100%; max-height: none; height: auto; box-shadow: none; display: block; }
-  .cat-modal .topo { position: static; background: none; color: #000; }
-  .cat-modal .topo small { color: #333; }
+  @page { size: A4 landscape; margin: 0 }
+  html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+  body.imprimindo > *:not(#impressao) { display: none !important; }
+  body.imprimindo dialog, body.imprimindo .gfc { display: none !important; }
+  body:not(.imprimindo) > main, body:not(.imprimindo) .adm-top, body:not(.imprimindo) .adm-tabs { display: none !important; }
+  #impressao { display: block; }
+  #impressao, #impressao * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+  .pg { position: relative; width: 297mm; height: 209.5mm; overflow: hidden; page-break-after: always; break-after: page; background: #fff; color: #0b1f3a; }
+  .pg:last-child { page-break-after: auto; break-after: auto; }
+  .pg-barra { position: absolute; top: 0; left: 0; right: 0; height: 5mm; background: linear-gradient(90deg, #00a3a3 0 30%, #0b1f3a 30% 100%); }
+  .pg-rod { position: absolute; left: 12mm; right: 12mm; bottom: 6mm; border-top: .3mm solid #c9d1dc; padding-top: 2mm; display: flex; justify-content: space-between; font-size: 8pt; color: #5b6b80; }
+  .pg-rod em { font-style: normal; color: #00a3a3; font-weight: 700; }
+  .pg-rod b { color: #0b1f3a; }
+  .pg-cab { position: absolute; top: 11mm; left: 12mm; right: 12mm; display: flex; justify-content: space-between; align-items: center; }
+  .pg-cab span { color: #00a3a3; font-weight: 700; letter-spacing: .3mm; font-size: 11pt; }
+  .pg-cab img { height: 8mm; }
+  .pg-esq { position: absolute; left: 12mm; top: 26mm; width: 130mm; bottom: 18mm; display: flex; flex-direction: column; gap: 5mm; }
+  .pg-foto { flex: 0 0 62mm; border: .3mm solid #dde3ec; display: flex; align-items: center; justify-content: center; color: #8a97a8; font-size: 9pt; overflow: hidden; background: #f6f8fb; }
+  .pg-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .pg-vista { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .pg-vista h4 { margin: 0 0 2mm; font-size: 8pt; letter-spacing: .4mm; color: #5b6b80; border-bottom: .3mm solid #c9d1dc; padding-bottom: 1.5mm; }
+  .pg-vimg { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  .pg-vimg img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .pg-dir { position: absolute; left: 150mm; right: 12mm; top: 26mm; bottom: 18mm; }
+  .pg-dir h2 { margin: 0; font-size: 22pt; line-height: 1.05; color: #0b1f3a; }
+  .pg-cod { display: inline-block; margin: 2mm 0 2mm; background: #00a3a3; color: #fff; font-weight: 700; font-size: 9pt; padding: 1mm 4mm; border-radius: 4mm; }
+  .pg-dir h3 { margin: 2mm 0 1.2mm; font-size: 10pt; color: #00a3a3; letter-spacing: .3mm; }
+  .pg-spec { list-style: none; margin: 0; padding: 0; }
+  .pg-spec li { display: flex; justify-content: space-between; gap: 4mm; padding: .6mm 2mm; font-size: 8pt; }
+  .pg-spec li:nth-child(odd) { background: #eef1f6; }
+  .pg-spec span { color: #5b6b80; font-size: 7.5pt; }
+  .pg-spec b { text-align: right; }
+  .pg-itens { display: grid; grid-template-columns: 1fr 1fr; gap: 0 5mm; }
+  .pg-itens ol { list-style: none; margin: 0; padding: 0; }
+  .pg-itens li { font-size: 7.5pt; line-height: 1.25; padding: .2mm 0; }
+  .pg-itens li b { color: #00a3a3; }
+  .pg-capa { background: #0b1f3a; color: #fff; }
+  .pg-capa::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 0 55%, rgba(0,0,0,.18) 55% 75%, rgba(0,163,163,.12) 75% 100%); }
+  .pg-capalogo { position: absolute; top: 14mm; left: 16mm; height: 20mm; background: #fff; padding: 3mm 5mm; border-radius: 2mm; }
+  .pg-traco { display: block; width: 24mm; height: 1.2mm; background: #00a3a3; }
+  .pg-capa .pg-traco { position: absolute; left: 16mm; top: 78mm; }
+  .pg-capa p { position: absolute; left: 16mm; margin: 0; }
+  .pg-t1 { top: 86mm; font-size: 22pt; font-weight: 300; letter-spacing: 1mm; }
+  .pg-t2 { top: 99mm; font-size: 40pt; font-weight: 800; }
+  .pg-t3 { top: 124mm; font-size: 13pt; color: #b9c6d8; }
+  .pg-chips { position: absolute; left: 16mm; top: 140mm; display: flex; gap: 3mm; }
+  .pg-chips span { border: .3mm solid #00a3a3; color: #fff; border-radius: 5mm; padding: 1.5mm 5mm; font-size: 9pt; font-weight: 700; }
+  .pg-t4 { top: 175mm; font-size: 11pt; color: #00c2c2; font-weight: 700; }
+  .pg-indice h2, .pg-comp h2 { position: absolute; left: 14mm; top: 16mm; margin: 0; font-size: 24pt; }
+  .pg-indice .pg-traco, .pg-comp .pg-traco { position: absolute; left: 14mm; top: 32mm; }
+  .pg-cols { position: absolute; left: 14mm; right: 14mm; top: 42mm; bottom: 18mm; column-count: 2; column-gap: 14mm; }
+  .pg-grupo { break-inside: avoid; margin-bottom: 3mm; }
+  .pg-grupo h4 { margin: 0 0 1.5mm; color: #00a3a3; font-size: 10pt; letter-spacing: .3mm; }
+  .pg-ind { display: flex; justify-content: space-between; font-size: 8pt; padding: .3mm 0; border-bottom: .2mm dotted #c9d1dc; }
+  .pg-comp table { position: absolute; left: 14mm; right: 14mm; top: 38mm; width: calc(100% - 28mm); border-collapse: collapse; font-size: 6pt; }
+  .pg-comp th { background: #0b1f3a; color: #fff; text-align: left; padding: .6mm 1.5mm; }
+  .pg-comp td { padding: .2mm 1.5mm; }
+  .pg-comp tr:nth-child(even) td { background: #eef1f6; }
 }
