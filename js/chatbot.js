@@ -93,7 +93,7 @@
     { re: /\b(cor|cores|pintura|pintar|tinta|colorido|combinacao|combinacoes|paleta de cores|cor do barco)\b/, txt: 'Quer escolher as cores? Posso te mostrar o catálogo, deixar você montar ao vivo no 3D, ou sugerir combinações. Dica: me diga as cores que imagina, como "azul marinho e branco", e eu monto para você.', ops: [['🎨 Catálogo de cores', { ir: 'catalogo' }], ['🚤 Pintar a Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Pintar a Pontoon', { ir: 'pontoon' }], ['💡 Ideias de combinação', { ideias: true }]] },
     { re: /\b(hurricane|60 ?sl|lancha|lanchas|60 pes)\b/, txt: 'A Hurricane 60 SL tem 60 pés e casco laminado, feita para quem busca presença, estabilidade e acabamento. No configurador 3D você escolhe a cor base e o grafismo.', ops: [['🚤 Configurar a Hurricane 60 SL', { ir: 'hurricane' }], ['🎨 Ver cores no catálogo', { ir: 'catalogo' }], WAOP] },
     { re: /\b(pontoon|pontom|pesca|pescar|pescaria|lazer|aluminio|plataforma|catamara)\b/, txt: 'A Linha Pontoon é em alumínio naval, com espaço para lazer, pesca e bons encontros. No configurador 3D você pinta as três faixas.', ops: [['🛥️ Configurar a Pontoon', { ir: 'pontoon' }], ['🎨 Ver cores no catálogo', { ir: 'catalogo' }], WAOP] },
-    { re: /\b(modelo|modelos|barco|barcos|embarcacao|embarcacoes|lancha|linha|linhas|produtos|produto|frota|nautica)\b/, txt: 'Hoje temos dois modelos com configurador 3D: a Hurricane 60 SL e a Linha Pontoon. Qual você quer ver?', ops: [['🚤 Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Linha Pontoon', { ir: 'pontoon' }], ['🔎 Ver a seção de modelos', { ir: 'modelos' }]] },
+    { re: /\b(modelo|modelos|barco|barcos|embarcacao|embarcacoes|lancha|linha|linhas|produtos|produto|frota|nautica)\b/, txt: 'Temos 36 modelos de embarcações em 5 linhas (Colorado, Fish, Gran Bass, Hurricane e Veloster), com ficha técnica e itens de série, e dois modelos com configurador 3D: a Hurricane 60 SL e a Linha Pontoon. O que você quer ver?', ops: [['📋 Ver as linhas e fichas', { barcos: true }], ['🚤 Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Linha Pontoon', { ir: 'pontoon' }], ['🔎 Ver a seção de modelos', { ir: 'modelos' }]] },
     { re: /\b(configur\w*|personaliz\w*|montar|monte|customiz\w*|3d|simulador|editar|edicao|projetar|desenhar|criar meu barco)\b/, txt: 'Dá para montar o seu barco ao vivo no configurador 3D: você troca cores e grafismos, desfaz, e salva uma imagem para mostrar à equipe. Qual modelo?', ops: [['🚤 Hurricane 60 SL', { ir: 'hurricane' }], ['🛥️ Linha Pontoon', { ir: 'pontoon' }], ['💡 Ideias de combinação', { ideias: true }]] },
     { re: /\b(estaleiro|empresa|sobre|quem (e|sao)|historia|engenharia|fabrica|fabricacao|gran fish|granfish|diferencial)\b/, txt: 'A Gran Fish é um estaleiro de Pratápolis - MG com engenharia própria, acabamento sob medida (materiais, cores e layout escolhidos por você) e pós-venda direto com quem entende da embarcação.', ops: [['⚓ Conhecer o estaleiro', { ir: 'estaleiro' }], ['📸 Ver no Instagram', { ir: 'instagram' }], ['🚤 Ver os modelos', { ir: 'modelos' }]] },
     { re: /\b(instagram|insta|redes|rede social|novidades|lancamentos|fotos|videos|reels|bastidores)\b/, txt: 'No Instagram do estaleiro você acompanha lançamentos, bastidores e embarcações entregues.', ops: [['📸 Ver o Instagram', { ir: 'instagram' }], ['🚤 Ver os modelos', { ir: 'modelos' }]] },
@@ -347,6 +347,12 @@
     if (a.ir) levar({ chave: a.ir, cores: a.cores || [] });
     else if (a.say) { const r = intencao(a.say); if (r) mostrar(r); }
     else if (a.ideias) ideias();
+    else if (a.barco || a.linha || a.barcos) {
+      carregarBarcos().then((d) => {
+        const r = a.barco ? porId(d, a.barco) : a.linha ? resumoLinha(d, a.linha) : visaoGeral(d);
+        if (r) mostrar(r);
+      });
+    }
   }
 
   function ideias() {
@@ -388,6 +394,114 @@
     };
   }
 
+  // Catálogo de embarcações (fichas técnicas e itens de série)
+  let barcos = null;
+  function carregarBarcos() {
+    if (barcos) return Promise.resolve(barcos);
+    return new Promise((ok) => {
+      if (window.GF_CATALOGO) return ok((barcos = window.GF_CATALOGO));
+      const s = document.createElement('script');
+      s.src = 'js/catalogo-dados.js';
+      s.onload = () => ok((barcos = window.GF_CATALOGO || []));
+      s.onerror = () => ok([]);
+      document.head.appendChild(s);
+    });
+  }
+  const LINHAS_B = [['colorado', 'COLORADO'], ['gran ?bass', 'GRAN BASS'], ['bass', 'GRAN BASS'], ['hurricane', 'HURRICANE'], ['veloster', 'VELOSTER'], ['fish', 'FISH']];
+  const ITENS_B = ['giropesca', 'viveiro', 'flap', 'escada', 'pedestal', 'guarda sol', 'ancora', 'caixa seca', 'bateria', 'porta vara', 'eva', 'xadrez', 'tanque', 'cockpit', 'estofado', 'refluxo', 'motor eletrico', 'remo', 'cunho', 'castelo', 'porta objetos', 'porta documentos'];
+  const PARADAS_B = new Set('o a os as de da do das dos e um uma com modelo modelos barco barcos embarcacao embarcacoes ficha tecnica itens item serie quais qual que me fale sobre informacoes info detalhes tem mostra mostrar quero saber ver como para medidas caracteristicas especificacoes tamanho peso motor motorizacao lotacao da no na em'.split(' '));
+  const gB = (b, k) => b.spec[k] || '';
+  const motorB = (b) => gB(b, 'MOTORIZAÇÃO MÁXIMA') || gB(b, 'MOTORIZAÇÃO');
+  const lotB = (b) => parseInt(gB(b, 'LOTAÇÃO'), 10) || 0;
+  const hpsB = (b) => (motorB(b).match(/\d+/g) || ['0']).map(Number);
+  const tamB = (b) => (b.nome.match(/\d\.\d/) || [''])[0];
+  const varianteB = (b) => norm(b.nome.replace(/^[A-Za-zÀ-ú ]+?(?=\s\d\.\d)/, '').replace(/\d\.\d/, '')).replace(/-/g, ' ').split(' ').filter(Boolean);
+  const souEquipe = () => {
+    try { const s = JSON.parse(sessionStorage.getItem('gf_admin_token') || 'null'); return !!(s && s.exp > Date.now()); } catch (e) { return false; }
+  };
+  const bonito = (s) => s.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+  const unicos = (l) => l.filter((b, i) => l.findIndex((x) => x.nome === b.nome) === i);
+  const lista = (l) => l.map((b) => b.nome).join(', ');
+  const opsBarcos = (l) => unicos(l).slice(0, 12).map((b) => ['🚤 ' + b.nome, { barco: b.id }]);
+
+  function fichaBarco(b) {
+    const v = (rot, k) => (gB(b, k) ? rot + ' ' + gB(b, k) : '');
+    const junta = (a) => a.filter(Boolean).join(' · ');
+    const L = [b.nome + ' (código ' + b.cod + ') · linha ' + bonito(b.linha)];
+    L.push(junta([v('Comprimento', 'COMPRIMENTO'), v('Boca', 'BOCA'), v('Pontal', 'PONTAL'), v('Calado', 'CALADO'), v('Contorno', 'CONTORNO')]));
+    L.push(junta(['Lotação ' + lotB(b) + ' pessoas', 'Motorização ' + motorB(b), v('Peso', 'PESO APROXIMADO'), v('Carga', 'CAPACIDADE DE CARGA')]));
+    L.push(junta(Object.keys(b.spec).filter((k) => /^(CHAPA|LARGURA|FUNDO|BORDA)/.test(k)).map((k) => k.charAt(0) + k.slice(1).toLowerCase() + ' ' + b.spec[k])));
+    L.push('Itens de série (' + b.itens.length + '): ' + b.itens.join(', ') + '.');
+    return L.filter(Boolean).join('\n');
+  }
+  function opsFicha(b, todos) {
+    const ops = [['📋 Outros da linha ' + bonito(b.linha), { linha: b.linha }], ['🎨 Cores e pinturas', { ir: 'catalogo' }], WAOP];
+    if (souEquipe()) ops.unshift(['🗂️ Ficha completa (equipe)', { ir: 'barco:' + b.id }]);
+    return ops;
+  }
+  function resumoLinha(dados, linha) {
+    const l = unicos(dados.filter((b) => b.linha === linha));
+    const tam = [...new Set(l.map(tamB))].sort();
+    const hp = l.flatMap(hpsB).filter(Boolean);
+    return { txt: 'Linha ' + bonito(linha) + ': ' + l.length + (l.length === 1 ? ' modelo' : ' modelos') + ' (' + tam.join(' e ') + ' m), motores de ' + Math.min(...hp) + ' a ' + Math.max(...hp) + ' HP.\n' + lista(l) + '\nToque num modelo para ver a ficha técnica e os itens de série.', ops: opsBarcos(l) };
+  }
+  function visaoGeral(dados) {
+    const nomes = [...new Set(dados.map((b) => b.linha))];
+    const txt = 'Temos ' + unicos(dados).length + ' modelos em ' + nomes.length + ' linhas: ' + nomes.map((n) => bonito(n) + ' (' + unicos(dados.filter((b) => b.linha === n)).length + ')').join(', ') + '. Todos em alumínio, de 5,5 e 6 m. Escolha uma linha para ver os modelos, fichas técnicas e itens de série.';
+    return { txt, ops: nomes.map((n) => ['🚤 Linha ' + bonito(n), { linha: n }]).concat([WAOP]) };
+  }
+  function porId(dados, id) {
+    const b = dados.find((x) => x.id === id);
+    return b ? { txt: fichaBarco(b), ops: opsFicha(b) } : null;
+  }
+
+  function buscarBarco(t, dados) {
+    if (!dados.length) return null;
+    let n = ' ' + norm(t).replace(/gran ?fish/g, ' ') + ' ';
+    n = n.replace(/(\d)[,](\d)/g, '$1.$2');
+    if (/\b(60 ?sl|60 pes|lancha|pontoon|pontom)\b/.test(n)) return null;
+    if (/\b(cor|cores|pintura|pintar|grafismo|referencia|paleta)\b/.test(n)) return null;
+    const lin = (LINHAS_B.find(([k]) => new RegExp('\\b' + k + '\\b').test(n)) || [])[1];
+    const sem = n.replace(/\d+ ?(pessoas?|lugares|hp|cavalos|kg)\b/g, ' ');
+    let tam = (sem.match(/\b([56])\.([05])\b/) || [])[0];
+    if (!tam && lin) { const m = sem.match(/\b([56])\b/); if (m) tam = m[1] === '5' ? '5.5' : '6.0'; }
+    if (lin) {
+      const vocab = new Set(dados.flatMap(varianteB));
+      const vt = sem.replace(/\b[56]\.[05]\b|\b[56]\b/g, ' ').split(' ').filter((w) => w && vocab.has(w) && !PARADAS_B.has(w) && !new RegExp('^(' + LINHAS_B.map((x) => x[0]).join('|') + ')$').test(w) && w !== 'bass' && w !== 'fish' && w !== 'gran');
+      let c = dados.filter((b) => b.linha === lin && (!tam || tamB(b) === tam));
+      if (vt.length) {
+        const exato = c.filter((b) => { const x = varianteB(b); return x.length === vt.length && vt.every((w) => x.includes(w)); });
+        c = exato.length ? exato : c.filter((b) => vt.every((w) => varianteB(b).includes(w)));
+      }
+      c = unicos(c);
+      if (!c.length) return null;
+      if (c.length === 1) return { txt: fichaBarco(c[0]), ops: opsFicha(c[0]) };
+      if (!vt.length && !tam) return resumoLinha(dados, lin);
+      return { txt: 'Achei ' + c.length + ' modelos: ' + lista(c) + '. Toque em um para ver a ficha completa.', ops: opsBarcos(c) };
+    }
+    const pessoas = (sem.match(/\b(\d+) ?(pessoas?|lugares)\b/) || n.match(/\b(\d+) ?(pessoas?|lugares)\b/) || [])[1];
+    if (pessoas && /\b(barco|barcos|modelo|modelos|cabe|cabem|leva|levam|lotacao|aguenta|comporta|qual|quais|tem)\b/.test(n)) {
+      const c = unicos(dados.filter((b) => lotB(b) >= Number(pessoas)));
+      if (!c.length) return { txt: 'Nenhum modelo do catálogo leva ' + pessoas + ' pessoas. A maior lotação é ' + Math.max(...dados.map(lotB)) + ' pessoas.', ops: [WAOP] };
+      return { txt: 'Modelos com lotação para ' + pessoas + ' pessoas ou mais (' + c.length + '): ' + lista(c) + '.', ops: opsBarcos(c) };
+    }
+    const hp = (n.match(/\b(\d+) ?(hp|cavalos)\b/) || [])[1];
+    if (hp) {
+      const x = Number(hp);
+      const c = unicos(dados.filter((b) => { const h = hpsB(b); return x <= Math.max(...h) && (h.length < 2 || x >= Math.min(...h)); }));
+      if (!c.length) return { txt: 'Nenhum modelo recebe motor de ' + hp + ' HP. O maior é de ' + Math.max(...dados.flatMap(hpsB)) + ' HP.', ops: [WAOP] };
+      return { txt: 'Modelos que aceitam motor de ' + hp + ' HP (' + c.length + '): ' + lista(c) + '.', ops: opsBarcos(c) };
+    }
+    const item = ITENS_B.find((k) => n.includes(' ' + k));
+    if (item && /\b(tem|com|vem|possui|inclui|incluso|item|itens|equipado|equipada)\b/.test(n)) {
+      const c = unicos(dados.filter((b) => b.itens.some((i) => norm(i).includes(item))));
+      if (!c.length) return { txt: 'Não encontrei "' + item + '" nos itens de série dos modelos.', ops: [WAOP] };
+      return { txt: 'Têm ' + item + ' de série (' + c.length + ' modelos): ' + lista(c) + '.', ops: opsBarcos(c) };
+    }
+    if (/\b(fichas?|ficha tecnica|fichas tecnicas|itens de serie|quadro comparativo|comparativo|catalogo de (barcos|embarcacoes)|catalogo das embarcacoes|quais (sao )?(os )?(modelos|barcos|embarcacoes|linhas)|que (modelos|barcos|linhas)|todos os (modelos|barcos)|lista de (modelos|barcos))\b/.test(n)) return visaoGeral(dados);
+    return null;
+  }
+
   function oferecer(chave, cores) {
     const alvo = pendente = { chave, cores: cores || [] };
     const linha = el('div', 'gfc-go');
@@ -404,7 +518,7 @@
     pendente = null;
     const { chave, cores } = p;
     if (cores.length && chave === ctx && aplicarAqui('', cores)) return;
-    let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : DESTINOS[chave];
+    let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : chave.startsWith('barco:') ? ['catalogo-admin.html#' + chave.slice(6), 'a ficha completa do modelo'] : DESTINOS[chave];
     const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
     let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
     if (temCores) url += '?cores=' + cores.map((c) => c.slice(1)).join(',');
@@ -482,6 +596,8 @@
     const corPedida = extrairCores(t);
     if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) { ocupado = false; env.disabled = false; campo.focus(); return; }
     const curto = norm(t).split(' ').length <= 4;
+    const barco = buscarBarco(t, await carregarBarcos());
+    if (barco) { mostrar(barco); ocupado = false; env.disabled = false; campo.focus(); return; }
     const achado = await buscarNoCatalogo(t);
     if (achado && (curto || /\bref/.test(norm(t)))) { mostrar(achado); ocupado = false; env.disabled = false; campo.focus(); return; }
     if (curto) {
