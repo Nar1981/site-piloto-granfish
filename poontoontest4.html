@@ -1000,6 +1000,20 @@
       if (st) st.innerText = '✓ Cores sugeridas pela Marina aplicadas. Ajuste como quiser.';
     }
 
+    // Ponte para a Marina aplicar cores sem recarregar a página
+    window.marinaConfig = {
+      modelo: 'pontoon',
+      campos: ['faixa 1','faixa 2','faixa 3'],
+      aplicar(lista) {
+        const ids = ['cinza2', 'Azul', 'cinza'];
+        const hexes = (lista || []).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+        hexes.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+        const st = document.getElementById('status');
+        if (st && hexes.length) st.innerText = '✓ Cores aplicadas pela Marina. Ajuste como quiser.';
+        return hexes.length;
+      }
+    };
+
     function selecionarCor(nomeMaterial, hex) {
       if (!hex) return;
       mostrarCaixaHex(nomeMaterial);

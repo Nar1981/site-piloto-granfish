@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
   const chave = Deno.env.get('GEMINI_API_KEY');
   if (!chave) return resp({ erro: 'config' }, 500);
 
-  let corpo: { messages?: { role?: string; text?: string }[] };
+  let corpo: { messages?: { role?: string; text?: string }[]; pagina?: string };
   try { corpo = await req.json(); } catch { return resp({ erro: 'json' }, 400); }
 
   const msgs = (Array.isArray(corpo.messages) ? corpo.messages : [])
@@ -81,12 +81,19 @@ Deno.serve(async (req) => {
     }));
   if (!msgs.length || msgs[msgs.length - 1].role !== 'user') return resp({ erro: 'vazio' }, 400);
 
+  const PAGINAS: Record<string, string> = {
+    hurricane: 'A pessoa está no configurador 3D da Hurricane 60 SL. Ajude a escolher cores (base, grafismo 1 e 2) e, ao sugerir, use [[IR:hurricane:#hex1,#hex2,#hex3]]: as cores são aplicadas na hora, sem sair da página.',
+    pontoon: 'A pessoa está no configurador 3D da Linha Pontoon. Ajude a escolher as 3 faixas de cor e, ao sugerir, use [[IR:pontoon:#hex1,#hex2,#hex3]]: as cores são aplicadas na hora, sem sair da página.',
+    catalogo: 'A pessoa está no catálogo de cores. Ajude a achar uma referência parecida com o que ela descrever, usando [[IR:catalogo:#hex1,#hex2]], ou ofereça montar o barco no estaleiro.'
+  };
+  const extra = PAGINAS[String(corpo.pagina || '')] || '';
+
   try {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': chave },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SISTEMA }] },
+        systemInstruction: { parts: [{ text: SISTEMA + (extra ? '\n\nContexto da página atual: ' + extra : '') }] },
         contents: msgs,
         generationConfig: { temperature: 0.7, maxOutputTokens: 400, thinkingConfig: { thinkingBudget: 0 } }
       })

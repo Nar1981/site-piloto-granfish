@@ -2321,6 +2321,20 @@ pygame.quit()
       if (st) st.innerText = '✓ Cores sugeridas pela Marina aplicadas. Ajuste como quiser.';
     }
 
+    // Ponte para a Marina aplicar cores sem recarregar a página
+    window.marinaConfig = {
+      modelo: 'hurricane',
+      campos: ['cor base do casco','cor 1 do grafismo','cor 2 do grafismo'],
+      aplicar(lista) {
+        const ids = ['decalque1', 'decalque-cor1', 'decalque-cor2'];
+        const hexes = (lista || []).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+        hexes.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+        const st = document.getElementById('status');
+        if (st && hexes.length) st.innerText = '✓ Cores aplicadas pela Marina. Ajuste como quiser.';
+        return hexes.length;
+      }
+    };
+
     function isMaterialDecalque(nomeMaterial) {
       if (!nomeMaterial) return false;
       return nomeMaterial.toLowerCase().replace(/[^a-z0-9]/g, '').includes('decalque');

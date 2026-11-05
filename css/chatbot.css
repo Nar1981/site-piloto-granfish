@@ -20,9 +20,9 @@
 .gfc-m { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: .92rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
 .gfc-bot { align-self: flex-start; color: #0b1b23; background: #fff; border-bottom-left-radius: 4px; }
 .gfc-user { align-self: flex-end; color: #fff; background: #0c7c7a; border-bottom-right-radius: 4px; }
-.gfc-sug { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px 0; background: #f1f6f6; }
+.gfc-sug { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding: 8px 12px 4px; background: #f1f6f6; }
 .gfc-sug[hidden] { display: none; }
-.gfc-sug button { padding: 7px 11px; border: 1px solid #0c7c7a; border-radius: 999px; color: #0c7c7a; background: #fff; font: inherit; font-size: .8rem; cursor: pointer; }
+.gfc-sug button { flex: none; white-space: nowrap; padding: 7px 11px; border: 1px solid #0c7c7a; border-radius: 999px; color: #0c7c7a; background: #fff; font: inherit; font-size: .8rem; cursor: pointer; }
 .gfc-form { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid #dfe7ea; }
 .gfc-form input { flex: 1; min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #c9d3d8; border-radius: 10px; font: inherit; font-size: 16px; }
 .gfc-form button { padding: 0 16px; border: 0; border-radius: 10px; color: #fff; background: #b8693a; font: inherit; font-weight: 700; cursor: pointer; }

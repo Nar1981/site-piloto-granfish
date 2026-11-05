@@ -136,13 +136,52 @@
   msgs.setAttribute('role', 'log');
   msgs.setAttribute('aria-live', 'polite');
 
+  const pag = (location.pathname.split('/').pop() || 'index.html');
+  const ctx = /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo/.test(pag) ? 'catalogo' : 'home';
+  const PALETAS = [
+    ['⚓ Azul marinho e branco', ['#0d1b2a', '#ffffff', '#c0c0c0']],
+    ['🖤 Preto e grafite', ['#111111', '#25282a', '#c0c0c0']],
+    ['🔥 Vermelho esportivo', ['#e74c3c', '#ffffff', '#111111']],
+    ['🌿 Verde militar (pesca)', ['#4b5320', '#d8cbb5', '#111111']],
+    ['🌊 Azul turquesa e areia', ['#00a896', '#fffdd0', '#ffffff']],
+    ['🤍 Branco total', ['#ffffff', '#f4f4f0', '#c0c0c0']]
+  ];
+  const BUSCAS = [
+    ['🎨 Parecido com azul', ['#0070ff']], ['🎨 Parecido com vermelho', ['#e74c3c']],
+    ['🎨 Parecido com verde', ['#27ae60']], ['🎨 Preto e branco', ['#111111', '#ffffff']],
+    ['🎨 Dourado', ['#d4af37']]
+  ];
   const sug = el('div', 'gfc-sug');
-  ['Conhecer os modelos', 'Como configurar minha embarcação?', 'Preciso de suporte'].forEach((s) => {
-    const b = el('button', '', s);
+  const chip = (txt, fn) => {
+    const b = el('button', '', txt);
     b.type = 'button';
-    b.addEventListener('click', () => enviar(s));
+    b.addEventListener('click', fn);
     sug.appendChild(b);
-  });
+  };
+  function montarChips() {
+    sug.textContent = '';
+    if (ctx === 'hurricane' || ctx === 'pontoon') {
+      PALETAS.forEach(([n, c]) => chip(n, () => aplicarAqui(n, c)));
+      chip('📖 Ver catálogo de cores', () => enviar('Quero ver o catálogo de cores'));
+    } else if (ctx === 'catalogo') {
+      BUSCAS.forEach(([n, c]) => chip(n, () => { bolha('user', n); levar({ chave: 'catalogo', cores: c }); }));
+      chip('🚤 Montar meu barco', () => enviar('Quero montar meu barco no estaleiro'));
+    } else {
+      ['Conhecer os modelos', 'Montar meu barco com cores', 'Ver catálogo de cores', 'Preciso de suporte'].forEach((s) => chip(s, () => enviar(s)));
+    }
+  }
+  function aplicarAqui(nome, cores) {
+    const cfgPg = window.marinaConfig;
+    if (!cfgPg) return false;
+    const n = cfgPg.aplicar(cores);
+    if (!n) return false;
+    const rot = cfgPg.campos.slice(0, n).map((c, i) => c + ': ' + cores[i]).join(' · ');
+    if (nome) bolha('user', nome);
+    bolha('bot', 'Pronto, apliquei no seu barco! ✨ (' + rot + ') Quer testar outra combinação ou procurar algo parecido no catálogo?');
+    hist.push({ role: 'bot', text: 'Apliquei as cores no configurador: ' + rot });
+    return true;
+  }
+  montarChips();
 
   const form = el('form', 'gfc-form');
   const campo = el('input');
@@ -183,6 +222,7 @@
   async function levar(p) {
     pendente = null;
     const { chave, cores } = p;
+    if (cores.length && chave === ctx && aplicarAqui('', cores)) return;
     let [url, nome, externo] = DESTINOS[chave];
     const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
     let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
@@ -222,7 +262,7 @@
         const r = await fetch(URL_CHAT, {
           method: 'POST', signal: ctrl.signal,
           headers: { 'Content-Type': 'application/json', apikey: cfg.supabaseAnonKey || '' },
-          body: JSON.stringify({ messages: hist.slice(-12) })
+          body: JSON.stringify({ messages: hist.slice(-12), pagina: ctx })
         });
         clearTimeout(to);
         if (r.ok) texto = ((await r.json()).reply || '').trim();
@@ -242,7 +282,7 @@
   async function enviar(t) {
     t = (t || '').trim();
     if (!t || ocupado) return;
-    ocupado = true; env.disabled = true; sug.hidden = true;
+    ocupado = true; env.disabled = true;
     bolha('user', t);
     hist.push({ role: 'user', text: t });
     campo.value = '';
@@ -250,6 +290,8 @@
     if (pendente && NAO.test(t)) { msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove()); pendente = null; bolha('bot', 'Tudo bem! Se precisar de algo é só chamar.'); ocupado = false; env.disabled = false; return; }
     msgs.querySelectorAll('.gfc-go').forEach((x) => x.remove());
     pendente = null;
+    const corPedida = extrairCores(t);
+    if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) { ocupado = false; env.disabled = false; campo.focus(); return; }
     await responder();
     ocupado = false; env.disabled = false; campo.focus();
   }
@@ -262,7 +304,14 @@
     botao.classList.toggle('gfc-open', abrir);
     botao.setAttribute('aria-expanded', String(abrir));
     if (abrir) {
-      if (!msgs.children.length) bolha('bot', 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
+      if (!msgs.children.length) {
+        const BOAS = {
+          hurricane: 'Oi! Sou a Marina. Vamos montar a sua Hurricane 60 SL? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "casco azul marinho com detalhes brancos").',
+          pontoon: 'Oi! Sou a Marina. Vamos montar a sua Pontoon? Toque numa combinação abaixo que eu aplico na hora, ou me diga as cores que você imagina (ex.: "faixas verde e branca").',
+          catalogo: 'Oi! Sou a Marina. Procurando uma cor? Toque numa busca abaixo ou descreva o que imagina (ex.: "algo parecido com azul petróleo") que eu te levo até a referência mais próxima.'
+        };
+        bolha('bot', BOAS[ctx] || 'Oi! Eu sou a ' + NOME + ', da Gran Fish. Posso ajudar com modelos, cores, configuração da sua embarcação, cadastro ou suporte. Como posso ajudar?');
+      }
       campo.focus();
     }
   }
