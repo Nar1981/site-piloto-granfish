@@ -1437,7 +1437,6 @@ window.GF_CATALOGO = [
    "hurricane-60-ss-39-1.jpg",
    "hurricane-60-ss-39-2.jpg"
   ],
-  "pptx": "Planta_Baixa_H60SS_Editavel.pptx",
   "pins": [
    {
     "num": 1,

@@ -114,7 +114,7 @@
   .pg-comp tr:nth-child(even) td { background: #eef1f6; }
 }
 
-/* ── Planta Baixa Interativa & PPTX ── */
+/* ── Planta Baixa Interativa ── */
 .cat-interactive-wrap {
   position: relative;
   display: block;
@@ -184,23 +184,4 @@
 .cat-itens li.pin-ativo::before {
   background: var(--teal, #0f766e) !important;
   transform: scale(1.15);
-}
-.chip--pptx {
-  background: #fdf0e9 !important;
-  color: var(--copper, #d9743f) !important;
-  border: 1px solid rgba(217, 116, 63, 0.4);
-  font-weight: 700 !important;
-}
-.cat-btn-pptx {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  background: var(--copper, #d9743f);
-  color: #ffffff;
-  font-weight: 600;
-}
-.cat-btn-pptx:hover {
-  background: #c56330;
-  color: #ffffff;
 }

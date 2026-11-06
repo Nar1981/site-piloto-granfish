@@ -64,7 +64,6 @@
     corpo.append(el('h3', '', b.nome), el('div', 'cod', b.cod));
     const chips = el('div', 'chips');
     [sp(b, 'COMPRIMENTO').replace(/\s*m$/i, ' m'), pessoas(b), motor(b)].forEach((t) => chips.appendChild(el('span', 'chip', t)));
-    if (b.pptx) chips.appendChild(el('span', 'chip chip--pptx', 'Planta Baixa · PPTX'));
     corpo.appendChild(chips);
     c.append(f, corpo);
     return c;
@@ -109,14 +108,6 @@
     const tt = el('div');
     tt.append(el('small', '', 'LINHA ' + b.linha + ' · ' + b.cod), el('h2', '', b.nome));
     const ac = el('div', 'acoes');
-    if (b.pptx) {
-      const b_pptx = el('a', 'button button--copper cat-btn-pptx', 'Baixar PPTX');
-      b_pptx.href = b.pptx;
-      b_pptx.download = b.pptx;
-      b_pptx.title = 'Baixar apresentação PowerPoint editável (.pptx)';
-      b_pptx.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Baixar PPTX';
-      ac.append(b_pptx);
-    }
     const bc = el('button', 'button', 'Copiar resumo');
     bc.type = 'button';
     const bp = el('button', 'button', 'Imprimir');

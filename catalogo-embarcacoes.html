@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; base-uri 'self'; connect-src 'self' https://*.supabase.co; form-action 'self';">
 <title>Catálogo de embarcações · Gran Fish</title>
@@ -11,14 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/cadastro.css">
+<link rel="stylesheet" href="css/admin.css">
 <link rel="stylesheet" href="css/chatbot.css">
 <link rel="stylesheet" href="css/catalogo.css">
 </head>
 <body data-publico>
 <main class="wrap" style="padding:36px 0 90px">
-  <p><a href="index.html" style="color:inherit">← Voltar ao site Gran Fish</a></p>
   <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Catálogo de embarcações</h1>
-  <p style="color:var(--muted);margin:0 0 22px">Fichas técnicas e itens de série de todos os modelos Gran Fish. Consulta livre, sem senha.</p>
+  <p style="color:var(--muted);margin:0 0 22px">Fichas técnicas e itens de série de todos os modelos Gran Fish. Acesso livre, sem login.</p>
 
   <section id="painel" hidden>
     <div class="stats" id="linhas"></div>
@@ -46,9 +46,9 @@
   </section>
 
   <section id="negado" class="card" hidden>
-    <h2 class="card-title">Catálogo indisponível</h2>
-    <p>O catálogo público não está liberado no momento. Fale com a equipe pelo WhatsApp.</p>
-    <a class="button button--copper" href="index.html#contato">Falar com a equipe</a>
+    <h2 class="card-title">Acesso restrito</h2>
+    <p>Entre primeiro na área interna para ver o catálogo.</p>
+    <a class="button button--copper" href="cadastros-admin.html?next=catalogo-admin.html">Entrar</a>
   </section>
 </main>
 
@@ -57,6 +57,7 @@
 <script src="js/cadastro-config.js"></script>
 <script src="js/catalogo-dados.js"></script>
 <script src="js/catalogo-admin.js" defer></script>
+<script src="js/site-campos.js"></script><script src="js/site-personalizar.js" defer></script>
 <script src="js/chatbot.js" defer></script>
 </body>
 </html>
