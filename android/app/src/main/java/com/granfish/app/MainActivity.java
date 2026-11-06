@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -22,13 +23,15 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.webkit.WebViewAssetLoader;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity extends AppCompatActivity implements GranFishChromeClient.FileChooserCallback {
 
     private WebView webView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private MaterialButton btnExitApp;
     private ProgressBar progressBar;
     private View layoutOffline;
     private ValueCallback<Uri[]> uploadMessage;
@@ -36,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Switch from splash theme to main app theme
         setTheme(R.style.Theme_GranFish);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
 
     private void initViews() {
         webView = findViewById(R.id.webView);
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        btnExitApp = findViewById(R.id.btnExitApp);
         progressBar = findViewById(R.id.progressBar);
         layoutOffline = findViewById(R.id.layoutOffline);
 
@@ -61,11 +63,19 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
             webView.reload();
         });
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.teal, R.color.copper);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            webView.reload();
-            swipeRefreshLayout.setRefreshing(false);
-        });
+        btnExitApp.setOnClickListener(v -> showExitConfirmation());
+    }
+
+    public void showExitConfirmation() {
+        new MaterialAlertDialogBuilder(this, R.style.Theme_GranFish_Dialog)
+            .setTitle(R.string.exit_dialog_title)
+            .setMessage(R.string.exit_dialog_message)
+            .setPositiveButton(R.string.exit_dialog_confirm, (dialog, which) -> {
+                finishAffinity();
+                System.exit(0);
+            })
+            .setNegativeButton(R.string.exit_dialog_cancel, (dialog, which) -> dialog.dismiss())
+            .show();
     }
 
     private void initFileChooser() {
@@ -95,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
     private void setupWebView() {
         WebSettings settings = webView.getSettings();
 
-        // JavaScript & Storage (essential for 3D configurator, Marina chat, and catalog)
+        // JavaScript & Storage
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
@@ -108,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
+
+        // Disable overscroll bounce & refresh interference
+        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // Media & Audio
         settings.setMediaPlaybackRequiresUserGesture(false);
@@ -134,6 +147,9 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
         webView.setWebViewClient(new GranFishWebClient(this, assetLoader, layoutOffline));
         webView.setWebChromeClient(new GranFishChromeClient(progressBar, this));
 
+        // JavaScript Interface for exiting app from web buttons
+        webView.addJavascriptInterface(new WebAppInterface(), "GranFishApp");
+
         // Downloads listener (catalogs, PPTX, PDFs)
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             try {
@@ -150,11 +166,17 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
                     Toast.makeText(MainActivity.this, getString(R.string.download_started) + " " + fileName, Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                // Fallback to browser
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
             }
         });
+    }
+
+    public class WebAppInterface {
+        @JavascriptInterface
+        public void exitApp() {
+            runOnUiThread(MainActivity.this::showExitConfirmation);
+        }
     }
 
     private void setupBackNavigation() {
@@ -184,8 +206,8 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
                         if (webView.canGoBack()) {
                             webView.goBack();
                         } else {
-                            setEnabled(false);
-                            getOnBackPressedDispatcher().onBackPressed();
+                            // If at root page, prompt exit confirmation
+                            showExitConfirmation();
                         }
                     }
                 );

@@ -6,4 +6,10 @@
     <string name="btn_retry">Tentar novamente</string>
     <string name="file_chooser_title">Selecione um arquivo</string>
     <string name="download_started">Iniciando download…</string>
+    <string name="btn_exit">Sair</string>
+    <string name="btn_exit_desc">Sair do aplicativo Gran Fish</string>
+    <string name="exit_dialog_title">Sair do Aplicativo</string>
+    <string name="exit_dialog_message">Deseja realmente fechar o aplicativo Gran Fish?</string>
+    <string name="exit_dialog_confirm">Sair</string>
+    <string name="exit_dialog_cancel">Cancelar</string>
 </resources>

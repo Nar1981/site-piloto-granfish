@@ -412,6 +412,17 @@
     else if (modal.open) modal.close();
   });
 
+  const btnSairWeb = $('cat-btn-sair-web');
+  if (btnSairWeb) {
+    btnSairWeb.addEventListener('click', () => {
+      if (window.GranFishApp && window.GranFishApp.exitApp) {
+        window.GranFishApp.exitApp();
+      } else if (confirm('Deseja fechar o aplicativo Gran Fish?')) {
+        window.close();
+      }
+    });
+  }
+
   window.GFAbrirBarco = abrir;
   window.GFFiltrarLinha = (l) => {
     linha = l;

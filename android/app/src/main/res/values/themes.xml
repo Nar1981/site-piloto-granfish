@@ -18,4 +18,18 @@
         <item name="android:statusBarColor">@color/primary</item>
         <item name="android:navigationBarColor">@color/primary_dark</item>
     </style>
+
+    <!-- Dialog theme -->
+    <style name="Theme.GranFish.Dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/copper</item>
+        <item name="colorSecondary">@color/teal</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">#a9c4c0</item>
+        <item name="buttonBarPositiveButtonStyle">@style/GranFish.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/GranFish.Dialog.Button</item>
+    </style>
+
+    <style name="GranFish.Dialog.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/copper</item>
+    </style>
 </resources>

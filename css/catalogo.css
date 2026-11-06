@@ -211,3 +211,20 @@
   color: var(--teal, #0f766e);
   transform: translateX(-3px);
 }
+
+/* ── Prevencao de reload no scroll ── */
+html, body {
+  overscroll-behavior-y: contain;
+}
+
+/* ── Botao Sair Web ── */
+.cat-btn-sair-web {
+  color: var(--copper, #d7794c) !important;
+  border-color: rgba(215, 121, 76, 0.4) !important;
+}
+.cat-btn-sair-web:hover {
+  background: #fbf2ed !important;
+  border-color: var(--copper, #d7794c) !important;
+  color: var(--copper, #d7794c) !important;
+  transform: scale(1.03) !important;
+}

@@ -7,70 +7,88 @@
     android:layout_height="match_parent"
     android:background="@color/primary">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:background="@color/primary" />
 
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primary" />
+        <!-- Offline error view -->
+        <LinearLayout
+            android:id="@+id/layoutOffline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@color/primary"
+            android:visibility="gone">
 
-            <!-- Offline error view -->
-            <LinearLayout
-                android:id="@+id/layoutOffline"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo_gf"
+                android:contentDescription="@string/app_name"
+                android:layout_marginBottom="32dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/offline_title"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/offline_message"
+                android:textColor="#a9c4c0"
+                android:textSize="14sp"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="24dp"
-                android:background="@color/primary"
-                android:visibility="gone">
+                android:layout_marginBottom="24dp" />
 
-                <ImageView
-                    android:layout_width="160dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/logo_gf"
-                    android:contentDescription="@string/app_name"
-                    android:layout_marginBottom="32dp" />
+            <Button
+                android:id="@+id/btnRetry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_retry"
+                android:backgroundTint="@color/copper"
+                android:textColor="@color/white"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/offline_title"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
+        <!-- Botão de Sair do Aplicativo -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnExitApp"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/btn_exit"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_exit"
+            app:iconTint="@color/copper"
+            app:iconSize="18dp"
+            app:iconPadding="6dp"
+            app:backgroundTint="@color/primary_dark"
+            app:strokeColor="@color/copper"
+            app:strokeWidth="1.5dp"
+            app:cornerRadius="21dp"
+            app:elevation="8dp"
+            android:contentDescription="@string/btn_exit_desc" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/offline_message"
-                    android:textColor="#a9c4c0"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="24dp" />
-
-                <Button
-                    android:id="@+id/btnRetry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btn_retry"
-                    android:backgroundTint="@color/copper"
-                    android:textColor="@color/white"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp" />
-            </LinearLayout>
-
-        </FrameLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
