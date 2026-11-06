@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Gran Fish</string>
+    <string name="title_activity_main">Gran Fish</string>
+    <string name="offline_title">Sem conexão com a internet</string>
+    <string name="offline_message">Verifique sua conexão para acessar todos os recursos atualizados.</string>
+    <string name="btn_retry">Tentar novamente</string>
+    <string name="file_chooser_title">Selecione um arquivo</string>
+    <string name="download_started">Iniciando download…</string>
+</resources>

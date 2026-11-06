@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de Cores · Gran Fish</title>
+<meta name="description" content="Catálogo de cores e grafismos Gran Fish: linhas Gran Bass, Hurricane 6.0 e Linha Sem, com paletas HEX e CMYK.">
+<meta name="theme-color" content="#071d26">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23071d26'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%2344d0f2'%3EGF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body>
+<header class="barra topbar">
+  <a class="brand" href="index.html?pular=1" aria-label="Gran Fish, voltar ao site"><img src="logo GF.png" alt="Gran Fish" width="148" height="48"></a>
+  <nav class="topnav" aria-label="Navegação principal">
+    <a href="index.html?pular=1">Início</a>
+    <a href="index.html?pular=1#modelos">Modelos</a>
+    <a href="#/" aria-current="page">Catálogo</a>
+    <a href="index.html?pular=1#contato">Contato</a>
+  </nav>
+  <form class="busca" role="search" id="busca">
+    <input type="search" id="q" placeholder="Buscar referência ou nome (ex.: 0007, Navy)" autocomplete="off" aria-label="Buscar">
+    <ul class="busca__res" id="res" hidden></ul>
+  </form>
+  <a class="barra__site" href="index.html?pular=1">← Voltar ao site</a>
+</header>
+
+<main id="app" tabindex="-1" aria-live="polite"></main>
+
+<footer class="rodape">
+  <span>GRAN FISH &nbsp;·&nbsp; Catálogo de Cores</span>
+  <span>Gran Fish Indústria e Comércio de Embarcações Ltda · Rua das Primaveras, 50 - Pratápolis, MG</span>
+</footer>
+<noscript><p style="padding:2rem">Este catálogo precisa de JavaScript habilitado.</p></noscript>
+<script src="data.js"></script>
+<script src="js/app.js" defer></script>
+<script src="js/cadastro-config.js"></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>

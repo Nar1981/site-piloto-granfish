@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#071d26</color>
+    <color name="primary_dark">#041218</color>
+    <color name="teal">#0f766e</color>
+    <color name="teal_light">#14b8a6</color>
+    <color name="copper">#d9743f</color>
+    <color name="background">#071d26</color>
+    <color name="paper">#f6f8fb</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="splash_background">#071d26</color>
+</resources>

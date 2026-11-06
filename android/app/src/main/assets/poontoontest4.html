@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Poontoon Atelier | Gran Fish</title>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+    body, html { width: 100%; height: 100%; height: 100dvh; background-color: #071b24; font-family: "DM Sans", "Segoe UI", sans-serif; color: #f7fbfc; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* Barra Superior */
+    .header-title { width: 100%; background: linear-gradient(110deg, #082d39, #0d5260); color: #ffffff; text-align: center; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 14px 16px; font-size: 16px; font-weight: 800; letter-spacing: 0.6px; border-bottom: 1px solid rgba(151, 235, 223, 0.25); z-index: 10; position: relative; }
+    .btn-help { position: absolute; right: 16px; top: calc(8px + env(safe-area-inset-top, 0px)); background: #27272e; border: 1px solid #3d3d47; color: #00d2ff; border-radius: 50%; width: 26px; height: 26px; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: all 0.2s; }
+    .btn-help:active { transform: scale(0.9); background: #00d2ff; color: #000; }
+
+    /* Container do 3D e Logo */
+    .seu-container-do-3d { flex: 1; position: relative; width: 100%; height: 100%; }
+    .btn-reset-cam { background: rgba(28, 49, 68, 0.85); border: 1px solid #3d3d47; color: #00d2ff; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .btn-reset-cam:active { transform: scale(0.95); background: #00d2ff; color: #000; }
+    .watermark-logo { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 110px; z-index: 4; opacity: 0.88; pointer-events: none; filter: drop-shadow(0 3px 7px rgba(0,0,0,0.48)); display: block; }
+    @media (max-width: 768px) { .watermark-logo { width: 80px; } }
+    #api-frame { width: 100%; height: 100%; border: none; background: transparent; position: relative; z-index: 1; }
+
+    .selection-summary { position: absolute; top: 16px; right: 16px; width: min(224px, calc(100% - 32px)); padding: 12px; border: 1px solid rgba(155, 235, 223, 0.5); border-radius: 15px; background: rgba(4, 25, 31, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08); backdrop-filter: blur(10px); z-index: 5; pointer-events: auto; }
+    .selection-summary .btn-reset-cam { position: static; width: 100%; justify-content: center; margin-top: 12px; }
+    .summary-heading { display: block; margin-bottom: 8px; color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .summary-colors { display: grid; gap: 7px; }
+    .summary-color { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .summary-swatch { width: 19px; height: 19px; flex: 0 0 19px; border: 1px solid rgba(255,255,255,0.78); border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.28); }
+    .summary-color-copy { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+    .summary-label { color: #a9c2c6; font-size: 10px; font-weight: 700; }
+    .summary-value { overflow: hidden; color: #ffffff; font: 11px Consolas, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    @media (max-width: 520px) {
+      .watermark-logo { left: 50%; right: auto; bottom: 7px; width: 72px; opacity: 0.82; }
+      .selection-summary { top: auto; right: 8px; bottom: 8px; width: auto; max-width: calc(100% - 16px); padding: 7px 9px; border-radius: 10px; opacity: 0.86; }
+      .summary-heading, .summary-label { display: none; }
+      .summary-colors { display: inline-flex; gap: 5px; }
+      .summary-color { gap: 0; }
+      .summary-swatch { width: 15px; height: 15px; flex-basis: 15px; border-radius: 4px; }
+      .summary-color-copy { display: none; }
+    }
+
+    /* Painel Inferior Compacto */
+    .panel-controls { position: absolute; left: 0; bottom: 0; width: 100%; background: linear-gradient(145deg, #0b3039, #08232d); border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,0.38); padding: 17px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px; display: flex; flex-direction: column; z-index: 100; max-height: 52vh; transform: translateY(calc(100% - 58px)); transition: transform 0.3s ease; }
+    .panel-controls.is-open { transform: translateY(0); }
+    .drawer-handle { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin: -5px 0 12px; padding: 8px 12px; border: 1px solid rgba(155, 235, 223, 0.45); border-radius: 12px; background: rgba(4, 18, 24, 0.55); color: #9bebdf; font: 700 12px "Trebuchet MS", sans-serif; cursor: pointer; animation: drawerHandlePulse 3s cubic-bezier(.2,.7,.2,1) 0.7s 1 both; }
+    .panel-controls.is-open .drawer-handle { animation: none; }
+    @keyframes drawerHandlePulse {
+      0%, 100% {
+        background-color: rgba(4, 18, 24, 0.55);
+        border-color: rgba(155, 235, 223, 0.45);
+        box-shadow: 0 0 0 0 rgba(39, 125, 112, 0);
+        filter: brightness(1);
+        transform: scale(1);
+      }
+      18% {
+        transform: scale(1.014);
+        box-shadow: 0 0 0 8px rgba(39, 125, 112, 0.06);
+      }
+      42% {
+        background-color: #ebf9f5;
+        border-color: rgba(39, 125, 112, 0.38);
+        box-shadow: 0 0 0 10px rgba(39, 125, 112, 0.08), 0 0 16px rgba(39, 125, 112, 0.2);
+        color: #1a4d45;
+        filter: brightness(1.04);
+      }
+      68% { transform: scale(1.006); }
+      100% {
+        background-color: rgba(4, 18, 24, 0.55);
+        border-color: rgba(155, 235, 223, 0.45);
+        box-shadow: 0 0 0 0 rgba(39, 125, 112, 0);
+        filter: brightness(1);
+        transform: scale(1);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) { .drawer-handle { animation: none; } }
+    .drawer-handle::before { content: "⌃"; font-size: 18px; line-height: 10px; transition: transform 0.3s ease; }
+    .panel-controls.is-open .drawer-handle::before { transform: rotate(180deg); }
+    .drawer-handle-text::after { content: "Abrir escolhas"; }
+    .panel-controls.is-open .drawer-handle-text::after { content: "Fechar escolhas"; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (min-width: 521px) {
+      .panel-controls { position: fixed; top: 0; right: auto; bottom: 0; left: 0; width: min(420px, 38vw); max-height: none; border-radius: 0 22px 22px 0; transform: translateX(calc(-100% + 34px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { width: 42px; height: 150px; margin: 0; position: absolute; top: 50%; right: -42px; transform: translateY(-50%); border-radius: 0 12px 12px 0; writing-mode: vertical-rl; }
+      .drawer-handle::before { transform: rotate(90deg); }
+      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
+      #choice-panel { height: 100%; overflow-y: auto; padding-top: 17px; }
+    }
+     
+    .tab-content { display: flex; flex-direction: column; gap: 12px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Inputs de Cor e Seleção */
+    .color-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 11px; position: relative; width: 100%; }
+    .select-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
+    .color-indicator { position: absolute; left: 8px; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: none; }
+    
+    .custom-select { background: #102f37; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 10px; color: #ffffff; font-size: 13px; font-weight: bold; padding: 11px 10px 11px 32px; width: 100%; cursor: pointer; text-overflow: ellipsis; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
+    .custom-select optgroup { background: #1e1e24; color: #00d2ff; font-weight: 700; }
+    .custom-select option { background: #27272e; color: #ffffff; }
+
+    .picker-btn-wrapper { position: relative; width: 47px; height: 47px; border-radius: 13px; border: 2px solid rgba(255,255,255,0.8); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e74c3c, #f1c40f, #2ecc71, #3498db); box-shadow: 0 5px 14px rgba(0,0,0,0.3); overflow: hidden; }
+    .picker-btn-wrapper span { font-size: 16px; pointer-events: none; }
+    .picker-btn-wrapper input[type="color"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    /* Entradas Manuais Ocultas (Sanfona) */
+    details { margin-top: 6px; background: rgba(3, 16, 22, 0.42); border-radius: 10px; padding: 9px; border: 1px dashed rgba(151, 235, 223, 0.25); }
+    .manual-color-details { display: none; }
+    .manual-color-details.is-selected { display: block; }
+    summary { font-size: 11px; font-weight: 600; color: #a0a0a8; cursor: pointer; outline: none; }
+    .inputs-row { display: flex; gap: 8px; margin-top: 10px; }
+    .custom-input { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 5px; color: #ffffff; font-size: 12px; font-family: monospace; padding: 8px; width: 50%; outline: none; }
+    .custom-input:focus, .custom-select:focus { border-color: #00d2ff; }
+
+    .status-bar { font-size: 11px; color: #9bebdf; text-align: center; margin-bottom: 8px; font-weight: 700; }
+
+    .color-preview { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-height: 70px; padding: 10px 12px; border: 1px solid rgba(151, 235, 223, 0.25); border-radius: 14px; background: rgba(4, 18, 24, 0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+    .preview-swatch { width: 50px; height: 50px; flex: 0 0 50px; border-radius: 11px; border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+    .preview-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .preview-label { color: #9bebdf; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .preview-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ffffff; font-size: 14px; font-weight: 800; }
+    .preview-hex { color: #b8ced1; font: 12px Consolas, monospace; }
+
+    /* Barra Inferior */
+    .action-bar { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(151, 235, 223, 0.2); }
+    @media (max-width: 520px) {
+      .panel-controls { position: fixed; width: min(calc(100% - 16px), 420px); left: 8px; max-height: 70dvh; border-radius: 18px 18px 0 0; transform: translateY(calc(100% - 54px)); }
+      .panel-controls.is-open { transform: translateY(0); }
+      .drawer-handle { margin-bottom: 10px; border-radius: 14px; }
+      #choice-panel { max-height: calc(70dvh - 64px); overflow-y: auto; overscroll-behavior: contain; }
+    }
+    .btn-capture { flex: 1; background: #4cd964; border: none; border-radius: 8px; color: #000; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(76, 217, 100, 0.3); transition: opacity 0.2s; }
+    .btn-capture:active { opacity: 0.8; }
+    .btn-undo { flex: 0 0 auto; background: #ffffff; border: 1px solid var(--atelier-line); border-radius: 10px; color: var(--ink); font-size: 13px; font-weight: 700; padding: 10px 12px; cursor: pointer; transition: opacity 0.2s, background 0.2s; }
+    .btn-undo:hover:not(:disabled) { background: #f5f8f8; }
+    .btn-undo:active:not(:disabled) { opacity: 0.8; }
+    .btn-undo:disabled { cursor: not-allowed; opacity: 0.45; }
+
+    /* Modais */
+    .help-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .help-content { background: #1a1a1e; border: 1px solid #3d3d47; border-radius: 12px; padding: 24px; max-width: 360px; width: 100%; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .help-content h3 { margin-bottom: 16px; color: #00d2ff; font-size: 18px; text-align: center; }
+    .help-content ul { padding-left: 0; margin-bottom: 24px; list-style: none; }
+    .help-content li { margin-bottom: 14px; font-size: 13px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; }
+    .help-content li::before { content: "➔"; color: #00d2ff; font-weight: bold; }
+    .btn-close-help, .btn-action { border: none; color: #000; padding: 12px 16px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-size: 14px; transition: opacity 0.2s; }
+    .btn-close-help { background: #00d2ff; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .picker-btn-wrapper:hover, .custom-select:hover, .tab-btn:hover, .seu-container-do-3d:hover { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="%2300d2ff" stroke="%231a1a1e" stroke-width="1.2" d="M19.35,11.72L17.28,13.79L12.21,8.72L14.28,6.65C15.06,5.87 16.33,5.87 17.11,6.65L19.35,8.89C20.13,9.67 20.13,10.94 19.35,11.72M10.79,10.14L15.86,15.21L9.98,21.09C9.78,21.29 9.52,21.43 9.24,21.5L5.36,22.47C4.89,22.59 4.5,22.2 4.62,21.73L5.59,17.85C5.66,17.57 5.8,17.31 6,17.11L11.88,11.23Z"/></svg>') 0 24, pointer !important; }
+    }
+
+    /* Tema Gran Fish */
+    body, html { background-color: #002a29; }
+    .header-title,
+    .panel-controls { background-color: #002a29; }
+    .btn-help,
+    .btn-reset-cam,
+    .tab-btn,
+    .custom-select,
+    .custom-input,
+    .help-content { background: #001f1e; }
+    .btn-help,
+    .btn-reset-cam,
+    .tab-btn,
+    .custom-select,
+    .custom-input,
+    details,
+    .help-content { border-color: rgba(255, 255, 255, 0.24); }
+    .btn-help,
+    .btn-reset-cam,
+    .tab-btn.active,
+    .btn-close-help,
+    .btn-action[style*="00d2ff"] { color: #ffffff; background: #002a29; border-color: #002a29; }
+    .tab-btn,
+    .custom-select,
+    .custom-input,
+    .custom-select option,
+    .custom-select optgroup { color: #ffffff; }
+    .tabs-container,
+    .action-bar { border-color: rgba(255, 255, 255, 0.2); }
+    .btn-help,
+    .btn-reset-cam,
+    .custom-select:focus,
+    .custom-input:focus,
+    .picker-btn-wrapper,
+    .help-content h3,
+    .help-content li::before { border-color: #002a29; color: #ffffff; }
+    .status-bar { color: #8be0bd !important; }
+    .btn-capture,
+    .btn-action[style*="4cd964"] { background: #002a29 !important; color: #ffffff; box-shadow: 0 4px 10px rgba(0, 42, 41, 0.4); }
+    .help-content h3,
+    .help-content li::before { color: #8be0bd; }
+
+    /* Direção visual premium */
+    :root { --ink: #10242c; --ink-soft: #52636a; --panel: #ffffff; --line: #e4eaec; --accent: #bd9250; --accent-dark: #8e672d; }
+    body, html { background: #f4f7f7; color: var(--ink); font-family: "DM Sans", "Segoe UI", Arial, sans-serif; }
+    .header-title { height: 64px; display: flex; align-items: center; justify-content: center; padding: 0 60px; background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--line); font-size: 15px; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 2px 12px rgba(16,36,44,.05); }
+    .header-brand { position: absolute; left: 24px; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+    .btn-help { top: 18px; right: 22px; width: 28px; height: 28px; background: #f3f5f5; border: 1px solid var(--line); color: var(--ink); font-size: 13px; }
+    .seu-container-do-3d, #api-frame { background: #f8faf9; }
+    .watermark-logo { width: 92px; opacity: .62; filter: none; }
+    .selection-summary { top: 24px; right: 28px; width: 258px; padding: 20px; border: 1px solid rgba(16,36,44,.08); border-radius: 16px; background: rgba(255,255,255,.94); box-shadow: 0 14px 36px rgba(16,36,44,.12); backdrop-filter: blur(14px); }
+    .summary-heading { color: var(--accent-dark); font-size: 9px; letter-spacing: .16em; }
+    .summary-label { color: var(--ink-soft); }
+    .summary-value { color: var(--ink); }
+    .summary-color-copy .summary-value { color: var(--ink); }
+    .summary-swatch { border-color: rgba(16,36,44,.22); }
+    .selection-summary .btn-reset-cam { background: transparent; color: var(--ink); border: 1px solid var(--line); box-shadow: none; font-size: 11px; }
+    .panel-controls { background: var(--panel); border: 1px solid var(--line); box-shadow: 0 14px 40px rgba(16,36,44,.14); padding: 24px 22px calc(20px + env(safe-area-inset-bottom, 0px)) 22px; }
+    .panel-intro { display: flex; flex-direction: column; gap: 5px; padding: 2px 0 18px; }
+    .panel-intro strong { color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
+    .panel-intro span { color: var(--ink-soft); font-size: 12px; }
+    .drawer-handle { background: #f5f8f8; border-color: var(--line); color: var(--ink); text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+    .tabs-container { border-color: var(--line); gap: 6px; }
+    .tab-btn { background: transparent; border-color: transparent; color: var(--ink-soft); border-radius: 8px; font-size: 11px; padding: 10px 12px; }
+    .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: none; }
+    .status-bar { color: var(--accent-dark) !important; letter-spacing: .02em; }
+    .color-preview { background: #f8faf9; border-color: var(--line); border-radius: 12px; }
+    .preview-label { color: var(--accent-dark); }
+    .preview-name { color: var(--ink); }
+    .preview-hex { color: var(--ink-soft); }
+    .custom-select, .custom-input { background: #fff; border-color: var(--line); color: var(--ink); border-radius: 8px; box-shadow: 0 2px 5px rgba(16,36,44,.04); }
+    .custom-select option, .custom-select optgroup { background: #fff; color: var(--ink); }
+    details { background: #f8faf9; border-color: var(--line); }
+    summary { color: var(--ink-soft); }
+    .picker-btn-wrapper { border-color: var(--line); box-shadow: none; }
+    .action-bar { border-color: var(--line); }
+    .btn-capture { background: var(--accent) !important; color: #fff; box-shadow: 0 6px 16px rgba(189,146,80,.25); }
+    @media (min-width: 521px) {
+      .panel-controls { top: 84px; left: auto; right: 24px; bottom: 24px; width: min(390px, 34vw); border-radius: 18px; transform: translateX(calc(100% + 24px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { width: 40px; height: 132px; right: auto; left: -41px; border-radius: 10px 0 0 10px; writing-mode: vertical-rl; background: var(--panel); box-shadow: -4px 8px 18px rgba(16,36,44,.08); }
+      .drawer-handle::before { transform: rotate(90deg); }
+      .panel-controls.is-open .drawer-handle::before { transform: rotate(270deg); }
+    }
+    @media (max-width: 520px) {
+      .header-title { height: 56px; font-size: 12px; }
+      .header-brand { left: 14px; font-size: 9px; }
+      .btn-help { top: 14px; right: 14px; }
+      .selection-summary { top: 12px; right: 12px; background: rgba(255,255,255,.92); }
+      .panel-controls { background: var(--panel); border-color: var(--line); }
+    }
+
+    /* Conceito autoral: Atelier Náutico */
+    :root { --atelier-bg: #ffffff; --atelier-panel: #ffffff; --atelier-line: #e5eaeb; --atelier-coral: #f07d62; --atelier-mint: #277d70; }
+    body, html { background: #ffffff; color: #10242c; }
+    .header-title { height: 72px; justify-content: flex-start; gap: 18px; padding-left: 34px; background: #ffffff; color: #10242c; border-bottom: 1px solid var(--atelier-line); box-shadow: 0 2px 14px rgba(16,36,44,.06); text-align: left; }
+    .header-title > span:not(.header-brand) { font-size: 12px; letter-spacing: .2em; }
+    .header-brand { position: static; color: var(--atelier-coral); font-size: 10px; letter-spacing: .25em; padding-right: 18px; border-right: 1px solid var(--atelier-line); }
+    .btn-help { top: 22px; right: 30px; background: #ffffff; border-color: var(--atelier-line); color: var(--atelier-mint); }
+    .btn-home { position: absolute; top: 18px; right: 68px; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--atelier-line); border-radius: 50%; color: var(--atelier-mint); background: #ffffff; text-decoration: none; padding: 0; line-height: 1; }
+    .btn-home svg { width: 14px; height: 14px; display: block; }
+    .btn-home:active { transform: scale(.92); }
+    .btn-fullscreen { position: absolute; top: 18px; right: 104px; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--atelier-line); border-radius: 50%; color: var(--atelier-mint); background: #ffffff; padding: 0; line-height: 1; cursor: pointer; }
+    .btn-fullscreen svg { width: 15px; height: 15px; display: block; }
+    .btn-fullscreen:active { transform: scale(.92); }
+    .header-actions { position: absolute; top: 16px; right: 14px; display: flex; align-items: center; gap: 6px; z-index: 20; }
+    .header-actions .btn-fullscreen, .header-actions .btn-home, .header-actions .btn-help { position: static; flex: 0 0 26px; }
+    .fullscreen-prompt { position: fixed; top: calc(84px + env(safe-area-inset-top, 0px)); left: 50%; width: min(360px, calc(100% - 28px)); padding: 16px; transform: translateX(-50%); border: 1px solid var(--atelier-line); border-radius: 14px; background: rgba(255,255,255,.98); box-shadow: 0 14px 36px rgba(16,36,44,.18); color: var(--ink); text-align: center; z-index: 300; }
+    .fullscreen-prompt strong { display: block; margin-bottom: 6px; color: var(--atelier-mint); font-size: 14px; }
+    .fullscreen-prompt p { margin-bottom: 13px; color: var(--ink-soft); font-size: 12px; line-height: 1.4; }
+    .fullscreen-prompt-actions { display: flex; gap: 8px; }
+    .fullscreen-prompt-actions button { flex: 1; min-height: 36px; border: 1px solid var(--atelier-line); border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 700; }
+    .fullscreen-prompt-accept { background: var(--ink); color: #ffffff; }
+    .fullscreen-prompt-decline { background: #ffffff; color: var(--ink); }
+    @media (min-width: 521px) { .fullscreen-prompt { display: none !important; } }
+    .seu-container-do-3d, #api-frame { background: #ffffff; }
+    .watermark-logo { bottom: 24px; width: 84px; opacity: .32; filter: none; }
+    .selection-summary { top: 28px; right: 30px; width: 238px; padding: 18px; border: 1px solid var(--atelier-line); border-radius: 18px; background: rgba(255,255,255,.94); color: #10242c; box-shadow: 0 18px 50px rgba(16,36,44,.12); backdrop-filter: blur(16px); }
+    .summary-heading { color: var(--atelier-coral); letter-spacing: .2em; }
+    .summary-label { color: #8ba6aa; }
+    .summary-value { color: #10242c; }
+    .summary-swatch { border-color: rgba(255,255,255,.5); border-radius: 2px; }
+    .selection-summary .btn-reset-cam { background: transparent; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 3px; box-shadow: none; }
+    .panel-controls { background: var(--atelier-panel); border: 1px solid var(--atelier-line); border-radius: 22px; box-shadow: 0 20px 60px rgba(16,36,44,.16); padding: 22px 22px 18px; backdrop-filter: blur(18px); }
+    .panel-intro { padding-bottom: 16px; border-bottom: 1px solid var(--atelier-line); }
+    .panel-intro strong { color: #10242c; font-size: 19px; letter-spacing: .01em; }
+    .panel-intro span { color: #6d7d81; }
+    .drawer-handle { background: #ffffff; color: var(--atelier-mint); border-color: var(--atelier-line); border-radius: 14px; }
+    .tabs-container { border-color: var(--atelier-line); padding-top: 14px; }
+    .tab-btn { color: #6d7d81; border-radius: 3px; background: transparent; border-color: transparent; }
+    .tab-btn.active { background: var(--atelier-coral); border-color: var(--atelier-coral); color: #ffffff; box-shadow: none; }
+    .status-bar { color: var(--atelier-mint) !important; text-align: left; font-size: 10px; }
+    .color-preview { background: #ffffff; border-color: rgba(255,255,255,.82); border-radius: 14px; cursor: pointer; }
+    .color-preview:hover { border-color: var(--atelier-coral); box-shadow: 0 0 0 2px rgba(240,125,98,.18); }
+    details { background: rgba(4, 16, 22, .46); border-color: var(--atelier-line); border-radius: 12px; }
+    .preview-label { color: var(--atelier-coral); }
+    .preview-name, .texture-reference-name { color: #10242c; }
+    .preview-hex { color: #6d7d81; }
+    .custom-select, .custom-input { background: #ffffff; border-color: var(--atelier-line); color: #10242c; border-radius: 10px; box-shadow: none; }
+    .custom-select option, .custom-select optgroup { background: #ffffff; color: #10242c; }
+    .custom-select option:checked { background-color: var(--select-color, #ffffff); color: var(--select-contrast, #10242c); }
+    .texture-reference { background: #ffffff; border-color: var(--atelier-line); border-radius: 12px; }
+    .texture-reference-label, summary { color: var(--atelier-mint); }
+    .picker-btn-wrapper { border-color: var(--atelier-line); border-radius: 12px; box-shadow: none; }
+    .action-bar { border-color: var(--atelier-line); }
+    .btn-capture { background: var(--atelier-coral) !important; color: #1c1110; border-radius: 10px; box-shadow: 0 8px 22px rgba(240,125,98,.2); }
+    @media (min-width: 521px) {
+      .panel-controls { top: 96px; right: 30px; bottom: 28px; width: min(400px, 35vw); border-radius: 22px; transform: translateX(calc(100% + 30px)); }
+      .panel-controls.is-open { transform: translateX(0); }
+      .drawer-handle { left: -43px; right: auto; width: 42px; height: 148px; border-radius: 14px 0 0 14px; background: #ffffff; }
+    }
+    @media (max-width: 520px) {
+      .header-title { height: 60px; padding-left: 16px; padding-right: 114px; gap: 8px; justify-content: flex-start; text-align: left; white-space: nowrap; overflow: hidden; }
+      .header-brand { font-size: 8px; padding-right: 11px; }
+      .header-title > span:not(.header-brand) { font-size: 10px; }
+      .header-title > span:not(.header-brand) { overflow: hidden; text-overflow: ellipsis; }
+      .selection-summary { background: rgba(255,255,255,.94); top: 12px; right: 12px; }
+      .header-title > .btn-help { position: absolute; top: 14px; right: 14px; z-index: 20; width: 26px; height: 26px; }
+      .header-title > .btn-home { position: absolute; top: 16px; right: 50px; z-index: 20; width: 26px; height: 26px; font-size: 15px; }
+      .header-title > .btn-fullscreen { position: absolute; top: 16px; right: 84px; z-index: 20; width: 26px; height: 26px; }
+      .panel-controls { background: #ffffff; }
+    }
+    @media (max-width: 360px) {
+      .header-brand { display: none; }
+      .header-title > span:not(.header-brand) { flex: 1 1 auto; min-width: 0; }
+    }
+    @media (max-width: 520px) {
+      .selection-summary {
+        top: 8px; right: 10px; bottom: auto; left: 10px; width: auto;
+        height: auto; max-height: none; padding: 8px 10px; border-radius: 16px;
+      }
+      .selection-summary .btn-reset-cam { margin-top: 7px; padding: 7px 10px; }
+      .panel-controls { max-height: 72dvh; }
+      #choice-panel { max-height: calc(72dvh - 64px); overflow-y: auto; }
+      .seu-container-do-3d { min-height: 0; transition: height .3s ease; }
+      body.mobile-drawer-open .seu-container-do-3d {
+        flex: 0 0 calc(100dvh - var(--header-height) - var(--drawer-height));
+        height: calc(100dvh - var(--header-height) - var(--drawer-height));
+      }
+      .seu-container-do-3d.is-3d-focused .selection-summary {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
+    @media (min-width: 521px) {
+      .selection-summary { top: 24px; left: 24px; right: auto; width: 230px; }
+    }
+    .header-title > span:not(.header-brand) { font-size: 0; }
+    .header-title > span:not(.header-brand)::after { content: "Minha Pontoon"; font-size: 12px; letter-spacing: .2em; }
+    @media (max-width: 520px) {
+      .header-title > span:not(.header-brand)::after { font-size: 10px; letter-spacing: 0; }
+    }
+  </style>
+  <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body>
+
+  <section class="fullscreen-prompt" id="fullscreen-prompt" aria-labelledby="fullscreen-prompt-title">
+    <strong id="fullscreen-prompt-title">Melhor experiência em tela cheia</strong>
+    <p>Veja o configurador com mais espaço e aproveite melhor a visualização do modelo.</p>
+    <div class="fullscreen-prompt-actions">
+      <button class="fullscreen-prompt-accept" type="button" onclick="escolherTelaCheia(true)">Entrar em tela cheia</button>
+      <button class="fullscreen-prompt-decline" type="button" onclick="escolherTelaCheia(false)">Agora não</button>
+    </div>
+  </section>
+
+  <div class="header-title"><span class="header-brand">GRAN FISH / ATELIER</span><span>Minha cota</span><button class="btn-fullscreen" type="button" aria-label="Entrar em tela cheia" title="Entrar em tela cheia" onclick="alternarTelaCheia()"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><a class="btn-home" href="index.html" aria-label="Voltar para a página inicial" title="Voltar para index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 3 11.5v8.5a1 1 0 0 1 1 1h5v-7h6v7h5a1 1 0 0 0 1-1v-8.5L12 3.5Z" fill="currentColor"/></svg></a><button class="btn-help" aria-label="Como usar o configurador" onclick="toggleHelp()">?</button></div>
+  
+  <div class="seu-container-do-3d">
+    <aside class="selection-summary" aria-live="polite" aria-label="Resumo das cores escolhidas">
+      <span class="summary-heading">Sua composição</span>
+      <div class="summary-colors">
+        <div class="summary-color"><span class="summary-swatch" id="summary-swatch-cinza2"></span><div class="summary-color-copy"><span class="summary-label">Faixa 1</span><strong class="summary-value" id="summary-color-cinza2">#25282A</strong></div></div>
+        <div class="summary-color"><span class="summary-swatch" id="summary-swatch-Azul"></span><div class="summary-color-copy"><span class="summary-label">Faixa 2</span><strong class="summary-value" id="summary-color-Azul">#0D1B2A</strong></div></div>
+        <div class="summary-color"><span class="summary-swatch" id="summary-swatch-cinza"></span><div class="summary-color-copy"><span class="summary-label">Faixa 3</span><strong class="summary-value" id="summary-color-cinza">#25282A</strong></div></div>
+      </div>
+      <button class="btn-reset-cam" onclick="voltarPosicaoInicial()">🔄 Posição Inicial</button>
+    </aside>
+    <img src="https://raw.githubusercontent.com/Nar1981/minhas-texturas/main/logo%20GF.png" 
+         id="logoGF" 
+         class="watermark-logo" 
+         alt="Logo Gran Fish" 
+         crossorigin="anonymous"
+         onerror="console.warn('Imagem da logo não encontrada no GitHub.');">
+    <iframe id="api-frame" tabindex="0" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen></iframe>
+  </div>
+
+  <div class="panel-controls">
+    <button class="drawer-handle" type="button" aria-expanded="false" aria-controls="choice-panel" onclick="toggleChoiceDrawer(this)"><span class="drawer-handle-text" aria-hidden="true"></span><span class="sr-only">Abrir ou fechar menu de escolhas</span></button>
+    <div id="choice-panel">
+    <div class="panel-intro"><strong>Monte sua assinatura</strong><span>Três faixas. Uma identidade única.</span></div>
+    <div id="status" class="status-bar">Preparando sua configuração...</div>
+    
+    <!-- Seleção das três faixas -->
+    <div id="tab-faixa1" class="tab-content active">
+      <div class="color-row">
+        <div class="color-preview" id="preview-cinza2" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 1" onclick="abrirSelecaoCor('cinza2', 'tab-faixa1', this)" onkeydown="ativarSelecaoCor(event, 'cinza2', 'tab-faixa1', this)">
+          <div class="preview-swatch" id="swatch-cinza2"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza2">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza2">#25282A</span></div>
+        </div>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-cinza2"></div>
+          <select class="custom-select has-color" id="select-cinza2" onchange="selecionarCor('cinza2', this.value)"></select>
+        </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('cinza2')">
+          <span>🎨</span>
+          <input type="color" id="picker-cinza2" value="#25282a" oninput="aplicarHexComSincronizacao('cinza2', this.value)">
+        </div>
+      </div>
+      <details class="manual-color-details" data-color-id="cinza2"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-cinza2" placeholder="HEX" onchange="digitarHex('cinza2', this.value)">
+          <input type="text" class="custom-input" id="rgb-cinza2" placeholder="RGB" onchange="digitarRgb('cinza2', this.value)">
+        </div>
+      </details>
+    </div>
+
+    <!-- ABA 2: FAIXA 2 -->
+    <div id="tab-faixa2" class="tab-content">
+      <div class="color-row">
+        <div class="color-preview" id="preview-Azul" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 2" onclick="abrirSelecaoCor('Azul', 'tab-faixa2', this)" onkeydown="ativarSelecaoCor(event, 'Azul', 'tab-faixa2', this)">
+          <div class="preview-swatch" id="swatch-Azul"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-Azul">Azul Marinho</strong><span class="preview-hex" id="preview-hex-Azul">#0D1B2A</span></div>
+        </div>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-Azul"></div>
+          <select class="custom-select has-color" id="select-Azul" onchange="selecionarCor('Azul', this.value)"></select>
+        </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('Azul')">
+          <span>🎨</span>
+          <input type="color" id="picker-Azul" value="#0d1b2a" oninput="aplicarHexComSincronizacao('Azul', this.value)">
+        </div>
+      </div>
+      <details class="manual-color-details" data-color-id="Azul"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-Azul" placeholder="HEX" onchange="digitarHex('Azul', this.value)">
+          <input type="text" class="custom-input" id="rgb-Azul" placeholder="RGB" onchange="digitarRgb('Azul', this.value)">
+        </div>
+      </details>
+    </div>
+
+    <!-- ABA 3: FAIXA 3 -->
+    <div id="tab-faixa3" class="tab-content">
+      <div class="color-row">
+        <div class="color-preview" id="preview-cinza" role="button" tabindex="0" aria-label="Selecionar cor da Faixa 3" onclick="abrirSelecaoCor('cinza', 'tab-faixa3', this)" onkeydown="ativarSelecaoCor(event, 'cinza', 'tab-faixa3', this)">
+          <div class="preview-swatch" id="swatch-cinza"></div>
+          <div class="preview-copy"><span class="preview-label">Cor selecionada</span><strong class="preview-name" id="preview-name-cinza">Grafite Chumbo</strong><span class="preview-hex" id="preview-hex-cinza">#25282A</span></div>
+        </div>
+        <div class="select-wrapper">
+          <div class="color-indicator" id="indicator-cinza"></div>
+          <select class="custom-select has-color" id="select-cinza" onchange="selecionarCor('cinza', this.value)"></select>
+        </div>
+        <div class="picker-btn-wrapper" title="Paleta Livre" onclick="mostrarCaixaHex('cinza')">
+          <span>🎨</span>
+          <input type="color" id="picker-cinza" value="#25282a" oninput="aplicarHexComSincronizacao('cinza', this.value)">
+        </div>
+      </div>
+      <details class="manual-color-details" data-color-id="cinza"><summary>⚙️ Inserir HEX/RGB Manualmente</summary>
+        <div class="inputs-row">
+          <input type="text" class="custom-input" id="hex-cinza" placeholder="HEX" onchange="digitarHex('cinza', this.value)">
+          <input type="text" class="custom-input" id="rgb-cinza" placeholder="RGB" onchange="digitarRgb('cinza', this.value)">
+        </div>
+      </details>
+    </div>
+
+    <!-- Barra Inferior de Ações -->
+    <div class="action-bar">
+      <button type="button" class="btn-undo" id="btn-undo" onclick="desfazerConfiguracao()" disabled>Desfazer</button>
+      <button type="button" class="btn-capture" id="btn-capture" onclick="tirarFoto()">Salvar configuração</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- Modais -->
+  <div id="helpModal" class="help-modal">
+    <div class="help-content">
+      <h3>Como Interagir</h3>
+      <ul>
+        <li><b>Girar Câmera:</b> Clique/Toque e arraste.</li>
+        <li><b>Aproximar/Afastar:</b> Use scroll do mouse ou movimento de pinça.</li>
+        <li><b>Fechar escolhas:</b> Deslize para baixo sobre o 3D.</li>
+        <li><b>Feedback Visual:</b> Ao alterar uma cor ou clicar no barco, a área selecionada piscará com um brilho de destaque.</li>
+      </ul>
+      <button class="btn-close-help" onclick="toggleHelp()">Entendi!</button>
+    </div>
+  </div>
+
+  <div id="shareModal" class="help-modal">
+    <div class="help-content" style="text-align: center;">
+      <h3>Imagem Pronta!</h3>
+      <img id="capturePreview" style="width: 100%; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d47;" />
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <button class="btn-action" onclick="baixarImagem()" style="background: #4cd964; flex: 1;">📥 Baixar</button>
+        <button class="btn-action" id="btnShareNative" onclick="compartilharImagem()" style="background: #00d2ff; flex: 1; display: none;">🔗 Compartilhar</button>
+      </div>
+      <button class="btn-close-help" onclick="fecharShareModal()" style="background: transparent; border: 1px solid #3d3d47; color: #a0a0a8;">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    function atualizarBotaoTelaCheia() {
+      const botao = document.querySelector('.btn-fullscreen');
+      if (!botao) return;
+      const emTelaCheia = Boolean(document.fullscreenElement);
+      botao.setAttribute('aria-label', emTelaCheia ? 'Sair da tela cheia' : 'Entrar em tela cheia');
+      botao.setAttribute('title', emTelaCheia ? 'Sair da tela cheia' : 'Entrar em tela cheia');
+    }
+
+    async function alternarTelaCheia() {
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {
+        console.warn('Não foi possível alternar para tela cheia.', error);
+      }
+      atualizarBotaoTelaCheia();
+    }
+
+    document.addEventListener('fullscreenchange', atualizarBotaoTelaCheia);
+
+    function escolherTelaCheia(aceitar) {
+      sessionStorage.setItem('fullscreen-prompt-poontoon-responded', 'true');
+      document.getElementById('fullscreen-prompt')?.remove();
+      if (aceitar) alternarTelaCheia();
+    }
+
+    function iniciarTelaCheiaNoCelular() {
+      if (!window.matchMedia('(max-width: 520px)').matches || sessionStorage.getItem('fullscreen-prompt-poontoon-responded')) return;
+      document.getElementById('fullscreen-prompt')?.removeAttribute('hidden');
+    }
+
+    function openTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function abrirSelecaoCor(idHTML, tabId, preview) {
+      mostrarCaixaHex(idHTML);
+      const tabButton = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (tabButton) openTab(tabId, tabButton);
+      const select = document.getElementById('select-' + idHTML);
+      if (select) {
+        select.focus({ preventScroll: true });
+        if (typeof select.showPicker === 'function') {
+          try {
+            select.showPicker();
+          } catch (error) {
+            select.click();
+          }
+        } else {
+          select.click();
+        }
+        window.setTimeout(() => {
+          select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 0);
+      }
+      if (preview) preview.setAttribute('aria-label', 'Seleção de cor aberta');
+    }
+
+    function mostrarCaixaHex(idHTML) {
+      document.querySelectorAll('.manual-color-details').forEach(details => {
+        details.classList.toggle('is-selected', details.dataset.colorId === idHTML);
+      });
+    }
+
+    function esconderCaixasHex() {
+      document.querySelectorAll('.manual-color-details').forEach(details => {
+        details.classList.remove('is-selected');
+      });
+    }
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.color-row, .manual-color-details')) esconderCaixasHex();
+    });
+
+    function ativarSelecaoCor(event, idHTML, tabId, preview) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        abrirSelecaoCor(idHTML, tabId, preview);
+      }
+    }
+
+    function atualizarFoco3D(isFocused) {
+      if (!window.matchMedia('(max-width: 520px)').matches) return;
+      const stage = document.querySelector('.seu-container-do-3d');
+      if (stage) stage.classList.toggle('is-3d-focused', isFocused);
+    }
+
+    function configurarInteracaoMobile() {
+      const stage = document.querySelector('.seu-container-do-3d');
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      if (!stage || !panel || !handle) return;
+
+      let pointerStart = null;
+      let drawerPointerStart = null;
+      const isControlArea = target => target.closest('.panel-controls, .selection-summary');
+
+      stage.addEventListener('focusin', event => {
+        if (!isControlArea(event.target)) atualizarFoco3D(true);
+      });
+      stage.addEventListener('focusout', event => {
+        if (!stage.contains(event.relatedTarget)) atualizarFoco3D(false);
+      });
+      stage.addEventListener('pointerdown', event => {
+        if (isControlArea(event.target)) return;
+        atualizarFoco3D(true);
+        pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      }, { passive: true });
+      stage.addEventListener('pointermove', event => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const deltaY = event.clientY - pointerStart.y;
+        const deltaX = Math.abs(event.clientX - pointerStart.x);
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
+          pointerStart = null;
+          toggleChoiceDrawer(handle);
+        }
+      }, { passive: true });
+      stage.addEventListener('pointerup', event => {
+        if (pointerStart && pointerStart.id === event.pointerId) pointerStart = null;
+      }, { passive: true });
+      stage.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
+      panel.addEventListener('pointerdown', event => {
+        if (event.target.closest('#choice-panel')) return;
+        if (!panel.classList.contains('is-open')) return;
+        drawerPointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      }, { passive: true });
+      panel.addEventListener('pointermove', event => {
+        if (!drawerPointerStart || drawerPointerStart.id !== event.pointerId) return;
+        const deltaY = event.clientY - drawerPointerStart.y;
+        const deltaX = Math.abs(event.clientX - drawerPointerStart.x);
+        const drawerIsOpen = panel.classList.contains('is-open');
+        const isVerticalSwipe = Math.abs(deltaY) > 28 && Math.abs(deltaY) > deltaX * 0.8;
+        if (isVerticalSwipe && ((drawerIsOpen && deltaY > 0) || (!drawerIsOpen && deltaY < 0))) {
+          drawerPointerStart = null;
+          toggleChoiceDrawer(handle);
+        }
+      }, { passive: true });
+      panel.addEventListener('pointerup', event => {
+        if (drawerPointerStart && drawerPointerStart.id === event.pointerId) drawerPointerStart = null;
+      }, { passive: true });
+      panel.addEventListener('pointercancel', () => { drawerPointerStart = null; }, { passive: true });
+      panel.addEventListener('wheel', event => {
+        if (event.target.closest('#choice-panel')) return;
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((drawerIsOpen && event.deltaY > 0) || (!drawerIsOpen && event.deltaY < 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
+      stage.addEventListener('wheel', event => {
+        const drawerIsOpen = panel.classList.contains('is-open');
+        if ((!drawerIsOpen && event.deltaY < 0) || (drawerIsOpen && event.deltaY > 0)) toggleChoiceDrawer(handle);
+      }, { passive: true });
+      iframe.addEventListener('focus', () => atualizarFoco3D(true));
+      iframe.addEventListener('blur', () => atualizarFoco3D(false));
+    }
+
+    function toggleChoiceDrawer(handle) {
+      const panel = handle.closest('.panel-controls');
+      const isOpen = panel.classList.toggle('is-open');
+      handle.setAttribute('aria-expanded', String(isOpen));
+      if (window.matchMedia('(max-width: 520px)').matches) {
+        document.documentElement.style.setProperty('--header-height', `${document.querySelector('.header-title').getBoundingClientRect().height}px`);
+        document.documentElement.style.setProperty('--drawer-height', `${panel.getBoundingClientRect().height}px`);
+        document.body.classList.toggle('mobile-drawer-open', isOpen);
+        window.setTimeout(ajustarCameraParaGaveta, 320);
+      }
+      if (isOpen) {
+        document.getElementById('api-frame').focus({ preventScroll: true });
+      }
+    }
+
+    function abrirGavetaComCor(idHTML, tabId) {
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      const tabEl = document.getElementById(tabId);
+      if (tabEl) tabEl.classList.add('active');
+
+      if (panel && handle && !panel.classList.contains('is-open')) toggleChoiceDrawer(handle);
+
+      const select = document.getElementById('select-' + idHTML);
+      const picker = document.getElementById('picker-' + idHTML);
+      if (isMobile) { if (select) select.focus({ preventScroll: true }); } else { if (picker) picker.click(); if (select) select.focus({ preventScroll: true }); }
+    }
+
+    function ajustarCameraParaGaveta() {
+      if (!apiInstance) return;
+      if (!apiInstance.resize) return;
+      apiInstance.getCameraLookAt(function(err, camera) {
+        apiInstance.resize();
+        if (!err && camera && apiInstance.setCameraLookAt) {
+          apiInstance.setCameraLookAt(camera.position, camera.target, 0);
+        }
+      });
+    }
+
+    const modelUid = '871922e1678141d9b5f9e76775a11dc8';
+    const iframe = document.getElementById('api-frame');
+    const client = new Sketchfab(iframe);
+    let apiInstance = null; let materiaisCarregados = []; let ultimaImagemBase64 = null;
+    let cameraInicial = null;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const configuracaoAtual = { cinza2: '#25282a', Azul: '#0d1b2a', cinza: '#25282a' };
+    const historicoConfiguracao = [];
+    let configuracaoPronta = false;
+    let restaurandoConfiguracao = false;
+
+    function capturarConfiguracao() { return { ...configuracaoAtual }; }
+
+    function atualizarBotaoDesfazer() {
+      const botao = document.getElementById('btn-undo');
+      if (botao) botao.disabled = historicoConfiguracao.length === 0;
+    }
+
+    function registrarConfiguracaoAnterior() {
+      if (!configuracaoPronta || restaurandoConfiguracao) return;
+      historicoConfiguracao.push(capturarConfiguracao());
+      if (historicoConfiguracao.length > 30) historicoConfiguracao.shift();
+      atualizarBotaoDesfazer();
+    }
+
+    function desfazerConfiguracao() {
+      const anterior = historicoConfiguracao.pop();
+      if (!anterior) return;
+      restaurandoConfiguracao = true;
+      Object.assign(configuracaoAtual, anterior);
+      Object.entries(configuracaoAtual).forEach(([nomeMaterial, hex]) => aplicarHexComSincronizacao(nomeMaterial, hex));
+      restaurandoConfiguracao = false;
+      atualizarBotaoDesfazer();
+    }
+
+    document.addEventListener('keydown', event => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
+        event.preventDefault();
+        desfazerConfiguracao();
+      }
+    }, true);
+
+    function voltarPosicaoInicial() {
+      if (apiInstance && cameraInicial) {
+        apiInstance.setCameraLookAt(cameraInicial.position, cameraInicial.target, 1);
+      }
+    }
+
+    const catalogoCores = {
+      'Cores Clássicas & Base': {
+        'Preto Ônix': '#111111', 'Branco Puro': '#ffffff', 'Branco Pérola': '#fdfcf7', 'Off White': '#f4f4f0',
+        'Cinza Asfalto': '#3a3f44', 'Grafite Chumbo': '#25282a', 'Cinza Chumbo': '#212529', 'Cinza Nardo': '#686b73',
+        'Cinza Espacial': '#4a4e51', 'Cinza Tempestade': '#37474f', 'Cinza Cimento': '#8d99ae', 'Fibra de Carbono': '#1a1a1a', 'Preto Perolizado': '#18181b'
+      },
+      'Azuis Oceânicos': {
+        'Azul Marinho': '#0d1b2a', 'Azul Cobalto': '#0f2b48', 'Azul Petróleo': '#16252d', 'Azul Royal': '#002366',
+        'Azul Atlântico': '#1c3144', 'Azul Caribe': '#00bcd4', 'Azul Bahama': '#00a4e4', 'Azul Abissal': '#050c1a',
+        'Azul Mediterrâneo': '#004777', 'Azul Elétrico': '#0070ff', 'Azul Aço': '#4682b4', 'Azul Indiano': '#13293d',
+        'Azul Laguna': '#00838f', 'Azul Polar': '#e0f7fa', 'Azul Celeste': '#48cae4', 'Azul Meia-Noite': '#0a1128',
+        'Ciano': '#00d2ff', 'Turquesa': '#00a896', 'Índigo': '#283593'
+      },
+      'Verdes & Náuticos': {
+        'Verde': '#27ae60', 'Verde Oliva': '#1e261d', 'Verde Florestal': '#0e291e', 'Verde Água': '#0a9396',
+        'Verde Menta': '#52b788', 'Verde Esmeralda': '#2ecc71', 'Verde Militar': '#4b5320', 'Verde Musgo': '#2f3e2e',
+        'Verde Selva': '#1e4d2b', 'Verde Sálvia': '#99aab5', 'Verde Malaquita': '#116e50'
+      },
+      'Tons Quentes & Esportivos': {
+        'Vermelho': '#e74c3c', 'Vermelho Ferrari': '#ff2800', 'Vermelho Escarlate': '#c0392b', 'Vermelho Rubi': '#9b111e',
+        'Laranja': '#e67e22', 'Laranja Safety': '#ff6700', 'Laranja Fluorescente': '#ff5e00', 'Laranja Sunset': '#f3722c',
+        'Amarelo': '#f1c40f', 'Amarelo Safety': '#ffea00', 'Amarelo Fluo': '#ccff00', 'Amarelo Solar': '#f9c74f',
+        'Verde Neon': '#39ff14', 'Verde Acid': '#b5e61d', 'Coral': '#ff6f61', 'Salmão': '#fa8072',
+        'Magenta': '#d81b60', 'Rosa Quartzo': '#f7cac9', 'Roxo': '#8e44ad', 'Roxo Berinjela': '#231229', 'Roxo Ametista': '#5c2d91', 'Vinho Bordô': '#401018'
+      },
+      'Madeiras & Terrosos': {
+        'Marrom Café': '#2b1d16', 'Teka': '#8b5a2b', 'Caramelo': '#b3541e', 'Mogno': '#4a150e', 'Nogueira': '#3d2314',
+        'Terracota': '#d95d39', 'Whisky': '#a0522d', 'Cappuccino': '#8b7d6b', 'Chocolate': '#38220f', 'Bege': '#d8cbb5',
+        'Areia': '#c2b280', 'Creme': '#fffdd0', 'Marfim': '#fffff0', 'Amêndoa': '#ebd5b3', 'Camurça': '#deb887', 'Concha': '#fff5ee'
+      },
+      'Metálicos & Nobres': {
+        'Dourado': '#d4af37', 'Ouro Velho': '#cfb53b', 'Prata': '#c0c0c0', 'Prata Lunar': '#e3e8ec', 'Bronze': '#cd7f32',
+        'Cobre': '#b87333', 'Cobre Escovado': '#934d28', 'Titânio': '#58595b', 'Estanho': '#7f8c8d', 'Champagne': '#f7e7ce'
+      }
+    };
+
+    function obterEmojiCor(grupo, nome) {
+      const n = nome.toLowerCase();
+      if (grupo.includes('Azuis')) return '🟦';
+      if (grupo.includes('Verdes')) return '🟩';
+      if (grupo.includes('Quentes')) {
+        if (n.includes('amarelo') || n.includes('solar') || n.includes('acid') || n.includes('neon')) return '🟨';
+        if (n.includes('laranja') || n.includes('coral') || n.includes('salmão') || n.includes('sunset')) return '🟧';
+        if (n.includes('roxo') || n.includes('magenta') || n.includes('ametista') || n.includes('berinjela')) return '🟪';
+        return '🟥';
+      }
+      if (grupo.includes('Madeiras') || grupo.includes('Terrosos')) {
+        if (n.includes('bege') || n.includes('areia') || n.includes('creme') || n.includes('marfim') || n.includes('amêndoa') || n.includes('concha')) return '⬜';
+        return '🟫';
+      }
+      if (grupo.includes('Metálicos')) {
+        if (n.includes('dourado') || n.includes('ouro') || n.includes('champagne')) return '🟨';
+        if (n.includes('cobre') || n.includes('bronze')) return '🟧';
+        if (n.includes('prata') || n.includes('titânio') || n.includes('estanho') || n.includes('lunar')) return '⬜';
+      }
+      if (n.includes('branco') || n.includes('off') || n.includes('pérola')) return '⬜';
+      if (n.includes('cinza') || n.includes('grafite') || n.includes('asfalto') || n.includes('carbono') || n.includes('chumbo') || n.includes('nardo') || n.includes('cimento') || n.includes('preto') || n.includes('ônix')) return '⬛';
+      return '⬛'; 
+    }
+
+    function calcularContraste(hex) {
+      const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      return (((r*299)+(g*587)+(b*114))/1000 >= 128) ? '#000000' : '#ffffff';
+    }
+
+    function popularSelects() {
+      ['cinza2', 'Azul', 'cinza'].forEach(mat => {
+        const select = document.getElementById('select-' + mat); if (!select) return;
+        select.innerHTML = '<option value="">🎨 Cores Personalizadas</option>';
+        for (const [grupo, cores] of Object.entries(catalogoCores)) {
+          const optgroup = document.createElement('optgroup'); optgroup.label = grupo;
+          for (const [nome, hex] of Object.entries(cores)) {
+            const option = document.createElement('option'); 
+            option.value = hex; option.style.backgroundColor = hex; option.style.color = calcularContraste(hex);
+            const icone = obterEmojiCor(grupo, nome);
+            option.textContent = `${icone} ${nome}`; 
+            optgroup.appendChild(option);
+          }
+          select.appendChild(optgroup);
+        }
+      });
+      sincronizarInputs('cinza2', '#25282a', '37, 40, 42');
+      sincronizarInputs('Azul', '#0d1b2a', '13, 27, 42');
+      sincronizarInputs('cinza', '#25282a', '37, 40, 42');
+    }
+
+    function toggleHelp() {
+      const modal = document.getElementById('helpModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function srgbToLinear(val) { const c = val / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+
+    function ajustarEmissao(material) {
+      if (material.name === 'LUZ' || material.name === 'LUZ.001' || material.name === 'LUZ.002') {
+        if (material.channels.EmitColor) material.channels.EmitColor.enable = true;
+        if (material.channels.EmissionPBR) material.channels.EmissionPBR.enable = true;
+      } else {
+        if (material.channels.EmitColor) {
+          material.channels.EmitColor.factor = 0;
+          material.channels.EmitColor.color = [0, 0, 0];
+          material.channels.EmitColor.enable = false;
+        }
+        if (material.channels.EmissionPBR) {
+          material.channels.EmissionPBR.factor = 0;
+          material.channels.EmissionPBR.color = [0, 0, 0];
+          material.channels.EmissionPBR.enable = false;
+        }
+      }
+    }
+
+    // Função de Brilho de Destaque (Pulso de Emissão Temporária)
+    function destacarMaterialVisualmente(materialAlvo) {
+      if (!apiInstance || !materialAlvo) return;
+      
+      if (materialAlvo.channels.EmitColor) {
+        materialAlvo.channels.EmitColor.enable = true;
+        materialAlvo.channels.EmitColor.color = [0, 0.8, 1];
+        materialAlvo.channels.EmitColor.factor = 2.5;
+      } else if (materialAlvo.channels.EmissionPBR) {
+        materialAlvo.channels.EmissionPBR.enable = true;
+        materialAlvo.channels.EmissionPBR.color = [0, 0.8, 1];
+        materialAlvo.channels.EmissionPBR.factor = 2.5;
+      }
+      apiInstance.setMaterial(materialAlvo);
+
+      setTimeout(() => {
+        if (materialAlvo.channels.EmitColor) {
+          materialAlvo.channels.EmitColor.factor = 0;
+          materialAlvo.channels.EmitColor.enable = false;
+        }
+        if (materialAlvo.channels.EmissionPBR) {
+          materialAlvo.channels.EmissionPBR.factor = 0;
+          materialAlvo.channels.EmissionPBR.enable = false;
+        }
+        apiInstance.setMaterial(materialAlvo);
+      }, 1500);
+    }
+
+    client.init(modelUid, {
+      success: function(api) {
+        apiInstance = api; api.start();
+        api.addEventListener('viewerready', function() {
+          if (api.setBackground) api.setBackground({ color: [1.0, 1.0, 1.0, 1.0] });
+
+          setTimeout(() => {
+            if (api.getCameraLookAt) {
+              api.getCameraLookAt(function(err, camera) {
+                if (!err && camera) {
+                  cameraInicial = { position: camera.position, target: camera.target };
+                }
+              });
+            }
+          }, 500);
+
+          api.getMaterialList(function(err, materials) {
+            if (err) return; materiaisCarregados = materials;
+            materials.forEach(mat => { ajustarEmissao(mat); api.setMaterial(mat); });
+
+            setTimeout(function() {
+              configuracaoPronta = false;
+              aplicarHexComSincronizacao('cinza2', '#25282a'); 
+              aplicarHexComSincronizacao('Azul', '#0d1b2a'); 
+              aplicarHexComSincronizacao('cinza', '#25282a');
+              aplicarCoresDaUrl(['cinza2', 'Azul', 'cinza']);
+              configuracaoPronta = true;
+              atualizarBotaoDesfazer();
+            }, 300);
+            
+            api.addEventListener('click', function(info) {
+              if (info && info.material && info.material.name) {
+                const matName = info.material.name;
+                const matIds = ['cinza2', 'Azul', 'cinza'];
+                const matchedMat = matIds.find(id => id.toLowerCase() === matName.toLowerCase());
+                if (matchedMat) {
+                  const matchedObj = materiaisCarregados.find(m => m.name.toLowerCase() === matchedMat.toLowerCase());
+                  if (matchedObj) destacarMaterialVisualmente(matchedObj);
+
+                  const tabBtnIndex = matIds.indexOf(matchedMat);
+                  abrirGavetaComCor(matchedMat, `tab-faixa${tabBtnIndex + 1}`);
+                }
+              }
+            }, { pick: 'fast' });
+
+            document.getElementById('status').innerText = '✓ Selecione as cores ou toque no modelo.';
+          });
+        });
+      },
+      error: function() { document.getElementById('status').innerText = 'Erro ao conectar com Sketchfab.'; },
+      autostart: 1,
+      transparent: 1,
+      ui_controls: 0,
+      ui_general_controls: 0,
+      ui_infos: 0,
+      ui_stop: 0,
+      ui_help: 0,
+      ui_settings: 0,
+      ui_annotations: 0,
+      ui_vr: 0,
+      ui_fullscreen: 0,
+      ui_inspector: 0,
+      ui_watermark: 0
+    });
+
+    function sincronizarInputs(nomeMaterial, hex, rgbTexto) {
+      const hexInput = document.getElementById('hex-' + nomeMaterial), rgbInput = document.getElementById('rgb-' + nomeMaterial), select = document.getElementById('select-' + nomeMaterial), picker = document.getElementById('picker-' + nomeMaterial), indicator = document.getElementById('indicator-' + nomeMaterial); 
+      
+      if (hexInput) hexInput.value = hex; 
+      if (rgbInput) rgbInput.value = rgbTexto; 
+      if (picker) picker.value = hex; 
+      if (indicator) indicator.style.backgroundColor = hex; 
+
+      const swatch = document.getElementById('swatch-' + nomeMaterial);
+      const previewHex = document.getElementById('preview-hex-' + nomeMaterial);
+      const previewName = document.getElementById('preview-name-' + nomeMaterial);
+      if (swatch) swatch.style.backgroundColor = hex;
+      if (previewHex) previewHex.textContent = hex.toUpperCase();
+      if (previewName) {
+        const selectedOption = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex] : null;
+        previewName.textContent = selectedOption && selectedOption.value ? selectedOption.textContent.replace(/^\S+\s/, '') : 'Cor personalizada';
+      }
+
+      const summarySwatch = document.getElementById('summary-swatch-' + nomeMaterial);
+      const summaryColor = document.getElementById('summary-color-' + nomeMaterial);
+      if (summarySwatch) summarySwatch.style.backgroundColor = hex;
+      if (summaryColor) summaryColor.textContent = hex.toUpperCase();
+      
+      if (select) { 
+        let achou=false; 
+        for (let i=0; i<select.options.length; i++) { 
+          if(select.options[i].value.toLowerCase() === hex.toLowerCase()) { select.selectedIndex=i; achou=true; break; } 
+        } 
+        if(!achou) select.value=''; 
+        const contraste = calcularContraste(hex);
+        const selectedOption = select.options[select.selectedIndex];
+        select.style.backgroundColor = hex;
+        select.style.color = contraste;
+        select.style.setProperty('--select-color', hex);
+        select.style.setProperty('--select-contrast', contraste);
+        if (selectedOption) {
+          selectedOption.style.backgroundColor = hex;
+          selectedOption.style.color = contraste;
+        }
+      }
+    }
+
+    // Cores sugeridas pela Marina (?cores=hex1,hex2,hex3)
+    function aplicarCoresDaUrl(ids) {
+      const p = new URLSearchParams(location.search).get('cores');
+      if (!p) return;
+      const lista = p.split(',').map(h => '#' + h.trim().replace(/^#/, '')).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+      if (!lista.length) return;
+      lista.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+      const st = document.getElementById('status');
+      if (st) st.innerText = '✓ Cores sugeridas pela Marina aplicadas. Ajuste como quiser.';
+    }
+
+    // Ponte para a Marina aplicar cores sem recarregar a página
+    const IDS = ['cinza2', 'Azul', 'cinza'];
+    window.marinaConfig = {
+      ids: IDS,
+      aplicarUm(i, hex) { if (/^#[0-9a-f]{6}$/i.test(hex) && IDS[i]) aplicarHexComSincronizacao(IDS[i], hex); },
+      modelo: 'pontoon',
+      campos: ['faixa 1','faixa 2','faixa 3'],
+      aplicar(lista) {
+        const ids = IDS;
+        const hexes = (lista || []).filter(h => /^#[0-9a-f]{6}$/i.test(h)).slice(0, ids.length);
+        hexes.forEach((hex, i) => aplicarHexComSincronizacao(ids[i], hex));
+        const st = document.getElementById('status');
+        if (st && hexes.length) st.innerText = '✓ Cores aplicadas pela Marina. Ajuste como quiser.';
+        return hexes.length;
+      }
+    };
+
+    function selecionarCor(nomeMaterial, hex) {
+      if (!hex) return;
+      mostrarCaixaHex(nomeMaterial);
+      aplicarHexComSincronizacao(nomeMaterial, hex);
+    }
+    function aplicarHexComSincronizacao(nomeMaterial, hex) { 
+      window.dispatchEvent(new CustomEvent('marina:cor', { detail: { id: nomeMaterial, hex } }));
+      const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); 
+      if (configuracaoAtual[nomeMaterial] && configuracaoAtual[nomeMaterial].toLowerCase() !== hex.toLowerCase()) registrarConfiguracaoAnterior();
+      configuracaoAtual[nomeMaterial] = hex;
+      sincronizarInputs(nomeMaterial, hex, `${r}, ${g}, ${b}`); 
+      aplicarRgb(nomeMaterial, [srgbToLinear(r), srgbToLinear(g), srgbToLinear(b)]); 
+      
+      const matObj = materiaisCarregados.find(m => m.name.toLowerCase() === nomeMaterial.toLowerCase());
+      if (matObj) destacarMaterialVisualmente(matObj);
+    }
+    function digitarHex(nomeMaterial, valorHex) { let hex = valorHex.trim(); if (!hex.startsWith('#')) hex = '#' + hex; if (/^#[0-9A-Fa-f]{6}$/.test(hex)) aplicarHexComSincronizacao(nomeMaterial, hex); }
+    function digitarRgb(nomeMaterial, valorRgb) { const p = valorRgb.split(',').map(n => parseInt(n.trim(), 10)); if (p.length === 3) aplicarHexComSincronizacao(nomeMaterial, '#' + p.map(x => x.toString(16).padStart(2, '0')).join('')); }
+
+    function aplicarRgb(nomeMaterial, rgb) {
+      if (!apiInstance) return; const material = materiaisCarregados.find(m => m.name.toLowerCase() === nomeMaterial.toLowerCase());
+      if (material) { 
+        ajustarEmissao(material);
+        if (material.channels.AlbedoPBR) { material.channels.AlbedoPBR.color = rgb; material.channels.AlbedoPBR.factor = 1; } 
+        apiInstance.setMaterial(material); 
+      }
+    }
+
+    function tirarFoto() {
+      if (!apiInstance) { alert('Aguarde o modelo 3D carregar antes de gerar a imagem.'); return; }
+      const btnCapture = document.getElementById('btn-capture'); btnCapture.innerHTML = '⏳ Processando...'; btnCapture.disabled = true;
+      apiInstance.getScreenShot(3840, 2160, function(err, base64Image) {
+        if (!err) {
+          const img = new Image(); img.onload = function() {
+            const canvas = document.createElement('canvas'); canvas.width = 3840; canvas.height = 2160; const ctx = canvas.getContext('2d');
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0);
+
+            const agora = new Date(); const dataStr = agora.toLocaleDateString('pt-BR'); const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+            // ===== Etiqueta igual à do visualizador 3D ("Cores escolhidas") =====
+            const hexCor1 = document.getElementById('summary-color-cinza2').textContent;
+            const hexCor2 = document.getElementById('summary-color-Azul').textContent;
+            const hexCor3 = document.getElementById('summary-color-cinza').textContent;
+            const nomeCor1 = document.getElementById('preview-name-cinza2').textContent;
+            const nomeCor2 = document.getElementById('preview-name-Azul').textContent;
+            const nomeCor3 = document.getElementById('preview-name-cinza').textContent;
+
+            const cardX = 100, cardY = canvas.height - 680, cardW = 1080, cardH = 540, cardR = 44;
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
+            ctx.shadowBlur = 40;
+            ctx.shadowOffsetY = 12;
+            ctx.fillStyle = "rgba(4, 25, 31, 0.88)";
+            ctx.beginPath();
+            ctx.moveTo(cardX + cardR, cardY);
+            ctx.arcTo(cardX + cardW, cardY, cardX + cardW, cardY + cardH, cardR);
+            ctx.arcTo(cardX + cardW, cardY + cardH, cardX, cardY + cardH, cardR);
+            ctx.arcTo(cardX, cardY + cardH, cardX, cardY, cardR);
+            ctx.arcTo(cardX, cardY, cardX + cardW, cardY, cardR);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = "rgba(155, 235, 223, 0.6)";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            ctx.restore();
+
+            const logoDOM = document.getElementById('logoGF');
+            if (logoDOM && logoDOM.complete && logoDOM.naturalWidth > 0) {
+              const logoW = 180;
+              const logoH = (logoDOM.naturalHeight / logoDOM.naturalWidth) * logoW;
+              ctx.drawImage(logoDOM, cardX + cardW - logoW - 50, cardY + 35, logoW, logoH);
+            }
+
+            ctx.textAlign = "left";
+            ctx.font = "bold 40px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "#9bebdf";
+            ctx.fillText("CORES ESCOLHIDAS", cardX + 60, cardY + 95);
+
+            ctx.strokeStyle = "rgba(155, 235, 223, 0.28)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(cardX + 50, cardY + 130);
+            ctx.lineTo(cardX + cardW - 50, cardY + 130);
+            ctx.stroke();
+
+            const linhas = [
+              { hex: hexCor1, nome: nomeCor1, rotulo: "Faixa 1" },
+              { hex: hexCor2, nome: nomeCor2, rotulo: "Faixa 2" },
+              { hex: hexCor3, nome: nomeCor3, rotulo: "Faixa 3" }
+            ];
+            let linhaY = cardY + 200;
+            linhas.forEach(l => {
+              // Amostra de cor (swatch)
+              ctx.fillStyle = l.hex;
+              ctx.strokeStyle = "rgba(255,255,255,0.78)";
+              ctx.lineWidth = 4;
+              const sw = 48, sx = cardX + 60, sy = linhaY - sw / 2, sr = 12;
+              ctx.beginPath();
+              ctx.moveTo(sx + sr, sy);
+              ctx.arcTo(sx + sw, sy, sx + sw, sy + sw, sr);
+              ctx.arcTo(sx + sw, sy + sw, sx, sy + sw, sr);
+              ctx.arcTo(sx, sy + sw, sx, sy, sr);
+              ctx.arcTo(sx, sy, sx + sw, sy, sr);
+              ctx.closePath();
+              ctx.fill();
+              ctx.stroke();
+              // Rótulo + Hex/Nome
+              ctx.textBaseline = "middle";
+              ctx.font = "32px Trebuchet MS, sans-serif";
+              ctx.fillStyle = "#a9c2c6";
+              ctx.fillText(l.rotulo, cardX + 140, linhaY - 20);
+              ctx.font = "bold 38px Consolas, monospace";
+              ctx.fillStyle = "#ffffff";
+              ctx.fillText(l.hex + "  ·  " + l.nome, cardX + 140, linhaY + 24);
+              linhaY += 110;
+            });
+            ctx.textBaseline = "alphabetic";
+
+            // Rodapé com data/hora
+            ctx.font = "32px Trebuchet MS, sans-serif";
+            ctx.fillStyle = "rgba(169, 194, 198, 0.85)";
+            ctx.fillText(`Gerado em: ${dataStr} às ${horaStr}`, cardX + 60, cardY + cardH - 30);
+            ctx.textAlign = "start";
+
+            ultimaImagemBase64 = canvas.toDataURL('image/png'); document.getElementById('capturePreview').src = ultimaImagemBase64;
+            document.getElementById('shareModal').style.display = 'flex';
+            if (navigator.canShare) document.getElementById('btnShareNative').style.display = 'block';
+            btnCapture.innerHTML = '📸 Salvar Imagem'; btnCapture.disabled = false;
+          }; img.src = base64Image;
+        } else {
+          alert('Ocorreu um erro ao capturar.'); btnCapture.innerHTML = '📸 Salvar Imagem'; btnCapture.disabled = false;
+        }
+      });
+    }
+
+    function fecharShareModal() { document.getElementById('shareModal').style.display = 'none'; }
+    function baixarImagem() { const link = document.createElement('a'); link.href = ultimaImagemBase64; link.download = 'Pontoon_Configurado.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); fecharShareModal(); }
+    async function compartilharImagem() { const res = await fetch(ultimaImagemBase64); const blob = await res.blob(); const file = new File([blob], 'Pontoon.png', { type: 'image/png' }); await navigator.share({ title: 'Configuração Pontoon', files: [file] }); fecharShareModal(); }
+
+    if (window.innerWidth >= 521) {
+      const panel = document.querySelector('.panel-controls');
+      const handle = document.querySelector('.drawer-handle');
+      panel.classList.add('is-open');
+      handle.setAttribute('aria-expanded', 'true');
+    }
+    popularSelects();
+    configurarInteracaoMobile();
+    iniciarTelaCheiaNoCelular();
+  </script>
+<script src="js/cadastro-config.js"></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>

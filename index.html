@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071d26">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="description" content="Gran Fish: engenharia, construção e personalização de embarcações de alto padrão.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; media-src 'self'; frame-src https://www.instagram.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self';">
   <title>Gran Fish | Engenharia náutica com identidade</title>
@@ -47,4 +49,5 @@
 <script src="js/catalogo-botao.js" defer></script>
   <script src="js/site-campos.js"></script><script src="js/site-personalizar.js" defer></script>
 <script src="js/chatbot.js" defer></script>
+  <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
 </body></html>

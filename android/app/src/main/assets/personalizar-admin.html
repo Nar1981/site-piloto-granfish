@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self';">
+<title>Personalizar site · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body>
+<main class="wrap" style="padding:36px 0 70px">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Personalizar o site</h1>
+  <p style="color:var(--muted);margin:0 0 22px">Edite textos, cores, WhatsApp, rodapé e seções. Campo vazio volta ao texto original.</p>
+
+  <section id="painel" hidden>
+    <form id="form"></form>
+  </section>
+
+  <section id="negado" class="card" hidden>
+    <h2 class="card-title">Acesso restrito</h2>
+    <p>Entre primeiro na área interna para personalizar o site.</p>
+    <a class="button button--copper" href="cadastros-admin.html">Entrar</a>
+  </section>
+</main>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/site-campos.js"></script>
+<script src="js/personalizar-admin.js" defer></script>
+<script src="js/admin-shell.js" defer></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "Gran Fish Embarcações",
+  "short_name": "Gran Fish",
+  "description": "Catálogo de embarcações, configuradores 3D e assistência virtual Gran Fish.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071d26",
+  "theme_color": "#071d26",
+  "orientation": "portrait-primary",
+  "categories": ["business", "lifestyle", "shopping"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

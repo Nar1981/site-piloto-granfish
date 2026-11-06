@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#071d26">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; base-uri 'self'; connect-src 'self' https://*.supabase.co; form-action 'self';">
 <title>Catálogo de embarcações · Gran Fish</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,5 +67,6 @@
 <script src="js/catalogo-admin.js" defer></script>
 <script src="js/site-campos.js"></script><script src="js/site-personalizar.js" defer></script>
 <script src="js/chatbot.js" defer></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
 </body>
 </html>

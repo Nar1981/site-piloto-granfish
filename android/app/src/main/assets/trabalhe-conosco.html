@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071d26">
+  <meta name="description" content="Gran Fish - Trabalhe Conosco. Envie seu currículo e faça parte do nosso estaleiro.">
+  <title>Gran Fish | Trabalhe Conosco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cadastro.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="locked">
+  <div class="splash" id="splash" aria-label="Abertura Gran Fish">
+    <video id="intro-video" autoplay muted playsinline preload="auto" poster="logo GF.png" aria-hidden="true">
+      <source src="./logoanimada.mp4" type="video/mp4">
+    </video>
+    <div class="splash-content">
+      <button class="button splash-enter" id="enter-site" type="button">Entrar no estaleiro</button>
+    </div>
+  </div>
+
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Gran Fish, início">
+        <img src="logo GF.png" alt="Gran Fish">
+      </a>
+      <nav class="topnav" aria-label="Navegação interna">
+        <a href="index.html">Início</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="cadastro.html">Cadastro</a>
+        <a href="trabalhe-conosco.html" class="active">Trabalhe Conosco</a>
+      </nav>
+      <a class="button" href="index.html">Voltar ao site</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
+        </svg>
+      </button>
+    </header>
+
+    <main>
+      <div class="content">
+        <div class="content-inner">
+
+          <!-- Seção 01: Título e introdução -->
+          <section class="section" id="inicio">
+            <div class="card">
+              <div class="bloco">
+                <h1>Trabalhe Conosco</h1>
+                <p class="section-subtitle">Faça parte do estaleiro que está navegando rumo ao futuro. Envie seu currículo e conte um pouco sobre você.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Seção 02: Formulário de candidatura -->
+          <section class="section" id="formulario">
+            <div class="card">
+              <form id="form-candidatura" enctype="multipart/form-data">
+
+                <!-- Dados pessoais -->
+                <div class="bloco">
+                  <h2>Dados Pessoais</h2>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="nome">Nome completo *</label>
+                      <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+                    </div>
+                  </div>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="email">E-mail *</label>
+                      <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="f">
+                      <label for="telefone">Telefone / WhatsApp *</label>
+                      <input type="tel" id="telefone" name="telefone" required placeholder="(35) 99999-9999">
+                    </div>
+                  </div>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="cargo">Cargo desejado *</label>
+                      <select id="cargo" name="cargo" required>
+                        <option value="">Selecione uma área</option>
+                        <option value="producao">Produção / Estaleiro</option>
+                        <option value="engenharia">Engenharia</option>
+                        <option value="design">Design Náutico</option>
+                        <option value="administrativo">Administrativo</option>
+                        <option value="comercial">Comercial</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="ti">Tecnologia da Informação</option>
+                        <option value="outro">Outro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Experiência -->
+                <div class="bloco">
+                  <h2>Experiência Profissional</h2>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="experiencia">Tempo de experiência</label>
+                      <select id="experiencia" name="experiencia">
+                        <option value="">Selecione</option>
+                        <option value="estagiario">Estagiário / 1º emprego</option>
+                        <option value="junior">Júnior (1-2 anos)</option>
+                        <option value="pleno">Pleno (3-5 anos)</option>
+                        <option value="senior">Sênior (5+ anos)</option>
+                        <option value="lideranca">Liderança / Gestão</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="experiencia_desc">Descreva sua experiência relevante</label>
+                      <textarea id="experiencia_desc" name="experiencia_desc" rows="4" placeholder="Conte sobre suas experiências anteriores, projetos e habilidades..."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Upload de CV -->
+                <div class="bloco">
+                  <h2>Curriculum Vitae</h2>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="cv" class="file-upload-label">
+                        <span>Envie seu currículo (PDF) *</span>
+                        <input type="file" id="cv" name="cv" accept=".pdf" required>
+                      </label>
+                      <p class="field-hint">Tamanho máximo: 10 MB. Formato aceito: PDF.</p>
+                      <div id="cv-preview" class="file-preview" style="display:none;">
+                        <span id="cv-name"></span>
+                        <span id="cv-size"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="linkedin">Link do LinkedIn (opcional)</label>
+                      <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
+                    </div>
+                  </div>
+
+                  <div class="grid f">
+                    <div class="f">
+                      <label for="mensagem">Mensagem adicional (opcional)</label>
+                      <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte por que você quer fazer parte da Gran Fish..."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Declaração -->
+                <div class="bloco">
+                  <div class="grid f">
+                    <div class="f">
+                      <label class="checkbox-label">
+                        <input type="checkbox" id="declaracao" name="declaracao" required>
+                        <span>Declaro que as informações prestadas são verdadeiras e autorizo o tratamento dos meus dados pessoais para fins process seletivo, conforme a LGPD (Lei nº 13.709/2018).</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botão de envio -->
+                <div class="bloco actions">
+                  <button type="submit" class="button button--copper" id="btn-submit">
+                    <span id="btn-text">Enviar candidatura</span>
+                    <span id="btn-loading" style="display:none;">Enviando...</span>
+                  </button>
+                  <p id="mensagem-erro" class="mensagem-erro" style="display:none;"></p>
+                  <p id="mensagem-sucesso" class="mensagem-sucesso" style="display:none;"></p>
+                </div>
+
+              </form>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p><strong>Gran Fish Indústria e Comércio de Embarcações LTDA</strong><br>
+      Rua das Primaveras, 50, Pratápolis - MG, CEP 37.970-000<br>
+      CNPJ 59.593.605/0001-86</p>
+    </footer>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="drawer" aria-label="Menu móvel" aria-hidden="true">
+    <div class="drawer-header">
+      <strong>Gran Fish</strong>
+      <button class="drawer-close" id="drawer-close" type="button" aria-label="Fechar menu">×</button>
+    </div>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="cadastro.html">Cadastro</a>
+      <a href="trabalhe-conosco.html">Trabalhe Conosco</a>
+    </nav>
+  </aside>
+
+  <!-- Scripts -->
+  <script src="js/cadastro-config.js"></script>
+  <script src="js/candidatura.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+  <script>
+    (() => {
+      const body=document.body,splash=document.querySelector('#splash'),video=document.querySelector('#intro-video'),enterButton=document.querySelector('#enter-site'),menuToggle=document.querySelector('#menu-toggle'),drawer=document.querySelector('#drawer'),drawerClose=document.querySelector('#drawer-close'),backdrop=document.querySelector('#drawer-backdrop'); let splashClosed=false;
+      const startVideo=()=>{if(video&&!splashClosed){video.muted=true;video.play().catch(()=>{})}}; const closeSplash=()=>{if(splashClosed)return;splashClosed=true;splash.classList.add('is-hidden');body.classList.remove('locked');if(video)video.pause()}; enterButton.addEventListener('click',closeSplash); if(video){video.addEventListener('loadedmetadata',startVideo,{once:true});video.addEventListener('canplay',startVideo,{once:true});video.addEventListener('ended',closeSplash,{once:true});video.load();startVideo()}
+      if(new URLSearchParams(location.search).has('pular'))closeSplash();
+      const setDrawer=(open)=>{drawer.classList.toggle('is-open',open);backdrop.classList.toggle('is-open',open);drawer.setAttribute('aria-hidden',String(!open));menuToggle.setAttribute('aria-expanded',String(open));body.classList.toggle('locked',open);if(open)drawerClose.focus();else menuToggle.focus()};
+      menuToggle.addEventListener('click',()=>setDrawer(true));
+      drawerClose.addEventListener('click',()=>setDrawer(false));
+      backdrop.addEventListener('click',()=>setDrawer(false));
+      drawer.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setDrawer(false)));
+      document.addEventListener('keydown',(event)=>{if(event.key==='Escape'){if(drawer.classList.contains('is-open'))setDrawer(false);else closeSplash()}});
+    })();
+  </script>
+</body>
+</html>

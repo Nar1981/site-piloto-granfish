@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; base-uri 'self'; connect-src 'self' https://*.supabase.co; form-action 'self';">
+<title>Painel interno · Gran Fish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cadastro.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body>
+<main class="wrap" style="padding:36px 0 70px">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:6px">Painel interno</h1>
+  <p style="color:var(--muted);margin:0 0 22px">Todos os acessos do site Gran Fish em um só lugar. Uso exclusivo da equipe.</p>
+
+  <section id="painel" hidden>
+    <h2 class="sec">Área interna</h2>
+    <div class="tiles">
+      <a class="tile" href="cadastros-admin.html"><h3>Cadastros recebidos <span class="badge" id="b-pend" hidden></span></h3><p class="nota">Ver, filtrar, mudar status e exportar CSV dos cadastros.</p></a>
+      <a class="tile" href="catalogo-admin.html"><h3>Catálogo de embarcações</h3><p class="nota">Fichas técnicas, itens de série e comparativo de todos os modelos.</p></a>
+      <a class="tile" href="usuarios-admin.html"><h3>Administradores</h3><p class="nota">Criar e remover usuários administradores.</p></a>
+      <a class="tile" href="personalizar-admin.html"><h3>Personalizar o site</h3><p class="nota">Editar textos, cores, WhatsApp, rodapé e seções.</p></a>
+      <a class="tile" href="instagram-admin.html"><h3>Instagram</h3><p class="nota">Adicionar publicações manualmente ou usar o perfil automático.</p></a>
+    </div>
+
+    <h2 class="sec">Site público</h2>
+    <div class="tiles">
+      <a class="tile" href="index.html"><h3>Página inicial</h3><p class="nota">Site Gran Fish.</p></a>
+      <a class="tile" href="cadastro.html"><h3>Ficha cadastral</h3><p class="nota">Formulário público de cadastro de clientes e empresas.</p></a>
+      <a class="tile" href="ficha-cadastral-granfish.pptx"><h3>Ficha editável (PPTX)</h3><p class="nota">Modelo para download.</p></a>
+    </div>
+
+    <h2 class="sec">Serviços externos</h2>
+    <div class="tiles">
+      <a class="tile" href="https://supabase.com/dashboard/project/eqlvmxtoqavglfrtfhfx" target="_blank" rel="noopener noreferrer"><h3>Supabase (banco de dados)</h3><p class="nota">Projeto granfish-cadastros: tabelas, usuários, MFA e backups.</p></a>
+      <a class="tile" href="https://github.com/Nar1981/site-piloto-granfish" target="_blank" rel="noopener noreferrer"><h3>GitHub (código do site)</h3><p class="nota">Repositório Nar1981/site-piloto-granfish.</p></a>
+    </div>
+
+    <p class="nota">Por segurança, senhas não são exibidas nem guardadas nesta página.</p>
+  </section>
+
+  <section id="negado" class="card" hidden>
+    <h2 class="card-title">Acesso restrito</h2>
+    <p>Entre primeiro na área interna para ver o painel.</p>
+    <a class="button button--copper" href="cadastros-admin.html">Entrar</a>
+  </section>
+</main>
+
+<script src="js/cadastro-config.js"></script>
+<script src="js/painel-interno.js" defer></script>
+<script src="js/site-campos.js"></script><script src="js/site-personalizar.js" defer></script>
+<script src="js/admin-shell.js" defer></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>
