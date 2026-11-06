@@ -158,17 +158,24 @@
   av.src = 'img/marina.svg'; av.alt = ''; av.width = 40; av.height = 40;
   const tit = el('div', 'gfc-tit');
   tit.append(el('strong', '', NOME + ' · Gran Fish'), el('small', '', 'Assistente virtual'));
+  const acoes = el('div', 'gfc-top-acoes');
+  const btnVoltar = el('button', 'gfc-back', '← Voltar');
+  btnVoltar.type = 'button';
+  btnVoltar.setAttribute('aria-label', 'Voltar para a tela');
+  btnVoltar.addEventListener('click', () => alternar(false));
   const fechar = el('button', 'gfc-x', '×');
   fechar.type = 'button';
   fechar.setAttribute('aria-label', 'Fechar chat');
-  topo.append(av, tit, fechar);
+  acoes.append(btnVoltar, fechar);
+  topo.append(av, tit, acoes);
 
   const msgs = el('div', 'gfc-msgs');
   msgs.setAttribute('role', 'log');
   msgs.setAttribute('aria-live', 'polite');
 
   const pag = (location.pathname.split('/').pop() || 'index.html');
-  const ctx = /-admin\.html$|^painel-interno/.test(pag) ? 'admin' : /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo\.html/.test(pag) ? 'catalogo' : 'home';
+  const ehCatalogoBarcos = /^catalogo-(embarcacoes|admin)\.html$/.test(pag);
+  const ctx = /-admin\.html$|^painel-interno/.test(pag) && !ehCatalogoBarcos ? 'admin' : /^h60sl/.test(pag) ? 'hurricane' : /^poontoon/.test(pag) ? 'pontoon' : /^catalogo\.html/.test(pag) ? 'catalogo' : ehCatalogoBarcos ? 'catalogo_barcos' : 'home';
   const ADM = /-admin\.html$|^painel-interno/.test(pag);
   const PALETAS = [
     ['⚓ Azul marinho e branco', ['#0d1b2a', '#ffffff', '#c0c0c0']],
@@ -194,8 +201,24 @@
     sug.textContent = '';
     if (ctx === 'hurricane' || ctx === 'pontoon') {
       chip('💡 Sugestões', sugerir);
-      PALETAS.forEach(([n, c]) => chip(n, () => aplicarAqui(n, c)));
+      PALETAS.forEach(([n, c]) => chip(n, () => {
+        aplicarAqui(n, c);
+        setTimeout(() => alternar(false), 350);
+      }));
       chip('📖 Catálogo', () => enviar('catálogo'));
+    } else if (ctx === 'catalogo_barcos') {
+      ['Hurricane', 'Gran Bass', 'Fish', 'Colorado', 'Veloster'].forEach((l) => {
+        chip('🚤 ' + l, () => {
+          bolha('user', 'Linha ' + l);
+          if (window.GFFiltrarLinha) window.GFFiltrarLinha(l.toUpperCase());
+          setTimeout(() => alternar(false), 200);
+        });
+      });
+      chip('🏠 Todos os modelos', () => {
+        bolha('user', 'Todos os modelos');
+        if (window.GFFiltrarLinha) window.GFFiltrarLinha('');
+        setTimeout(() => alternar(false), 200);
+      });
     } else if (ctx === 'admin') {
       [['📥 Cadastros', 'cadastros_admin'], ['🚤 Catálogo', 'catalogo_admin'], ['📸 Instagram', 'instagram_admin'], ['🎛️ Personalizar', 'personalizar_admin'], ['👥 Admins', 'usuarios_admin'], ['🏠 Painel', 'admin']].forEach(([n, k]) => chip(n, () => { bolha('user', n); levar({ chave: k, cores: [] }); }));
     } else if (ctx === 'catalogo') {
@@ -357,9 +380,23 @@
     if (a.ir) levar({ chave: a.ir, cores: a.cores || [] });
     else if (a.say) { const r = intencao(a.say); if (r) mostrar(r); }
     else if (a.ideias) ideias();
-    else if (a.barco || a.linha || a.barcos) {
+    else if (a.barco) {
+      levar({ chave: 'barco:' + a.barco, cores: [] });
+    }
+    else if (a.linha) {
+      if (ehCatalogoBarcos && window.GFFiltrarLinha) {
+        window.GFFiltrarLinha(a.linha.toUpperCase());
+        setTimeout(() => alternar(false), 200);
+      } else {
+        carregarBarcos().then((d) => {
+          const r = resumoLinha(d, a.linha);
+          if (r) mostrar(r);
+        });
+      }
+    }
+    else if (a.barcos) {
       carregarBarcos().then((d) => {
-        const r = a.barco ? porId(d, a.barco) : a.linha ? resumoLinha(d, a.linha) : visaoGeral(d);
+        const r = visaoGeral(d);
         if (r) mostrar(r);
       });
     }
@@ -529,7 +566,10 @@
   async function levar(p) {
     pendente = null;
     const { chave, cores } = p;
-    if (cores.length && chave === ctx && aplicarAqui('', cores)) return;
+    if (cores.length && chave === ctx && aplicarAqui('', cores)) {
+      setTimeout(() => alternar(false), 350);
+      return;
+    }
     let [url, nome, externo] = chave.startsWith('ref:') ? ['catalogo.html#/ref/' + chave.slice(4), 'a referência do catálogo'] : chave.startsWith('barco:') ? [(souEquipe() ? 'catalogo-admin.html#' : 'catalogo-embarcacoes.html#') + chave.slice(6), 'a ficha completa do modelo'] : DESTINOS[chave];
     const temCores = cores.length && (chave === 'hurricane' || chave === 'pontoon');
     let aviso = 'Pronto, te levando para ' + nome + (temCores ? ' já com as cores pedidas' : '') + '! 🚤';
@@ -546,20 +586,40 @@
     bolha('bot', aviso);
     hist.push({ role: 'bot', text: 'Levei a pessoa para ' + nome + '.' });
     setTimeout(() => {
+      alternar(false);
       if (externo) { window.open(url, '_blank', 'noopener'); return; }
-      const [pag, hash] = url.split('#');
-      const aqui = (location.pathname.split('/').pop() || 'index.html') === pag;
+      const [destinoPag, hash] = url.split('#');
+      const pagAtual = (location.pathname.split('/').pop() || 'index.html');
+      const aqui = pagAtual === destinoPag;
+
+      if (chave.startsWith('barco:')) {
+        const barcoId = chave.slice(6);
+        if (ehCatalogoBarcos || aqui) {
+          if (window.GFAbrirBarco) {
+            window.GFAbrirBarco(barcoId);
+          } else {
+            location.hash = barcoId;
+          }
+          const alvo = document.getElementById(barcoId);
+          if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+      }
+
+      if (chave.startsWith('ref:') && pagAtual === 'catalogo.html') {
+        location.hash = '/ref/' + chave.slice(4);
+        return;
+      }
+
       const alvo = hash && document.getElementById(hash);
       if (aqui && alvo) {
-        alternar(false);
         alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else if (aqui && !hash) {
-        alternar(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         location.href = url;
       }
-    }, 900);
+    }, 450);
   }
 
   async function responder() {
@@ -614,7 +674,11 @@
       return;
     }
     const corPedida = extrairCores(t);
-    if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) { ocupado = false; env.disabled = false; campo.focus(); return; }
+    if ((ctx === 'hurricane' || ctx === 'pontoon') && corPedida.length && !/catalog|parecid|semelhan/i.test(semAcento(t)) && aplicarAqui('', corPedida)) {
+      ocupado = false; env.disabled = false; campo.focus();
+      setTimeout(() => alternar(false), 450);
+      return;
+    }
     const curto = norm(t).split(' ').length <= 4;
     const barco = buscarBarco(t, await carregarBarcos());
     if (barco) { mostrar(barco); ocupado = false; env.disabled = false; campo.focus(); return; }

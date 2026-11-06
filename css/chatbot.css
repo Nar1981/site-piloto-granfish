@@ -15,7 +15,10 @@
 .gfc-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; color: #fff; background: #071d26; }
 .gfc-top strong { display: block; }
 .gfc-top small { color: #a9c4c0; }
-.gfc-x { border: 0; color: #fff; background: none; font-size: 28px; line-height: 1; cursor: pointer; }
+.gfc-top-acoes { display: flex; align-items: center; gap: 8px; }
+.gfc-back { display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; color: #fff; background: rgba(255,255,255,.14); font: inherit; font-size: .8rem; font-weight: 700; padding: 5px 12px; cursor: pointer; transition: background .2s, transform .15s; }
+.gfc-back:hover { background: rgba(255,255,255,.28); transform: translateY(-1px); }
+.gfc-x { border: 0; color: #fff; background: none; font-size: 28px; line-height: 1; cursor: pointer; padding: 0 4px; }
 .gfc-msgs { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 14px; overflow-y: auto; background: #f1f6f6; }
 .gfc-m { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: .92rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
 .gfc-bot { align-self: flex-start; color: #0b1b23; background: #fff; border-bottom-left-radius: 4px; }

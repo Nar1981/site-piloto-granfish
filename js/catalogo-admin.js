@@ -51,6 +51,7 @@
   function card(b) {
     const c = el('button', 'cat-card');
     c.type = 'button';
+    c.id = b.id;
     c.dataset.id = b.id;
     const f = el('div', 'foto');
     if (b.fotos[0]) {
@@ -112,7 +113,7 @@
     bc.type = 'button';
     const bp = el('button', 'button', 'Imprimir');
     bp.type = 'button';
-    const bx = el('button', 'button button--copper', 'Fechar');
+    const bx = el('button', 'button button--copper', '← Voltar ao catálogo');
     bx.type = 'button';
     ac.append(bc, bp, bx);
     topo.append(tt, ac);
@@ -404,5 +405,20 @@
   render();
   const h = decodeURIComponent(location.hash.slice(1));
   if (h) abrir(h);
+
+  window.addEventListener('hashchange', () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (h) abrir(h);
+    else if (modal.open) modal.close();
+  });
+
+  window.GFAbrirBarco = abrir;
+  window.GFFiltrarLinha = (l) => {
+    linha = l;
+    tiles.querySelectorAll('.stat').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.l === l));
+    });
+    render();
+  };
   }
 })();
