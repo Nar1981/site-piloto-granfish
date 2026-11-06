@@ -1,4 +1,3 @@
-// Gerado a partir de Catalogo_Embarcacoes_Editavel.pptx
 window.GF_CATALOGO = [
  {
   "id": "colorado-55-s-6",
@@ -1390,8 +1389,193 @@ window.GF_CATALOGO = [
   ]
  },
  {
-  "id": "hurricane-60-sl-39",
+  "id": "hurricane-60-ss-39",
   "slide": 39,
+  "linha": "HURRICANE",
+  "nome": "HURRICANE 6.0 SS",
+  "cod": "H60SS",
+  "spec": {
+   "COMPRIMENTO": "5.95M",
+   "PONTAL": "0.60 M",
+   "BOCA": "1.80 M",
+   "CALADO": "0.18 M",
+   "CONTORNO": "2.35 M",
+   "LOTAÇÃO": "06 PESSOAS",
+   "MOTORIZAÇÃO MÁXIMA": "40 a 100 HP",
+   "PESO APROXIMADO": "250 KG",
+   "CAPACIDADE DE CARGA": "750 KG",
+   "CHAPA DO CASCO": "2.0 mm",
+   "CHAPA DA LATERAL": "1.5 mm",
+   "CHAPA DA PLATAFORMA": "2.2 mm xadrez",
+   "LARGURA DO CASCO": "1.25 metros"
+  },
+  "itens": [
+   "Suporte Motor Elétrico",
+   "Tomada Motor Elétrico",
+   "Caixa Seca",
+   "Base P/ Giropesca",
+   "Caixa Seca",
+   "Porta Vara",
+   "Caixa Seca",
+   "Caixa Seca",
+   "Cunho de Inox",
+   "Tanque 60L",
+   "Suporte P/ Remo",
+   "Cockpit com Acrílico Fumê e Protetor do Acrílico",
+   "Banco Estofado Pedestal 4X",
+   "Piso em Chapa Xadrez",
+   "Ralo Para Escoamento de Água",
+   "Viveiro Alumínio Embutido",
+   "Bancos Embutidos",
+   "Base P/ Giropesca",
+   "Tampas Porão 2 Suportes Bateria",
+   "Refluxo D’Água",
+   "1 Par de Flap",
+   "Escada"
+  ],
+  "fotos": [
+   "hurricane-60-ss-39-1.jpg",
+   "hurricane-60-ss-39-2.jpg"
+  ],
+  "pptx": "Planta_Baixa_H60SS_Editavel.pptx",
+  "pins": [
+   {
+    "num": 1,
+    "x": 0.8,
+    "y": 26.4,
+    "item": "Suporte Motor Elétrico"
+   },
+   {
+    "num": 2,
+    "x": 3.7,
+    "y": 26.3,
+    "item": "Tomada Motor Elétrico"
+   },
+   {
+    "num": 3,
+    "x": 6.8,
+    "y": 14.5,
+    "item": "Caixa Seca"
+   },
+   {
+    "num": 4,
+    "x": 11.2,
+    "y": 14.4,
+    "item": "Base P/ Giropesca"
+   },
+   {
+    "num": 5,
+    "x": 15.0,
+    "y": 16.4,
+    "item": "Caixa Seca"
+   },
+   {
+    "num": 6,
+    "x": 19.6,
+    "y": 3.7,
+    "item": "Porta Vara"
+   },
+   {
+    "num": 7,
+    "x": 23.7,
+    "y": 12.6,
+    "item": "Caixa Seca"
+   },
+   {
+    "num": 8,
+    "x": 28.1,
+    "y": 14.7,
+    "item": "Caixa Seca"
+   },
+   {
+    "num": 9,
+    "x": 31.9,
+    "y": 1.8,
+    "item": "Cunho de Inox"
+   },
+   {
+    "num": 10,
+    "x": 35.4,
+    "y": 3.9,
+    "item": "Tanque 60L"
+   },
+   {
+    "num": 11,
+    "x": 43.0,
+    "y": 8.0,
+    "item": "Suporte P/ Remo"
+   },
+   {
+    "num": 12,
+    "x": 47.4,
+    "y": 12.1,
+    "item": "Cockpit com Acrílico Fumê e Protetor do Acrílico"
+   },
+   {
+    "num": 13,
+    "x": 53.0,
+    "y": 10.6,
+    "item": "Banco Estofado Pedestal 4X"
+   },
+   {
+    "num": 14,
+    "x": 66.0,
+    "y": 10.0,
+    "item": "Piso em Chapa Xadrez"
+   },
+   {
+    "num": 15,
+    "x": 71.6,
+    "y": 5.6,
+    "item": "Ralo Para Escoamento de Água"
+   },
+   {
+    "num": 16,
+    "x": 75.3,
+    "y": 7.9,
+    "item": "Viveiro Alumínio Embutido"
+   },
+   {
+    "num": 17,
+    "x": 79.5,
+    "y": 6.5,
+    "item": "Bancos Embutidos"
+   },
+   {
+    "num": 18,
+    "x": 83.7,
+    "y": 3.5,
+    "item": "Base P/ Giropesca"
+   },
+   {
+    "num": 19,
+    "x": 87.9,
+    "y": 2.9,
+    "item": "Tampas Porão 2 Suportes Bateria"
+   },
+   {
+    "num": 20,
+    "x": 93.2,
+    "y": 11.8,
+    "item": "Refluxo D’Água"
+   },
+   {
+    "num": 21,
+    "x": 96.6,
+    "y": 12.3,
+    "item": "1 Par de Flap"
+   },
+   {
+    "num": 22,
+    "x": 99.5,
+    "y": 12.6,
+    "item": "Escada"
+   }
+  ]
+ },
+ {
+  "id": "hurricane-60-sl-39",
+  "slide": 40,
   "linha": "HURRICANE",
   "nome": "HURRICANE 6.0 SL",
   "cod": "H60SL",
@@ -1442,7 +1626,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "hurricane-60-sl-40",
-  "slide": 40,
+  "slide": 41,
   "linha": "HURRICANE",
   "nome": "HURRICANE 6.0 SL",
   "cod": "H601SL",
@@ -1493,7 +1677,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "hurricane-60-slx-master-41",
-  "slide": 41,
+  "slide": 42,
   "linha": "HURRICANE",
   "nome": "HURRICANE 6.0 SLX MASTER",
   "cod": "HSLXM60",
@@ -1539,7 +1723,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "hurricane-60-slx-42",
-  "slide": 42,
+  "slide": 43,
   "linha": "HURRICANE",
   "nome": "HURRICANE 6.0 SLX",
   "cod": "H60SLX",
@@ -1591,7 +1775,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "hurricane-55-ss-43",
-  "slide": 43,
+  "slide": 44,
   "linha": "HURRICANE",
   "nome": "HURRICANE 5.5 SS",
   "cod": "H55SS1",
@@ -1639,7 +1823,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "hurricane-55-s-44",
-  "slide": 44,
+  "slide": 45,
   "linha": "HURRICANE",
   "nome": "HURRICANE 5.5 S",
   "cod": "H55S",
@@ -1687,7 +1871,7 @@ window.GF_CATALOGO = [
  },
  {
   "id": "veloster-60-46",
-  "slide": 46,
+  "slide": 47,
   "linha": "VELOSTER",
   "nome": "VELOSTER 6.0",
   "cod": "VL60",

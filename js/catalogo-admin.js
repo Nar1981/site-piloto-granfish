@@ -64,6 +64,7 @@
     corpo.append(el('h3', '', b.nome), el('div', 'cod', b.cod));
     const chips = el('div', 'chips');
     [sp(b, 'COMPRIMENTO').replace(/\s*m$/i, ' m'), pessoas(b), motor(b)].forEach((t) => chips.appendChild(el('span', 'chip', t)));
+    if (b.pptx) chips.appendChild(el('span', 'chip chip--pptx', 'Planta Baixa · PPTX'));
     corpo.appendChild(chips);
     c.append(f, corpo);
     return c;
@@ -108,6 +109,14 @@
     const tt = el('div');
     tt.append(el('small', '', 'LINHA ' + b.linha + ' · ' + b.cod), el('h2', '', b.nome));
     const ac = el('div', 'acoes');
+    if (b.pptx) {
+      const b_pptx = el('a', 'button button--copper cat-btn-pptx', 'Baixar PPTX');
+      b_pptx.href = b.pptx;
+      b_pptx.download = b.pptx;
+      b_pptx.title = 'Baixar apresentação PowerPoint editável (.pptx)';
+      b_pptx.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Baixar PPTX';
+      ac.append(b_pptx);
+    }
     const bc = el('button', 'button', 'Copiar resumo');
     bc.type = 'button';
     const bp = el('button', 'button', 'Imprimir');
@@ -118,18 +127,76 @@
     topo.append(tt, ac);
 
     const corpo = el('div', 'corpo');
+    let highlightItem = () => {};
+    let clearHighlight = () => {};
+    const pinElements = {};
+
     if (b.fotos.length) {
       const fs = el('div', 'cat-fotos');
-      b.fotos.forEach((f) => {
+      b.fotos.forEach((f, fIdx) => {
         const fig = el('figure');
-        const i = el('img');
-        i.src = 'img/catalogo/' + f;
-        i.alt = b.nome;
-        const cap = el('figcaption', '', 'Imagem');
-        i.addEventListener('load', () => {
-          cap.textContent = i.naturalWidth / i.naturalHeight > 2 ? 'Vista superior · itens numerados' : 'Foto da embarcação';
-        });
-        fig.append(i, cap);
+        const isInteractive = b.pins && b.pins.length && fIdx === 0;
+
+        if (isInteractive) {
+          const wrap = el('div', 'cat-interactive-wrap');
+          const i = el('img', 'cat-blueprint-img');
+          i.src = 'img/catalogo/' + f;
+          i.alt = b.nome;
+          wrap.appendChild(i);
+
+          const tip = el('div', 'cat-pin-tip');
+          tip.hidden = true;
+          wrap.appendChild(tip);
+
+          b.pins.forEach((p) => {
+            const pin = el('button', 'cat-pin');
+            pin.type = 'button';
+            pin.dataset.num = p.num;
+            pin.style.left = p.x + '%';
+            pin.style.top = p.y + '%';
+            pin.textContent = p.num;
+            pin.setAttribute('aria-label', p.num + ' - ' + p.item);
+            pinElements[p.num] = pin;
+
+            const onEnter = () => {
+              tip.textContent = p.num + ' · ' + p.item;
+              tip.style.left = Math.min(Math.max(p.x, 15), 85) + '%';
+              tip.style.top = Math.max(p.y - 8, 4) + '%';
+              tip.hidden = false;
+              pin.classList.add('ativo');
+              highlightItem(p.num);
+            };
+            const onLeave = () => {
+              tip.hidden = true;
+              pin.classList.remove('ativo');
+              clearHighlight();
+            };
+
+            pin.addEventListener('mouseenter', onEnter);
+            pin.addEventListener('mouseleave', onLeave);
+            pin.addEventListener('focus', onEnter);
+            pin.addEventListener('blur', onLeave);
+            pin.addEventListener('click', (ev) => {
+              ev.preventDefault();
+              onEnter();
+              const targetLi = modal.querySelector(`.cat-itens li[data-num="${p.num}"]`);
+              if (targetLi) targetLi.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+            wrap.appendChild(pin);
+          });
+
+          const cap = el('figcaption', '', 'Vista superior interativa · Passe o mouse nos números para identificar os itens');
+          fig.append(wrap, cap);
+        } else {
+          const i = el('img');
+          i.src = 'img/catalogo/' + f;
+          i.alt = b.nome;
+          const cap = el('figcaption', '', 'Imagem');
+          i.addEventListener('load', () => {
+            cap.textContent = i.naturalWidth / i.naturalHeight > 2 ? 'Vista superior · itens numerados' : 'Foto da embarcação / Prancha técnica';
+          });
+          fig.append(i, cap);
+        }
         fs.appendChild(fig);
       });
       corpo.appendChild(fs);
@@ -148,10 +215,30 @@
     const c2 = el('div');
     c2.appendChild(el('h3', '', 'Itens de série (' + b.itens.length + ')'));
     const ol = el('ul', 'cat-itens');
-    b.itens.forEach((t) => {
+    b.itens.forEach((t, iIdx) => {
+      const num = iIdx + 1;
       const li = el('li', q && norm(t).includes(q) ? 'dest' : '', t);
+      li.dataset.num = num;
+      li.addEventListener('mouseenter', () => {
+        li.classList.add('pin-ativo');
+        if (pinElements[num]) pinElements[num].classList.add('ativo');
+      });
+      li.addEventListener('mouseleave', () => {
+        li.classList.remove('pin-ativo');
+        if (pinElements[num]) pinElements[num].classList.remove('ativo');
+      });
       ol.appendChild(li);
     });
+
+    highlightItem = (num) => {
+      clearHighlight();
+      const targetLi = modal.querySelector(`.cat-itens li[data-num="${num}"]`);
+      if (targetLi) targetLi.classList.add('pin-ativo');
+    };
+    clearHighlight = () => {
+      modal.querySelectorAll('.cat-itens li.pin-ativo').forEach((li) => li.classList.remove('pin-ativo'));
+    };
+
     c2.appendChild(ol);
     dois.append(c1, c2);
     corpo.appendChild(dois);

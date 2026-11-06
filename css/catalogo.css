@@ -113,3 +113,94 @@
   .pg-comp td { padding: .2mm 1.5mm; }
   .pg-comp tr:nth-child(even) td { background: #eef1f6; }
 }
+
+/* ── Planta Baixa Interativa & PPTX ── */
+.cat-interactive-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #ffffff;
+}
+.cat-blueprint-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cat-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--copper, #d9743f);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  z-index: 5;
+  padding: 0;
+}
+.cat-pin:hover, .cat-pin:focus, .cat-pin.ativo {
+  transform: translate(-50%, -50%) scale(1.4);
+  background: var(--teal, #0f766e);
+  color: #ffffff;
+  z-index: 10;
+  box-shadow: 0 0 14px rgba(15, 118, 110, 0.85);
+}
+.cat-pin-tip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  background: #071d26;
+  color: #97ebdf;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(151, 235, 223, 0.35);
+  z-index: 20;
+  margin-top: -8px;
+  transition: opacity 0.15s;
+}
+.cat-itens li {
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.cat-itens li:hover, .cat-itens li.pin-ativo {
+  background: #e6f6f4 !important;
+  transform: translateX(4px);
+}
+.cat-itens li.pin-ativo::before {
+  background: var(--teal, #0f766e) !important;
+  transform: scale(1.15);
+}
+.chip--pptx {
+  background: #fdf0e9 !important;
+  color: var(--copper, #d9743f) !important;
+  border: 1px solid rgba(217, 116, 63, 0.4);
+  font-weight: 700 !important;
+}
+.cat-btn-pptx {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  background: var(--copper, #d9743f);
+  color: #ffffff;
+  font-weight: 600;
+}
+.cat-btn-pptx:hover {
+  background: #c56330;
+  color: #ffffff;
+}
