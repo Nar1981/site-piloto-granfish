@@ -16,14 +16,42 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            def keystoreFile = file('../granfish-release.jks')
+            if (!keystoreFile.exists()) {
+                keystoreFile = file('granfish-release.jks')
+            }
+            if (keystoreFile.exists()) {
+                storeFile keystoreFile
+                storePassword System.getenv("SIGNING_STORE_PASSWORD") ?: "granfish2026"
+                keyAlias System.getenv("SIGNING_KEY_ALIAS") ?: "granfish"
+                keyPassword System.getenv("SIGNING_KEY_PASSWORD") ?: "granfish2026"
+            }
+        }
+    }
+
     buildTypes {
         release {
+            def keystoreFile = file('../granfish-release.jks')
+            if (!keystoreFile.exists()) {
+                keystoreFile = file('granfish-release.jks')
+            }
+            if (keystoreFile.exists()) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             applicationIdSuffix ".debug"
             debuggable true
+        }
+    }
+
+    bundle {
+        language {
+            enableSplit = false
         }
     }
 
