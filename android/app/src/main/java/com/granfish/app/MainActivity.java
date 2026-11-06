@@ -25,13 +25,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity extends AppCompatActivity implements GranFishChromeClient.FileChooserCallback {
 
     private WebView webView;
-    private MaterialButton btnExitApp;
     private ProgressBar progressBar;
     private View layoutOffline;
     private ValueCallback<Uri[]> uploadMessage;
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
 
     private void initViews() {
         webView = findViewById(R.id.webView);
-        btnExitApp = findViewById(R.id.btnExitApp);
         progressBar = findViewById(R.id.progressBar);
         layoutOffline = findViewById(R.id.layoutOffline);
 
@@ -62,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements GranFishChromeCli
             layoutOffline.setVisibility(View.GONE);
             webView.reload();
         });
-
-        btnExitApp.setOnClickListener(v -> showExitConfirmation());
     }
 
     public void showExitConfirmation() {
